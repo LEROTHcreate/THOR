@@ -70,10 +70,10 @@ type SearchResult =
 
 // ── Glass dropdown style ──────────────────────────────────────────────────────
 const dropdownStyle: CSSProperties = {
-  background: "rgba(255,255,255,0.92)",
+  background: "var(--glass-card-bg)",
   backdropFilter: "blur(24px)",
   WebkitBackdropFilter: "blur(24px)",
-  border: "1px solid rgba(255,255,255,0.80)",
+  border: "1px solid var(--glass-strong-border)",
   boxShadow: "0 16px 48px rgba(0,0,0,0.12)",
 };
 
@@ -81,7 +81,7 @@ const notifPanelStyle: CSSProperties = {
   background: "rgba(255,255,255,0.96)",
   backdropFilter: "blur(24px)",
   WebkitBackdropFilter: "blur(24px)",
-  border: "1px solid rgba(255,255,255,0.80)",
+  border: "1px solid var(--glass-strong-border)",
   boxShadow: "0 16px 48px rgba(0,0,0,0.12)",
 };
 
@@ -342,7 +342,7 @@ function ResultRow({
         className={cn(base, active ? activeClass : idleClass)}
         onMouseDown={onSelect}
       >
-        <span>👤</span>
+        <span></span>
         <span className="flex-1 font-semibold">
           {p.prenom} {p.nom}
         </span>
@@ -358,7 +358,7 @@ function ResultRow({
         className={cn(base, active ? activeClass : idleClass)}
         onMouseDown={onSelect}
       >
-        <span>📁</span>
+        <span></span>
         <span className="font-mono text-xs font-semibold">{d.numero}</span>
         <span className="flex-1">
           {d.patientPrenom} {d.patientNom}
@@ -375,7 +375,7 @@ function ResultRow({
         className={cn(base, active ? activeClass : idleClass)}
         onMouseDown={onSelect}
       >
-        <span>📄</span>
+        <span></span>
         <span className="font-mono text-xs font-semibold">{d.numero}</span>
         <span className="flex-1">
           {d.patientPrenom} {d.patientNom}
@@ -395,7 +395,7 @@ function ResultRow({
       className={cn(base, active ? activeClass : idleClass)}
       onMouseDown={onSelect}
     >
-      <span>📅</span>
+      <span></span>
       <span className="text-xs font-semibold text-slate-500">{formatRdvDate(r.date)}</span>
       <span className="text-xs text-slate-400">{r.heure}</span>
       <span className="flex-1">
@@ -918,7 +918,7 @@ export default function ProHeader() {
                   )}
 
                   <div className="px-4 py-2.5 text-[11px] text-slate-400">
-                    💡 Le fichier .ics s&apos;importe dans n&apos;importe quel agenda en un clic
+                    Le fichier .ics s&apos;importe dans n&apos;importe quel agenda en un clic
                   </div>
                 </div>
               );
@@ -937,7 +937,7 @@ export default function ProHeader() {
               aria-label="Profil"
               title="Profil"
             >
-              👤
+
             </button>
 
             {open ? (

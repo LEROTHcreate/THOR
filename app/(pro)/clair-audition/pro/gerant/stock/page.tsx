@@ -4,21 +4,21 @@ import { useState, useEffect, useCallback } from "react";
 import type { CSSProperties } from "react";
 
 const glass: CSSProperties = {
-  background: "rgba(255,255,255,0.58)",
+  background: "var(--glass-bg)",
   backdropFilter: "blur(20px)",
   WebkitBackdropFilter: "blur(20px)",
-  border: "1px solid rgba(255,255,255,0.72)",
+  border: "1px solid var(--glass-border)",
   boxShadow: "0 8px 32px rgba(0,0,0,0.06)",
 };
 const glassSubtle: CSSProperties = {
-  background: "rgba(255,255,255,0.45)",
-  border: "1px solid rgba(255,255,255,0.65)",
+  background: "var(--glass-subtle-bg)",
+  border: "1px solid var(--glass-subtle-border)",
 };
 const inputStyle: CSSProperties = {
   padding: "9px 12px",
   borderRadius: 10,
   border: "1px solid rgba(148,163,184,0.35)",
-  background: "rgba(255,255,255,0.7)",
+  background: "var(--glass-strong-bg)",
   fontSize: 13,
   color: "#1e293b",
   outline: "none",
@@ -142,7 +142,7 @@ function Toast({ message, onClose }: { message: string; onClose: () => void }) {
   return (
     <div style={{
       position: "fixed", bottom: 24, right: 24, zIndex: 9999,
-      background: `linear-gradient(135deg,${ACCENT},#00a872)`,
+      background: ACCENT,
       color: "#fff", borderRadius: 14, padding: "12px 20px",
       fontSize: 14, fontWeight: 600, boxShadow: `0 8px 32px ${ACCENT}40`,
       display: "flex", alignItems: "center", gap: 10,
@@ -202,7 +202,7 @@ function AjustementModal({
         <div style={{ padding: "16px 24px", borderTop: "1px solid rgba(148,163,184,0.15)", display: "flex", justifyContent: "flex-end", gap: 10 }}>
           <button onClick={onClose} style={{ padding: "9px 20px", borderRadius: 10, border: "1px solid rgba(148,163,184,0.3)", background: "rgba(255,255,255,0.6)", fontSize: 13, fontWeight: 600, color: "#64748b", cursor: "pointer" }}>Annuler</button>
           <button onClick={() => { if (quantite !== 0) onSave(quantite, motif); }} disabled={quantite === 0 || newStock < 0}
-            style={{ padding: "9px 24px", borderRadius: 10, border: "none", background: quantite === 0 || newStock < 0 ? "rgba(148,163,184,0.3)" : `linear-gradient(135deg,${ACCENT},#00a872)`, fontSize: 13, fontWeight: 700, color: quantite === 0 || newStock < 0 ? "#94a3b8" : "#fff", cursor: quantite === 0 || newStock < 0 ? "not-allowed" : "pointer" }}>
+            style={{ padding: "9px 24px", borderRadius: 10, border: "none", background: quantite === 0 || newStock < 0 ? "rgba(148,163,184,0.3)" : ACCENT, fontSize: 13, fontWeight: 700, color: quantite === 0 || newStock < 0 ? "#94a3b8" : "#fff", cursor: quantite === 0 || newStock < 0 ? "not-allowed" : "pointer" }}>
             Appliquer
           </button>
         </div>
@@ -286,7 +286,7 @@ function CommandeModal({
             <label style={fieldLabel}>Fournisseur</label>
             <input style={inputStyle} value={fournisseur} onChange={e => setFournisseur(e.target.value)} placeholder="Nom du fournisseur" />
             {item.fournisseurEmail && (
-              <div style={{ fontSize: 11, color: "#94a3b8", marginTop: 4 }}>✉ {item.fournisseurEmail}</div>
+              <div style={{ fontSize: 11, color: "#94a3b8", marginTop: 4 }}>{item.fournisseurEmail}</div>
             )}
           </div>
           <div>
@@ -302,8 +302,8 @@ function CommandeModal({
         <div style={{ padding: "16px 24px", borderTop: "1px solid rgba(148,163,184,0.15)", display: "flex", justifyContent: "flex-end", gap: 10 }}>
           <button onClick={onClose} style={{ padding: "9px 20px", borderRadius: 10, border: "1px solid rgba(148,163,184,0.3)", background: "rgba(255,255,255,0.6)", fontSize: 13, fontWeight: 600, color: "#64748b", cursor: "pointer" }}>Annuler</button>
           <button onClick={handleSend} disabled={sending || sent || quantite < 1}
-            style={{ padding: "9px 24px", borderRadius: 10, border: "none", background: sent ? "rgba(16,185,129,0.85)" : `linear-gradient(135deg,${ACCENT},#00a872)`, fontSize: 13, fontWeight: 700, color: "#fff", cursor: sending || sent ? "default" : "pointer", minWidth: 140, display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }}>
-            {sent ? "✓ Envoyée !" : sending ? "Envoi en cours…" : "📤 Envoyer la commande"}
+            style={{ padding: "9px 24px", borderRadius: 10, border: "none", background: sent ? "rgba(16,185,129,0.85)" : ACCENT, fontSize: 13, fontWeight: 700, color: "#fff", cursor: sending || sent ? "default" : "pointer", minWidth: 140, display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }}>
+            {sent ? "✓ Envoyée !" : sending ? "Envoi en cours…" : "Envoyer la commande"}
           </button>
         </div>
       </div>
@@ -408,12 +408,12 @@ export default function StockAuditionPage() {
         <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
           {ruptureItems.length > 0 && (
             <div style={{ display: "flex", alignItems: "center", gap: 6, borderRadius: 20, padding: "6px 14px", fontSize: 12, fontWeight: 700, background: "rgba(239,68,68,0.08)", color: "#ef4444", border: "1px solid rgba(239,68,68,0.25)" }}>
-              🔴 {ruptureItems.length} rupture{ruptureItems.length > 1 ? "s" : ""}
+              {ruptureItems.length} rupture{ruptureItems.length > 1 ? "s" : ""}
             </div>
           )}
           {alertItems.length > 0 && (
             <div style={{ display: "flex", alignItems: "center", gap: 6, borderRadius: 20, padding: "6px 14px", fontSize: 12, fontWeight: 700, background: "rgba(245,158,11,0.08)", color: "#d97706", border: "1px solid rgba(245,158,11,0.25)" }}>
-              ⚠ {alertItems.length} stock{alertItems.length > 1 ? "s" : ""} bas
+              {alertItems.length} stock{alertItems.length > 1 ? "s" : ""} bas
             </div>
           )}
         </div>
@@ -422,10 +422,10 @@ export default function StockAuditionPage() {
       {/* ── KPI cards ── */}
       <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 14 }}>
         {[
-          { label: "Références",       val: kpi.totalRefs,                                   color: "#2D8CFF",  icon: "📦" },
-          { label: "Valeur stock HT",  val: formatEuro(kpi.valeurStock),                     color: ACCENT,     icon: "💰" },
-          { label: "Alertes stock",    val: kpi.alertes,                                     color: "#f59e0b",  icon: "⚠" },
-          { label: "Commandes en cours", val: kpi.commandesEnCours,                          color: "#8B5CF6",  icon: "📋" },
+          { label: "Références",       val: kpi.totalRefs,                                   color: "#2D8CFF",  icon: "" },
+          { label: "Valeur stock HT",  val: formatEuro(kpi.valeurStock),                     color: ACCENT,     icon: "" },
+          { label: "Alertes stock",    val: kpi.alertes,                                     color: "#f59e0b",  icon: "" },
+          { label: "Commandes en cours", val: kpi.commandesEnCours,                          color: "#8B5CF6",  icon: "" },
         ].map(k => (
           <div key={k.label} style={{ ...glass, borderRadius: 16, padding: "16px 18px" }}>
             <div style={{ fontSize: 18, marginBottom: 6 }}>{k.icon}</div>
@@ -442,7 +442,7 @@ export default function StockAuditionPage() {
             onClick={() => setAlertOpen(o => !o)}
             style={{ width: "100%", padding: "14px 20px", display: "flex", alignItems: "center", justifyContent: "space-between", background: "rgba(245,158,11,0.06)", border: "none", borderBottom: alertOpen ? "1px solid rgba(245,158,11,0.15)" : "none", cursor: "pointer" }}>
             <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-              <span style={{ fontSize: 16 }}>⚠️</span>
+              <span style={{ fontSize: 16 }}></span>
               <span style={{ fontSize: 14, fontWeight: 700, color: "#92400e" }}>
                 {alertItems.length} article{alertItems.length > 1 ? "s" : ""} nécessitant un réapprovisionnement
               </span>
@@ -474,8 +474,8 @@ export default function StockAuditionPage() {
                     )}
                     <button
                       onClick={() => { setCommandeItem(item); }}
-                      style={{ flexShrink: 0, padding: "6px 14px", borderRadius: 10, border: "none", background: `linear-gradient(135deg,${ACCENT},#00a872)`, color: "#fff", fontSize: 12, fontWeight: 700, cursor: "pointer", whiteSpace: "nowrap" }}>
-                      📤 Commander
+                      style={{ flexShrink: 0, padding: "6px 14px", borderRadius: 10, border: "none", background: ACCENT, color: "#fff", fontSize: 12, fontWeight: 700, cursor: "pointer", whiteSpace: "nowrap" }}>
+                      Commander
                     </button>
                   </div>
                 );
@@ -488,13 +488,13 @@ export default function StockAuditionPage() {
       {/* ── Tabs ── */}
       <div style={{ display: "flex", gap: 4, ...glassSubtle, borderRadius: 14, padding: 5, width: "fit-content" }}>
         {([
-          { key: "stock",      label: "📦 Stock" },
-          { key: "commandes",  label: `📋 Commandes${kpi.commandesEnCours > 0 ? ` (${kpi.commandesEnCours})` : ""}` },
-          { key: "mouvements", label: "📊 Mouvements" },
+          { key: "stock",      label: "Stock" },
+          { key: "commandes",  label: `Commandes${kpi.commandesEnCours > 0 ? ` (${kpi.commandesEnCours})` : ""}` },
+          { key: "mouvements", label: "Mouvements" },
         ] as { key: PageTab; label: string }[]).map(({ key, label }) => (
           <button key={key} onClick={() => setTab(key)} style={{
             padding: "8px 20px", borderRadius: 10, border: "none", fontSize: 13, fontWeight: 600, cursor: "pointer", transition: "all 0.15s",
-            background: tab === key ? `linear-gradient(135deg,${ACCENT},#00a872)` : "transparent",
+            background: tab === key ? ACCENT : "transparent",
             color: tab === key ? "#fff" : "#64748b",
             boxShadow: tab === key ? `0 2px 8px ${ACCENT}40` : "none",
           }}>{label}</button>
@@ -514,7 +514,7 @@ export default function StockAuditionPage() {
               {CATEGORIES.map(c => (
                 <button key={c} onClick={() => setCat(c)}
                   style={{ padding: "6px 14px", borderRadius: 20, border: "none", fontSize: 12, fontWeight: 600, cursor: "pointer", transition: "all 0.15s",
-                    background: cat === c ? `linear-gradient(135deg,${ACCENT},#00a872)` : "rgba(255,255,255,0.45)",
+                    background: cat === c ? ACCENT : "rgba(255,255,255,0.45)",
                     color: cat === c ? "#fff" : "#64748b",
                     boxShadow: cat === c ? `0 2px 8px ${ACCENT}30` : "0 1px 3px rgba(0,0,0,0.05)",
                   }}>{c}</button>
@@ -581,7 +581,7 @@ export default function StockAuditionPage() {
         <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
           {commandes.length === 0 ? (
             <div style={{ ...glass, borderRadius: 18, padding: "48px 32px", textAlign: "center" }}>
-              <div style={{ fontSize: 32, marginBottom: 12 }}>📋</div>
+              <div style={{ fontSize: 32, marginBottom: 12 }}></div>
               <div style={{ fontSize: 15, fontWeight: 700, color: "#1e293b", marginBottom: 6 }}>Aucune commande</div>
               <div style={{ fontSize: 13, color: "#94a3b8" }}>Utilisez le bouton «&nbsp;Commander&nbsp;» depuis l'onglet Stock ou le panneau d'alertes.</div>
             </div>

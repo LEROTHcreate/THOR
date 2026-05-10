@@ -55,7 +55,7 @@ function Header({ scrolled }: { scrolled: boolean }) {
           <div className="flex items-center gap-2.5">
             <div
               className="grid h-8 w-8 place-items-center rounded-xl"
-              style={{ background: `linear-gradient(135deg, ${ACCENT}, #1A72E8)`, boxShadow: `0 2px 8px ${ACCENT}44` }}
+              style={{ background: ACCENT, boxShadow: `0 2px 8px ${ACCENT}44` }}
             >
               <svg className="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
                 <path d="M2.5 12s3.5-7 9.5-7 9.5 7 9.5 7-3.5 7-9.5 7-9.5-7-9.5-7Z" />
@@ -87,7 +87,7 @@ function Header({ scrolled }: { scrolled: boolean }) {
           <Link
             href="/connexion/patient?space=vision"
             className="rounded-xl px-4 py-2 text-sm font-semibold text-white transition-all hover:opacity-90 hover:scale-[1.02]"
-            style={{ background: `linear-gradient(135deg, ${ACCENT}, #1A72E8)`, boxShadow: `0 2px 10px ${ACCENT}40` }}
+            style={{ background: ACCENT, boxShadow: `0 2px 10px ${ACCENT}40` }}
           >
             Connexion
           </Link>
@@ -133,7 +133,7 @@ function Hero() {
           <div>
             <div
               className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-xs font-semibold mb-7 border"
-              style={{ background: "rgba(255,255,255,0.70)", backdropFilter: "blur(12px)", borderColor: `rgba(45,140,255,0.25)`, color: "#1E40AF", animation: "fadeInUp 0.7s ease both" }}
+              style={{ background: "var(--glass-nav-bg)", backdropFilter: "blur(12px)", borderColor: `rgba(45,140,255,0.25)`, color: "#1E40AF", animation: "fadeInUp 0.7s ease both" }}
             >
               <span className="h-2 w-2 rounded-full bg-[#2D8CFF] animate-pulse" />
               Votre espace santé visuelle
@@ -162,7 +162,7 @@ function Hero() {
               <Link
                 href="/connexion/patient?space=vision"
                 className="inline-flex items-center justify-center gap-2 rounded-2xl px-7 py-4 text-sm font-semibold text-white transition-all hover:scale-[1.02]"
-                style={{ background: `linear-gradient(135deg, ${ACCENT}, #1A72E8)`, boxShadow: `0 4px 24px ${ACCENT}44` }}
+                style={{ background: ACCENT, boxShadow: `0 4px 24px ${ACCENT}44` }}
               >
                 Accéder à mon espace
                 <svg className="w-4 h-4" viewBox="0 0 16 16" fill="none">
@@ -206,17 +206,17 @@ function Hero() {
 
             <div
               className="relative rounded-3xl p-7 shadow-[0_40px_100px_rgba(45,140,255,0.16)]"
-              style={{ background: "rgba(255,255,255,0.72)", backdropFilter: "blur(28px)", border: "1px solid rgba(255,255,255,0.88)" }}
+              style={{ background: "var(--glass-strong-bg)", backdropFilter: "blur(28px)", border: "1px solid rgba(255,255,255,0.88)" }}
             >
               {/* En-tête profil */}
               <div className="flex items-center justify-between mb-6">
                 <div>
-                  <div className="font-bold text-slate-800 text-base">Bonjour, Marie 👋</div>
+                  <div className="font-bold text-slate-800 text-base">Bonjour, Marie</div>
                   <div className="text-xs text-slate-400 mt-0.5">Dernier bilan il y a 2 mois</div>
                 </div>
                 <div
                   className="h-10 w-10 rounded-full flex items-center justify-center text-xs font-bold text-white"
-                  style={{ background: `linear-gradient(135deg, ${ACCENT}, #1A72E8)`, boxShadow: `0 4px 14px ${ACCENT}44` }}
+                  style={{ background: ACCENT, boxShadow: `0 4px 14px ${ACCENT}44` }}
                 >
                   MD
                 </div>
@@ -264,7 +264,7 @@ function Hero() {
 
               {/* Acuité visuelle */}
               <div className="rounded-2xl p-4"
-                   style={{ background: "rgba(255,255,255,0.55)", border: "1px solid rgba(0,0,0,0.05)" }}>
+                   style={{ background: "var(--glass-subtle-bg)", border: "1px solid rgba(0,0,0,0.05)" }}>
                 <div className="flex justify-between items-center mb-2.5">
                   <span className="text-xs font-semibold text-slate-600">Acuité visuelle</span>
                   <span className="text-xs font-bold" style={{ color: ACCENT }}>OD 10/10 · OG 9/10</span>
@@ -289,7 +289,7 @@ function Hero() {
             {/* Badge flottant bas-gauche */}
             <div
               className="absolute -bottom-5 -left-10 rounded-2xl px-4 py-3 shadow-[0_12px_40px_rgba(0,0,0,0.10)] flex items-center gap-3"
-              style={{ background: "rgba(255,255,255,0.88)", backdropFilter: "blur(20px)", border: "1px solid rgba(255,255,255,0.95)", animation: "fadeInUp 0.7s 0.6s ease both, floatY 8s 1.8s ease-in-out infinite" }}
+              style={{ background: "var(--glass-card-bg)", backdropFilter: "blur(20px)", border: "1px solid rgba(255,255,255,0.95)", animation: "fadeInUp 0.7s 0.6s ease both, floatY 8s 1.8s ease-in-out infinite" }}
             >
               <div className="h-9 w-9 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: `rgba(45,140,255,0.10)` }}>
                 <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke={ACCENT} strokeWidth="1.8" strokeLinecap="round">
@@ -309,7 +309,7 @@ function Hero() {
             {/* Badge RGPD top-right */}
             <div
               className="absolute -top-4 right-4 rounded-full px-3 py-1.5 text-xs font-medium text-slate-600 shadow-sm flex items-center gap-1.5"
-              style={{ background: "rgba(255,255,255,0.92)", backdropFilter: "blur(12px)", border: "1px solid rgba(255,255,255,0.98)", animation: "fadeInUp 0.7s 0.5s ease both" }}
+              style={{ background: "var(--glass-card-bg)", backdropFilter: "blur(12px)", border: "1px solid rgba(255,255,255,0.98)", animation: "fadeInUp 0.7s 0.5s ease both" }}
             >
               <svg className="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="#10b981" strokeWidth="2" strokeLinecap="round">
                 <rect x="5" y="11" width="14" height="10" rx="2" />
@@ -321,7 +321,7 @@ function Hero() {
             {/* Badge RDV confirmé — top-left */}
             <div
               className="absolute -top-8 -left-8 rounded-2xl px-4 py-3 shadow-[0_8px_30px_rgba(0,0,0,0.09)] flex items-center gap-3"
-              style={{ background: "rgba(255,255,255,0.88)", backdropFilter: "blur(20px)", border: "1px solid rgba(255,255,255,0.95)", animation: "fadeInUp 0.7s 0.72s ease both, floatY 9s 2.4s ease-in-out infinite" }}
+              style={{ background: "var(--glass-card-bg)", backdropFilter: "blur(20px)", border: "1px solid rgba(255,255,255,0.95)", animation: "fadeInUp 0.7s 0.72s ease both, floatY 9s 2.4s ease-in-out infinite" }}
             >
               <div className="h-8 w-8 rounded-xl flex items-center justify-center flex-shrink-0"
                    style={{ background: "rgba(16,185,129,0.10)" }}>
@@ -338,7 +338,7 @@ function Hero() {
             {/* Badge renouvellement — bottom-right */}
             <div
               className="absolute -bottom-10 -right-6 rounded-2xl px-4 py-3 shadow-[0_8px_30px_rgba(0,0,0,0.09)] flex items-center gap-3"
-              style={{ background: "rgba(255,255,255,0.88)", backdropFilter: "blur(20px)", border: "1px solid rgba(255,255,255,0.95)", animation: "fadeInUp 0.7s 0.84s ease both, floatY 10s 3s ease-in-out infinite" }}
+              style={{ background: "var(--glass-card-bg)", backdropFilter: "blur(20px)", border: "1px solid rgba(255,255,255,0.95)", animation: "fadeInUp 0.7s 0.84s ease both, floatY 10s 3s ease-in-out infinite" }}
             >
               <div className="h-8 w-8 rounded-xl flex items-center justify-center flex-shrink-0"
                    style={{ background: "rgba(99,102,241,0.10)" }}>
@@ -512,7 +512,7 @@ function Comment() {
             <div key={step.n} className="step-card relative flex flex-col items-center text-center">
               <div
                 className="mb-6 flex h-20 w-20 items-center justify-center rounded-3xl text-2xl font-bold text-white shadow-lg"
-                style={{ background: `linear-gradient(135deg, ${ACCENT}, #1A72E8)`, boxShadow: `0 8px 24px ${ACCENT}38` }}
+                style={{ background: ACCENT, boxShadow: `0 8px 24px ${ACCENT}38` }}
               >
                 {i + 1}
               </div>
@@ -746,7 +746,7 @@ function CTAFinal() {
           <Link
             href="/connexion/patient?space=vision&mode=signup"
             className="inline-flex items-center justify-center gap-2 rounded-2xl px-7 py-3.5 text-sm font-semibold text-white transition-all hover:scale-[1.02]"
-            style={{ background: `linear-gradient(135deg, ${ACCENT}, #1A72E8)`, boxShadow: `0 4px 20px ${ACCENT}38` }}
+            style={{ background: ACCENT, boxShadow: `0 4px 20px ${ACCENT}38` }}
           >
             Créer mon espace patient
             <svg className="w-4 h-4" viewBox="0 0 16 16" fill="none">
@@ -775,7 +775,7 @@ function Footer() {
           <div className="flex items-center gap-2.5">
             <div
               className="grid h-7 w-7 place-items-center rounded-lg"
-              style={{ background: `linear-gradient(135deg, ${ACCENT}, #1A72E8)` }}
+              style={{ background: ACCENT }}
             >
               <svg className="w-3.5 h-3.5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
                 <path d="M2.5 12s3.5-7 9.5-7 9.5 7 9.5 7-3.5 7-9.5 7-9.5-7-9.5-7Z" />

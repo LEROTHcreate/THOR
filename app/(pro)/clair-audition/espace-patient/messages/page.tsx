@@ -3,16 +3,16 @@
 import { useState } from "react";
 
 const glass = {
-  background: "rgba(255,255,255,0.58)",
+  background: "var(--glass-bg)",
   backdropFilter: "blur(20px)",
   WebkitBackdropFilter: "blur(20px)",
-  border: "1px solid rgba(255,255,255,0.72)",
+  border: "1px solid var(--glass-border)",
   boxShadow: "0 8px 32px rgba(0,0,0,0.06)",
 } as React.CSSProperties;
 
 const glassSubtle = {
-  background: "rgba(255,255,255,0.45)",
-  border: "1px solid rgba(255,255,255,0.65)",
+  background: "var(--glass-subtle-bg)",
+  border: "1px solid var(--glass-subtle-border)",
 } as React.CSSProperties;
 
 const conversations = [
@@ -95,7 +95,7 @@ export default function MessagesAuditionPage() {
                   onClick={() => setFilter(f)}
                   className="rounded-full px-3 py-1 text-xs font-medium transition-all"
                   style={filter === f
-                    ? { background: "linear-gradient(135deg, #00C98A, #00A574)", color: "#fff", border: "none" }
+                    ? { background: "#00C98A", color: "#fff", border: "none" }
                     : { ...glassSubtle, color: "#64748b" }}
                 >
                   {f}
@@ -149,7 +149,7 @@ export default function MessagesAuditionPage() {
                   <div key={i} className={`flex ${m.mine ? "justify-end" : "justify-start"}`}>
                     {m.mine ? (
                       <div className="max-w-xs rounded-2xl px-4 py-2.5 text-sm text-white"
-                           style={{ background: "linear-gradient(135deg, #00C98A, #00A574)" }}>
+                           style={{ background: "#00C98A" }}>
                         <p>{m.content}</p>
                         <p className="mt-1 text-[10px] text-white/60">{m.time}</p>
                       </div>
@@ -175,7 +175,7 @@ export default function MessagesAuditionPage() {
                 <button
                   onClick={() => setDraft("")}
                   className="rounded-xl text-white px-4 py-2.5 text-sm font-semibold hover:opacity-90 transition-colors"
-                  style={{ background: "linear-gradient(135deg, #00C98A, #00A574)" }}
+                  style={{ background: "#00C98A" }}
                 >
                   Envoyer
                 </button>

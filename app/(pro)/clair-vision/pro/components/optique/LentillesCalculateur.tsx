@@ -15,16 +15,16 @@ import {
 
 /* ── Styles glass ───────────────────────────────────────────────────────── */
 const glass = {
-  background: "rgba(255,255,255,0.58)",
+  background: "var(--glass-bg)",
   backdropFilter: "blur(20px)",
   WebkitBackdropFilter: "blur(20px)",
-  border: "1px solid rgba(255,255,255,0.72)",
+  border: "1px solid var(--glass-border)",
   boxShadow: "0 8px 32px rgba(0,0,0,0.06)",
 } as React.CSSProperties;
 
 const glassSubtle = {
-  background: "rgba(255,255,255,0.45)",
-  border: "1px solid rgba(255,255,255,0.65)",
+  background: "var(--glass-subtle-bg)",
+  border: "1px solid var(--glass-subtle-border)",
 } as React.CSSProperties;
 
 /* ── Types locaux ─────────────────────────────────────────────────────── */
@@ -87,7 +87,7 @@ function StepBar({ step }: { step: Step }) {
       {steps.map((s, i) => (
         <div key={s.n} className="flex items-center">
           <div className={`flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-semibold transition-all ${step === s.n ? "text-white" : step > s.n ? "text-[#2D8CFF]" : "text-slate-400"}`}
-            style={step === s.n ? { background: "linear-gradient(135deg,#2D8CFF,#1A72E8)", boxShadow: "0 2px 8px rgba(45,140,255,.28)" } : glassSubtle}>
+            style={step === s.n ? { background: "#2D8CFF", boxShadow: "0 2px 8px rgba(45,140,255,.28)" } : glassSubtle}>
             <span className={`grid h-5 w-5 place-items-center rounded-full text-[10px] font-bold ${step > s.n ? "bg-[#2D8CFF] text-white" : step === s.n ? "bg-white/25 text-white" : "bg-slate-200 text-slate-500"}`}>
               {step > s.n ? <IconCheck className="w-3 h-3" /> : s.n}
             </span>
@@ -178,7 +178,7 @@ function LensCard({ lens, selected, onSelect }: { lens: Lens; selected: boolean;
 
 /* ── Top3Card ───────────────────────────────────────────────────────────── */
 function Top3Card({ detail, rank, onSelect }: { detail: ScoreDetail; rank: 1 | 2 | 3; onSelect: () => void }) {
-  const medals = ["🥇 1er choix", "🥈 2e choix", "🥉 3e choix"];
+  const medals = ["1er choix", "2e choix", "3e choix"];
   const borders = ["border-amber-400", "border-slate-300", "border-orange-400"];
   const badgeBg = ["bg-amber-50 text-amber-700 border-amber-200", "bg-slate-100 text-slate-600 border-slate-200", "bg-orange-50 text-orange-700 border-orange-200"];
   const { lens, raisons, alertes: scoreAlertes } = detail;
@@ -225,7 +225,7 @@ function Top3Card({ detail, rank, onSelect }: { detail: ScoreDetail; rank: 1 | 2
       )}
       <button onClick={onSelect}
         className="mt-auto w-full rounded-xl py-2 text-sm font-semibold text-white transition-all hover:opacity-90"
-        style={{ background: "linear-gradient(135deg,#2D8CFF,#1A72E8)", boxShadow: "0 2px 8px rgba(45,140,255,.28)" }}>
+        style={{ background: "#2D8CFF", boxShadow: "0 2px 8px rgba(45,140,255,.28)" }}>
         Sélectionner
       </button>
     </div>
@@ -320,11 +320,11 @@ export default function LentillesCalculateur({
 
   /* ── ENV LABELS ── */
   const ENV_META: Record<Environment, { label: string; note: string; icon: string; color: string }> = {
-    bureau_clim:  { label: "Bureau climatisé", note: "Risque de sécheresse lacrymo-oculaire, contrôler Dk/t et teneur en eau", icon: "🏢", color: "border-l-blue-400" },
-    chantier:     { label: "Chantier / Poussière", note: "Attention aux lentilles ioniques (attirent les particules). Préférer non-ionique + journalières", icon: "⛑️", color: "border-l-orange-400" },
-    exterieur:    { label: "Extérieur / Nature", note: "UV, vent, poussières — journalières recommandées", icon: "🌿", color: "border-l-green-400" },
-    domicile:     { label: "Domicile / Sédentaire", note: "Confort prioritaire", icon: "🏠", color: "border-l-slate-400" },
-    salle_blanche:{ label: "Salle blanche / Labo", note: "Lentilles non-ioniques strictement. Journalières obligatoires", icon: "🔬", color: "border-l-purple-400" },
+    bureau_clim:  { label: "Bureau climatisé", note: "Risque de sécheresse lacrymo-oculaire, contrôler Dk/t et teneur en eau", icon: "", color: "border-l-blue-400" },
+    chantier:     { label: "Chantier / Poussière", note: "Attention aux lentilles ioniques (attirent les particules). Préférer non-ionique + journalières", icon: "", color: "border-l-orange-400" },
+    exterieur:    { label: "Extérieur / Nature", note: "UV, vent, poussières — journalières recommandées", icon: "", color: "border-l-green-400" },
+    domicile:     { label: "Domicile / Sédentaire", note: "Confort prioritaire", icon: "", color: "border-l-slate-400" },
+    salle_blanche:{ label: "Salle blanche / Labo", note: "Lentilles non-ioniques strictement. Journalières obligatoires", icon: "", color: "border-l-purple-400" },
     autre:        { label: "Autre", note: "Environnement mixte", icon: "⋯", color: "border-l-slate-300" },
   };
 
@@ -362,7 +362,7 @@ export default function LentillesCalculateur({
         {(["premiere", "readaptation"] as AdaptType[]).map(t => (
           <button key={t} onClick={() => setAdaptType(t)}
             className={`flex-1 rounded-[var(--radius-large)] px-4 py-3 text-sm font-semibold transition-all ${adaptType === t ? "text-white" : "text-slate-600"}`}
-            style={adaptType === t ? { background: "linear-gradient(135deg,#2D8CFF,#1A72E8)", boxShadow: "0 2px 8px rgba(45,140,255,.25)" } : glassSubtle}>
+            style={adaptType === t ? { background: "#2D8CFF", boxShadow: "0 2px 8px rgba(45,140,255,.25)" } : glassSubtle}>
             {t === "premiere" ? "Première adaptation" : "Réadaptation"}
           </button>
         ))}
@@ -524,7 +524,7 @@ export default function LentillesCalculateur({
           {([{ v: "classique" as AdaptationType, l: "Adaptation classique" }, { v: "personnalisee" as AdaptationType, l: "Adaptation personnalisée" }]).map(({ v, l }) => (
             <button key={v} onClick={() => setProfile(p => ({ ...p, adaptationType: v }))}
               className={`flex-1 rounded-xl px-4 py-3 text-sm font-semibold transition-all ${profile.adaptationType === v ? "text-white" : "text-slate-600"}`}
-              style={profile.adaptationType === v ? { background: "linear-gradient(135deg,#2D8CFF,#1A72E8)", boxShadow: "0 2px 8px rgba(45,140,255,.25)" } : glassSubtle}>
+              style={profile.adaptationType === v ? { background: "#2D8CFF", boxShadow: "0 2px 8px rgba(45,140,255,.25)" } : glassSubtle}>
               {l}
             </button>
           ))}
@@ -585,7 +585,7 @@ export default function LentillesCalculateur({
                       {[{ v: true, l: "Oui" }, { v: false, l: "Non" }].map(({ v, l }) => (
                         <button key={String(v)} onClick={() => setProfile(p => ({ ...p, [key]: v }))}
                           className={`rounded-lg px-3 py-1 text-xs font-semibold transition-all ${val === v ? "text-white" : "text-slate-500"}`}
-                          style={val === v ? { background: "linear-gradient(135deg,#2D8CFF,#1A72E8)" } : glassSubtle}>
+                          style={val === v ? { background: "#2D8CFF" } : glassSubtle}>
                           {l}
                         </button>
                       ))}
@@ -601,7 +601,7 @@ export default function LentillesCalculateur({
                 {[{ v: 6, l: "< 8h" }, { v: 10, l: "8–12h" }, { v: 14, l: "> 12h" }].map(({ v, l }) => (
                   <button key={v} onClick={() => setProfile(p => ({ ...p, heuresPort: v }))}
                     className={`flex-1 rounded-xl py-2 text-sm font-semibold transition-all ${profile.heuresPort === v ? "text-white" : "text-slate-600"}`}
-                    style={profile.heuresPort === v ? { background: "linear-gradient(135deg,#2D8CFF,#1A72E8)" } : glassSubtle}>
+                    style={profile.heuresPort === v ? { background: "#2D8CFF" } : glassSubtle}>
                     {l}
                   </button>
                 ))}
@@ -647,7 +647,7 @@ export default function LentillesCalculateur({
         {/* LARS rule banner when toric is needed */}
         {needsToric && (
           <div className="flex items-start gap-3 rounded-[var(--radius-large)] border border-amber-200 bg-amber-50/80 px-4 py-3">
-            <span className="text-base mt-0.5">🔄</span>
+            <span className="text-base mt-0.5"></span>
             <div>
               <div className="text-xs font-bold text-amber-800 mb-0.5">Règle LARS — Ajustement de l&apos;axe torique</div>
               <div className="text-[11px] text-amber-700 leading-relaxed">
@@ -743,7 +743,7 @@ export default function LentillesCalculateur({
         {dossier && dossier.essais.length > 0 && (
           <div className="rounded-[var(--radius-large)] p-5" style={glass}>
             <div className="flex items-center gap-2 mb-4">
-              <span className="text-base">📋</span>
+              <span className="text-base"></span>
               <div className="text-sm font-semibold text-slate-800">Historique d'adaptation — {dossier.patientName}</div>
             </div>
             {dossier.essais.map((essai, i) => (
@@ -873,7 +873,7 @@ PARAMÈTRES FINAUX
           <div className="px-5 pb-5 flex gap-2">
             <button onClick={() => window.print()}
               className="inline-flex items-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold text-white transition-all hover:opacity-90"
-              style={{ background: "linear-gradient(135deg,#2D8CFF,#1A72E8)", boxShadow: "0 2px 8px rgba(45,140,255,.28)" }}>
+              style={{ background: "#2D8CFF", boxShadow: "0 2px 8px rgba(45,140,255,.28)" }}>
               Imprimer / PDF
             </button>
             <button className="inline-flex items-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold transition-all" style={glassSubtle}
@@ -911,7 +911,7 @@ PARAMÈTRES FINAUX
         {step < 4 && (
           <button onClick={() => setStep(s => Math.min(4, s + 1) as Step)} disabled={!canGoNext()}
             className="inline-flex items-center gap-2 rounded-xl px-5 py-2.5 text-sm font-semibold text-white transition-all hover:opacity-90 disabled:opacity-40"
-            style={{ background: "linear-gradient(135deg,#2D8CFF,#1A72E8)", boxShadow: "0 2px 8px rgba(45,140,255,.28)" }}>
+            style={{ background: "#2D8CFF", boxShadow: "0 2px 8px rgba(45,140,255,.28)" }}>
             Suivant <IconArrow />
           </button>
         )}

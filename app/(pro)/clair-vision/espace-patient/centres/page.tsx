@@ -4,16 +4,16 @@ import Link from "next/link";
 const ACCENT = "#2D8CFF";
 
 const glass = {
-  background: "rgba(255,255,255,0.58)",
+  background: "var(--glass-bg)",
   backdropFilter: "blur(20px)",
   WebkitBackdropFilter: "blur(20px)",
-  border: "1px solid rgba(255,255,255,0.72)",
+  border: "1px solid var(--glass-border)",
   boxShadow: "0 8px 32px rgba(0,0,0,0.06)",
 } as React.CSSProperties;
 
 const glassSubtle = {
-  background: "rgba(255,255,255,0.45)",
-  border: "1px solid rgba(255,255,255,0.65)",
+  background: "var(--glass-subtle-bg)",
+  border: "1px solid var(--glass-subtle-border)",
 } as React.CSSProperties;
 
 function IconLocation() {
@@ -111,7 +111,7 @@ export default function CentresVisionPage() {
                 <div className="flex items-center gap-3">
                   <div
                     className="grid h-10 w-10 flex-shrink-0 place-items-center rounded-xl text-white shadow-[0_4px_16px_rgba(45,140,255,0.28)]"
-                    style={{ background: `linear-gradient(135deg, ${ACCENT}, #1A72E8)` }}
+                    style={{ background: ACCENT }}
                   >
                     <IconLocation />
                   </div>
@@ -148,11 +148,11 @@ export default function CentresVisionPage() {
                 </div>
               </div>
 
-              <div className="pt-3" style={{ borderTop: "1px solid rgba(255,255,255,0.65)" }}>
+              <div className="pt-3" style={{ borderTop: "1px solid var(--glass-sep)" }}>
                 <Link
                   href="/clair-vision/espace-patient/rendez-vous"
                   className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-semibold text-white shadow-[0_4px_14px_rgba(45,140,255,0.28)] transition-all hover:shadow-[0_6px_20px_rgba(45,140,255,0.38)]"
-                  style={{ background: `linear-gradient(135deg, ${ACCENT}, #1A72E8)` }}
+                  style={{ background: ACCENT }}
                 >
                   <IconCalendar />
                   Prendre RDV
@@ -172,7 +172,7 @@ export default function CentresVisionPage() {
               <div className="flex items-center gap-3 mb-3">
                 <div
                   className="grid h-8 w-8 flex-shrink-0 place-items-center rounded-lg text-white"
-                  style={{ background: `linear-gradient(135deg, ${ACCENT}, #1A72E8)` }}
+                  style={{ background: ACCENT }}
                 >
                   <IconLocation />
                 </div>

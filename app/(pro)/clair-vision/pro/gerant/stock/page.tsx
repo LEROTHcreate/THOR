@@ -23,15 +23,15 @@ import DraggableWindow from "@/components/ui/DraggableWindow";
 
 /* ─── Style tokens ─────────────────────────────────────────────────── */
 const glass: CSSProperties = {
-  background: "rgba(255,255,255,0.58)",
+  background: "var(--glass-bg)",
   backdropFilter: "blur(20px)",
   WebkitBackdropFilter: "blur(20px)",
-  border: "1px solid rgba(255,255,255,0.72)",
+  border: "1px solid var(--glass-border)",
   boxShadow: "0 8px 32px rgba(0,0,0,0.06)",
 };
 const glassSubtle: CSSProperties = {
-  background: "rgba(255,255,255,0.45)",
-  border: "1px solid rgba(255,255,255,0.65)",
+  background: "var(--glass-subtle-bg)",
+  border: "1px solid var(--glass-subtle-border)",
 };
 
 /* ─── Helpers ──────────────────────────────────────────────────────── */
@@ -325,12 +325,12 @@ function CommandeVisionModal({
   const [sent, setSent] = useState(false);
 
   const glass2: CSSProperties = {
-    background: "rgba(255,255,255,0.58)", backdropFilter: "blur(20px)", WebkitBackdropFilter: "blur(20px)",
-    border: "1px solid rgba(255,255,255,0.72)", boxShadow: "0 8px 32px rgba(0,0,0,0.06)",
+    background: "var(--glass-bg)", backdropFilter: "blur(20px)", WebkitBackdropFilter: "blur(20px)",
+    border: "1px solid var(--glass-border)", boxShadow: "0 8px 32px rgba(0,0,0,0.06)",
   };
   const inp: CSSProperties = {
     padding: "9px 12px", borderRadius: 10, border: "1px solid rgba(148,163,184,0.35)",
-    background: "rgba(255,255,255,0.7)", fontSize: 13, color: "#1e293b", outline: "none", width: "100%", boxSizing: "border-box",
+    background: "var(--glass-strong-bg)", fontSize: 13, color: "#1e293b", outline: "none", width: "100%", boxSizing: "border-box",
   };
   const lbl: CSSProperties = { fontSize: 11, fontWeight: 600, color: "#64748b", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: 4, display: "block" };
 
@@ -379,7 +379,7 @@ function CommandeVisionModal({
             <label style={lbl}>Notes (optionnel)</label>
             <textarea style={{ ...inp, resize: "vertical", minHeight: 60 }} value={notes} onChange={e => setNotes(e.target.value)} placeholder="Instructions, urgence…" />
           </div>
-          <div style={{ background: "rgba(255,255,255,0.45)", border: "1px solid rgba(255,255,255,0.65)", borderRadius: 12, padding: "10px 16px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+          <div style={{ background: "var(--glass-subtle-bg)", border: "1px solid var(--glass-subtle-border)", borderRadius: 12, padding: "10px 16px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
             <span style={{ fontSize: 13, color: "#64748b", fontWeight: 600 }}>Montant estimé HT</span>
             <span style={{ fontSize: 18, fontWeight: 800, color: "#1e293b" }}>{(quantite * item.prixAchat).toLocaleString("fr-FR", { style: "currency", currency: "EUR" })}</span>
           </div>
@@ -387,8 +387,8 @@ function CommandeVisionModal({
         <div style={{ padding: "16px 24px", borderTop: "1px solid rgba(148,163,184,0.15)", display: "flex", justifyContent: "flex-end", gap: 10 }}>
           <button onClick={onClose} style={{ padding: "9px 20px", borderRadius: 10, border: "1px solid rgba(148,163,184,0.3)", background: "rgba(255,255,255,0.6)", fontSize: 13, fontWeight: 600, color: "#64748b", cursor: "pointer" }}>Annuler</button>
           <button onClick={handleSend} disabled={sending || sent}
-            style={{ padding: "9px 24px", borderRadius: 10, border: "none", background: sent ? "rgba(16,185,129,0.85)" : "linear-gradient(135deg,#2D8CFF,#1A72E8)", fontSize: 13, fontWeight: 700, color: "#fff", cursor: sending || sent ? "default" : "pointer", minWidth: 160, display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }}>
-            {sent ? "✓ Envoyée !" : sending ? "Envoi en cours…" : "📤 Envoyer la commande"}
+            style={{ padding: "9px 24px", borderRadius: 10, border: "none", background: sent ? "rgba(16,185,129,0.85)" : "#2D8CFF", fontSize: 13, fontWeight: 700, color: "#fff", cursor: sending || sent ? "default" : "pointer", minWidth: 160, display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }}>
+            {sent ? "✓ Envoyée !" : sending ? "Envoi en cours…" : "Envoyer la commande"}
           </button>
         </div>
       </div>
@@ -1071,7 +1071,7 @@ export default function StockPage() {
     cursor: "pointer", border: "1px solid transparent", transition: "all 0.15s",
   };
   const btnPrimary: CSSProperties = {
-    background: "linear-gradient(135deg, #2D8CFF, #1A72E8)",
+    background: "#2D8CFF",
     color: "#fff", border: "none", borderRadius: 10,
     padding: "8px 18px", fontSize: 13, fontWeight: 600,
     cursor: "pointer", boxShadow: "0 2px 8px rgba(45,140,255,0.30)",
@@ -1089,7 +1089,7 @@ export default function StockPage() {
   };
   const inputStyle: CSSProperties = {
     width: "100%", padding: "8px 12px", borderRadius: 8,
-    border: "1px solid rgba(0,0,0,0.10)", background: "rgba(255,255,255,0.7)",
+    border: "1px solid rgba(0,0,0,0.10)", background: "var(--glass-strong-bg)",
     fontSize: 13, color: "#0f172a", outline: "none", boxSizing: "border-box",
   };
 
@@ -1118,7 +1118,7 @@ export default function StockPage() {
             <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 4 }}>
               <div style={{
                 width: 36, height: 36, borderRadius: 10,
-                background: "linear-gradient(135deg, #00C98A, #047857)",
+                background: "#00C98A",
                 display: "flex", alignItems: "center", justifyContent: "center",
                 boxShadow: "0 2px 8px rgba(0,201,138,0.30)",
               }}>
@@ -1187,7 +1187,7 @@ export default function StockPage() {
             style={{
               padding: "8px 24px", borderRadius: 10, border: "none",
               fontSize: 14, fontWeight: 600, cursor: "pointer", transition: "all 0.15s",
-              background: activeTab === key ? "linear-gradient(135deg, #2D8CFF, #1A72E8)" : "transparent",
+              background: activeTab === key ? "#2D8CFF" : "transparent",
               color: activeTab === key ? "#fff" : "#64748b",
               boxShadow: activeTab === key ? "0 2px 8px rgba(45,140,255,0.25)" : "none",
             }}
@@ -1256,7 +1256,7 @@ export default function StockPage() {
                     background: stockFilter === f
                       ? f === "rupture" ? "linear-gradient(135deg,#0f172a,#334155)"
                         : f === "bas"   ? "linear-gradient(135deg,#EF4444,#DC2626)"
-                        : "linear-gradient(135deg,#2D8CFF,#1A72E8)"
+                        : "#2D8CFF"
                       : "transparent",
                     color: stockFilter === f ? "#fff" : "#64748b",
                     boxShadow: stockFilter === f ? "0 2px 8px rgba(0,0,0,0.15)" : "none",
@@ -1519,7 +1519,7 @@ export default function StockPage() {
                   <button key={key} onClick={() => setMvtTypeFilter(key)} style={{
                     padding: "5px 14px", borderRadius: 9, fontSize: 12, fontWeight: 600,
                     cursor: "pointer", border: "none",
-                    background: mvtTypeFilter === key ? "linear-gradient(135deg,#2D8CFF,#1A72E8)" : "transparent",
+                    background: mvtTypeFilter === key ? "#2D8CFF" : "transparent",
                     color: mvtTypeFilter === key ? "#fff" : "#64748b",
                   }}>
                     {label}
@@ -1544,7 +1544,7 @@ export default function StockPage() {
                   <button key={key} onClick={() => setMvtDateFilter(key)} style={{
                     padding: "5px 12px", borderRadius: 9, fontSize: 12, fontWeight: 600,
                     cursor: "pointer", border: "none",
-                    background: mvtDateFilter === key ? "linear-gradient(135deg,#2D8CFF,#1A72E8)" : "transparent",
+                    background: mvtDateFilter === key ? "#2D8CFF" : "transparent",
                     color: mvtDateFilter === key ? "#fff" : "#64748b",
                   }}>
                     {label}
@@ -1929,7 +1929,7 @@ export default function StockPage() {
             </div>
             {commandes.length === 0 ? (
               <div style={{ ...glass, borderRadius: 18, padding: "56px 32px", textAlign: "center" }}>
-                <div style={{ fontSize: 36, marginBottom: 14 }}>📋</div>
+                <div style={{ fontSize: 36, marginBottom: 14 }}></div>
                 <div style={{ fontSize: 16, fontWeight: 700, color: "#1e293b", marginBottom: 8 }}>Aucune commande fournisseur</div>
                 <div style={{ fontSize: 13, color: "#94a3b8" }}>Allez dans l&apos;onglet <strong>Stock</strong>, puis cliquez sur <strong>Commander</strong> pour une référence en alerte.</div>
               </div>
@@ -2090,15 +2090,15 @@ export default function StockPage() {
               <div style={{ display: "flex", gap: 3, background: "rgba(0,0,0,0.04)", borderRadius: 10, padding: 3, border: "1px solid rgba(0,0,0,0.07)" }}>
                 <button onClick={() => setBlMode("rapide")} style={{
                   padding: "5px 14px", borderRadius: 8, fontSize: 12, fontWeight: 600, border: "none", cursor: "pointer", transition: "all 0.15s",
-                  background: blMode === "rapide" ? "linear-gradient(135deg,#2D8CFF,#1A72E8)" : "transparent",
+                  background: blMode === "rapide" ? "#2D8CFF" : "transparent",
                   color: blMode === "rapide" ? "#fff" : "#64748b",
                   boxShadow: blMode === "rapide" ? "0 2px 6px rgba(45,140,255,0.25)" : "none",
-                }}>⚡ Saisie rapide</button>
+                }}>Saisie rapide</button>
                 <button onClick={() => setBlMode("search")} style={{
                   padding: "5px 14px", borderRadius: 8, fontSize: 12, fontWeight: 600, border: "none", cursor: "pointer", transition: "all 0.15s",
                   background: blMode === "search" ? "#f1f5f9" : "transparent",
                   color: blMode === "search" ? "#334155" : "#64748b",
-                }}>🔍 Recherche article</button>
+                }}>Recherche article</button>
               </div>
               <div style={{ width: 1, height: 20, background: "rgba(0,0,0,0.10)" }} />
               {CATEGORIES_DEFAULT.map(cat => {
@@ -2204,7 +2204,7 @@ export default function StockPage() {
                               <span style={{ position: "absolute", right: 6, top: "50%", transform: "translateY(-50%)", fontSize: 9, color: "#10b981", fontWeight: 800 }}>✓</span>
                             )}
                             {isNew && marqueDropdownAnchor?.id !== line.id && (
-                              <span style={{ position: "absolute", right: 6, top: "50%", transform: "translateY(-50%)", fontSize: 9, color: "#F59E0B", fontWeight: 800 }}>★</span>
+                              <span style={{ position: "absolute", right: 6, top: "50%", transform: "translateY(-50%)", fontSize: 9, color: "#F59E0B", fontWeight: 800 }}></span>
                             )}
                           </div>
                         </td>
@@ -2366,7 +2366,7 @@ export default function StockPage() {
                     <span style={{ fontSize: 12, color: "#10b981", fontWeight: 600 }}>✓ {rapidLines.filter(l => l.matchedItemId).length} connu(s)</span>
                   )}
                   {rapidLines.filter(l => l.marque && l.reference && !l.matchedItemId).length > 0 && (
-                    <span style={{ fontSize: 12, color: "#F59E0B", fontWeight: 600 }}>★ {rapidLines.filter(l => l.marque && l.reference && !l.matchedItemId).length} nouveau(x)</span>
+                    <span style={{ fontSize: 12, color: "#F59E0B", fontWeight: 600 }}>{rapidLines.filter(l => l.marque && l.reference && !l.matchedItemId).length} nouveau(x)</span>
                   )}
                   <button onClick={addRapideLine} style={{ ...btnGhost, fontSize: 12, padding: "5px 14px" }}>
                     + Ajouter une ligne

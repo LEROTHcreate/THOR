@@ -11,15 +11,15 @@ import { useRouter } from "next/navigation";
 
 /* ─── Style tokens ─────────────────────────────────────────────────── */
 const glass: CSSProperties = {
-  background: "rgba(255,255,255,0.58)",
+  background: "var(--glass-bg)",
   backdropFilter: "blur(20px)",
   WebkitBackdropFilter: "blur(20px)",
-  border: "1px solid rgba(255,255,255,0.72)",
+  border: "1px solid var(--glass-border)",
   boxShadow: "0 8px 32px rgba(0,0,0,0.06)",
 };
 const glassSubtle: CSSProperties = {
-  background: "rgba(255,255,255,0.45)",
-  border: "1px solid rgba(255,255,255,0.65)",
+  background: "var(--glass-subtle-bg)",
+  border: "1px solid var(--glass-subtle-border)",
 };
 
 /* ─── Helpers ──────────────────────────────────────────────────────── */
@@ -142,7 +142,7 @@ const BENCHMARK_ROWS: BenchmarkRow[] = [
 
 function statutStyle(s: BenchmarkRow["statut"]): { color: string; bg: string; symbol: string } {
   if (s === "bon")  return { color: "#047857", bg: "rgba(0,201,138,0.12)", symbol: "✓" };
-  if (s === "warn") return { color: "#B45309", bg: "rgba(245,158,11,0.12)", symbol: "⚠" };
+  if (s === "warn") return { color: "#B45309", bg: "rgba(245,158,11,0.12)", symbol: "" };
   return { color: "#991B1B", bg: "rgba(239,68,68,0.12)", symbol: "✗" };
 }
 
@@ -153,7 +153,7 @@ function computeAlertes(period: Period, caMonthly: number[] = CA_MONTHLY): Alert
   const alerts: Alerte[] = [];
 
   alerts.push({
-    icon: "⚠",
+    icon: "",
     text: "Délai de paiement moyen à 18 j vs objectif 15 j — relances à planifier",
     color: "#B45309", bg: "rgba(245,158,11,0.10)", border: "rgba(245,158,11,0.30)",
     link: "Voir →",
@@ -162,7 +162,7 @@ function computeAlertes(period: Period, caMonthly: number[] = CA_MONTHLY): Alert
   const vidal = EQUIPE.find(e => e.initiales === "MV");
   if (vidal && vidal.pct < 80) {
     alerts.push({
-      icon: "🔴",
+      icon: "",
       text: `Vidal sous objectif à ${vidal.pct}% — ${formatEur(vidal.objectif - vidal.ca)} restants à générer`,
       color: "#991B1B", bg: "rgba(239,68,68,0.10)", border: "rgba(239,68,68,0.30)",
     });
@@ -334,7 +334,7 @@ export default function GerantPage() {
     fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
   };
   const periodBtnActive: CSSProperties = {
-    background: "linear-gradient(135deg, #2D8CFF, #1A72E8)",
+    background: "#2D8CFF",
     color: "#fff",
     boxShadow: "0 2px 8px rgba(45,140,255,0.25)",
     border: "1px solid transparent",
@@ -345,9 +345,9 @@ export default function GerantPage() {
     cursor: "pointer",
   };
   const periodBtnInactive: CSSProperties = {
-    background: "rgba(255,255,255,0.55)",
+    background: "var(--glass-subtle-bg)",
     color: "#64748b",
-    border: "1px solid rgba(255,255,255,0.65)",
+    border: "1px solid var(--glass-subtle-border)",
     borderRadius: 10,
     padding: "6px 16px",
     fontSize: 13,
@@ -360,7 +360,7 @@ export default function GerantPage() {
     display: "flex",
     gap: 4,
     background: "rgba(255,255,255,0.6)",
-    border: "1px solid rgba(255,255,255,0.72)",
+    border: "1px solid var(--glass-border)",
     borderRadius: 14,
     padding: 4,
     marginBottom: 28,
@@ -471,7 +471,7 @@ export default function GerantPage() {
                 boxShadow: "0 1px 4px rgba(45,140,255,0.08)",
               }}
             >
-              📄 Exporter le rapport
+              Exporter le rapport
             </button>
           </div>
         </div>
@@ -717,16 +717,16 @@ export default function GerantPage() {
             const topPct = topPerformer ? Math.round((topPerformer.ca / (editObjectifs[topPerformer.initiales] ?? topPerformer.objectif)) * 100) : 0;
             const insights: Array<{ dot: string; text: string }> = [
               margesTotalTaux > 63
-                ? { dot: "#2D8CFF", text: `✨ Votre marge brute de ${margesTotalTaux}% dépasse l'objectif sectoriel de 63% — votre mix produit est optimisé.` }
-                : { dot: "#F59E0B", text: `⚠️ Marge brute à ${margesTotalTaux}% sous l'objectif sectoriel (63%) — revoir le mix verres simples/progressifs.` },
+                ? { dot: "#2D8CFF", text: `Votre marge brute de ${margesTotalTaux}% dépasse l'objectif sectoriel de 63% — votre mix produit est optimisé.` }
+                : { dot: "#F59E0B", text: `Marge brute à ${margesTotalTaux}% sous l'objectif sectoriel (63%) — revoir le mix verres simples/progressifs.` },
               isMaxMonth
-                ? { dot: "#00C98A", text: `📈 ${lastMonthLabel} est votre meilleur mois sur les 12 derniers mois avec ${formatEur(caLast)} de CA.` }
+                ? { dot: "#00C98A", text: `${lastMonthLabel} est votre meilleur mois sur les 12 derniers mois avec ${formatEur(caLast)} de CA.` }
                 : diff < 0
-                ? { dot: "#EF4444", text: `📉 Le CA de ce mois est en recul de ${Math.abs(diff)}% par rapport au mois précédent.` }
-                : { dot: "#00C98A", text: `📈 Le CA de ce mois progresse de ${diff}% par rapport au mois précédent.` },
+                ? { dot: "#EF4444", text: `Le CA de ce mois est en recul de ${Math.abs(diff)}% par rapport au mois précédent.` }
+                : { dot: "#00C98A", text: `Le CA de ce mois progresse de ${diff}% par rapport au mois précédent.` },
               topPerformer
-                ? { dot: "#8B5CF6", text: `🏆 ${topPerformer.nom} est le top performer du mois à ${topPct}% de l'objectif avec ${formatEur(topPerformer.ca)} de CA.` }
-                : { dot: "#8B5CF6", text: "🏆 Aucune donnée praticien disponible." },
+                ? { dot: "#8B5CF6", text: `${topPerformer.nom} est le top performer du mois à ${topPct}% de l'objectif avec ${formatEur(topPerformer.ca)} de CA.` }
+                : { dot: "#8B5CF6", text: "Aucune donnée praticien disponible." },
             ];
             return (
               <div style={{
@@ -735,7 +735,7 @@ export default function GerantPage() {
                 background: "linear-gradient(135deg, rgba(45,140,255,0.05), rgba(99,102,241,0.05))",
               }}>
                 <div style={{ fontSize: 15, fontWeight: 700, color: "#0f172a", marginBottom: 16 }}>
-                  💡 Insights
+                  Insights
                 </div>
                 <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
                   {insights.map((ins, i) => (
@@ -956,10 +956,10 @@ export default function GerantPage() {
                 const pctEffectif = objectifEffectif > 0 ? Math.min(100, Math.round((emp.ca / objectifEffectif) * 100)) : 0;
                 const badge =
                   pctEffectif >= 80
-                    ? { label: "En objectif", icon: "🎯", color: "#047857", bg: "rgba(0,201,138,0.10)", border: "rgba(0,201,138,0.25)" }
+                    ? { label: "En objectif", icon: "", color: "#047857", bg: "rgba(0,201,138,0.10)", border: "rgba(0,201,138,0.25)" }
                     : pctEffectif >= 50
-                    ? { label: "À booster", icon: "⚡", color: "#B45309", bg: "rgba(245,158,11,0.10)", border: "rgba(245,158,11,0.25)" }
-                    : { label: "Attention", icon: "🚨", color: "#991B1B", bg: "rgba(239,68,68,0.10)", border: "rgba(239,68,68,0.25)" };
+                    ? { label: "À booster", icon: "", color: "#B45309", bg: "rgba(245,158,11,0.10)", border: "rgba(245,158,11,0.25)" }
+                    : { label: "Attention", icon: "", color: "#991B1B", bg: "rgba(239,68,68,0.10)", border: "rgba(239,68,68,0.25)" };
                 const tendances = ["+4% vs février", "+2% vs février", "-3% vs février"];
                 const isEditing = editingInitiales === emp.initiales;
 
@@ -1186,9 +1186,9 @@ export default function GerantPage() {
             </div>
             <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
               {[
-                { icon: "🚨", text: "Martin Vidal à 66% de son objectif — 4 700 € restants à générer ce mois", color: "#991B1B", bg: "rgba(239,68,68,0.10)", border: "rgba(239,68,68,0.30)" },
-                { icon: "🎯", text: "Dr. Sophie Martin à 90% — en bonne voie pour atteindre son objectif mensuel", color: "#047857", bg: "rgba(0,201,138,0.10)", border: "rgba(0,201,138,0.30)" },
-                { icon: "⚡", text: "Julien Dubois : 31 actes réalisés — record mensuel personnel à portée (33 actes)", color: "#B45309", bg: "rgba(245,158,11,0.10)", border: "rgba(245,158,11,0.30)" },
+                { icon: "", text: "Martin Vidal à 66% de son objectif — 4 700 € restants à générer ce mois", color: "#991B1B", bg: "rgba(239,68,68,0.10)", border: "rgba(239,68,68,0.30)" },
+                { icon: "", text: "Dr. Sophie Martin à 90% — en bonne voie pour atteindre son objectif mensuel", color: "#047857", bg: "rgba(0,201,138,0.10)", border: "rgba(0,201,138,0.30)" },
+                { icon: "", text: "Julien Dubois : 31 actes réalisés — record mensuel personnel à portée (33 actes)", color: "#B45309", bg: "rgba(245,158,11,0.10)", border: "rgba(245,158,11,0.30)" },
                 { icon: "ℹ", text: "Taux moyen d'atteinte objectifs équipe : 79% — objectif collectif fixé à 85%", color: "#1D6FCC", bg: "rgba(45,140,255,0.10)", border: "rgba(45,140,255,0.30)" },
               ].map((a, i) => (
                 <div key={i} style={{
@@ -1334,7 +1334,7 @@ export default function GerantPage() {
               {[
                 { label: "Encaissé ce mois", value: 38500, color: "#047857", bg: "rgba(0,201,138,0.10)", border: "rgba(0,201,138,0.25)", icon: "✓" },
                 { label: "En attente", sublabel: "Devis acceptés non facturés", value: 12300, color: "#B45309", bg: "rgba(245,158,11,0.10)", border: "rgba(245,158,11,0.25)", icon: "⏳" },
-                { label: "Prévu fin de mois", value: 50800, color: "#1D6FCC", bg: "rgba(45,140,255,0.10)", border: "rgba(45,140,255,0.25)", icon: "📈" },
+                { label: "Prévu fin de mois", value: 50800, color: "#1D6FCC", bg: "rgba(45,140,255,0.10)", border: "rgba(45,140,255,0.25)", icon: "" },
               ].map((item, i) => (
                 <div key={i} style={{
                   background: item.bg,

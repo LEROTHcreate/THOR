@@ -6,15 +6,15 @@ import type { CSSProperties } from "react";
 import { loadUsers, loadCurrentUserId, type ProUser } from "@/lib/users";
 
 const glass: CSSProperties = {
-  background: "rgba(255,255,255,0.58)",
+  background: "var(--glass-bg)",
   backdropFilter: "blur(20px)",
   WebkitBackdropFilter: "blur(20px)",
-  border: "1px solid rgba(255,255,255,0.72)",
+  border: "1px solid var(--glass-border)",
   boxShadow: "0 8px 32px rgba(0,0,0,0.06)",
 };
 const glassSubtle: CSSProperties = {
-  background: "rgba(255,255,255,0.45)",
-  border: "1px solid rgba(255,255,255,0.65)",
+  background: "var(--glass-subtle-bg)",
+  border: "1px solid var(--glass-subtle-border)",
 };
 
 const PRIMARY   = "#00C98A";
@@ -151,7 +151,7 @@ export default function BriefingDuJour() {
         background: "linear-gradient(135deg, rgba(0,201,138,0.06) 0%, rgba(255,255,255,0.58) 60%, rgba(5,150,105,0.04) 100%)",
         backdropFilter: "blur(20px)",
         WebkitBackdropFilter: "blur(20px)",
-        border: "1px solid rgba(255,255,255,0.72)",
+        border: "1px solid var(--glass-border)",
         boxShadow: "0 8px 32px rgba(0,0,0,0.06)",
       }}
     >
@@ -163,7 +163,7 @@ export default function BriefingDuJour() {
             <div className="flex items-center gap-2.5">
               <div
                 className="grid h-9 w-9 place-items-center rounded-xl flex-shrink-0"
-                style={{ background: `linear-gradient(135deg,${PRIMARY},${PRIMARY_D})`, boxShadow: `0 2px 8px rgba(0,201,138,0.25)` }}
+                style={{ background: PRIMARY, boxShadow: `0 2px 8px rgba(0,201,138,0.25)` }}
               >
                 {/* Ear icon */}
                 <svg className="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
@@ -226,7 +226,7 @@ export default function BriefingDuJour() {
               </div>
             </div>
             <span className="text-xs font-bold rounded-full px-3 py-1 flex-shrink-0 text-white"
-              style={{ background: `linear-gradient(135deg,${PRIMARY},${PRIMARY_D})`, boxShadow: "0 2px 8px rgba(0,201,138,.25)" }}>
+              style={{ background: PRIMARY, boxShadow: "0 2px 8px rgba(0,201,138,.25)" }}>
               {formatCountdown(nextRdv.diffMs)}
             </span>
           </div>

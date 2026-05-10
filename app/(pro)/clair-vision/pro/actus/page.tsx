@@ -10,7 +10,7 @@ const glass: CSSProperties = {
   background: "rgba(255,255,255,0.68)",
   backdropFilter: "blur(20px)",
   WebkitBackdropFilter: "blur(20px)",
-  border: "1px solid rgba(255,255,255,0.80)",
+  border: "1px solid var(--glass-strong-border)",
   boxShadow: "0 8px 32px rgba(0,0,0,0.06)",
   borderRadius: 18,
 };

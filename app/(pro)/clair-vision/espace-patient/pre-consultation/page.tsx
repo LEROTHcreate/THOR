@@ -5,10 +5,10 @@ import { useState, useEffect } from "react";
 const A = "#2D8CFF";
 
 const glass = {
-  background: "rgba(255,255,255,0.72)",
+  background: "var(--glass-strong-bg)",
   backdropFilter: "blur(20px)" as const,
   WebkitBackdropFilter: "blur(20px)" as const,
-  border: "1px solid rgba(255,255,255,0.80)",
+  border: "1px solid var(--glass-strong-border)",
   borderRadius: 20,
 };
 
@@ -83,7 +83,7 @@ function ReferentCard({ referent, onEdit }: { referent: Referent; onEdit: () => 
           <div style={{ fontSize: 12, color: "#64748b", marginTop: 1 }}>{referent.centreName}</div>
         </div>
       </div>
-      <button onClick={onEdit} style={{ padding: "6px 14px", borderRadius: 10, border: `1.5px solid rgba(0,0,0,.12)`, background: "rgba(255,255,255,.8)", fontSize: 12, fontWeight: 600, color: "#64748b", cursor: "pointer", whiteSpace: "nowrap", flexShrink: 0 }}>
+      <button onClick={onEdit} style={{ padding: "6px 14px", borderRadius: 10, border: `1.5px solid rgba(0,0,0,.12)`, background: "var(--glass-strong-bg)", fontSize: 12, fontWeight: 600, color: "#64748b", cursor: "pointer", whiteSpace: "nowrap", flexShrink: 0 }}>
         Modifier
       </button>
     </div>
@@ -265,7 +265,7 @@ export default function PreConsultationPage() {
       {/* Header */}
       <div style={{ marginBottom: 28 }}>
         <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 8 }}>
-          <div style={{ width: 36, height: 36, borderRadius: "50%", background: `${A}15`, border: `2px solid ${A}`, display: "grid", placeItems: "center", fontSize: 18 }}>👁</div>
+          <div style={{ width: 36, height: 36, borderRadius: "50%", background: `${A}15`, border: `2px solid ${A}`, display: "grid", placeItems: "center", fontSize: 18 }}></div>
           <div>
             <h1 style={{ fontSize: 20, fontWeight: 800, color: "#0f172a", margin: 0 }}>Pré-consultation</h1>
             <p style={{ fontSize: 13, color: "#64748b", margin: 0 }}>Avant votre rendez-vous · Clair Vision</p>
@@ -337,12 +337,12 @@ export default function PreConsultationPage() {
               <label style={{ fontSize: 12, fontWeight: 700, color: "#64748b", textTransform: "uppercase", letterSpacing: ".04em", display: "block", marginBottom: 6 }}>Marque / modèle actuel</label>
               <input value={form.equipementMarque} onChange={e => setForm(f => ({ ...f, equipementMarque: e.target.value }))}
                 placeholder="Ex : Silhouette Titan"
-                style={{ width: "100%", padding: "10px 12px", borderRadius: 10, border: "1px solid rgba(0,0,0,.12)", fontSize: 13, outline: "none", boxSizing: "border-box", background: "rgba(255,255,255,.8)" }} />
+                style={{ width: "100%", padding: "10px 12px", borderRadius: 10, border: "1px solid rgba(0,0,0,.12)", fontSize: 13, outline: "none", boxSizing: "border-box", background: "var(--glass-strong-bg)" }} />
             </div>
             <div>
               <label style={{ fontSize: 12, fontWeight: 700, color: "#64748b", textTransform: "uppercase", letterSpacing: ".04em", display: "block", marginBottom: 6 }}>Âge de l&apos;équipement</label>
               <select value={form.equipementAge} onChange={e => setForm(f => ({ ...f, equipementAge: e.target.value }))}
-                style={{ width: "100%", padding: "10px 12px", borderRadius: 10, border: "1px solid rgba(0,0,0,.12)", fontSize: 13, outline: "none", boxSizing: "border-box", background: "rgba(255,255,255,.8)" }}>
+                style={{ width: "100%", padding: "10px 12px", borderRadius: 10, border: "1px solid rgba(0,0,0,.12)", fontSize: 13, outline: "none", boxSizing: "border-box", background: "var(--glass-strong-bg)" }}>
                 <option value="">Sélectionner</option>
                 <option>Moins d&apos;un an</option>
                 <option>1 à 2 ans</option>
@@ -358,7 +358,7 @@ export default function PreConsultationPage() {
             <textarea value={form.activites} onChange={e => setForm(f => ({ ...f, activites: e.target.value }))}
               placeholder="Ex : Tennis 3x/semaine, télétravail sur écran 8h/jour, lecture le soir…"
               rows={3}
-              style={{ width: "100%", padding: "10px 12px", borderRadius: 10, border: "1px solid rgba(0,0,0,.12)", fontSize: 13, outline: "none", resize: "vertical", fontFamily: "inherit", lineHeight: 1.5, boxSizing: "border-box", background: "rgba(255,255,255,.8)" }} />
+              style={{ width: "100%", padding: "10px 12px", borderRadius: 10, border: "1px solid rgba(0,0,0,.12)", fontSize: 13, outline: "none", resize: "vertical", fontFamily: "inherit", lineHeight: 1.5, boxSizing: "border-box", background: "var(--glass-strong-bg)" }} />
           </div>
 
           <div style={{ marginBottom: 8 }}>
@@ -392,7 +392,7 @@ export default function PreConsultationPage() {
             <textarea value={form.medicaments} onChange={e => setForm(f => ({ ...f, medicaments: e.target.value }))}
               placeholder="Ex : antihistaminiques, antidépresseurs, traitements hormonaux…"
               rows={3}
-              style={{ width: "100%", padding: "10px 12px", borderRadius: 10, border: "1px solid rgba(0,0,0,.12)", fontSize: 13, outline: "none", resize: "vertical", fontFamily: "inherit", lineHeight: 1.5, boxSizing: "border-box", background: "rgba(255,255,255,.8)" }} />
+              style={{ width: "100%", padding: "10px 12px", borderRadius: 10, border: "1px solid rgba(0,0,0,.12)", fontSize: 13, outline: "none", resize: "vertical", fontFamily: "inherit", lineHeight: 1.5, boxSizing: "border-box", background: "var(--glass-strong-bg)" }} />
           </div>
 
           <div style={{ marginBottom: 24 }}>
@@ -402,7 +402,7 @@ export default function PreConsultationPage() {
             <textarea value={form.autresInfos} onChange={e => setForm(f => ({ ...f, autresInfos: e.target.value }))}
               placeholder="Allergies aux matériaux, sensibilité à la lumière…"
               rows={3}
-              style={{ width: "100%", padding: "10px 12px", borderRadius: 10, border: "1px solid rgba(0,0,0,.12)", fontSize: 13, outline: "none", resize: "vertical", fontFamily: "inherit", lineHeight: 1.5, boxSizing: "border-box", background: "rgba(255,255,255,.8)" }} />
+              style={{ width: "100%", padding: "10px 12px", borderRadius: 10, border: "1px solid rgba(0,0,0,.12)", fontSize: 13, outline: "none", resize: "vertical", fontFamily: "inherit", lineHeight: 1.5, boxSizing: "border-box", background: "var(--glass-strong-bg)" }} />
           </div>
 
           <div style={{ marginBottom: 8 }}>
@@ -420,7 +420,7 @@ export default function PreConsultationPage() {
       {/* Navigation */}
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: 20 }}>
         {step > 1 ? (
-          <button onClick={() => setStep(s => s - 1)} style={{ padding: "12px 24px", borderRadius: 14, border: "1.5px solid rgba(0,0,0,.12)", background: "rgba(255,255,255,.8)", fontSize: 14, fontWeight: 700, color: "#64748b", cursor: "pointer" }}>
+          <button onClick={() => setStep(s => s - 1)} style={{ padding: "12px 24px", borderRadius: 14, border: "1.5px solid rgba(0,0,0,.12)", background: "var(--glass-strong-bg)", fontSize: 14, fontWeight: 700, color: "#64748b", cursor: "pointer" }}>
             ← Précédent
           </button>
         ) : <div />}

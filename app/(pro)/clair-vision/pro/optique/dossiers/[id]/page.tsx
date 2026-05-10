@@ -6,15 +6,15 @@ import type { CSSProperties } from "react";
 
 /* ── Design system ─────────────────────────────────────────────────────── */
 const glass: CSSProperties = {
-  background: "rgba(255,255,255,0.58)",
+  background: "var(--glass-bg)",
   backdropFilter: "blur(20px)",
   WebkitBackdropFilter: "blur(20px)",
-  border: "1px solid rgba(255,255,255,0.72)",
+  border: "1px solid var(--glass-border)",
   boxShadow: "0 8px 32px rgba(0,0,0,0.06)",
 };
 const glassSubtle: CSSProperties = {
-  background: "rgba(255,255,255,0.45)",
-  border: "1px solid rgba(255,255,255,0.65)",
+  background: "var(--glass-subtle-bg)",
+  border: "1px solid var(--glass-subtle-border)",
 };
 
 /* ── Types ─────────────────────────────────────────────────────────────── */
@@ -795,7 +795,7 @@ export default function DossierDetailPage({ params }: { params: Promise<{ id: st
   if (dossier === null) {
     return (
       <div className="flex flex-col items-center justify-center py-24 text-center">
-        <div className="text-4xl mb-4">📂</div>
+        <div className="text-4xl mb-4"></div>
         <h2 className="text-xl font-semibold text-slate-800 mb-2">Dossier introuvable</h2>
         <p className="text-sm text-slate-500 mb-6">Le dossier demandé n&apos;existe pas ou a été supprimé.</p>
         <Link

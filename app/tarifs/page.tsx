@@ -321,7 +321,7 @@ export default function TarifsPage() {
             <div
               className="inline-flex items-center gap-3 rounded-2xl px-6 py-4 shadow-sm"
               style={{
-                background: "rgba(255,255,255,0.72)",
+                background: "var(--glass-strong-bg)",
                 backdropFilter: "blur(16px)",
                 WebkitBackdropFilter: "blur(16px)",
                 border: "1px solid rgba(255,255,255,0.90)",
@@ -454,7 +454,7 @@ export default function TarifsPage() {
             <div
               className="overflow-x-auto rounded-2xl"
               style={{
-                background: "rgba(255,255,255,0.72)",
+                background: "var(--glass-strong-bg)",
                 backdropFilter: "blur(20px)",
                 WebkitBackdropFilter: "blur(20px)",
                 border: "1px solid rgba(255,255,255,0.90)",
@@ -616,7 +616,7 @@ function PlanCard({ plan, annual }: { plan: Plan; annual: boolean }) {
   const ctaStyle =
     plan.ctaStyle === "primary"
       ? {
-          background: "linear-gradient(135deg,#2D8CFF,#1A72E8)",
+          background: "#2D8CFF",
           color: "#fff",
           boxShadow: "0 4px 16px rgba(45,140,255,0.35)",
         }

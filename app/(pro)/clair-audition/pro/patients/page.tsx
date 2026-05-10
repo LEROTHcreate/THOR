@@ -7,15 +7,15 @@ import DraggableWindow from "@/components/ui/DraggableWindow";
 
 /* ── Glass tokens ────────────────────────────────────────────────────────── */
 const glass: CSSProperties = {
-  background: "rgba(255,255,255,0.58)",
+  background: "var(--glass-bg)",
   backdropFilter: "blur(20px)",
   WebkitBackdropFilter: "blur(20px)",
-  border: "1px solid rgba(255,255,255,0.72)",
+  border: "1px solid var(--glass-border)",
   boxShadow: "0 8px 32px rgba(0,0,0,0.06)",
 };
 const glassSubtle: CSSProperties = {
-  background: "rgba(255,255,255,0.45)",
-  border: "1px solid rgba(255,255,255,0.65)",
+  background: "var(--glass-subtle-bg)",
+  border: "1px solid var(--glass-subtle-border)",
 };
 
 const ACCENT = "#00C98A";
@@ -52,9 +52,9 @@ interface StoredPatient {
 type MarqueFilter = "Tous" | "Phonak" | "Oticon" | "Starkey" | "Widex" | "ReSound" | "Signia";
 
 const STATUS_META: Record<PatientStatus, { label: string; color: string; bg: string; dot: string }> = {
-  suivi:          { label: "Suivi actif",           color: "#10b981", bg: "rgba(16,185,129,0.10)",  dot: "🟢" },
-  controle:       { label: "Contrôle prévu",        color: "#00C98A", bg: "rgba(0,201,138,0.10)",  dot: "🟢" },
-  renouvellement: { label: "Renouvellement proche", color: "#f59e0b", bg: "rgba(245,158,11,0.10)", dot: "🟡" },
+  suivi:          { label: "Suivi actif",           color: "#10b981", bg: "rgba(16,185,129,0.10)",  dot: "" },
+  controle:       { label: "Contrôle prévu",        color: "#00C98A", bg: "rgba(0,201,138,0.10)",  dot: "" },
+  renouvellement: { label: "Renouvellement proche", color: "#f59e0b", bg: "rgba(245,158,11,0.10)", dot: "" },
 };
 
 /* ── Mock patients ────────────────────────────────────────────────────────── */
@@ -149,6 +149,21 @@ function IconCalendar({ className }: { className?: string }) {
     </svg>
   );
 }
+function IconGrid({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="3" y="3" width="7" height="7" rx="1.5" /><rect x="14" y="3" width="7" height="7" rx="1.5" />
+      <rect x="3" y="14" width="7" height="7" rx="1.5" /><rect x="14" y="14" width="7" height="7" rx="1.5" />
+    </svg>
+  );
+}
+function IconList({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01" />
+    </svg>
+  );
+}
 function IconEar({ className }: { className?: string }) {
   return (
     <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
@@ -191,7 +206,7 @@ const modalInputBase: CSSProperties = {
   fontSize: "14px",
   color: "#1e293b",
   outline: "none",
-  background: "rgba(255,255,255,0.60)",
+  background: "var(--glass-strong-bg)",
   boxSizing: "border-box",
 };
 
@@ -281,7 +296,7 @@ function NouveauPatientModal({
       defaultWidth={580}
       defaultHeight={560}
     >
-      <div style={{ background: "rgba(255,255,255,0.97)", padding: "24px" }}>
+      <div style={{ background: "var(--glass-card-bg)", padding: "24px" }}>
         <p style={{ fontSize: "13px", color: "#94a3b8", marginBottom: "16px" }}>Créer un dossier audiologique</p>
 
         <div style={{ display: "grid", gap: "16px" }}>
@@ -332,7 +347,7 @@ function NouveauPatientModal({
           <button
             onClick={handleSave}
             style={{
-              background: `linear-gradient(135deg, ${ACCENT}, #00a872)`,
+              background: ACCENT,
               boxShadow: "0 4px 12px rgba(0,201,138,0.30)",
               borderRadius: "999px", padding: "10px 24px",
               fontSize: "14px", fontWeight: 600, color: "#fff", cursor: "pointer", border: "none",
@@ -410,7 +425,7 @@ function PatientCard({ p }: { p: Patient }) {
       <div style={{ padding: "10px 20px 16px", display: "flex", gap: 8 }}>
         <Link
           href={`/clair-audition/pro/patients/${p.id}`}
-          style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", gap: 6, padding: "8px 12px", borderRadius: 10, background: `linear-gradient(135deg, ${ACCENT}, #00a872)`, color: "white", fontSize: 12.5, fontWeight: 600, textDecoration: "none", boxShadow: "0 2px 8px rgba(0,201,138,0.25)" }}
+          style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", gap: 6, padding: "8px 12px", borderRadius: 10, background: ACCENT, color: "white", fontSize: 12.5, fontWeight: 600, textDecoration: "none", boxShadow: "0 2px 8px rgba(0,201,138,0.25)" }}
         >
           <IconClipboard className="w-3.5 h-3.5" />
           Voir fiche
@@ -490,7 +505,7 @@ function PatientRow({ p }: { p: Patient }) {
       {/* Actions */}
       <div style={{ marginLeft: "auto", display: "flex", gap: 8, flexShrink: 0 }}>
         <Link href={`/clair-audition/pro/patients/${p.id}`}
-          style={{ display: "flex", alignItems: "center", gap: 5, padding: "7px 14px", borderRadius: 9, background: `linear-gradient(135deg, ${ACCENT}, #00a872)`, color: "white", fontSize: 12, fontWeight: 600, textDecoration: "none", boxShadow: "0 2px 8px rgba(0,201,138,0.22)", whiteSpace: "nowrap" }}>
+          style={{ display: "flex", alignItems: "center", gap: 5, padding: "7px 14px", borderRadius: 9, background: ACCENT, color: "white", fontSize: 12, fontWeight: 600, textDecoration: "none", boxShadow: "0 2px 8px rgba(0,201,138,0.22)", whiteSpace: "nowrap" }}>
           Voir fiche
         </Link>
         <Link href={`/clair-audition/pro/agenda`}
@@ -534,7 +549,7 @@ function StoredPatientRow({ p }: { p: StoredPatient }) {
         Créé le {new Date(p.createdAt).toLocaleDateString("fr-FR")}
       </div>
       <Link href={`/clair-audition/pro/patients/${p.id}`}
-        style={{ display: "flex", alignItems: "center", gap: 5, padding: "6px 12px", borderRadius: 9, background: `linear-gradient(135deg, ${ACCENT}, #00a872)`, color: "white", fontSize: 12, fontWeight: 600, textDecoration: "none", flexShrink: 0 }}>
+        style={{ display: "flex", alignItems: "center", gap: 5, padding: "6px 12px", borderRadius: 9, background: ACCENT, color: "white", fontSize: 12, fontWeight: 600, textDecoration: "none", flexShrink: 0 }}>
         Voir fiche
       </Link>
     </div>
@@ -574,90 +589,168 @@ export default function PatientsAuditionPage() {
     return matchQ && matchM;
   });
 
-  const totalCount = MOCK_PATIENTS.length + storedPatients.length;
+  const totalCount  = MOCK_PATIENTS.length + storedPatients.length;
   const renouvCount = MOCK_PATIENTS.filter(p => p.status === "renouvellement").length;
+
+  // Counts per marque (filter pills)
+  const marqueCounts: Record<MarqueFilter, number> = MARQUE_FILTERS.reduce((acc, f) => {
+    acc[f] = f === "Tous" ? MOCK_PATIENTS.length : MOCK_PATIENTS.filter(p => p.marque === f).length;
+    return acc;
+  }, {} as Record<MarqueFilter, number>);
+
+  // Status counts (header inline)
+  const statusCounts: Record<PatientStatus, number> = (Object.keys(STATUS_META) as PatientStatus[])
+    .reduce((acc, s) => {
+      acc[s] = MOCK_PATIENTS.filter(p => p.status === s).length;
+      return acc;
+    }, {} as Record<PatientStatus, number>);
 
   return (
     <div className="w-full space-y-6">
-      {/* Header */}
-      <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", flexWrap: "wrap", gap: 16 }}>
+      {/* ── Header ── */}
+      <header className="flex flex-wrap items-start justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-semibold tracking-tight text-slate-800 h-title">Patients</h1>
-          <p style={{ fontSize: 14, color: "#64748b", marginTop: 4, marginBottom: 0 }}>
-            <span style={{ fontWeight: 600, color: ACCENT }}>{totalCount} patients</span>
-            {renouvCount > 0 && (
-              <> · <span style={{ fontWeight: 600, color: "#f59e0b" }}>{renouvCount} renouvellement{renouvCount > 1 ? "s" : ""} proches</span></>
-            )}
+          <h1 className="text-[26px] font-extrabold text-slate-800 tracking-tight leading-none m-0 h-title">
+            Patients
+          </h1>
+          <p className="text-sm text-slate-500 mt-1.5 mb-0 flex items-center gap-1.5 flex-wrap">
+            <span className="font-semibold tabular-nums" style={{ color: ACCENT }}>{totalCount} patients</span>
+            {(Object.keys(STATUS_META) as PatientStatus[]).map(s => {
+              const meta = STATUS_META[s];
+              const c = statusCounts[s];
+              if (c === 0) return null;
+              return (
+                <span key={s} className="inline-flex items-center gap-1.5 ml-1">
+                  <span className="text-slate-300">·</span>
+                  <span
+                    className="inline-block w-1.5 h-1.5 rounded-full"
+                    style={{ background: meta.color, boxShadow: `0 0 0 2px ${meta.bg}` }}
+                  />
+                  <span className="tabular-nums font-medium" style={{ color: meta.color }}>{c}</span>
+                  <span className="text-slate-500">{meta.label.toLowerCase()}</span>
+                </span>
+              );
+            })}
           </p>
         </div>
 
-        <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
-          {/* View toggle */}
-          <div style={{ display: "flex", gap: 0, ...glassSubtle, borderRadius: 10, padding: 3 }}>
-            {([["grid", "⊞"], ["list", "☰"]] as const).map(([mode, icon]) => (
-              <button key={mode} onClick={() => setViewMode(mode)}
-                style={{ padding: "6px 12px", borderRadius: 8, border: "none", cursor: "pointer", fontSize: 14, fontWeight: 600, transition: "all 0.15s",
-                  background: viewMode === mode ? ACCENT : "transparent",
-                  color: viewMode === mode ? "white" : "#94a3b8",
-                }}>
-                {icon}
-              </button>
-            ))}
+        <div className="flex items-center gap-2">
+          {/* View toggle (segmented, h-9) */}
+          <div
+            className="inline-flex items-center h-9 p-0.5 rounded-[10px]"
+            style={glassSubtle}
+            role="group"
+            aria-label="Mode d'affichage"
+          >
+            {([["list", IconList, "Liste"], ["grid", IconGrid, "Grille"]] as const).map(([mode, Icon, label]) => {
+              const active = viewMode === mode;
+              return (
+                <button
+                  key={mode}
+                  onClick={() => setViewMode(mode)}
+                  title={label}
+                  aria-label={label}
+                  aria-pressed={active}
+                  className="grid place-items-center h-8 w-9 rounded-lg cursor-pointer transition-all duration-150"
+                  style={{
+                    background: active ? ACCENT : "transparent",
+                    color: active ? "#fff" : "#94a3b8",
+                    boxShadow: active ? "0 2px 6px rgba(0,201,138,0.30)" : "none",
+                    border: "none",
+                  }}
+                >
+                  <Icon className="w-4 h-4" />
+                </button>
+              );
+            })}
           </div>
           <button
             onClick={() => setShowModal(true)}
+            className="inline-flex items-center gap-2 h-9 px-4 rounded-[10px] text-sm font-semibold text-white cursor-pointer transition-opacity hover:opacity-90"
             style={{
-              display: "flex", alignItems: "center", gap: 7,
-              background: `linear-gradient(135deg, ${ACCENT}, #00a872)`,
-              boxShadow: "0 2px 12px rgba(0,201,138,0.30)",
-              border: "none", borderRadius: 12, padding: "10px 20px",
-              fontSize: 14, fontWeight: 700, color: "white", cursor: "pointer",
+              background: ACCENT,
+              boxShadow: "0 2px 10px rgba(0,201,138,0.30)",
+              border: "none",
             }}
           >
             <IconPlus className="w-4 h-4" />
             Nouveau patient
           </button>
         </div>
-      </div>
+      </header>
 
-      {/* Search + Marque filter */}
-      <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: 12 }}>
-        <div style={{ position: "relative", flex: 1, minWidth: 220 }}>
-          <IconSearch className="w-4 h-4" style={{ position: "absolute", left: 12, top: "50%", transform: "translateY(-50%)", color: "#94a3b8", pointerEvents: "none" } as CSSProperties} />
+      {/* ── Toolbar : recherche + filtres marque (1 ligne, h-9) ── */}
+      <div className="flex flex-wrap items-center gap-2">
+        {/* Search */}
+        <div className="relative flex-1 min-w-[240px]">
+          <IconSearch
+            className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none text-slate-400"
+          />
+          {query && (
+            <button
+              onClick={() => setQuery("")}
+              aria-label="Effacer la recherche"
+              className="absolute right-2.5 top-1/2 -translate-y-1/2 grid place-items-center h-6 w-6 rounded-md text-slate-400 hover:text-slate-600 transition-colors"
+              style={{ background: "transparent", border: "none", cursor: "pointer" }}
+            >
+              <IconX className="w-3.5 h-3.5" />
+            </button>
+          )}
           <input
             type="text"
             placeholder="Rechercher par nom, appareil, marque…"
             value={query}
             onChange={e => setQuery(e.target.value)}
+            className="w-full h-9 rounded-[10px] text-sm outline-none transition-all"
             style={{
-              width: "100%", padding: "10px 12px 10px 38px", borderRadius: 12,
-              border: "1px solid rgba(203,213,225,0.8)", background: "rgba(255,255,255,0.75)",
-              backdropFilter: "blur(10px)", WebkitBackdropFilter: "blur(10px)",
-              fontSize: 14, color: "#1e293b", outline: "none", boxSizing: "border-box",
-            }}
+              padding: query ? "0 36px 0 38px" : "0 12px 0 38px",
+              border: "1px solid var(--glass-border)",
+              background: "var(--glass-strong-bg)",
+              backdropFilter: "blur(10px)",
+              WebkitBackdropFilter: "blur(10px)",
+              color: "var(--text)",
+              boxSizing: "border-box",
+            } as CSSProperties}
+            onFocus={e => { e.currentTarget.style.borderColor = "rgba(0,201,138,0.45)"; e.currentTarget.style.boxShadow = "0 0 0 3px rgba(0,201,138,0.12)"; }}
+            onBlur={e => { e.currentTarget.style.borderColor = "var(--glass-border)"; e.currentTarget.style.boxShadow = "none"; }}
           />
         </div>
-        <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
-          {MARQUE_FILTERS.map(f => (
-            <button
-              key={f}
-              onClick={() => setMarqueFilter(f)}
-              style={{
-                borderRadius: 999, padding: "6px 14px", fontSize: 12, fontWeight: 600, cursor: "pointer", border: "none", transition: "all 0.15s",
-                background: marqueFilter === f ? `linear-gradient(135deg, ${ACCENT}, #00a872)` : glassSubtle.background,
-                boxShadow: marqueFilter === f ? "0 2px 8px rgba(0,201,138,0.25)" : "none",
-                color: marqueFilter === f ? "white" : "#64748b",
-                ...(marqueFilter !== f ? glassSubtle : {}),
-              }}
-            >
-              {f}
-              {f !== "Tous" && (
-                <span style={{ opacity: 0.6, marginLeft: 4 }}>
-                  ({MOCK_PATIENTS.filter(p => p.marque === f).length})
+
+        {/* Filter pills */}
+        <div className="flex items-center gap-1.5 flex-wrap">
+          {MARQUE_FILTERS.map(f => {
+            const active = marqueFilter === f;
+            const count  = marqueCounts[f];
+            return (
+              <button
+                key={f}
+                onClick={() => setMarqueFilter(f)}
+                aria-pressed={active}
+                className="inline-flex items-center gap-1.5 h-9 px-3 rounded-[10px] text-[13px] font-semibold cursor-pointer transition-all duration-150"
+                style={{
+                  border: active ? "1px solid transparent" : "1px solid var(--glass-border)",
+                  background: active
+                    ? ACCENT
+                    : "var(--glass-strong-bg)",
+                  color: active ? "#fff" : "var(--muted)",
+                  boxShadow: active ? "0 2px 8px rgba(0,201,138,0.25)" : "none",
+                }}
+              >
+                {f}
+                <span
+                  className="text-[11px] font-bold tabular-nums px-1.5 py-0 rounded-md leading-[18px]"
+                  style={{
+                    background: active ? "rgba(255,255,255,0.22)" : "var(--glass-subtle-bg)",
+                    color: active ? "#fff" : "var(--muted)",
+                    minWidth: 22,
+                    textAlign: "center",
+                  }}
+                >
+                  {count}
                 </span>
-              )}
-            </button>
-          ))}
+              </button>
+            );
+          })}
         </div>
       </div>
 

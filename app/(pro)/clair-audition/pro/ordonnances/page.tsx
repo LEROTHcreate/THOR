@@ -6,21 +6,21 @@ import { useState, useEffect, useCallback, type CSSProperties } from "react";
    STYLE TOKENS
 ═══════════════════════════════════════════════════════════════════════ */
 const glass: CSSProperties = {
-  background: "rgba(255,255,255,0.58)",
+  background: "var(--glass-bg)",
   backdropFilter: "blur(20px)",
   WebkitBackdropFilter: "blur(20px)",
-  border: "1px solid rgba(255,255,255,0.72)",
+  border: "1px solid var(--glass-border)",
   boxShadow: "0 8px 32px rgba(0,0,0,0.06)",
 };
 const glassSubtle: CSSProperties = {
-  background: "rgba(255,255,255,0.45)",
-  border: "1px solid rgba(255,255,255,0.65)",
+  background: "var(--glass-subtle-bg)",
+  border: "1px solid var(--glass-subtle-border)",
 };
 const inputStyle: CSSProperties = {
   padding: "9px 12px",
   borderRadius: 10,
   border: "1px solid rgba(148,163,184,0.35)",
-  background: "rgba(255,255,255,0.7)",
+  background: "var(--glass-strong-bg)",
   fontSize: 13,
   color: "#1e293b",
   outline: "none",
@@ -167,7 +167,7 @@ function Toast({ message, onClose }: { message: string; onClose: () => void }) {
   return (
     <div style={{
       position: "fixed", bottom: 24, right: 24, zIndex: 9999,
-      background: "linear-gradient(135deg,#10b981,#059669)",
+      background: "#10b981",
       color: "#fff", borderRadius: 14, padding: "12px 20px",
       fontSize: 14, fontWeight: 600, boxShadow: "0 8px 32px rgba(16,185,129,0.35)",
       display: "flex", alignItems: "center", gap: 10,
@@ -341,7 +341,7 @@ function OrdonnanceModal({
           <button onClick={onClose} style={{ padding: "9px 20px", borderRadius: 10, border: "1px solid rgba(148,163,184,0.3)", background: "rgba(255,255,255,0.6)", fontSize: 13, fontWeight: 600, color: "#64748b", cursor: "pointer" }}>
             Annuler
           </button>
-          <button onClick={handleSave} style={{ padding: "9px 24px", borderRadius: 10, border: "none", background: "linear-gradient(135deg,#10b981,#059669)", fontSize: 13, fontWeight: 700, color: "#fff", cursor: "pointer", boxShadow: "0 2px 8px rgba(16,185,129,0.30)" }}>
+          <button onClick={handleSave} style={{ padding: "9px 24px", borderRadius: 10, border: "none", background: "#10b981", fontSize: 13, fontWeight: 700, color: "#fff", cursor: "pointer", boxShadow: "0 2px 8px rgba(16,185,129,0.30)" }}>
             {initial ? "Enregistrer" : "Créer l'ordonnance"}
           </button>
         </div>
@@ -424,7 +424,7 @@ export default function OrdonnancesAuditionPage() {
         </div>
         <button
           onClick={() => { setEditOrdo(undefined); setModalOpen(true); }}
-          style={{ padding: "9px 18px", borderRadius: 12, border: "none", background: "linear-gradient(135deg,#10b981,#059669)", fontSize: 13, fontWeight: 700, color: "#fff", cursor: "pointer", boxShadow: "0 2px 8px rgba(16,185,129,0.25)" }}
+          style={{ padding: "9px 18px", borderRadius: 12, border: "none", background: "#10b981", fontSize: 13, fontWeight: 700, color: "#fff", cursor: "pointer", boxShadow: "0 2px 8px rgba(16,185,129,0.25)" }}
         >
           + Nouvelle ordonnance
         </button>
@@ -459,7 +459,7 @@ export default function OrdonnancesAuditionPage() {
               style={{
                 padding: "6px 14px", borderRadius: 20, fontSize: 12, fontWeight: 600, cursor: "pointer",
                 ...(filterTab === t
-                  ? { background: "linear-gradient(135deg,#10b981,#059669)", color: "#fff", border: "none", boxShadow: "0 2px 8px rgba(16,185,129,0.25)" }
+                  ? { background: "#10b981", color: "#fff", border: "none", boxShadow: "0 2px 8px rgba(16,185,129,0.25)" }
                   : { ...glassSubtle, color: "#64748b", border: "1px solid rgba(148,163,184,0.25)" }
                 ),
               }}
@@ -529,7 +529,7 @@ export default function OrdonnancesAuditionPage() {
             <div>
               <button
                 onClick={() => { setEditOrdo(o); setModalOpen(true); }}
-                style={{ padding: "4px 12px", borderRadius: 8, border: "1px solid rgba(148,163,184,0.2)", background: "rgba(255,255,255,0.5)", color: "#64748b", fontSize: 11, fontWeight: 600, cursor: "pointer" }}
+                style={{ padding: "4px 12px", borderRadius: 8, border: "1px solid rgba(148,163,184,0.2)", background: "var(--glass-subtle-bg)", color: "#64748b", fontSize: 11, fontWeight: 600, cursor: "pointer" }}
               >
                 Modifier
               </button>

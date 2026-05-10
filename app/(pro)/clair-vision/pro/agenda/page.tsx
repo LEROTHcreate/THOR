@@ -6,15 +6,15 @@ import { loadUsers, type ProUser, type UserRole } from "@/lib/users";
 
 /* ── Glass tokens ──────────────────────────────────────────────────────────── */
 const glass: CSSProperties = {
-  background: "rgba(255,255,255,0.58)",
+  background: "var(--glass-bg)",
   backdropFilter: "blur(20px)",
   WebkitBackdropFilter: "blur(20px)",
-  border: "1px solid rgba(255,255,255,0.72)",
+  border: "1px solid var(--glass-border)",
   boxShadow: "0 8px 32px rgba(0,0,0,0.06)",
 };
 const glassSubtle: CSSProperties = {
-  background: "rgba(255,255,255,0.45)",
-  border: "1px solid rgba(255,255,255,0.65)",
+  background: "var(--glass-subtle-bg)",
+  border: "1px solid var(--glass-subtle-border)",
 };
 
 /* ── Data model ────────────────────────────────────────────────────────────── */
@@ -57,12 +57,12 @@ const STATUT_LABEL: Record<RdvStatut, string> = {
 
 /* ── Bloc types ────────────────────────────────────────────────────────────── */
 const BLOC_OPTIONS: { value: BlocType; label: string; color: string; bg: string; icon: string }[] = [
-  { value: "pec",         label: "Faire PEC",    color: "#8B5CF6", bg: "rgba(139,92,246,0.12)",  icon: "📋" },
-  { value: "devis",       label: "Faire Devis",  color: "#F59E0B", bg: "rgba(245,158,11,0.12)",  icon: "💰" },
-  { value: "facturer",    label: "Facturer",     color: "#10B981", bg: "rgba(16,185,129,0.12)",  icon: "🧾" },
-  { value: "fournisseur", label: "Fournisseur",  color: "#0EA5E9", bg: "rgba(14,165,233,0.12)",  icon: "📦" },
-  { value: "notes",       label: "Notes",        color: "#94A3B8", bg: "rgba(148,163,184,0.12)", icon: "📝" },
-  { value: "custom",      label: "Personnalisé", color: "#64748B", bg: "rgba(100,116,139,0.12)", icon: "✏️" },
+  { value: "pec",         label: "Faire PEC",    color: "#8B5CF6", bg: "rgba(139,92,246,0.12)",  icon: "" },
+  { value: "devis",       label: "Faire Devis",  color: "#F59E0B", bg: "rgba(245,158,11,0.12)",  icon: "" },
+  { value: "facturer",    label: "Facturer",     color: "#10B981", bg: "rgba(16,185,129,0.12)",  icon: "" },
+  { value: "fournisseur", label: "Fournisseur",  color: "#0EA5E9", bg: "rgba(14,165,233,0.12)",  icon: "" },
+  { value: "notes",       label: "Notes",        color: "#94A3B8", bg: "rgba(148,163,184,0.12)", icon: "" },
+  { value: "custom",      label: "Personnalisé", color: "#64748B", bg: "rgba(100,116,139,0.12)", icon: "" },
 ];
 
 function getBlocInfo(rdv: RendezVous): { label: string; color: string; bg: string; icon: string } {
@@ -236,24 +236,6 @@ function saveRdvs(rdvs: RendezVous[]): void {
 }
 function genId(): string { return `rdv_${Date.now()}_${Math.random().toString(36).slice(2, 7)}`; }
 
-/* ── Mock data ─────────────────────────────────────────────────────────────── */
-function buildMockData(): RendezVous[] {
-  const monday = getMondayOf(new Date());
-  const di = (n: number) => isoDate(addDays(monday, n));
-  return [
-    { id: genId(), date: di(0), heure: "09:00", duree: 45, type: "controle",   statut: "confirme", category: "rdv", patientNom: "Leblanc",  patientPrenom: "Marie",   telephone: "06 12 34 56 78", notes: "Myopie forte", praticien: "Nicolas Garnier" },
-    { id: genId(), date: di(0), heure: "14:30", duree: 30, type: "adaptation", statut: "planifie", category: "rdv", patientNom: "Renaud",   patientPrenom: "Paul",    telephone: "06 98 76 54 32", praticien: "Sophie Martin" },
-    { id: genId(), date: di(0), heure: "10:30", duree: 20, type: "autre",      statut: "planifie", category: "bloc", blocType: "pec", patientNom: "", patientPrenom: "", praticien: "Nicolas Garnier" },
-    { id: genId(), date: di(1), heure: "10:30", duree: 30, type: "controle",   statut: "confirme", category: "rdv", patientNom: "Morel",    patientPrenom: "Isabelle", telephone: "07 11 22 33 44", praticien: "Sophie Martin" },
-    { id: genId(), date: di(1), heure: "16:00", duree: 15, type: "livraison",  statut: "planifie", category: "rdv", patientNom: "Girard",   patientPrenom: "Thomas",  telephone: "06 55 44 33 22", praticien: "Julien Dubois" },
-    { id: genId(), date: di(2), heure: "09:30", duree: 60, type: "adaptation", statut: "arrive",   category: "rdv", patientNom: "Bernard",  patientPrenom: "Lucas",   telephone: "06 77 88 99 00", praticien: "Sophie Martin" },
-    { id: genId(), date: di(3), heure: "11:00", duree: 30, type: "urgence",    statut: "arrive",   category: "rdv", patientNom: "Fontaine", patientPrenom: "Sophie",  telephone: "06 33 44 55 66", praticien: "Nicolas Garnier" },
-    { id: genId(), date: di(3), heure: "14:00", duree: 20, type: "autre",      statut: "planifie", category: "bloc", blocType: "devis", patientNom: "", patientPrenom: "", praticien: "Julien Dubois" },
-    { id: genId(), date: di(4), heure: "10:00", duree: 30, type: "controle",   statut: "confirme", category: "rdv", patientNom: "Petit",    patientPrenom: "Claire",  telephone: "07 22 33 44 55", praticien: "Nicolas Garnier" },
-    { id: genId(), date: di(4), heure: "15:00", duree: 45, type: "adaptation", statut: "planifie", category: "rdv", patientNom: "Durand",   patientPrenom: "Marc",    telephone: "06 99 88 77 66", praticien: "Sophie Martin" },
-  ];
-}
-
 /* ── Modal state ───────────────────────────────────────────────────────────── */
 interface ModalState { open: boolean; mode: "create" | "edit"; rdv: RendezVous; deleteConfirm: boolean; }
 
@@ -347,7 +329,7 @@ function ReassignConfirmModal({
                       <div style={{ fontSize: 13, fontWeight: 600, color: "#1e293b" }}>{label}</div>
                       <div style={{ fontSize: 11, color: "#64748b" }}>{r.heure} · {formatDuree(r.duree)}</div>
                     </div>
-                    <div style={{ fontSize: 11, fontWeight: 600, color: "text" in c ? c.text : c.color, background: "rgba(255,255,255,0.7)", padding: "2px 8px", borderRadius: 6 }}>
+                    <div style={{ fontSize: 11, fontWeight: 600, color: "text" in c ? c.text : c.color, background: "var(--glass-strong-bg)", padding: "2px 8px", borderRadius: 6 }}>
                       {"label" in c ? c.label : "RDV"}
                     </div>
                   </div>
@@ -391,14 +373,14 @@ function ReassignConfirmModal({
                           <div style={{ display: "flex", alignItems: "center", gap: 6, flexWrap: "wrap" }}>
                             <div style={{ fontSize: 13, fontWeight: 700, color: "#1e293b" }}>{u.name}</div>
                             {u.id === state.smartTargetId && (
-                              <span style={{ fontSize: 10, fontWeight: 700, color: "#f59e0b", background: "rgba(245,158,11,0.12)", border: "1px solid rgba(245,158,11,0.3)", borderRadius: 6, padding: "1px 6px" }}>⚡ Recommandé</span>
+                              <span style={{ fontSize: 10, fontWeight: 700, color: "#f59e0b", background: "rgba(245,158,11,0.12)", border: "1px solid rgba(245,158,11,0.3)", borderRadius: 6, padding: "1px 6px" }}>Recommandé</span>
                             )}
                             {!hasConflict && u.id !== state.smartTargetId && (
-                              <span style={{ fontSize: 10, fontWeight: 700, color: "#10b981", background: "rgba(16,185,129,0.1)", border: "1px solid rgba(16,185,129,0.3)", borderRadius: 6, padding: "1px 6px" }}>✓ Libre</span>
+                              <span style={{ fontSize: 10, fontWeight: 700, color: "#10b981", background: "rgba(16,185,129,0.1)", border: "1px solid rgba(16,185,129,0.3)", borderRadius: 6, padding: "1px 6px" }}>Libre</span>
                             )}
                             {hasConflict && (
                               <span style={{ fontSize: 10, fontWeight: 700, color: "#ef4444", background: "rgba(239,68,68,0.1)", border: "1px solid rgba(239,68,68,0.3)", borderRadius: 6, padding: "1px 6px" }}>
-                                ⚠ Conflit horaire
+                                Conflit horaire
                               </span>
                             )}
                           </div>
@@ -431,7 +413,7 @@ function ReassignConfirmModal({
             </div>
           ) : (
             <div style={{ marginBottom: 20, padding: "12px 14px", borderRadius: 10, background: "rgba(245,158,11,0.08)", border: "1px solid rgba(245,158,11,0.3)" }}>
-              <span style={{ fontSize: 13, color: "#92400e" }}>⚠ Aucun autre praticien disponible ce jour-là pour réassigner les RDV.</span>
+              <span style={{ fontSize: 13, color: "#92400e" }}>Aucun autre praticien disponible ce jour-là pour réassigner les RDV.</span>
             </div>
           )}
 
@@ -446,7 +428,7 @@ function ReassignConfirmModal({
                   onClick={() => onConfirm(state.smartTargetId)}
                   style={{ ...btnBase, background: "linear-gradient(135deg,#f59e0b,#d97706)", color: "#fff", boxShadow: "0 2px 12px rgba(245,158,11,0.4)" }}
                 >
-                  ⚡ Réassignation automatique
+                  Réassignation automatique
                 </button>
               )}
               <button onClick={onClose} style={{ ...btnBase, background: "#f1f5f9", color: "#475569" }}>Annuler</button>
@@ -455,7 +437,7 @@ function ReassignConfirmModal({
                   onClick={() => onConfirm(targetId)}
                   style={{ ...btnBase, background: targetUser?.color ?? "#6366f1", color: "#fff", boxShadow: `0 2px 12px ${targetUser?.color ?? "#6366f1"}40` }}
                 >
-                  ✓ Réassigner à {targetUser?.name}
+                  Réassigner à {targetUser?.name}
                 </button>
               )}
             </div>
@@ -561,7 +543,7 @@ function RdvBlock({ rdv, userId, onEdit, onDragMoveStart, isDragging }: {
           </div>
           {heightPx > 24 && (
             <div style={{ fontSize: 9, color: accentColor, marginTop: 1, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", fontWeight: 500 }}>
-              {isNewFromPatient ? "🌐 En ligne · " : ""}{rdv.heure}{isBloc ? "" : ` · ${rdv.duree}m`}
+              {isNewFromPatient ? "En ligne · " : ""}{rdv.heure}{isBloc ? "" : ` · ${rdv.duree}m`}
             </div>
           )}
         </div>
@@ -630,7 +612,7 @@ function PatientSearchInput({ initialNom, initialPrenom, onSelect, onClear, onFr
     document.addEventListener("mousedown", h); return () => document.removeEventListener("mousedown", h);
   }, []);
 
-  const inputStyle: CSSProperties = { width: "100%", padding: "8px 12px", borderRadius: 10, border: "1.5px solid rgba(203,213,225,0.8)", background: "rgba(255,255,255,0.75)", fontSize: 14, color: "#1e293b", outline: "none", boxSizing: "border-box" };
+  const inputStyle: CSSProperties = { width: "100%", padding: "8px 12px", borderRadius: 10, border: "1.5px solid rgba(203,213,225,0.8)", background: "var(--glass-strong-bg)", fontSize: 14, color: "#1e293b", outline: "none", boxSizing: "border-box" };
 
   function handleKeyDown(e: ReactKeyboardEvent<HTMLInputElement>) {
     const total = results.length + (showNew ? 1 : 0);
@@ -749,14 +731,14 @@ function RdvModal({
               {mode === "create" ? "Nouveau rendez-vous" : "Modifier le rendez-vous"}
             </h2>
           </div>
-          <button onClick={onClose} style={{ background: "rgba(255,255,255,0.7)", border: "none", borderRadius: 8, width: 32, height: 32, display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", color: "#64748b", flexShrink: 0 }}><IconX /></button>
+          <button onClick={onClose} style={{ background: "var(--glass-strong-bg)", border: "none", borderRadius: 8, width: 32, height: 32, display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", color: "#64748b", flexShrink: 0 }}><IconX /></button>
         </div>
 
         <div style={{ padding: "20px 24px 24px" }}>
 
         {/* Category toggle */}
         <div style={{ display: "flex", gap: 8, marginBottom: 20, padding: 4, background: "rgba(241,245,249,0.8)", borderRadius: 12 }}>
-          {([["rdv", "👤 Rendez-vous patient"], ["bloc", "🔧 Bloc interne"]] as const).map(([cat, label]) => (
+          {([["rdv", "Rendez-vous patient"], ["bloc", "Bloc interne"]] as const).map(([cat, label]) => (
             <button key={cat} onClick={() => onChange("category", cat)}
               style={{ flex: 1, padding: "7px 10px", borderRadius: 9, border: "none", fontSize: 13, fontWeight: 600, cursor: "pointer", transition: "all 0.15s",
                 background: rdv.category === cat ? (cat === "bloc" ? "#6366f1" : "#6366f1") : "transparent",
@@ -994,9 +976,7 @@ export default function AgendaPage() {
   });
 
   useEffect(() => {
-    const stored = loadRdvs();
-    if (stored.length === 0) { const mock = buildMockData(); saveRdvs(mock); setRdvs(mock); }
-    else setRdvs(stored);
+    setRdvs(loadRdvs());
     setStaffUsers(loadUsers());
     setPresenceByDate(loadPresence());
     const cfg = loadAgendaConfig();
@@ -1233,50 +1213,77 @@ export default function AgendaPage() {
   return (
     <>
       {/* ── Top bar ── */}
-      <div style={{ marginBottom: 20, display: "flex", alignItems: "center", flexWrap: "wrap", gap: 10 }}>
+      <div className="mb-5 flex flex-wrap items-center gap-2">
         {/* Navigation */}
-        <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-          <button onClick={prevPeriod} style={{ ...glassSubtle, borderRadius: 10, width: 36, height: 36, display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", color: "#475569", border: "1.5px solid rgba(203,213,225,0.7)" }} aria-label="Précédent"><IconChevronLeft /></button>
-          <button onClick={nextPeriod} style={{ ...glassSubtle, borderRadius: 10, width: 36, height: 36, display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", color: "#475569", border: "1.5px solid rgba(203,213,225,0.7)" }} aria-label="Suivant"><IconChevronRight /></button>
+        <div className="inline-flex items-center gap-1">
+          <button
+            onClick={prevPeriod}
+            aria-label="Précédent"
+            className="grid place-items-center w-9 h-9 rounded-[10px] border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
+          ><IconChevronLeft /></button>
+          <button
+            onClick={nextPeriod}
+            aria-label="Suivant"
+            className="grid place-items-center w-9 h-9 rounded-[10px] border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
+          ><IconChevronRight /></button>
         </div>
 
         {/* Period label */}
-        <div style={{ flex: 1, minWidth: 180, fontSize: 14, fontWeight: 600, color: "#334155", padding: "8px 14px", borderRadius: 10, ...glassSubtle, border: "1.5px solid rgba(203,213,225,0.5)" }}>
+        <div className="flex-1 min-w-[180px] h-9 px-3 inline-flex items-center text-sm font-medium text-slate-800 dark:text-slate-100 rounded-[10px] border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900">
           {viewMode === "week" ? formatWeekLabel(weekStart) : formatMonthLabel(weekStart)}
         </div>
 
-        {/* View toggle */}
-        <div style={{ display: "flex", gap: 0, ...glassSubtle, borderRadius: 10, padding: 3, border: "1.5px solid rgba(203,213,225,0.5)" }}>
-          {([["week", "Semaine", <IconWeek key="w"/>], ["month", "Mois", <IconCalGrid key="m"/>]] as const).map(([mode, label, icon]) => (
-            <button key={mode} onClick={() => setViewMode(mode as ViewMode)}
-              style={{ display: "flex", alignItems: "center", gap: 5, padding: "5px 12px", borderRadius: 8, border: "none", cursor: "pointer", fontSize: 13, fontWeight: 600, transition: "all 0.15s",
-                background: viewMode === mode ? "white" : "transparent",
-                color: viewMode === mode ? "#6366f1" : "#94a3b8",
-                boxShadow: viewMode === mode ? "0 1px 6px rgba(0,0,0,0.08)" : "none",
-              }}>
-              {icon} {label}
-            </button>
-          ))}
+        {/* View toggle (segmented) */}
+        <div
+          role="group"
+          aria-label="Mode d'affichage"
+          className="inline-flex items-center h-9 p-0.5 rounded-[10px] border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900"
+        >
+          {([["week", "Semaine", <IconWeek key="w"/>], ["month", "Mois", <IconCalGrid key="m"/>]] as const).map(([mode, label, icon]) => {
+            const active = viewMode === mode;
+            return (
+              <button
+                key={mode}
+                onClick={() => setViewMode(mode as ViewMode)}
+                aria-pressed={active}
+                className="inline-flex items-center gap-1.5 h-8 px-3 rounded-lg text-[13px] font-medium transition-colors"
+                style={{
+                  background: active ? "#2D8CFF" : "transparent",
+                  color: active ? "#fff" : "#94a3b8",
+                }}
+              >
+                {icon} {label}
+              </button>
+            );
+          })}
         </div>
 
-        <button onClick={goToToday} style={{ ...glassSubtle, borderRadius: 10, padding: "8px 14px", fontSize: 14, fontWeight: 500, color: "#6366f1", cursor: "pointer", border: "1.5px solid rgba(99,102,241,0.25)" }}>
+        <button
+          onClick={goToToday}
+          className="inline-flex items-center h-9 px-3 rounded-[10px] text-sm font-medium text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
+        >
           Aujourd&apos;hui
         </button>
 
         {/* iCal export dropdown */}
-        <div style={{ position: "relative" }} className="ical-export-wrap">
+        <div className="relative ical-export-wrap">
           <button
             onClick={() => { const el = document.getElementById("ical-menu"); if (el) el.style.display = el.style.display === "none" ? "flex" : "none"; }}
-            style={{ ...glassSubtle, borderRadius: 10, padding: "8px 14px", fontSize: 13, fontWeight: 600, color: "#475569", cursor: "pointer", border: "1.5px solid rgba(203,213,225,0.5)", display: "flex", alignItems: "center", gap: 6 }}
+            className="inline-flex items-center gap-1.5 h-9 px-3 rounded-[10px] text-sm font-medium text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
           >
-            📅 Exporter
+            Exporter
+            <svg className="w-3.5 h-3.5 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"><path d="M6 9l6 6 6-6" /></svg>
           </button>
-          <div id="ical-menu" style={{ display: "none", position: "absolute", top: "calc(100% + 6px)", right: 0, background: "white", borderRadius: 12, border: "1px solid rgba(0,0,0,.1)", boxShadow: "0 8px 32px rgba(0,0,0,.12)", padding: 6, flexDirection: "column", gap: 2, zIndex: 50, minWidth: 200 }}>
-            {([["week","📅 Semaine en cours"],["month","📆 Mois en cours"],["all","🗓 Tous les RDVs futurs"]] as const).map(([scope, label]) => (
-              <button key={scope} onClick={() => { exportToIcal(scope); const el=document.getElementById("ical-menu"); if(el) el.style.display="none"; }}
-                style={{ padding: "9px 14px", borderRadius: 8, border: "none", background: "transparent", fontSize: 13, fontWeight: 600, color: "#334155", cursor: "pointer", textAlign: "left", width: "100%" }}
-                onMouseEnter={e => (e.currentTarget.style.background="#f1f5f9")}
-                onMouseLeave={e => (e.currentTarget.style.background="transparent")}
+          <div
+            id="ical-menu"
+            className="hidden absolute top-[calc(100%+6px)] right-0 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-lg p-1 z-50 min-w-[220px]"
+            style={{ flexDirection: "column", gap: 2 }}
+          >
+            {([["week","Semaine en cours"],["month","Mois en cours"],["all","Tous les RDVs futurs"]] as const).map(([scope, label]) => (
+              <button
+                key={scope}
+                onClick={() => { exportToIcal(scope); const el=document.getElementById("ical-menu"); if(el) el.style.display="none"; }}
+                className="w-full text-left px-3 py-2 rounded-lg text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
               >
                 {label}
               </button>
@@ -1284,8 +1291,10 @@ export default function AgendaPage() {
           </div>
         </div>
 
-        <button onClick={() => openCreate(todayStr, "09:00")}
-          style={{ borderRadius: 10, padding: "8px 16px", background: "linear-gradient(135deg,#6366f1,#4f46e5)", border: "none", color: "white", fontSize: 14, fontWeight: 600, cursor: "pointer", display: "flex", alignItems: "center", gap: 6, boxShadow: "0 2px 12px rgba(99,102,241,0.3)" }}>
+        <button
+          onClick={() => openCreate(todayStr, "09:00")}
+          className="inline-flex items-center gap-1.5 h-9 px-4 rounded-[10px] text-sm font-medium text-white bg-vision-accent hover:bg-[#1A72E8] transition-colors"
+        >
           <IconPlus /> Nouveau RDV
         </button>
       </div>

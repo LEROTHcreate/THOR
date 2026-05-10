@@ -283,14 +283,14 @@ const NAV_BOTTOM = [
 
 /* ── Styles ─────────────────────────────────────────────────────────────── */
 const sidebarStyle: React.CSSProperties = {
-  background: "rgba(255,255,255,0.62)",
+  background: "var(--glass-nav-bg)",
   backdropFilter: "blur(24px)",
   WebkitBackdropFilter: "blur(24px)",
-  border: "1px solid rgba(255,255,255,0.72)",
+  borderRight: "1px solid var(--glass-nav-border)",
 };
 
 const wrapperStyle: React.CSSProperties = {
-  background: "#f8fafc",
+  background: "var(--thor-bg)",
   zoom: 0.95,
 };
 
@@ -306,7 +306,7 @@ function NavLink({
   badge?: number;
 }) {
   const activeStyle: React.CSSProperties = {
-    background: "linear-gradient(135deg, #10b981, #059669)",
+    background: "#10b981",
     boxShadow: "0 2px 8px rgba(16,185,129,0.30)",
   };
 
@@ -315,17 +315,13 @@ function NavLink({
       href={href}
       onClick={onClick}
       className={`flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all duration-200 ${
-        active ? "text-white" : "text-slate-500 hover:bg-white/50 hover:text-[#10b981]"
+        active ? "text-white" : "text-slate-500 hover:text-[#10b981] dark-nav-hover"
       }`}
       style={active ? activeStyle : undefined}
     >
       <span
-        className="grid h-8 w-8 place-items-center rounded-xl flex-shrink-0"
-        style={
-          active
-            ? { background: "rgba(255,255,255,0.20)" }
-            : { background: "rgba(209,250,229,0.70)" }
-        }
+        className={`grid h-8 w-8 place-items-center rounded-xl flex-shrink-0 ${active ? "" : "nav-icon-inactive-aud"}`}
+        style={active ? { background: "rgba(255,255,255,0.20)" } : undefined}
       >
         <Icon className="w-4 h-4" />
       </span>
@@ -479,7 +475,7 @@ function SidebarContent({
               storeConfig.logo
                 ? { boxShadow: "0 2px 8px rgba(0,0,0,0.12)" }
                 : {
-                    background: "linear-gradient(135deg, #10b981, #059669)",
+                    background: "#10b981",
                     boxShadow: "0 2px 8px rgba(16,185,129,0.30)",
                   }
             }
@@ -615,8 +611,8 @@ function SidebarContent({
         <div
           className="mt-4 rounded-[var(--radius-soft)] p-3 text-xs text-slate-500 flex items-center gap-2"
           style={{
-            background: "rgba(255,255,255,0.45)",
-            border: "1px solid rgba(255,255,255,0.65)",
+            background: "var(--glass-subtle-bg)",
+            border: "1px solid var(--glass-subtle-border)",
           }}
         >
           <svg className="w-3.5 h-3.5 text-[#10b981] flex-shrink-0" viewBox="0 0 24 24" fill="none">
@@ -629,8 +625,8 @@ function SidebarContent({
           onClick={onLogout}
           className="mt-3 w-full rounded-[var(--radius-soft)] px-4 py-2 text-sm font-medium text-slate-500 transition-colors hover:text-slate-700"
           style={{
-            background: "rgba(255,255,255,0.55)",
-            border: "1px solid rgba(255,255,255,0.72)",
+            background: "var(--glass-subtle-bg)",
+            border: "1px solid var(--glass-border)",
           }}
         >
           Déconnexion
@@ -738,16 +734,16 @@ export default function ProAuditionLayout({ children }: { children: ReactNode })
         <div
           className="lg:hidden fixed top-0 inset-x-0 z-30 flex items-center justify-between px-4 h-14"
           style={{
-            background: "rgba(255,255,255,0.75)",
+            background: "var(--glass-strong-bg)",
             backdropFilter: "blur(20px)",
             WebkitBackdropFilter: "blur(20px)",
-            borderBottom: "1px solid rgba(255,255,255,0.72)",
+            borderBottom: "1px solid var(--glass-sep)",
           }}
         >
           <div className="flex items-center gap-2.5">
             <div
               className="grid h-8 w-8 place-items-center rounded-lg text-white flex-shrink-0"
-              style={{ background: "linear-gradient(135deg, #10b981, #059669)" }}
+              style={{ background: "#10b981" }}
             >
               <IconEar className="w-4 h-4" />
             </div>

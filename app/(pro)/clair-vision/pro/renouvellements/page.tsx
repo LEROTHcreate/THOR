@@ -84,15 +84,15 @@ function loadRealPatients(): StoredPatient[] {
 
 /* ── Design tokens ────────────────────────────────────────────────────────── */
 const glass: React.CSSProperties = {
-  background: "rgba(255,255,255,0.58)",
+  background: "var(--glass-bg)",
   backdropFilter: "blur(20px)",
   WebkitBackdropFilter: "blur(20px)",
-  border: "1px solid rgba(255,255,255,0.72)",
+  border: "1px solid var(--glass-border)",
   boxShadow: "0 8px 32px rgba(0,0,0,0.06)",
 };
 const glassSubtle: React.CSSProperties = {
-  background: "rgba(255,255,255,0.45)",
-  border: "1px solid rgba(255,255,255,0.65)",
+  background: "var(--glass-subtle-bg)",
+  border: "1px solid var(--glass-subtle-border)",
 };
 
 /* ── Mock data ────────────────────────────────────────────────────────────── */
@@ -309,9 +309,9 @@ function JoursBadge({ jours }: { jours: number }) {
 function CanalIcons({ patient }: { patient: PatientLentilles }) {
   return (
     <span className="flex items-center gap-1">
-      <span title="Email" style={{ opacity: patient.email ? 1 : 0.25 }} className="text-base">📧</span>
-      <span title="SMS"   style={{ opacity: patient.telephone ? 1 : 0.25 }} className="text-base">📱</span>
-      <span title="Site"  style={{ opacity: patient.comptePatientCree ? 1 : 0.25 }} className="text-base">💬</span>
+      <span title="Email" style={{ opacity: patient.email ? 1 : 0.25 }} className="text-base"></span>
+      <span title="SMS"   style={{ opacity: patient.telephone ? 1 : 0.25 }} className="text-base"></span>
+      <span title="Site"  style={{ opacity: patient.comptePatientCree ? 1 : 0.25 }} className="text-base"></span>
     </span>
   );
 }
@@ -325,10 +325,10 @@ function KpiStrip({ patients }: { patients: PatientLentilles[] }) {
   const envoyes    = patients.filter(p => p.rappelStatut === "envoyé" && p.rappelEnvoye === today).length;
 
   const kpis = [
-    { emoji: "🔴", label: "En retard",             value: enRetard, accent: "#EF4444" },
-    { emoji: "🟡", label: "Cette semaine",          value: semaine,  accent: "#F59E0B" },
-    { emoji: "🟢", label: "Ce mois",               value: mois,     accent: "#10B981" },
-    { emoji: "✅", label: "Rappels envoyés auj.",  value: envoyes,  accent: "#2D8CFF" },
+    { emoji: "", label: "En retard",             value: enRetard, accent: "#EF4444" },
+    { emoji: "", label: "Cette semaine",          value: semaine,  accent: "#F59E0B" },
+    { emoji: "", label: "Ce mois",               value: mois,     accent: "#10B981" },
+    { emoji: "", label: "Rappels envoyés auj.",  value: envoyes,  accent: "#2D8CFF" },
   ];
 
   return (
@@ -392,9 +392,9 @@ function ModalRappel({ patient, onClose, onSend }: ModalProps) {
   }
 
   const canalLabels: Record<CanalContact, { label: string; emoji: string }> = {
-    email:        { label: "Email",   emoji: "📧" },
-    sms:          { label: "SMS",     emoji: "📱" },
-    message_site: { label: "Message", emoji: "💬" },
+    email:        { label: "Email",   emoji: "" },
+    sms:          { label: "SMS",     emoji: "" },
+    message_site: { label: "Message", emoji: "" },
   };
 
   return (
@@ -444,7 +444,7 @@ function ModalRappel({ patient, onClose, onSend }: ModalProps) {
                   className="flex items-center gap-1.5 rounded-xl px-3 py-2 text-sm font-medium transition-all"
                   style={
                     selected.includes(c)
-                      ? { background: "linear-gradient(135deg,#2D8CFF,#1A72E8)", color: "#fff", boxShadow: "0 2px 8px rgba(45,140,255,0.25)" }
+                      ? { background: "#2D8CFF", color: "#fff", boxShadow: "0 2px 8px rgba(45,140,255,0.25)" }
                       : { ...glassSubtle, color: "#64748b" }
                   }
                 >
@@ -486,7 +486,7 @@ function ModalRappel({ patient, onClose, onSend }: ModalProps) {
             }}
             disabled={selected.length === 0 || canaux.length === 0}
             className="rounded-xl px-5 py-2 text-sm font-semibold text-white transition-all disabled:opacity-40 disabled:cursor-not-allowed"
-            style={{ background: "linear-gradient(135deg,#2D8CFF,#1A72E8)", boxShadow: "0 2px 8px rgba(45,140,255,0.25)" }}
+            style={{ background: "#2D8CFF", boxShadow: "0 2px 8px rgba(45,140,255,0.25)" }}
           >
             Envoyer le rappel
           </button>
@@ -506,7 +506,7 @@ function Toast({ message, onDone }: ToastProps) {
   return (
     <div
       className="fixed bottom-6 left-1/2 -translate-x-1/2 z-[60] rounded-2xl px-5 py-3 text-sm font-semibold text-white shadow-xl"
-      style={{ background: "linear-gradient(135deg,#2D8CFF,#1A72E8)", boxShadow: "0 8px 32px rgba(45,140,255,0.30)" }}
+      style={{ background: "#2D8CFF", boxShadow: "0 8px 32px rgba(45,140,255,0.30)" }}
     >
       {message}
     </div>
@@ -545,7 +545,7 @@ function TableRow({
         <button
           onClick={() => onRappel(patient)}
           className="rounded-xl px-3 py-1.5 text-xs font-semibold text-white transition-all hover:opacity-90"
-          style={{ background: "linear-gradient(135deg,#2D8CFF,#1A72E8)", boxShadow: "0 2px 8px rgba(45,140,255,0.20)" }}
+          style={{ background: "#2D8CFF", boxShadow: "0 2px 8px rgba(45,140,255,0.20)" }}
         >
           Envoyer rappel
         </button>
@@ -611,7 +611,7 @@ function PatientCard({
         <button
           onClick={() => onRappel(patient)}
           className="rounded-xl px-3 py-1.5 text-xs font-semibold text-white transition-all hover:opacity-90"
-          style={{ background: "linear-gradient(135deg,#2D8CFF,#1A72E8)", boxShadow: "0 2px 8px rgba(45,140,255,0.20)" }}
+          style={{ background: "#2D8CFF", boxShadow: "0 2px 8px rgba(45,140,255,0.20)" }}
         >
           Rappeler
         </button>
@@ -636,7 +636,7 @@ function Pill({
       className="rounded-xl px-3 py-1.5 text-xs font-semibold transition-all"
       style={
         active
-          ? { background: "linear-gradient(135deg,#2D8CFF,#1A72E8)", color: "#fff", boxShadow: "0 2px 8px rgba(45,140,255,0.22)" }
+          ? { background: "#2D8CFF", color: "#fff", boxShadow: "0 2px 8px rgba(45,140,255,0.22)" }
           : { ...glassSubtle, color: "#64748b" }
       }
     >
@@ -672,7 +672,7 @@ function ConfigPatientModal({ sp, onSave, onClose }: { sp: StoredPatient; onSave
     onSave(patient);
   }
 
-  const inputCls: React.CSSProperties = { width: "100%", borderRadius: 10, border: "1px solid rgba(45,140,255,0.18)", background: "rgba(255,255,255,0.80)", padding: "7px 12px", fontSize: 13, color: "#1e293b", outline: "none" };
+  const inputCls: React.CSSProperties = { width: "100%", borderRadius: 10, border: "1px solid rgba(45,140,255,0.18)", background: "var(--glass-strong-bg)", padding: "7px 12px", fontSize: 13, color: "#1e293b", outline: "none" };
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4" style={{ background: "rgba(0,0,0,0.35)", backdropFilter: "blur(4px)" }} onClick={e => { if (e.target === e.currentTarget) onClose(); }}>
@@ -709,7 +709,7 @@ function ConfigPatientModal({ sp, onSave, onClose }: { sp: StoredPatient; onSave
           </div>
           <div className="flex gap-3 pt-1">
             <button type="button" onClick={onClose} className="flex-1 rounded-xl py-2.5 text-sm font-medium text-slate-600" style={glassSubtle}>Annuler</button>
-            <button type="submit" className="flex-1 rounded-xl py-2.5 text-sm font-semibold text-white" style={{ background: "linear-gradient(135deg,#2D8CFF,#1A72E8)" }}>Ajouter</button>
+            <button type="submit" className="flex-1 rounded-xl py-2.5 text-sm font-semibold text-white" style={{ background: "#2D8CFF" }}>Ajouter</button>
           </div>
         </form>
       </div>
@@ -937,7 +937,7 @@ export default function RenouvellementPage() {
         <div className="flex flex-wrap gap-2 items-center">
           <span className="text-[10px] font-bold uppercase tracking-wide text-slate-400 w-14 flex-shrink-0">Canaux</span>
           {(["email", "sms", "message_site"] as CanalContact[]).map(c => {
-            const info = { email: "📧 Email", sms: "📱 SMS", message_site: "💬 Site" }[c];
+            const info = { email: "Email", sms: "SMS", message_site: "Site" }[c];
             return (
               <Pill
                 key={c}

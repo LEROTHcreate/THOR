@@ -12,15 +12,15 @@ import Link from "next/link";
 
 /* ─── Style tokens ─────────────────────────────────────────────────── */
 const glass: CSSProperties = {
-  background: "rgba(255,255,255,0.58)",
+  background: "var(--glass-bg)",
   backdropFilter: "blur(20px)",
   WebkitBackdropFilter: "blur(20px)",
-  border: "1px solid rgba(255,255,255,0.72)",
+  border: "1px solid var(--glass-border)",
   boxShadow: "0 8px 32px rgba(0,0,0,0.06)",
 };
 const glassSubtle: CSSProperties = {
-  background: "rgba(255,255,255,0.45)",
-  border: "1px solid rgba(255,255,255,0.65)",
+  background: "var(--glass-subtle-bg)",
+  border: "1px solid var(--glass-subtle-border)",
 };
 
 /* ─── Helpers ──────────────────────────────────────────────────────── */
@@ -68,7 +68,7 @@ type BenchRow = {
 const BENCHMARKS: BenchRow[] = [
   { indicateur: "CA mensuel",             cabinet: "38 400 €",  secteur: "32 000 €",   top20: "52 000 €",   statut: "above", label: "✓ Au-dessus" },
   { indicateur: "Marge brute",            cabinet: "52%",       secteur: "48%",         top20: "58%",         statut: "norm",  label: "✓ Dans la norme" },
-  { indicateur: "Taux 100% Santé (Cl.1)", cabinet: "38%",       secteur: "42%",         top20: "28%",         statut: "watch", label: "⚠ Surveiller" },
+  { indicateur: "Taux 100% Santé (Cl.1)", cabinet: "38%",       secteur: "42%",         top20: "28%",         statut: "watch", label: "Surveiller" },
   { indicateur: "Panier moyen",           cabinet: "1 920 €",   secteur: "1 650 €",     top20: "2 400 €",     statut: "above", label: "✓ Au-dessus" },
   { indicateur: "Délai adaptation moy.",  cabinet: "3 visites", secteur: "3.2 visites", top20: "2.4 visites", statut: "above", label: "✓ Bon" },
   { indicateur: "Taux renouvellement",    cabinet: "67%",       secteur: "55%",         top20: "74%",         statut: "above", label: "✓ Bon" },
@@ -141,7 +141,7 @@ type IndicFinRow = { label: string; value: string; comment: string; badge: strin
 const INDIC_FIN: IndicFinRow[] = [
   { label: "Délai adaptation moyen", value: "3 visites",   comment: "vs secteur 3.2 — Efficace",          badge: "✓ Vert",  badgeColor: "#047857", badgeBg: "rgba(0,201,138,0.12)" },
   { label: "Taux renouvellement",    value: "67%",         comment: "vs secteur 55% — Au-dessus",         badge: "✓ Vert",  badgeColor: "#047857", badgeBg: "rgba(0,201,138,0.12)" },
-  { label: "Taux 100% Santé Cl.1",   value: "38%",         comment: "Surveiller impact marge",            badge: "⚠ Orange", badgeColor: "#B45309", badgeBg: "rgba(245,158,11,0.12)" },
+  { label: "Taux 100% Santé Cl.1",   value: "38%",         comment: "Surveiller impact marge",            badge: "Orange", badgeColor: "#B45309", badgeBg: "rgba(245,158,11,0.12)" },
   { label: "Charges fixes",          value: "21 000 €/mois", comment: "Loyer · Salaires · Charges sociales", badge: "— Neutre", badgeColor: "#64748b", badgeBg: "rgba(100,116,139,0.10)" },
   { label: "Seuil rentabilité",      value: "28 000 €/mois", comment: "Couvert ce mois (+10 400 €)",       badge: "ℹ Info",  badgeColor: "#0369a1", badgeBg: "rgba(6,182,212,0.10)" },
   { label: "Marge nette après charges", value: "14%",      comment: "vs secteur 12% — Bonne santé",       badge: "✓ Bleu",  badgeColor: "#1D6FCC", badgeBg: "rgba(99,102,241,0.10)" },
@@ -152,12 +152,12 @@ type Alerte = { icon: string; text: string; color: string; bg: string; border: s
 
 const ALERTES: Alerte[] = [
   {
-    icon: "⚠",
+    icon: "",
     text: "Taux 100% Santé Cl.1 à 38% (vs secteur 42%) — légèrement au-dessus du secteur, surveiller l'impact sur la marge",
     color: "#B45309", bg: "rgba(245,158,11,0.10)", border: "rgba(245,158,11,0.30)",
   },
   {
-    icon: "⚠",
+    icon: "",
     text: "Thomas Bernard à 64% de son objectif mensuel (6 400 € / 10 000 €) — accompagnement recommandé",
     color: "#B45309", bg: "rgba(245,158,11,0.10)", border: "rgba(245,158,11,0.30)",
   },
@@ -180,7 +180,7 @@ const ALERTES: Alerte[] = [
 
 const ALERTES_EQUIPE: Alerte[] = [
   {
-    icon: "⚠",
+    icon: "",
     text: "Thomas Bernard (64%) — sous l'objectif mensuel de 3 600 € · Relance accompagnement conseillée",
     color: "#B45309", bg: "rgba(245,158,11,0.10)", border: "rgba(245,158,11,0.30)",
   },
@@ -285,7 +285,7 @@ export default function GerantAuditionPage() {
   };
 
   const periodBtnActive: CSSProperties = {
-    background: "linear-gradient(135deg, #00C98A, #059669)",
+    background: "#00C98A",
     color: "#fff",
     boxShadow: "0 2px 8px rgba(0,201,138,0.25)",
     border: "1px solid transparent",
@@ -296,9 +296,9 @@ export default function GerantAuditionPage() {
     cursor: "pointer",
   };
   const periodBtnInactive: CSSProperties = {
-    background: "rgba(255,255,255,0.55)",
+    background: "var(--glass-subtle-bg)",
     color: "#64748b",
-    border: "1px solid rgba(255,255,255,0.65)",
+    border: "1px solid var(--glass-subtle-border)",
     borderRadius: 10,
     padding: "6px 18px",
     fontSize: 13,
@@ -322,7 +322,7 @@ export default function GerantAuditionPage() {
             <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 4 }}>
               <div style={{
                 width: 36, height: 36, borderRadius: 10,
-                background: "linear-gradient(135deg, #00C98A, #059669)",
+                background: "#00C98A",
                 display: "flex", alignItems: "center", justifyContent: "center",
                 boxShadow: "0 2px 8px rgba(0,201,138,0.30)",
               }}>
@@ -363,7 +363,7 @@ export default function GerantAuditionPage() {
                 boxShadow: "0 1px 4px rgba(0,0,0,0.05)",
               }}
             >
-              📄 Exporter le rapport
+              Exporter le rapport
             </button>
 
             {/* Period toggle */}
@@ -385,10 +385,10 @@ export default function GerantAuditionPage() {
       {/* ── 2. Onglets ── */}
       <div style={{
         display: "flex", gap: 6,
-        background: "rgba(255,255,255,0.60)",
+        background: "var(--glass-strong-bg)",
         backdropFilter: "blur(16px)",
         WebkitBackdropFilter: "blur(16px)",
-        border: "1px solid rgba(255,255,255,0.72)",
+        border: "1px solid var(--glass-border)",
         borderRadius: 16,
         padding: 6,
         marginBottom: 28,
@@ -557,7 +557,7 @@ export default function GerantAuditionPage() {
           <div style={{
             borderRadius: 18, padding: "22px 24px 20px", marginBottom: 28,
             background: "linear-gradient(135deg, rgba(0,201,138,0.05), rgba(99,102,241,0.05))",
-            border: "1px solid rgba(255,255,255,0.72)",
+            border: "1px solid var(--glass-border)",
             backdropFilter: "blur(20px)",
             WebkitBackdropFilter: "blur(20px)",
             boxShadow: "0 8px 32px rgba(0,0,0,0.06)",
@@ -574,7 +574,7 @@ export default function GerantAuditionPage() {
                 </svg>
               </div>
               <div>
-                <div style={{ fontSize: 15, fontWeight: 700, color: "#0f172a" }}>💡 Insights</div>
+                <div style={{ fontSize: 15, fontWeight: 700, color: "#0f172a" }}>Insights</div>
                 <div style={{ fontSize: 12, color: "#64748b" }}>Analyse automatique de vos données</div>
               </div>
             </div>
@@ -587,8 +587,8 @@ export default function GerantAuditionPage() {
               }}>
                 <span style={{ fontSize: 13, fontWeight: 500, lineHeight: 1.55, color: margePct > 52 ? "#047857" : "#B45309" }}>
                   {margePct > 52
-                    ? `✨ Votre marge brute de ${margePct}% dépasse la moyenne sectorielle de 48% — positionnement haut de gamme optimal.`
-                    : `⚠️ Marge brute sous 48% — revoir le mix Classe 1 / Classe 2.`}
+                    ? `Votre marge brute de ${margePct}% dépasse la moyenne sectorielle de 48% — positionnement haut de gamme optimal.`
+                    : `Marge brute sous 48% — revoir le mix Classe 1 / Classe 2.`}
                 </span>
               </div>
               {/* Insight 2 — CA mensuel */}
@@ -598,7 +598,7 @@ export default function GerantAuditionPage() {
                 border: `1px solid ${caDirection === "en progression" ? "rgba(0,201,138,0.25)" : "rgba(220,38,38,0.20)"}`,
               }}>
                 <span style={{ fontSize: 13, fontWeight: 500, lineHeight: 1.55, color: caDirection === "en progression" ? "#047857" : "#991B1B" }}>
-                  📈 Ce mois est {caDirection} de {caEvolution}% vs le mois précédent.
+                  Ce mois est {caDirection} de {caEvolution}% vs le mois précédent.
                 </span>
               </div>
               {/* Insight 3 — renouvellements */}
@@ -608,7 +608,7 @@ export default function GerantAuditionPage() {
                 border: "1px solid rgba(99,102,241,0.22)",
               }}>
                 <span style={{ fontSize: 13, fontWeight: 500, lineHeight: 1.55, color: "#4338CA" }}>
-                  🔄 67% de taux de renouvellement — 12 points au-dessus de la moyenne sectorielle (55%). Excellent levier de fidélisation.
+                  67% de taux de renouvellement — 12 points au-dessus de la moyenne sectorielle (55%). Excellent levier de fidélisation.
                 </span>
               </div>
             </div>
@@ -817,7 +817,7 @@ export default function GerantAuditionPage() {
             <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 20 }}>
               <div style={{
                 width: 32, height: 32, borderRadius: 9,
-                background: "linear-gradient(135deg, #00C98A, #059669)",
+                background: "#00C98A",
                 display: "flex", alignItems: "center", justifyContent: "center",
                 boxShadow: "0 2px 8px rgba(0,201,138,0.28)",
               }}>
@@ -838,10 +838,10 @@ export default function GerantAuditionPage() {
                 const pctColor         = computedPct >= 80 ? "#00C98A" : computedPct >= 50 ? "#F59E0B" : "#DC2626";
                 const badge =
                   computedPct >= 80
-                    ? { label: "🎯 En objectif",  color: "#047857", bg: "rgba(0,201,138,0.12)" }
+                    ? { label: "En objectif",  color: "#047857", bg: "rgba(0,201,138,0.12)" }
                     : computedPct >= 50
-                    ? { label: "⚡ À booster",    color: "#B45309", bg: "rgba(245,158,11,0.12)" }
-                    : { label: "🚨 Attention",     color: "#991B1B", bg: "rgba(220,38,38,0.10)" };
+                    ? { label: "À booster",    color: "#B45309", bg: "rgba(245,158,11,0.12)" }
+                    : { label: "Attention",     color: "#991B1B", bg: "rgba(220,38,38,0.10)" };
 
                 const tendance      = i === 0 ? "+4% vs mois préc." : "-8% vs mois préc.";
                 const tendanceColor = i === 0 ? "#047857" : "#DC2626";
@@ -1119,7 +1119,7 @@ export default function GerantAuditionPage() {
             <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 18 }}>
               <div style={{
                 width: 32, height: 32, borderRadius: 9,
-                background: "linear-gradient(135deg, #00C98A, #059669)",
+                background: "#00C98A",
                 display: "flex", alignItems: "center", justifyContent: "center",
                 boxShadow: "0 2px 8px rgba(0,201,138,0.28)",
               }}>

@@ -9,15 +9,15 @@ import { loadStoreConfig } from "@/lib/storeConfig";
 
 /* ── Glass tokens ────────────────────────────────────────────────────────── */
 const glass: CSSProperties = {
-  background: "rgba(255,255,255,0.58)",
+  background: "var(--glass-bg)",
   backdropFilter: "blur(20px)",
   WebkitBackdropFilter: "blur(20px)",
-  border: "1px solid rgba(255,255,255,0.72)",
+  border: "1px solid var(--glass-border)",
   boxShadow: "0 8px 32px rgba(0,0,0,0.06)",
 };
 const glassSubtle: CSSProperties = {
-  background: "rgba(255,255,255,0.45)",
-  border: "1px solid rgba(255,255,255,0.65)",
+  background: "var(--glass-subtle-bg)",
+  border: "1px solid var(--glass-subtle-border)",
 };
 
 /* ── Types ───────────────────────────────────────────────────────────────── */
@@ -395,7 +395,7 @@ function DevisWizard({
   const inputStyle: CSSProperties = {
     width: "100%", padding: "8px 12px", borderRadius: 10,
     border: "1.5px solid rgba(203,213,225,0.8)",
-    background: "rgba(255,255,255,0.75)",
+    background: "var(--glass-strong-bg)",
     fontSize: 14, color: "#1e293b", outline: "none", boxSizing: "border-box",
   };
 
@@ -417,7 +417,7 @@ function DevisWizard({
       defaultWidth={620}
       defaultHeight={580}
     >
-      <div style={{ background: "rgba(255,255,255,0.97)", padding: "24px 28px" }}>
+      <div style={{ background: "var(--glass-card-bg)", padding: "24px 28px" }}>
         {/* Step indicator */}
         <div style={{ display: "flex", gap: 8, marginBottom: 24 }}>
           {["Patient", "Équipement", "Récapitulatif"].map((label, i) => {
@@ -658,7 +658,7 @@ function DevisWizard({
             <button
               onClick={goNext}
               style={{
-                background: "linear-gradient(135deg, #00C98A, #059669)",
+                background: "#00C98A",
                 boxShadow: "0 2px 12px rgba(0,201,138,0.30)",
                 border: "none", padding: "9px 22px", borderRadius: 10,
                 display: "flex", alignItems: "center", gap: 8,
@@ -671,7 +671,7 @@ function DevisWizard({
             <button
               onClick={handleCreate}
               style={{
-                background: "linear-gradient(135deg, #10b981, #059669)",
+                background: "#10b981",
                 boxShadow: "0 2px 12px rgba(16,185,129,0.30)",
                 border: "none", padding: "9px 22px", borderRadius: 10,
                 fontSize: 14, fontWeight: 600, color: "white", cursor: "pointer",
@@ -730,7 +730,7 @@ function DevisCard({ d, onUpdate, onFacturer, relances, onRelanceSuccess }: { d:
     if (!needsRelance || relanceRecente || relanceState !== "idle") return null;
     if (joursDepuis > 15) return (
       <span style={{ display: "inline-flex", alignItems: "center", gap: 4, padding: "2px 9px", borderRadius: 999, background: "rgba(239,68,68,0.12)", color: "#dc2626", fontSize: 11, fontWeight: 700, border: "1px solid rgba(239,68,68,0.3)" }}>
-        ⚠ Relance nécessaire
+        Relance nécessaire
       </span>
     );
     if (joursDepuis > 7) return (
@@ -838,7 +838,7 @@ function DevisCard({ d, onUpdate, onFacturer, relances, onRelanceSuccess }: { d:
           <div className="text-xs text-slate-500">RAC</div>
           {d.racRegle ? (
             <div className="text-sm font-bold" style={{ color: isGeste ? "#f59e0b" : "#10b981" }}>
-              {d.modeReglementRAC === "Geste commercial" ? "Offert ✦" : "Réglé ✓"}
+              {d.modeReglementRAC === "Geste commercial" ? "Offert" : "Réglé ✓"}
             </div>
           ) : (
             <div className="text-sm font-bold" style={{ color: d.resteACharge === 0 ? "#10b981" : "#f59e0b" }}>
@@ -858,7 +858,7 @@ function DevisCard({ d, onUpdate, onFacturer, relances, onRelanceSuccess }: { d:
               color: d.modeReglementRAC === "Geste commercial" ? "#b45309" : "#047857",
             }}
           >
-            {d.modeReglementRAC === "Geste commercial" ? "✦ Geste commercial" : `✓ RAC réglé · ${d.modeReglementRAC}${d.nbEcheances ? ` (${d.nbEcheances}×${formatEuro(montantEch)})` : ""}`}
+            {d.modeReglementRAC === "Geste commercial" ? "Geste commercial" : `✓ RAC réglé · ${d.modeReglementRAC}${d.nbEcheances ? ` (${d.nbEcheances}×${formatEuro(montantEch)})` : ""}`}
           </span>
           {d.raisonGeste && <span className="ml-2 text-xs text-slate-400">{d.raisonGeste}</span>}
         </div>
@@ -913,7 +913,7 @@ function DevisCard({ d, onUpdate, onFacturer, relances, onRelanceSuccess }: { d:
 
               {isGeste && (
                 <div className="rounded-xl p-3 text-xs space-y-2" style={{ background: "rgba(245,158,11,0.06)", border: "1px solid rgba(245,158,11,0.25)" }}>
-                  <div className="font-semibold text-amber-700">✦ RAC de {formatEuro(d.resteACharge)} offert au patient</div>
+                  <div className="font-semibold text-amber-700">RAC de {formatEuro(d.resteACharge)} offert au patient</div>
                   <input
                     value={raisonGeste}
                     onChange={e => setRaisonGeste(e.target.value)}
@@ -966,7 +966,7 @@ function DevisCard({ d, onUpdate, onFacturer, relances, onRelanceSuccess }: { d:
           <button
             onClick={() => onFacturer(d)}
             className="inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg transition-colors text-white"
-            style={{ background: "linear-gradient(135deg,#00C98A,#059669)", boxShadow: "0 2px 6px rgba(0,201,138,0.25)" }}
+            style={{ background: "#00C98A", boxShadow: "0 2px 6px rgba(0,201,138,0.25)" }}
           >
             <svg viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
               <path d="M2 4h12a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1Z"/>
@@ -1178,7 +1178,7 @@ function DevisAuditionContent() {
         <button
           onClick={() => setModalOpen(true)}
           className="inline-flex items-center gap-2 rounded-[var(--radius-pill)] text-white px-5 py-2.5 text-sm font-semibold transition-all hover:opacity-90"
-          style={{ background: "linear-gradient(135deg, #00C98A, #059669)", boxShadow: "0 4px 12px rgba(0,201,138,0.28)" }}
+          style={{ background: "#00C98A", boxShadow: "0 4px 12px rgba(0,201,138,0.28)" }}
         >
           <IconPlus className="w-4 h-4" />
           Nouveau devis
@@ -1234,7 +1234,7 @@ function DevisAuditionContent() {
               style={isActive && meta
                 ? { background: meta.bg, color: meta.color, border: `1px solid ${meta.color}40` }
                 : isActive
-                ? { background: "linear-gradient(135deg, #00C98A, #059669)", color: "white" }
+                ? { background: "#00C98A", color: "white" }
                 : glassSubtle}
             >
               {s}

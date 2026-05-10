@@ -249,14 +249,12 @@ function SectionLabel({ children }: { children: string }) {
 
 /* ── Styles ─────────────────────────────────────────────────────────────────── */
 const sidebarStyle: CSSProperties = {
-  background: "rgba(255,255,255,0.62)",
-  backdropFilter: "blur(24px)",
-  WebkitBackdropFilter: "blur(24px)",
-  border: "1px solid rgba(255,255,255,0.72)",
+  background: "var(--surface)",
+  borderRight: "1px solid var(--border)",
 };
 
 const wrapperStyle: CSSProperties = {
-  background: "#f8fafc",
+  background: "var(--thor-bg)",
   zoom: 0.95,
 };
 
@@ -279,17 +277,13 @@ function NavLink({
       href={href}
       onClick={onClick}
       className={`flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all duration-200 ${
-        active ? "text-white" : "text-slate-500 hover:bg-white/50"
+        active ? "text-white" : "text-slate-500 hover:bg-white/50 dark-nav-hover"
       }`}
       style={active ? activeStyle : undefined}
     >
       <span
-        className="grid h-8 w-8 place-items-center rounded-xl flex-shrink-0"
-        style={
-          active
-            ? { background: "rgba(255,255,255,0.20)" }
-            : { background: "rgba(219,234,255,0.70)" }
-        }
+        className={`grid h-8 w-8 place-items-center rounded-xl flex-shrink-0 ${active ? "" : "nav-icon-inactive"}`}
+        style={active ? { background: "rgba(255,255,255,0.20)" } : undefined}
       >
         <Icon className="w-4 h-4" />
       </span>
@@ -322,17 +316,13 @@ function SettingsNavButton({
     <button
       onClick={onClick}
       className={`flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all duration-200 ${
-        active ? "text-white" : "text-slate-500 hover:bg-white/50"
+        active ? "text-white" : "text-slate-500 hover:bg-white/50 dark-nav-hover"
       }`}
       style={active ? activeStyle : undefined}
     >
       <span
-        className="grid h-8 w-8 place-items-center rounded-xl flex-shrink-0"
-        style={
-          active
-            ? { background: "rgba(255,255,255,0.20)" }
-            : { background: "rgba(219,234,255,0.70)" }
-        }
+        className={`grid h-8 w-8 place-items-center rounded-xl flex-shrink-0 ${active ? "" : "nav-icon-inactive"}`}
+        style={active ? { background: "rgba(255,255,255,0.20)" } : undefined}
       >
         <Icon className="w-4 h-4" />
       </span>
@@ -555,8 +545,8 @@ function SidebarContent({
         <div
           className="mt-4 rounded-[var(--radius-soft)] p-3 text-xs text-slate-500 flex items-center gap-2"
           style={{
-            background: "rgba(255,255,255,0.45)",
-            border: "1px solid rgba(255,255,255,0.65)",
+            background: "var(--glass-subtle-bg)",
+            border: "1px solid var(--glass-subtle-border)",
           }}
         >
           <svg className="w-3.5 h-3.5 flex-shrink-0" viewBox="0 0 24 24" fill="none" style={{ color: accentColor }}>
@@ -569,8 +559,8 @@ function SidebarContent({
           onClick={onLogout}
           className="mt-3 w-full rounded-[var(--radius-soft)] px-4 py-2 text-sm font-medium text-slate-500 transition-colors hover:text-slate-700"
           style={{
-            background: "rgba(255,255,255,0.55)",
-            border: "1px solid rgba(255,255,255,0.72)",
+            background: "var(--glass-subtle-bg)",
+            border: "1px solid var(--glass-border)",
           }}
         >
           Déconnexion
@@ -641,23 +631,6 @@ export default function ProVisionLayout({ children }: { children: ReactNode }) {
 
   return (
     <div className="min-h-screen" style={wrapperStyle}>
-      {/* ── Orbs ── */}
-      <div
-        className="pointer-events-none fixed -top-32 -left-32 h-96 w-96 rounded-full blur-3xl"
-        style={{ background: `${accentColor}0D` }}
-        aria-hidden
-      />
-      <div
-        className="pointer-events-none fixed top-1/3 -right-24 h-80 w-80 rounded-full blur-3xl"
-        style={{ background: `${accentColor}0A` }}
-        aria-hidden
-      />
-      <div
-        className="pointer-events-none fixed bottom-0 left-1/3 h-64 w-64 rounded-full blur-3xl"
-        style={{ background: `${accentColor}12` }}
-        aria-hidden
-      />
-
       <div className="flex h-screen w-full overflow-hidden">
         {/* ── Desktop sidebar ── */}
         <aside
@@ -684,10 +657,10 @@ export default function ProVisionLayout({ children }: { children: ReactNode }) {
         <div
           className="lg:hidden fixed top-0 inset-x-0 z-30 flex items-center justify-between px-4 h-14"
           style={{
-            background: "rgba(255,255,255,0.75)",
+            background: "var(--glass-strong-bg)",
             backdropFilter: "blur(20px)",
             WebkitBackdropFilter: "blur(20px)",
-            borderBottom: "1px solid rgba(255,255,255,0.72)",
+            borderBottom: "1px solid var(--glass-sep)",
           }}
         >
           <div className="flex items-center gap-2.5">

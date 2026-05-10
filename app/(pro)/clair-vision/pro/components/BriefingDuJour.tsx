@@ -6,15 +6,15 @@ import type { CSSProperties } from "react";
 import { loadUsers, loadCurrentUserId, type ProUser } from "@/lib/users";
 
 const glass: CSSProperties = {
-  background: "rgba(255,255,255,0.58)",
+  background: "var(--glass-bg)",
   backdropFilter: "blur(20px)",
   WebkitBackdropFilter: "blur(20px)",
-  border: "1px solid rgba(255,255,255,0.72)",
+  border: "1px solid var(--glass-border)",
   boxShadow: "0 8px 32px rgba(0,0,0,0.06)",
 };
 const glassSubtle: CSSProperties = {
-  background: "rgba(255,255,255,0.45)",
-  border: "1px solid rgba(255,255,255,0.65)",
+  background: "var(--glass-subtle-bg)",
+  border: "1px solid var(--glass-subtle-border)",
 };
 
 /* ── Mock data ───────────────────────────────────────────────────────────── */
@@ -151,7 +151,7 @@ export default function BriefingDuJour() {
         background: "linear-gradient(135deg, rgba(45,140,255,0.06) 0%, rgba(255,255,255,0.58) 60%, rgba(0,201,138,0.04) 100%)",
         backdropFilter: "blur(20px)",
         WebkitBackdropFilter: "blur(20px)",
-        border: "1px solid rgba(255,255,255,0.72)",
+        border: "1px solid var(--glass-border)",
         boxShadow: "0 8px 32px rgba(0,0,0,0.06)",
       }}
     >
@@ -163,7 +163,7 @@ export default function BriefingDuJour() {
             <div className="flex items-center gap-2.5">
               <div
                 className="grid h-9 w-9 place-items-center rounded-xl flex-shrink-0"
-                style={{ background: "linear-gradient(135deg,#2D8CFF,#1A72E8)", boxShadow: "0 2px 8px rgba(45,140,255,.25)" }}
+                style={{ background: "#2D8CFF", boxShadow: "0 2px 8px rgba(45,140,255,.25)" }}
               >
                 <svg className="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round">
                   <circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
@@ -220,7 +220,7 @@ export default function BriefingDuJour() {
             </div>
             <span
               className="text-xs font-bold rounded-[var(--radius-pill)] px-3 py-1 flex-shrink-0"
-              style={{ background: "linear-gradient(135deg,#2D8CFF,#1A72E8)", color: "white", boxShadow: "0 2px 8px rgba(45,140,255,.25)" }}
+              style={{ background: "#2D8CFF", color: "white", boxShadow: "0 2px 8px rgba(45,140,255,.25)" }}
             >
               {formatCountdown(nextRdv.diffMs)}
             </span>

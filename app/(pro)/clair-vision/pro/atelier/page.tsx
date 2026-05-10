@@ -329,10 +329,10 @@ export default function AtelierPage() {
 
   /* ── Glassmorphism styles ────────────────────────────────────────────────── */
   const glass: React.CSSProperties = {
-    background: "rgba(255,255,255,0.58)",
+    background: "var(--glass-bg)",
     backdropFilter: "blur(20px)",
     WebkitBackdropFilter: "blur(20px)",
-    border: "1px solid rgba(255,255,255,0.72)",
+    border: "1px solid var(--glass-border)",
     borderRadius: 18,
   };
 
@@ -644,7 +644,7 @@ export default function AtelierPage() {
       {/* Filtres + recherche */}
       <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 20, flexWrap: "wrap" }}>
         <div style={{ position: "relative", flex: "1 1 200px", maxWidth: 280 }}>
-          <span style={{ position: "absolute", left: 11, top: "50%", transform: "translateY(-50%)", color: "#94a3b8", fontSize: 15, pointerEvents: "none" }}>🔍</span>
+          <span style={{ position: "absolute", left: 11, top: "50%", transform: "translateY(-50%)", color: "#94a3b8", fontSize: 15, pointerEvents: "none" }}></span>
           <input
             value={search}
             onChange={e => setSearch(e.target.value)}
@@ -707,19 +707,19 @@ export default function AtelierPage() {
                     </span>
                     {cmd.urgent && (
                       <span style={{ fontSize: 11, fontWeight: 700, background: "#fff7ed", color: "#f59e0b", border: "1px solid #fde68a", borderRadius: 20, padding: "2px 10px" }}>
-                        ⚡ Urgent
+                        Urgent
                       </span>
                     )}
                     {retard && (
                       <span style={{ fontSize: 11, fontWeight: 700, background: "#fef2f2", color: "#ef4444", border: "1px solid #fecaca", borderRadius: 20, padding: "2px 10px" }}>
-                        ⚠ En retard
+                        En retard
                       </span>
                     )}
                   </div>
                   <div style={{ fontSize: 12, color: "#64748b", marginTop: 4, display: "flex", gap: 12, flexWrap: "wrap" }}>
-                    <span>👤 {cmd.praticien}</span>
-                    <span>🏭 {cmd.labo}</span>
-                    <span>🔲 {cmd.type}</span>
+                    <span>{cmd.praticien}</span>
+                    <span>{cmd.labo}</span>
+                    <span>{cmd.type}</span>
                     {cmd.refOD && <span>OD: {cmd.refOD}</span>}
                     {cmd.refOG && <span>OG: {cmd.refOG}</span>}
                   </div>
@@ -783,7 +783,7 @@ export default function AtelierPage() {
                         whiteSpace: "nowrap",
                       }}
                     >
-                      🔔 Notifier patient
+                      Notifier patient
                     </button>
                   </div>
                 </div>
@@ -839,7 +839,7 @@ export default function AtelierPage() {
 
 /* ── Shared input/button styles ──────────────────────────────────────────────── */
 const inputStyle: React.CSSProperties = {
-  background: "rgba(255,255,255,0.7)",
+  background: "var(--glass-strong-bg)",
   border: "1px solid rgba(203,213,225,0.8)",
   borderRadius: 10,
   padding: "9px 13px",

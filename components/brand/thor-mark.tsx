@@ -6,23 +6,16 @@ export default function ThorMark() {
       <svg
         className="relative z-10 size-10 p-2 text-white/95"
         viewBox="0 0 24 24"
-        fill="none"
+        fill="currentColor"
         aria-hidden="true"
       >
         <path
-          d="M6 7h12M12 7v12"
-          stroke="currentColor"
-          strokeWidth="1.8"
-          strokeLinecap="round"
+          fillRule="evenodd"
+          clipRule="evenodd"
+          d="M12 4.5a7 7 0 1 1 0 14 7 7 0 0 1 0-14Zm0 3a4 4 0 1 0 0 8 4 4 0 0 0 0-8Z"
         />
-        <path
-          d="M16.8 9.2c.9.9 1.45 2.12 1.45 3.48 0 2.76-2.24 5-5 5"
-          stroke="currentColor"
-          strokeWidth="1.4"
-          strokeLinecap="round"
-          opacity="0.9"
-        />
-        <circle cx="17.7" cy="9.1" r="1.1" fill="currentColor" opacity="0.95" />
+        <rect x="10.5" y="14" width="3" height="6" rx="1" />
+        <circle cx="12" cy="11.5" r="1.4" />
       </svg>
     </div>
   );

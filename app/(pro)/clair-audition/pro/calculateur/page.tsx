@@ -7,15 +7,15 @@ import Link from "next/link";
 
 /* ── Glass tokens ─────────────────────────────────────────────────────────── */
 const glass: CSSProperties = {
-  background: "rgba(255,255,255,0.58)",
+  background: "var(--glass-bg)",
   backdropFilter: "blur(20px)",
   WebkitBackdropFilter: "blur(20px)",
-  border: "1px solid rgba(255,255,255,0.72)",
+  border: "1px solid var(--glass-border)",
   boxShadow: "0 8px 32px rgba(0,0,0,0.06)",
 };
 const glassSubtle: CSSProperties = {
-  background: "rgba(255,255,255,0.45)",
-  border: "1px solid rgba(255,255,255,0.65)",
+  background: "var(--glass-subtle-bg)",
+  border: "1px solid var(--glass-subtle-border)",
 };
 
 /* ── Types ────────────────────────────────────────────────────────────────── */
@@ -177,7 +177,7 @@ function StepBar({ step }: { step: Step }) {
                 active ? "text-white" : done ? "text-[#00C98A]" : "text-slate-400"
               }`}
               style={active
-                ? { background: "linear-gradient(135deg,#00C98A,#059669)", boxShadow: "0 2px 8px rgba(0,201,138,.28)" }
+                ? { background: "#00C98A", boxShadow: "0 2px 8px rgba(0,201,138,.28)" }
                 : glassSubtle}
             >
               <span className={`grid h-5 w-5 place-items-center rounded-full text-[10px] font-bold ${
@@ -309,7 +309,7 @@ export default function CalculateurPage() {
                     <button key={m} type="button" onClick={() => setModeVie(m)}
                       className={`flex-1 rounded-xl py-2 text-xs font-semibold transition-all ${modeVie === m ? "text-white" : "text-slate-500 hover:text-slate-700"}`}
                       style={modeVie === m
-                        ? { background: "linear-gradient(135deg,#00C98A,#059669)", boxShadow: "0 2px 8px rgba(0,201,138,.3)" }
+                        ? { background: "#00C98A", boxShadow: "0 2px 8px rgba(0,201,138,.3)" }
                         : glassSubtle}>
                       {m}
                     </button>
@@ -326,7 +326,7 @@ export default function CalculateurPage() {
                   <button key={e} type="button" onClick={() => toggleEnv(e)}
                     className={`rounded-full px-3 py-1.5 text-xs font-medium transition-all ${envs.includes(e) ? "text-white" : "text-slate-500 hover:text-slate-700"}`}
                     style={envs.includes(e)
-                      ? { background: "linear-gradient(135deg,#00C98A,#059669)", boxShadow: "0 2px 6px rgba(0,201,138,.25)" }
+                      ? { background: "#00C98A", boxShadow: "0 2px 6px rgba(0,201,138,.25)" }
                       : glassSubtle}>
                     {e}
                   </button>
@@ -342,7 +342,7 @@ export default function CalculateurPage() {
                   <button key={String(v)} type="button" onClick={() => setSmartphone(v)}
                     className={`px-4 py-2 rounded-xl text-xs font-semibold transition-all ${smartphone === v ? "text-white" : "text-slate-500 hover:text-slate-700"}`}
                     style={smartphone === v
-                      ? { background: "linear-gradient(135deg,#00C98A,#059669)", boxShadow: "0 2px 8px rgba(0,201,138,.3)" }
+                      ? { background: "#00C98A", boxShadow: "0 2px 8px rgba(0,201,138,.3)" }
                       : glassSubtle}>
                     {v ? "Oui" : "Non"}
                   </button>
@@ -362,7 +362,7 @@ export default function CalculateurPage() {
                 <button key={mode} type="button" onClick={() => setInputMode(mode)}
                   className={`px-4 py-2 rounded-xl text-xs font-semibold transition-all ${inputMode === mode ? "text-white" : "text-slate-500"}`}
                   style={inputMode === mode
-                    ? { background: "linear-gradient(135deg,#00C98A,#059669)", boxShadow: "0 2px 8px rgba(0,201,138,.3)" }
+                    ? { background: "#00C98A", boxShadow: "0 2px 8px rgba(0,201,138,.3)" }
                     : glassSubtle}>
                   {mode === "freq" ? "Saisir les seuils" : "Sélectionner le niveau"}
                 </button>
@@ -410,7 +410,7 @@ export default function CalculateurPage() {
                     <button key={p} type="button" onClick={() => setDirectLoss(p)}
                       className={`px-4 py-2 rounded-xl text-xs font-semibold capitalize transition-all ${directLoss === p ? "text-white" : "text-slate-500"}`}
                       style={directLoss === p
-                        ? { background: "linear-gradient(135deg,#00C98A,#059669)", boxShadow: "0 2px 8px rgba(0,201,138,.3)" }
+                        ? { background: "#00C98A", boxShadow: "0 2px 8px rgba(0,201,138,.3)" }
                         : glassSubtle}>
                       {p.charAt(0).toUpperCase() + p.slice(1)}
                     </button>
@@ -434,7 +434,7 @@ export default function CalculateurPage() {
                   <button key={c} type="button" onClick={() => setClasse(c)}
                     className={`flex-1 rounded-xl py-2.5 text-sm font-semibold transition-all ${classe === c ? "text-white" : "text-slate-500"}`}
                     style={classe === c
-                      ? { background: "linear-gradient(135deg,#00C98A,#059669)", boxShadow: "0 2px 8px rgba(0,201,138,.3)" }
+                      ? { background: "#00C98A", boxShadow: "0 2px 8px rgba(0,201,138,.3)" }
                       : glassSubtle}>
                     Classe {c}
                     <div className="text-[10px] font-normal mt-0.5 opacity-80">
@@ -453,7 +453,7 @@ export default function CalculateurPage() {
                   <button key={String(v)} type="button" onClick={() => setMutuelle(v)}
                     className={`px-5 py-2 rounded-xl text-xs font-semibold transition-all ${mutuelle === v ? "text-white" : "text-slate-500"}`}
                     style={mutuelle === v
-                      ? { background: "linear-gradient(135deg,#00C98A,#059669)", boxShadow: "0 2px 8px rgba(0,201,138,.3)" }
+                      ? { background: "#00C98A", boxShadow: "0 2px 8px rgba(0,201,138,.3)" }
                       : glassSubtle}>
                     {v ? "Oui" : "Non"}
                   </button>
@@ -537,7 +537,7 @@ export default function CalculateurPage() {
                       <button
                         onClick={() => router.push(`/clair-audition/pro/devis?from=calculateur&marque=${encodeURIComponent(a.marque)}&modele=${encodeURIComponent(a.modele)}&classe=${classe}&prix=${a.prixUnitaire}`)}
                         className="flex-shrink-0 rounded-xl px-4 py-2 text-xs font-semibold text-white transition-all hover:opacity-90"
-                        style={{ background: "linear-gradient(135deg,#00C98A,#059669)", boxShadow: "0 2px 6px rgba(0,201,138,.3)" }}
+                        style={{ background: "#00C98A", boxShadow: "0 2px 6px rgba(0,201,138,.3)" }}
                       >
                         Créer un devis →
                       </button>
@@ -618,7 +618,7 @@ export default function CalculateurPage() {
               onClick={() => { if (canNext()) setStep(s => (s + 1) as Step); }}
               disabled={!canNext()}
               className="inline-flex items-center gap-2 rounded-xl px-5 py-2.5 text-sm font-semibold text-white transition-all hover:opacity-90 disabled:opacity-40 disabled:cursor-not-allowed"
-              style={{ background: "linear-gradient(135deg,#00C98A,#059669)", boxShadow: "0 2px 8px rgba(0,201,138,.3)" }}
+              style={{ background: "#00C98A", boxShadow: "0 2px 8px rgba(0,201,138,.3)" }}
             >
               Suivant
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-4 h-4">

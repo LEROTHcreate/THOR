@@ -206,7 +206,7 @@ function SAVModal({ appareil, onClose, onSent }: {
             </button>
             <button onClick={submit} disabled={!type}
               className="flex-1 rounded-xl py-2.5 text-sm font-semibold text-white transition-all disabled:opacity-40 disabled:cursor-not-allowed"
-              style={{ background: type ? "linear-gradient(135deg,#00C98A,#00A574)" : "#94a3b8" }}>
+              style={{ background: type ? "#00C98A" : "#94a3b8" }}>
               Envoyer le signalement
             </button>
           </div>
@@ -256,7 +256,7 @@ export default function AppareilsPage() {
         <Link
           href="/clair-audition/espace-patient/rendez-vous"
           className="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold text-white shadow-lg transition-all hover:scale-[1.02] active:scale-100"
-          style={{ background: "linear-gradient(135deg,#00C98A,#00A574)", boxShadow: "0 4px 16px rgba(0,201,138,0.3)" }}
+          style={{ background: "#00C98A", boxShadow: "0 4px 16px rgba(0,201,138,0.3)" }}
         >
           <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round">
             <path d="M8 6L4 10l4 4" /><path d="M16 6l4 4-4 4" /><path d="M14 4l-4 16" />

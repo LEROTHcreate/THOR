@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import type { CSSProperties, ChangeEvent } from "react";
 import { useRouter } from "next/navigation";
 
@@ -8,10 +8,10 @@ import { useRouter } from "next/navigation";
 const ACCENT = "#2D8CFF";
 
 const glass: CSSProperties = {
-  background: "rgba(255,255,255,0.58)",
+  background: "var(--glass-bg)",
   backdropFilter: "blur(20px)",
   WebkitBackdropFilter: "blur(20px)",
-  border: "1px solid rgba(255,255,255,0.72)",
+  border: "1px solid var(--glass-border)",
   borderRadius: 18,
   boxShadow: "0 8px 32px rgba(0,0,0,0.07)",
 };
@@ -47,7 +47,7 @@ const inputStyle: CSSProperties = {
   padding: "9px 12px",
   borderRadius: 10,
   border: "1px solid rgba(45,140,255,0.25)",
-  background: "rgba(255,255,255,0.80)",
+  background: "var(--glass-strong-bg)",
   fontSize: 14,
   color: "#1a2233",
   outline: "none",
@@ -75,6 +75,14 @@ interface StoredPatient {
   prenom: string;
   dateNaissance?: string;
   telephone?: string;
+  email?: string;
+  mutuelle?: string;
+  adresse?: string;
+  codePostal?: string;
+  ville?: string;
+  numeroSS?: string;
+  notes?: string;
+  createdAt?: string;
 }
 
 interface RefractionEye {
@@ -380,6 +388,136 @@ function PrescriptionCol({
   );
 }
 
+/* ── Patient Picker ──────────────────────────────────────────────────────── */
+function calcAge(dob?: string): string {
+  if (!dob) return "";
+  const y = dob.match(/\d{4}/)?.[0];
+  if (!y) return "";
+  return `${new Date().getFullYear() - parseInt(y)} ans`;
+}
+
+function PatientPicker({
+  patients,
+  onSelect,
+}: {
+  patients: StoredPatient[];
+  onSelect: (p: StoredPatient | null) => void;
+}) {
+  const [query, setQuery] = useState("");
+  const [open, setOpen] = useState(false);
+  const [selected, setSelected] = useState<StoredPatient | null>(null);
+  const ref = useRef<HTMLDivElement>(null);
+
+  const filtered = patients
+    .filter(p => {
+      const q = query.toLowerCase();
+      return (
+        `${p.prenom} ${p.nom}`.toLowerCase().includes(q) ||
+        `${p.nom} ${p.prenom}`.toLowerCase().includes(q)
+      );
+    })
+    .slice(0, 8);
+
+  useEffect(() => {
+    if (!open) return;
+    const h = (e: MouseEvent) => {
+      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
+    };
+    document.addEventListener("mousedown", h);
+    return () => document.removeEventListener("mousedown", h);
+  }, [open]);
+
+  function select(p: StoredPatient) {
+    setSelected(p);
+    setOpen(false);
+    setQuery("");
+    onSelect(p);
+  }
+
+  function clear() {
+    setSelected(null);
+    setQuery("");
+    onSelect(null);
+  }
+
+  function initials(p: StoredPatient) {
+    return ((p.prenom[0] ?? "") + (p.nom[0] ?? "")).toUpperCase();
+  }
+
+  const bg = ACCENT;
+
+  if (selected) {
+    return (
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "12px 14px", borderRadius: 12, background: `${ACCENT}0d`, border: `1.5px solid ${ACCENT}40`, gap: 12 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+          <div style={{ width: 40, height: 40, borderRadius: "50%", background: bg, color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 14, fontWeight: 800, flexShrink: 0 }}>
+            {initials(selected)}
+          </div>
+          <div>
+            <div style={{ fontSize: 15, fontWeight: 700, color: "#0f172a" }}>{selected.prenom} {selected.nom}</div>
+            <div style={{ fontSize: 12, color: "#64748b", marginTop: 2 }}>
+              {calcAge(selected.dateNaissance)}
+              {selected.mutuelle ? ` · ${selected.mutuelle}` : ""}
+              {selected.telephone ? ` · ${selected.telephone}` : ""}
+            </div>
+          </div>
+        </div>
+        <button onClick={clear} style={{ padding: "5px 12px", borderRadius: 8, border: "1px solid rgba(0,0,0,.1)", background: "rgba(255,255,255,.9)", fontSize: 12, fontWeight: 600, color: "#64748b", cursor: "pointer", flexShrink: 0 }}>
+          Changer
+        </button>
+      </div>
+    );
+  }
+
+  return (
+    <div ref={ref} style={{ position: "relative" }}>
+      <div style={{ position: "relative" }}>
+        <svg style={{ position: "absolute", left: 11, top: "50%", transform: "translateY(-50%)", width: 15, height: 15, color: "#94a3b8", pointerEvents: "none" }} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+          <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+        </svg>
+        <input
+          value={query}
+          onChange={e => { setQuery(e.target.value); setOpen(true); }}
+          onFocus={() => setOpen(true)}
+          placeholder={patients.length > 0 ? `Rechercher parmi ${patients.length} patient${patients.length > 1 ? "s" : ""}…` : "Aucun patient enregistré"}
+          style={{ ...inputStyle, paddingLeft: 34 }}
+        />
+      </div>
+      {open && (
+        <div style={{ position: "absolute", top: "calc(100% + 4px)", left: 0, right: 0, background: "rgba(255,255,255,.98)", borderRadius: 12, border: "1px solid rgba(0,0,0,.08)", boxShadow: "0 8px 32px rgba(0,0,0,.14)", zIndex: 300, overflow: "hidden" }}>
+          {filtered.length === 0 ? (
+            <div style={{ padding: "14px 16px", fontSize: 13, color: "#94a3b8", textAlign: "center" }}>
+              {patients.length === 0
+                ? <span>Aucun patient enregistré — <a href="/clair-vision/pro/patients" style={{ color: ACCENT, fontWeight: 600 }}>Ajouter →</a></span>
+                : "Aucun résultat"
+              }
+            </div>
+          ) : (
+            filtered.map(p => (
+              <button key={p.id} onClick={() => select(p)}
+                style={{ display: "flex", alignItems: "center", gap: 12, width: "100%", padding: "10px 14px", background: "none", border: "none", borderBottom: "1px solid rgba(0,0,0,.04)", cursor: "pointer", textAlign: "left" }}
+                onMouseOver={e => (e.currentTarget.style.background = "rgba(45,140,255,.04)")}
+                onMouseOut={e => (e.currentTarget.style.background = "none")}
+              >
+                <div style={{ width: 34, height: 34, borderRadius: "50%", background: bg, color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12, fontWeight: 800, flexShrink: 0 }}>
+                  {initials(p)}
+                </div>
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <div style={{ fontSize: 13, fontWeight: 700, color: "#0f172a" }}>{p.prenom} {p.nom}</div>
+                  <div style={{ fontSize: 11, color: "#94a3b8", marginTop: 1 }}>
+                    {calcAge(p.dateNaissance)}
+                    {p.mutuelle ? ` · ${p.mutuelle}` : ""}
+                  </div>
+                </div>
+              </button>
+            ))
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
+
 /* ── Main page ───────────────────────────────────────────────────────────── */
 export default function ConsultationPage() {
   const router = useRouter();
@@ -418,7 +556,7 @@ export default function ConsultationPage() {
   /* load from localStorage */
   useEffect(() => {
     try {
-      const raw = localStorage.getItem("thor_pro_vision_patients");
+      const raw = localStorage.getItem("thor_pro_patients");
       if (raw) setPatients(JSON.parse(raw) as StoredPatient[]);
     } catch { /* ignore */ }
     try {
@@ -538,14 +676,14 @@ export default function ConsultationPage() {
         </div>
       )}
 
-      <div style={{ maxWidth: 860, margin: "0 auto" }}>
+      <div>
 
         {/* Pre-consultation banner */}
         {preConsultData && (
           <div style={{ marginBottom: 20, background: "linear-gradient(135deg,rgba(45,140,255,0.10),rgba(45,140,255,0.04))", border: "1.5px solid rgba(45,140,255,0.30)", borderRadius: 16, padding: "14px 20px" }}>
             <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 10 }}>
               <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-                <span style={{ fontSize: 22 }}>📋</span>
+                <span style={{ fontSize: 22 }}></span>
                 <div>
                   <div style={{ fontSize: 14, fontWeight: 800, color: "#1e40af", marginBottom: 2 }}>Formulaire pré-consultation reçu aujourd&apos;hui</div>
                   <div style={{ fontSize: 13, color: "#3b82f6" }}>
@@ -567,7 +705,7 @@ export default function ConsultationPage() {
                   if (!v || (Array.isArray(v) && v.length === 0)) return null;
                   const labels: Record<string, string> = { motif: "Motif", difficultesVision: "Gênes visuelles", portActuel: "Port actuel", equipementMarque: "Équipement", equipementAge: "Âge équipement", activites: "Activités", medicaments: "Médicaments", antecedents: "Antécédents", autresInfos: "Autres infos", questions: "Questions" };
                   return (
-                    <div key={k} style={{ background: "rgba(255,255,255,0.7)", borderRadius: 10, padding: "8px 12px", border: "1px solid rgba(45,140,255,0.12)" }}>
+                    <div key={k} style={{ background: "var(--glass-strong-bg)", borderRadius: 10, padding: "8px 12px", border: "1px solid rgba(45,140,255,0.12)" }}>
                       <div style={{ fontSize: 11, fontWeight: 700, color: "#94a3b8", textTransform: "uppercase", letterSpacing: ".04em", marginBottom: 3 }}>{labels[k] ?? k}</div>
                       <div style={{ color: "#1e293b", fontWeight: 600 }}>{Array.isArray(v) ? v.join(", ") : String(v)}</div>
                     </div>
@@ -595,19 +733,10 @@ export default function ConsultationPage() {
             {/* Patient */}
             <div style={{ gridColumn: "1 / -1" }}>
               <label style={label}>Patient</label>
-              <select
-                value={patientId}
-                onChange={(e: ChangeEvent<HTMLSelectElement>) => setPatientId(e.target.value)}
-                style={selectStyle}
-              >
-                <option value="">— Sélectionner un patient —</option>
-                {patients.map((p) => (
-                  <option key={p.id} value={p.id}>
-                    {p.nom} {p.prenom}
-                    {p.dateNaissance ? ` (né·e le ${p.dateNaissance})` : ""}
-                  </option>
-                ))}
-              </select>
+              <PatientPicker
+                patients={patients}
+                onSelect={p => setPatientId(p?.id ?? "")}
+              />
             </div>
 
             {/* Date */}
@@ -888,7 +1017,7 @@ export default function ConsultationPage() {
               padding: "12px 28px",
               borderRadius: 12,
               border: `2px solid ${ACCENT}`,
-              background: "rgba(255,255,255,0.80)",
+              background: "var(--glass-strong-bg)",
               color: ACCENT,
               fontWeight: 700,
               fontSize: 15,

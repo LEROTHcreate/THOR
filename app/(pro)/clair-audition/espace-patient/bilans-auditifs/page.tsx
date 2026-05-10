@@ -241,7 +241,7 @@ export default function BilansAuditifsPage() {
         <Link
           href="/clair-audition/espace-patient/rendez-vous"
           className="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold text-white shadow-lg transition-all hover:scale-[1.02] active:scale-100"
-          style={{ background: "linear-gradient(135deg,#00C98A,#00A574)", boxShadow: "0 4px 16px rgba(0,201,138,0.3)" }}
+          style={{ background: "#00C98A", boxShadow: "0 4px 16px rgba(0,201,138,0.3)" }}
         >
           <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round"><path d="M12 5v14M5 12h14" /></svg>
           Nouveau bilan
@@ -262,7 +262,7 @@ export default function BilansAuditifsPage() {
               className="w-full text-left rounded-2xl border p-4 transition-all duration-200"
               style={selected === b.id
                 ? { borderColor: "#00C98A", background: "white", boxShadow: "0 0 0 3px rgba(0,201,138,0.12), 0 4px 16px rgba(0,0,0,0.05)" }
-                : { borderColor: "#e2e8f0", background: "rgba(255,255,255,0.7)" }
+                : { borderColor: "#e2e8f0", background: "var(--glass-strong-bg)" }
               }
             >
               <div className="flex items-center justify-between mb-1.5">
@@ -324,7 +324,7 @@ export default function BilansAuditifsPage() {
               <Link
                 href="/clair-audition/espace-patient/achats"
                 className="inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-semibold text-white"
-                style={{ background: "linear-gradient(135deg,#00C98A,#00A574)", boxShadow: "0 4px 16px rgba(0,201,138,0.25)" }}
+                style={{ background: "#00C98A", boxShadow: "0 4px 16px rgba(0,201,138,0.25)" }}
               >
                 <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
                 Déverrouiller ce bilan
@@ -473,7 +473,7 @@ export default function BilansAuditifsPage() {
                       <div className="text-[11px] font-bold uppercase tracking-widest text-slate-400 mb-4">Praticien</div>
                       <div className="flex items-center gap-3 mb-3">
                         <div className="w-10 h-10 rounded-full flex items-center justify-center text-white text-sm font-bold shrink-0"
-                          style={{ background: "linear-gradient(135deg,#00C98A,#00A574)" }}>
+                          style={{ background: "#00C98A" }}>
                           RB
                         </div>
                         <div>

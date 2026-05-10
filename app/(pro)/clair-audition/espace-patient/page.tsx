@@ -169,10 +169,10 @@ function IconMsg() {
 
 /* ─── Conseils entretien ──────────────────────────────────────────────────── */
 const CONSEILS = [
-  { titre: "Nettoyage quotidien", texte: "Essuyez vos appareils avec un chiffon sec chaque soir. Évitez l'eau et les sprays.", icon: "💧" },
-  { titre: "Stockage la nuit", texte: "Laissez le tiroir de la batterie ouvert la nuit pour sécher l'humidité accumulée.", icon: "🌙" },
-  { titre: "Environnements humides", texte: "Retirez vos appareils avant la douche, la piscine ou une activité sportive intense.", icon: "🏊" },
-  { titre: "Contrôle régulier", texte: "Un contrôle chez votre audioprothésiste tous les 6 mois permet d'optimiser le réglage.", icon: "🔧" },
+  { titre: "Nettoyage quotidien", texte: "Essuyez vos appareils avec un chiffon sec chaque soir. Évitez l'eau et les sprays.", icon: "" },
+  { titre: "Stockage la nuit", texte: "Laissez le tiroir de la batterie ouvert la nuit pour sécher l'humidité accumulée.", icon: "" },
+  { titre: "Environnements humides", texte: "Retirez vos appareils avant la douche, la piscine ou une activité sportive intense.", icon: "" },
+  { titre: "Contrôle régulier", texte: "Un contrôle chez votre audioprothésiste tous les 6 mois permet d'optimiser le réglage.", icon: "" },
 ];
 
 /* ══════════════════════════════════════════════════════════════════════════ */
@@ -207,7 +207,7 @@ export default function AuditionDashboardPage() {
         style={{ boxShadow: "0 2px 12px rgba(0,0,0,0.04)" }}>
         <div className="flex items-center gap-4">
           <div className="w-14 h-14 rounded-2xl flex items-center justify-center text-white text-lg font-bold shrink-0"
-            style={{ background: "linear-gradient(135deg,#00C98A,#00A574)", boxShadow: "0 4px 14px rgba(0,201,138,0.25)" }}>
+            style={{ background: "#00C98A", boxShadow: "0 4px 14px rgba(0,201,138,0.25)" }}>
             {initials}
           </div>
           <div>
@@ -226,7 +226,7 @@ export default function AuditionDashboardPage() {
         <div className="flex gap-2.5 flex-wrap">
           <Link href="/clair-audition/espace-patient/rendez-vous"
             className="inline-flex items-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold text-white transition-all hover:opacity-90 hover:scale-[1.02]"
-            style={{ background: "linear-gradient(135deg,#00C98A,#00A574)", boxShadow: "0 4px 12px rgba(0,201,138,0.30)" }}>
+            style={{ background: "#00C98A", boxShadow: "0 4px 12px rgba(0,201,138,0.30)" }}>
             <IconRdv />
             Prendre RDV
           </Link>
@@ -346,7 +346,7 @@ export default function AuditionDashboardPage() {
               ].map((doc) => (
                 <div key={doc.title} className="flex items-center gap-3 px-3 py-3 rounded-xl hover:bg-slate-50 transition-colors group">
                   <div className={`w-9 h-9 rounded-lg flex items-center justify-center text-[10px] font-bold text-white shrink-0 ${doc.locked ? "bg-slate-200" : ""}`}
-                    style={!doc.locked ? { background: "linear-gradient(135deg,#00C98A,#00A574)" } : {}}>
+                    style={!doc.locked ? { background: "#00C98A" } : {}}>
                     PDF
                   </div>
                   <div className="flex-1 min-w-0">
@@ -406,7 +406,7 @@ export default function AuditionDashboardPage() {
                 <p className="text-xs text-slate-400 mb-3">Aucun rendez-vous planifié.</p>
                 <Link href="/clair-audition/espace-patient/rendez-vous"
                   className="flex items-center justify-center gap-2 w-full rounded-xl py-2.5 text-sm font-semibold text-white"
-                  style={{ background: "linear-gradient(135deg,#00C98A,#00A574)" }}>
+                  style={{ background: "#00C98A" }}>
                   Prendre RDV
                 </Link>
               </div>

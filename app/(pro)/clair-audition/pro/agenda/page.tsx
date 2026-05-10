@@ -6,15 +6,15 @@ import { loadUsers, type ProUser, type UserRole } from "@/lib/users";
 
 /* ── Glass tokens ──────────────────────────────────────────────────────────── */
 const glass: CSSProperties = {
-  background: "rgba(255,255,255,0.58)",
+  background: "var(--glass-bg)",
   backdropFilter: "blur(20px)",
   WebkitBackdropFilter: "blur(20px)",
-  border: "1px solid rgba(255,255,255,0.72)",
+  border: "1px solid var(--glass-border)",
   boxShadow: "0 8px 32px rgba(0,0,0,0.06)",
 };
 const glassSubtle: CSSProperties = {
-  background: "rgba(255,255,255,0.45)",
-  border: "1px solid rgba(255,255,255,0.65)",
+  background: "var(--glass-subtle-bg)",
+  border: "1px solid var(--glass-subtle-border)",
 };
 
 const ACCENT = "#00C98A";
@@ -61,12 +61,12 @@ const STATUT_LABEL: Record<RdvStatut, string> = {
 
 /* ── Bloc types ────────────────────────────────────────────────────────────── */
 const BLOC_OPTIONS: { value: BlocType; label: string; color: string; bg: string; icon: string }[] = [
-  { value: "pec",         label: "Faire PEC",    color: "#8B5CF6", bg: "rgba(139,92,246,0.12)",  icon: "📋" },
-  { value: "devis",       label: "Faire Devis",  color: "#F59E0B", bg: "rgba(245,158,11,0.12)",  icon: "💰" },
-  { value: "facturer",    label: "Facturer",     color: "#10B981", bg: "rgba(16,185,129,0.12)",  icon: "🧾" },
-  { value: "fournisseur", label: "Fournisseur",  color: "#00C98A", bg: "rgba(0,201,138,0.12)",  icon: "📦" },
-  { value: "notes",       label: "Notes",        color: "#94A3B8", bg: "rgba(148,163,184,0.12)", icon: "📝" },
-  { value: "custom",      label: "Personnalisé", color: "#64748B", bg: "rgba(100,116,139,0.12)", icon: "✏️" },
+  { value: "pec",         label: "Faire PEC",    color: "#8B5CF6", bg: "rgba(139,92,246,0.12)",  icon: "" },
+  { value: "devis",       label: "Faire Devis",  color: "#F59E0B", bg: "rgba(245,158,11,0.12)",  icon: "" },
+  { value: "facturer",    label: "Facturer",     color: "#10B981", bg: "rgba(16,185,129,0.12)",  icon: "" },
+  { value: "fournisseur", label: "Fournisseur",  color: "#00C98A", bg: "rgba(0,201,138,0.12)",  icon: "" },
+  { value: "notes",       label: "Notes",        color: "#94A3B8", bg: "rgba(148,163,184,0.12)", icon: "" },
+  { value: "custom",      label: "Personnalisé", color: "#64748B", bg: "rgba(100,116,139,0.12)", icon: "" },
 ];
 
 function getBlocInfo(rdv: RendezVous): { label: string; color: string; bg: string; icon: string } {
@@ -354,7 +354,7 @@ function ReassignConfirmModal({
                       <div style={{ fontSize: 13, fontWeight: 600, color: "#1e293b" }}>{label}</div>
                       <div style={{ fontSize: 11, color: "#64748b" }}>{r.heure} · {formatDuree(r.duree)}</div>
                     </div>
-                    <div style={{ fontSize: 11, fontWeight: 600, color: "text" in c ? c.text : c.color, background: "rgba(255,255,255,0.7)", padding: "2px 8px", borderRadius: 6 }}>
+                    <div style={{ fontSize: 11, fontWeight: 600, color: "text" in c ? c.text : c.color, background: "var(--glass-strong-bg)", padding: "2px 8px", borderRadius: 6 }}>
                       {"label" in c ? c.label : "RDV"}
                     </div>
                   </div>
@@ -398,14 +398,14 @@ function ReassignConfirmModal({
                           <div style={{ display: "flex", alignItems: "center", gap: 6, flexWrap: "wrap" }}>
                             <div style={{ fontSize: 13, fontWeight: 700, color: "#1e293b" }}>{u.name}</div>
                             {u.id === state.smartTargetId && (
-                              <span style={{ fontSize: 10, fontWeight: 700, color: "#f59e0b", background: "rgba(245,158,11,0.12)", border: "1px solid rgba(245,158,11,0.3)", borderRadius: 6, padding: "1px 6px" }}>⚡ Recommandé</span>
+                              <span style={{ fontSize: 10, fontWeight: 700, color: "#f59e0b", background: "rgba(245,158,11,0.12)", border: "1px solid rgba(245,158,11,0.3)", borderRadius: 6, padding: "1px 6px" }}>Recommandé</span>
                             )}
                             {!hasConflict && u.id !== state.smartTargetId && (
                               <span style={{ fontSize: 10, fontWeight: 700, color: "#10b981", background: "rgba(16,185,129,0.1)", border: "1px solid rgba(16,185,129,0.3)", borderRadius: 6, padding: "1px 6px" }}>✓ Libre</span>
                             )}
                             {hasConflict && (
                               <span style={{ fontSize: 10, fontWeight: 700, color: "#ef4444", background: "rgba(239,68,68,0.1)", border: "1px solid rgba(239,68,68,0.3)", borderRadius: 6, padding: "1px 6px" }}>
-                                ⚠ Conflit horaire
+                                Conflit horaire
                               </span>
                             )}
                           </div>
@@ -438,7 +438,7 @@ function ReassignConfirmModal({
             </div>
           ) : (
             <div style={{ marginBottom: 20, padding: "12px 14px", borderRadius: 10, background: "rgba(245,158,11,0.08)", border: "1px solid rgba(245,158,11,0.3)" }}>
-              <span style={{ fontSize: 13, color: "#92400e" }}>⚠ Aucun autre praticien disponible ce jour-là.</span>
+              <span style={{ fontSize: 13, color: "#92400e" }}>Aucun autre praticien disponible ce jour-là.</span>
             </div>
           )}
 
@@ -453,7 +453,7 @@ function ReassignConfirmModal({
                   onClick={() => onConfirm(state.smartTargetId)}
                   style={{ ...btnBase, background: "linear-gradient(135deg,#f59e0b,#d97706)", color: "#fff", boxShadow: "0 2px 12px rgba(245,158,11,0.4)" }}
                 >
-                  ⚡ Réassignation automatique
+                  Réassignation automatique
                 </button>
               )}
               <button onClick={onClose} style={{ ...btnBase, background: "#f1f5f9", color: "#475569" }}>Annuler</button>
@@ -568,7 +568,7 @@ function RdvBlock({ rdv, userId, onEdit, onDragMoveStart, isDragging }: {
           </div>
           {heightPx > 24 && (
             <div style={{ fontSize: 9, color: accentColor, marginTop: 1, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", fontWeight: 500 }}>
-              {isNewFromPatient ? "🌐 En ligne · " : ""}{rdv.heure}{isBloc ? "" : ` · ${rdv.duree}m`}
+              {isNewFromPatient ? "En ligne · " : ""}{rdv.heure}{isBloc ? "" : ` · ${rdv.duree}m`}
             </div>
           )}
         </div>
@@ -637,7 +637,7 @@ function PatientSearchInput({ initialNom, initialPrenom, onSelect, onClear, onFr
     document.addEventListener("mousedown", h); return () => document.removeEventListener("mousedown", h);
   }, []);
 
-  const inputStyle: CSSProperties = { width: "100%", padding: "8px 12px", borderRadius: 10, border: "1.5px solid rgba(203,213,225,0.8)", background: "rgba(255,255,255,0.75)", fontSize: 14, color: "#1e293b", outline: "none", boxSizing: "border-box" };
+  const inputStyle: CSSProperties = { width: "100%", padding: "8px 12px", borderRadius: 10, border: "1.5px solid rgba(203,213,225,0.8)", background: "var(--glass-strong-bg)", fontSize: 14, color: "#1e293b", outline: "none", boxSizing: "border-box" };
 
   function handleKeyDown(e: ReactKeyboardEvent<HTMLInputElement>) {
     const total = results.length + (showNew ? 1 : 0);
@@ -742,13 +742,13 @@ function RdvModal({
           <h2 style={{ fontSize: 17, fontWeight: 700, color: "#1e293b", margin: 0 }}>
             {mode === "create" ? "Nouveau rendez-vous" : "Modifier le rendez-vous"}
           </h2>
-          <button onClick={onClose} style={{ background: "rgba(255,255,255,0.7)", border: "none", borderRadius: 8, width: 32, height: 32, display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", color: "#64748b" }}><IconX /></button>
+          <button onClick={onClose} style={{ background: "var(--glass-strong-bg)", border: "none", borderRadius: 8, width: 32, height: 32, display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", color: "#64748b" }}><IconX /></button>
         </div>
         <div style={{ padding: "20px 24px 24px" }}>
 
         {/* Category toggle */}
         <div style={{ display: "flex", gap: 8, marginBottom: 20, padding: 4, background: "rgba(241,245,249,0.8)", borderRadius: 12 }}>
-          {([["rdv", "👤 Rendez-vous patient"], ["bloc", "🔧 Bloc interne"]] as const).map(([cat, label]) => (
+          {([["rdv", "Rendez-vous patient"], ["bloc", "Bloc interne"]] as const).map(([cat, label]) => (
             <button key={cat} onClick={() => onChange("category", cat)}
               style={{ flex: 1, padding: "7px 10px", borderRadius: 9, border: "none", fontSize: 13, fontWeight: 600, cursor: "pointer", transition: "all 0.15s",
                 background: rdv.category === cat ? ACCENT : "transparent",
@@ -868,7 +868,7 @@ function RdvModal({
           <div style={{ display: "flex", gap: 10 }}>
             <button onClick={onClose} style={{ padding: "9px 18px", borderRadius: 10, background: "#f1f5f9", border: "1px solid rgba(203,213,225,0.7)", fontSize: 14, fontWeight: 500, color: "#475569", cursor: "pointer" }}>Annuler</button>
             <button onClick={onSave} disabled={!isValid}
-              style={{ padding: "9px 22px", borderRadius: 10, background: isValid ? `linear-gradient(135deg,${ACCENT},#00a872)` : "rgba(148,163,184,0.3)", border: "none", color: isValid ? "white" : "#94a3b8", fontSize: 14, fontWeight: 600, cursor: isValid ? "pointer" : "not-allowed", boxShadow: isValid ? `0 2px 12px ${ACCENT}40` : "none" }}>
+              style={{ padding: "9px 22px", borderRadius: 10, background: isValid ? ACCENT : "rgba(148,163,184,0.3)", border: "none", color: isValid ? "white" : "#94a3b8", fontSize: 14, fontWeight: 600, cursor: isValid ? "pointer" : "not-allowed", boxShadow: isValid ? `0 2px 12px ${ACCENT}40` : "none" }}>
               {mode === "create" ? "Créer" : "Enregistrer"}
             </button>
           </div>
@@ -1263,10 +1263,10 @@ export default function AuditionAgendaPage() {
         <div style={{ position: "relative" }}>
           <button onClick={() => { const el = document.getElementById("ical-menu-aud"); if (el) el.style.display = el.style.display === "none" ? "flex" : "none"; }}
             style={{ ...glassSubtle, borderRadius: 10, padding: "8px 14px", fontSize: 14, fontWeight: 500, color: "#475569", cursor: "pointer", border: "1.5px solid rgba(203,213,225,0.7)", display: "flex", alignItems: "center", gap: 6 }}>
-            📅 Exporter
+            Exporter
           </button>
           <div id="ical-menu-aud" style={{ display: "none", position: "absolute", top: "calc(100% + 6px)", right: 0, background: "white", border: "1.5px solid rgba(203,213,225,0.7)", borderRadius: 12, boxShadow: "0 8px 24px rgba(0,0,0,0.10)", flexDirection: "column", zIndex: 50, minWidth: 200, overflow: "hidden" }}>
-            {([["week","📅 Semaine en cours"],["month","🗓 Mois en cours"],["all","⏭ Tous les RDVs futurs"]] as const).map(([scope, label]) => (
+            {([["week","Semaine en cours"],["month","Mois en cours"],["all","Tous les RDVs futurs"]] as const).map(([scope, label]) => (
               <button key={scope} onClick={() => exportToIcal(scope)}
                 style={{ background: "transparent", border: "none", padding: "10px 16px", textAlign: "left", fontSize: 13, fontWeight: 500, color: "#334155", cursor: "pointer", display: "flex", alignItems: "center", gap: 8, transition: "background 0.12s" }}
                 onMouseEnter={e => (e.currentTarget.style.background = `rgba(0,201,138,0.08)`)}
@@ -1278,7 +1278,7 @@ export default function AuditionAgendaPage() {
         </div>
 
         <button onClick={() => openCreate(todayStr, "09:00")}
-          style={{ borderRadius: 10, padding: "8px 16px", background: `linear-gradient(135deg,${ACCENT},#00a872)`, border: "none", color: "white", fontSize: 14, fontWeight: 600, cursor: "pointer", display: "flex", alignItems: "center", gap: 6, boxShadow: `0 2px 12px ${ACCENT}40` }}>
+          style={{ borderRadius: 10, padding: "8px 16px", background: ACCENT, border: "none", color: "white", fontSize: 14, fontWeight: 600, cursor: "pointer", display: "flex", alignItems: "center", gap: 6, boxShadow: `0 2px 12px ${ACCENT}40` }}>
           <IconPlus /> Nouveau RDV
         </button>
       </div>

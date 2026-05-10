@@ -6,15 +6,15 @@ import type { CSSProperties } from "react";
 
 /* ── Design tokens ──────────────────────────────────────────────────────── */
 const glass: CSSProperties = {
-  background: "rgba(255,255,255,0.58)",
+  background: "var(--glass-bg)",
   backdropFilter: "blur(20px)",
   WebkitBackdropFilter: "blur(20px)",
-  border: "1px solid rgba(255,255,255,0.72)",
+  border: "1px solid var(--glass-border)",
   boxShadow: "0 8px 32px rgba(0,0,0,0.06)",
 };
 const glassSubtle: CSSProperties = {
-  background: "rgba(255,255,255,0.45)",
-  border: "1px solid rgba(255,255,255,0.65)",
+  background: "var(--glass-subtle-bg)",
+  border: "1px solid var(--glass-subtle-border)",
 };
 
 /* ── Types ──────────────────────────────────────────────────────────────── */
@@ -269,7 +269,7 @@ function EditModal({
   const inputStyle: CSSProperties = {
     width: "100%", padding: "8px 12px", borderRadius: 10,
     border: "1.5px solid rgba(203,213,225,0.8)",
-    background: "rgba(255,255,255,0.75)",
+    background: "var(--glass-strong-bg)",
     fontSize: 14, color: "#1e293b", outline: "none", boxSizing: "border-box",
   };
 
@@ -360,7 +360,7 @@ function EditModal({
           <button
             onClick={() => onSave(form)}
             style={{
-              background: "linear-gradient(135deg, #00C98A, #059669)",
+              background: "#00C98A",
               boxShadow: "0 2px 12px rgba(0,201,138,0.30)",
               border: "none", padding: "9px 22px", borderRadius: 10,
               fontSize: 14, fontWeight: 600, color: "white", cursor: "pointer",
@@ -549,7 +549,7 @@ export default function DossierAudDetailPage({
               <button
                 onClick={() => setShowEditModal(true)}
                 className="inline-flex items-center gap-2 rounded-[var(--radius-pill)] px-4 py-2 text-sm font-semibold transition-all hover:opacity-90"
-                style={{ background: "linear-gradient(135deg,#00C98A,#059669)", color: "#fff", boxShadow: "0 4px 12px rgba(0,201,138,0.25)" }}
+                style={{ background: "#00C98A", color: "#fff", boxShadow: "0 4px 12px rgba(0,201,138,0.25)" }}
               >
                 <IconEdit />
                 Modifier
@@ -638,7 +638,7 @@ export default function DossierAudDetailPage({
             onClick={() => setActiveTab(tab.key)}
             className="flex-1 rounded-[var(--radius-soft)] py-2 text-sm font-semibold transition-all"
             style={activeTab === tab.key
-              ? { background: "linear-gradient(135deg,#00C98A,#059669)", color: "#fff", boxShadow: "0 2px 8px rgba(0,201,138,0.25)" }
+              ? { background: "#00C98A", color: "#fff", boxShadow: "0 2px 8px rgba(0,201,138,0.25)" }
               : { color: "#64748b", background: "transparent" }}
           >
             {tab.label}
@@ -790,7 +790,7 @@ export default function DossierAudDetailPage({
               <h2 className="text-base font-bold text-slate-800 mb-3">Notes</h2>
               <div
                 className="rounded-[var(--radius-soft)] p-4 text-sm text-slate-700 leading-relaxed whitespace-pre-wrap"
-                style={{ background: "rgba(255,255,255,0.40)", border: "1px solid rgba(255,255,255,0.65)" }}
+                style={{ background: "rgba(255,255,255,0.40)", border: "1px solid var(--glass-subtle-border)" }}
               >
                 {dossier.notes}
               </div>

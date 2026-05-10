@@ -4,16 +4,16 @@ import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 
 const glass = {
-  background: "rgba(255,255,255,0.58)",
+  background: "var(--glass-bg)",
   backdropFilter: "blur(20px)",
   WebkitBackdropFilter: "blur(20px)",
-  border: "1px solid rgba(255,255,255,0.72)",
+  border: "1px solid var(--glass-border)",
   boxShadow: "0 8px 32px rgba(0,0,0,0.06)",
 } as React.CSSProperties;
 
 const glassSubtle = {
-  background: "rgba(255,255,255,0.45)",
-  border: "1px solid rgba(255,255,255,0.65)",
+  background: "var(--glass-subtle-bg)",
+  border: "1px solid var(--glass-subtle-border)",
 } as React.CSSProperties;
 
 type Tab = "Adaptation" | "Réadaptation" | "Suivi" | "Conseils";
@@ -386,7 +386,7 @@ export default function LentillesPage() {
                   </button>
                 ) : (
                   <button className="rounded-2xl px-4 py-2.5 text-sm font-semibold text-white hover:opacity-95"
-                          style={{ background: "linear-gradient(135deg, #2D8CFF, #1A72E8)" }}>
+                          style={{ background: "#2D8CFF" }}>
                     Télécharger le compte-rendu
                   </button>
                 )}
@@ -412,7 +412,7 @@ export default function LentillesPage() {
                   <div className="mt-1 text-sm font-semibold text-slate-900">A 1 mois</div>
                 </div>
                 <button className="w-full rounded-2xl px-4 py-2.5 text-sm font-semibold text-white hover:opacity-95"
-                        style={{ background: "linear-gradient(135deg, #2D8CFF, #1A72E8)" }}>
+                        style={{ background: "#2D8CFF" }}>
                   Planifier un contrôle
                 </button>
                 <button className="w-full rounded-2xl px-4 py-2.5 text-sm font-semibold text-slate-700 hover:text-slate-900 transition"
@@ -454,7 +454,7 @@ export default function LentillesPage() {
           <SectionCard title="Dernière réadaptation enregistrée">
             <div className="text-sm text-slate-500">Aucune réadaptation récente.</div>
             <button className="mt-4 w-full rounded-2xl px-4 py-2.5 text-sm font-semibold text-white hover:opacity-95"
-                    style={{ background: "linear-gradient(135deg, #2D8CFF, #1A72E8)" }}>
+                    style={{ background: "#2D8CFF" }}>
               Démarrer une réadaptation
             </button>
           </SectionCard>
@@ -578,7 +578,7 @@ export default function LentillesPage() {
                 <button
                   onClick={() => document.getElementById("checklist")?.scrollIntoView({ behavior: "smooth", block: "start" })}
                   className="rounded-2xl px-4 py-2.5 text-sm font-semibold text-white hover:opacity-95"
-                  style={{ background: "linear-gradient(135deg, #2D8CFF, #1A72E8)" }}
+                  style={{ background: "#2D8CFF" }}
                 >
                   Checklist (plus bas)
                 </button>
@@ -753,7 +753,7 @@ export default function LentillesPage() {
               onClick={() => setTab(t)}
               className="rounded-2xl px-4 py-2 text-sm font-semibold transition"
               style={tab === t
-                ? { background: "linear-gradient(135deg, #2D8CFF, #1A72E8)", color: "#fff" }
+                ? { background: "#2D8CFF", color: "#fff" }
                 : glassSubtle}
             >
               {t}

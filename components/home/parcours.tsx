@@ -105,10 +105,10 @@ function Parcours() {
               <div
                 className="rounded-3xl shadow-[0_18px_50px_-35px_rgba(0,0,0,0.25)] p-7"
                 style={{
-                  background: "rgba(255,255,255,0.58)",
+                  background: "var(--glass-bg)",
                   backdropFilter: "blur(20px)",
                   WebkitBackdropFilter: "blur(20px)",
-                  border: "1px solid rgba(255,255,255,0.72)",
+                  border: "1px solid var(--glass-border)",
                   boxShadow: "0 8px 32px rgba(0,0,0,0.06)",
                 }}
               >

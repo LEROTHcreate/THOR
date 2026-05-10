@@ -151,10 +151,10 @@ function LocateIcon() {
 
 // Glassmorphism card style
 const glassCard: React.CSSProperties = {
-  background: "rgba(255,255,255,0.72)",
+  background: "var(--glass-strong-bg)",
   backdropFilter: "blur(20px)",
   WebkitBackdropFilter: "blur(20px)",
-  border: "1px solid rgba(255,255,255,0.80)",
+  border: "1px solid var(--glass-strong-border)",
   boxShadow: "0 8px 32px rgba(0,0,0,0.07)",
   borderRadius: 24,
 };
@@ -651,18 +651,18 @@ export default function RendezVousPage() {
                     style={
                       isDone
                         ? {
-                            background: "linear-gradient(135deg, #34d399 0%, #10b981 100%)",
+                            background: "#10b981",
                             color: "#fff",
                             boxShadow: "0 4px 16px rgba(16,185,129,0.30)",
                           }
                         : isActive
                         ? {
-                            background: "linear-gradient(135deg, #2D8CFF 0%, #2563EB 100%)",
+                            background: "#2D8CFF",
                             color: "#fff",
                             boxShadow: "0 6px 24px rgba(45,140,255,0.35)",
                           }
                         : {
-                            background: "rgba(255,255,255,0.72)",
+                            background: "var(--glass-strong-bg)",
                             border: "1px solid rgba(203,213,225,0.7)",
                             color: "#94a3b8",
                           }
@@ -689,7 +689,7 @@ export default function RendezVousPage() {
                     style={{
                       background:
                         step > s.n
-                          ? "linear-gradient(90deg, #34d399, #10b981)"
+                          ? "#10b981"
                           : "rgba(203,213,225,0.5)",
                     }}
                   />
@@ -741,8 +741,8 @@ export default function RendezVousPage() {
                       className="rounded-2xl px-6 py-3 text-sm font-semibold text-white hover:opacity-95 transition"
                       style={{
                         background: service === "optique"
-                          ? "linear-gradient(135deg, #2D8CFF 0%, #2563EB 100%)"
-                          : "linear-gradient(135deg, #00C98A 0%, #00a870 100%)",
+                          ? "#2D8CFF"
+                          : "#00C98A",
                         boxShadow: service === "optique"
                           ? "0 8px 24px rgba(45,140,255,0.30)"
                           : "0 8px 24px rgba(0,201,138,0.30)",
@@ -754,8 +754,8 @@ export default function RendezVousPage() {
                       href="/"
                       className="rounded-2xl px-6 py-3 text-sm font-semibold transition hover:opacity-80"
                       style={{
-                        background: "rgba(255,255,255,0.72)",
-                        border: "1px solid rgba(255,255,255,0.80)",
+                        background: "var(--glass-strong-bg)",
+                        border: "1px solid var(--glass-strong-border)",
                         color: "#0f172a",
                       }}
                     >
@@ -919,7 +919,7 @@ export default function RendezVousPage() {
                               placeholder="Adresse, ville ou code postal"
                               className="flex-1 px-4 py-3 text-sm outline-none"
                               style={{
-                                background: "rgba(255,255,255,0.80)",
+                                background: "var(--glass-strong-bg)",
                                 border: "1px solid rgba(203,213,225,0.6)",
                                 borderRadius: 14,
                                 color: "#0f172a",
@@ -939,7 +939,7 @@ export default function RendezVousPage() {
                                       border: "1px solid rgba(203,213,225,0.5)",
                                     }
                                   : {
-                                      background: "linear-gradient(135deg, #2D8CFF 0%, #2563EB 100%)",
+                                      background: "#2D8CFF",
                                       color: "#fff",
                                       boxShadow: "0 6px 20px rgba(45,140,255,0.30)",
                                     }
@@ -964,7 +964,7 @@ export default function RendezVousPage() {
                                       border: "1px solid rgba(203,213,225,0.5)",
                                     }
                                   : {
-                                      background: "rgba(255,255,255,0.72)",
+                                      background: "var(--glass-strong-bg)",
                                       border: "1px solid rgba(203,213,225,0.6)",
                                       color: "#0f172a",
                                     }
@@ -1008,7 +1008,6 @@ export default function RendezVousPage() {
                             className="flex flex-col items-center justify-center py-10 rounded-2xl text-center"
                             style={{ background: "rgba(248,250,252,0.80)", border: "1px dashed rgba(203,213,225,0.70)" }}
                           >
-                            <div className="text-3xl mb-3">📍</div>
                             <div className="text-sm font-semibold" style={{ color: "#0f172a" }}>
                               Aucun centre disponible
                             </div>
@@ -1056,7 +1055,7 @@ export default function RendezVousPage() {
                                       <span
                                         className="inline-flex items-center px-2.5 py-1 text-[11px] font-semibold rounded-full"
                                         style={{
-                                          background: "linear-gradient(135deg, #2D8CFF 0%, #2563EB 100%)",
+                                          background: "#2D8CFF",
                                           color: "#fff",
                                         }}
                                       >
@@ -1394,7 +1393,7 @@ export default function RendezVousPage() {
                               placeholder="Marie"
                               className="w-full px-4 py-3 text-sm outline-none"
                               style={{
-                                background: "rgba(255,255,255,0.80)",
+                                background: "var(--glass-strong-bg)",
                                 border: "1px solid rgba(203,213,225,0.6)",
                                 borderRadius: 14,
                                 color: "#0f172a",
@@ -1409,7 +1408,7 @@ export default function RendezVousPage() {
                               placeholder="Dupont"
                               className="w-full px-4 py-3 text-sm outline-none"
                               style={{
-                                background: "rgba(255,255,255,0.80)",
+                                background: "var(--glass-strong-bg)",
                                 border: "1px solid rgba(203,213,225,0.6)",
                                 borderRadius: 14,
                                 color: "#0f172a",
@@ -1425,7 +1424,7 @@ export default function RendezVousPage() {
                               placeholder="marie.dupont@email.fr"
                               className="w-full px-4 py-3 text-sm outline-none"
                               style={{
-                                background: "rgba(255,255,255,0.80)",
+                                background: "var(--glass-strong-bg)",
                                 border: "1px solid rgba(203,213,225,0.6)",
                                 borderRadius: 14,
                                 color: "#0f172a",
@@ -1445,7 +1444,7 @@ export default function RendezVousPage() {
                             !patientNom.trim() || !patientPrenom.trim()
                               ? { background: "rgba(203,213,225,0.6)", color: "#94a3b8", cursor: "not-allowed" }
                               : {
-                                  background: "linear-gradient(135deg, #2D8CFF 0%, #2563EB 100%)",
+                                  background: "#2D8CFF",
                                   boxShadow: "0 8px 28px rgba(45,140,255,0.35)",
                                 }
                           }
@@ -1493,7 +1492,7 @@ export default function RendezVousPage() {
                                   border: "1px solid rgba(203,213,225,0.5)",
                                 }
                               : {
-                                  background: "linear-gradient(135deg, #2D8CFF 0%, #2563EB 100%)",
+                                  background: "#2D8CFF",
                                   color: "#fff",
                                   boxShadow: "0 8px 24px rgba(45,140,255,0.30)",
                                 }

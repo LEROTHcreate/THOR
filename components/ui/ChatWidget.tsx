@@ -16,26 +16,26 @@ const CTX_CONFIG: Record<ChatContext, {
     label: "THOR",
     accent: "#2D8CFF",
     accentLight: "rgba(45,140,255,0.10)",
-    gradient: "linear-gradient(135deg,#2D8CFF,#1A72E8)",
+    gradient: "#2D8CFF",
   },
   "pro-audition": {
     label: "THOR",
     accent: "#00C98A",
     accentLight: "rgba(0,201,138,0.10)",
-    gradient: "linear-gradient(135deg,#00C98A,#00A574)",
+    gradient: "#00C98A",
   },
   "patient-vision": {
     label: "THOR",
     accent: "#2D8CFF",
     accentLight: "rgba(45,140,255,0.10)",
-    gradient: "linear-gradient(135deg,#2D8CFF,#1A72E8)",
+    gradient: "#2D8CFF",
     disclaimer: "Informations générales — consultez votre opticien pour toute décision.",
   },
   "patient-audition": {
     label: "THOR",
     accent: "#00C98A",
     accentLight: "rgba(0,201,138,0.10)",
-    gradient: "linear-gradient(135deg,#00C98A,#00A574)",
+    gradient: "#00C98A",
     disclaimer: "Informations générales — consultez votre audioprothésiste pour toute décision.",
   },
 };
@@ -361,7 +361,7 @@ export default function ChatWidget({ context }: { context: ChatContext }) {
 
       if (!res.ok) {
         const err = await res.text();
-        setMessages(prev => [...prev, { role: "assistant", content: `⚠️ ${err}` }]);
+        setMessages(prev => [...prev, { role: "assistant", content: `Erreur : ${err}` }]);
         return;
       }
 
@@ -493,7 +493,7 @@ export default function ChatWidget({ context }: { context: ChatContext }) {
             background: "rgba(255,255,255,0.96)",
             backdropFilter: "blur(24px)",
             WebkitBackdropFilter: "blur(24px)",
-            border: "1px solid rgba(255,255,255,0.80)",
+            border: "1px solid var(--glass-strong-border)",
             boxShadow: "0 24px 64px rgba(11,18,32,0.18), 0 0 0 1px rgba(226,232,240,0.40)",
           }}
         >
@@ -530,7 +530,6 @@ export default function ChatWidget({ context }: { context: ChatContext }) {
             <div className="px-4 py-2 flex-shrink-0"
               style={{ background: cfg.accentLight, borderBottom: `1px solid ${cfg.accent}22` }}>
               <p className="text-[11px] text-slate-600 leading-snug">
-                <span className="font-semibold" style={{ color: cfg.accent }}>ℹ️ </span>
                 {cfg.disclaimer}
               </p>
             </div>
@@ -553,7 +552,7 @@ export default function ChatWidget({ context }: { context: ChatContext }) {
                     <button key={s} onClick={() => send(s)}
                       className="w-full text-left rounded-xl px-3.5 py-2.5 text-xs text-slate-700 font-medium transition-all duration-150 hover:scale-[1.01]"
                       style={{
-                        background: "rgba(255,255,255,0.80)",
+                        background: "var(--glass-strong-bg)",
                         border: `1px solid ${cfg.accent}28`,
                         boxShadow: "0 1px 4px rgba(0,0,0,0.04)",
                       }}>

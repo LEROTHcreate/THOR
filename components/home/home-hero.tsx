@@ -79,7 +79,7 @@ function DashboardMockup() {
                 key={item.label}
                 className="flex items-center gap-2 px-2 py-1.5 rounded-lg text-[9.5px] font-medium"
                 style={item.active ? {
-                  background: "linear-gradient(135deg, #2D8CFF, #1A72E8)",
+                  background: "#2D8CFF",
                   color: "white",
                 } : { color: "#94A3B8" }}
               >
@@ -113,7 +113,7 @@ function DashboardMockup() {
                 { label: "ORDONNANCES", value: "2 actives", sub: "Valides · 2027", accent: true },
                 { label: "DOCUMENTS", value: "5 fichiers", sub: "1 verrouillé" },
               ].map((s) => (
-                <div key={s.label} className="rounded-xl p-2" style={{ background: "rgba(255,255,255,0.88)", border: "1px solid rgba(226,232,240,0.55)" }}>
+                <div key={s.label} className="rounded-xl p-2" style={{ background: "var(--glass-card-bg)", border: "1px solid rgba(226,232,240,0.55)" }}>
                   <div className="text-[6.5px] text-slate-400 mb-0.5">{s.label}</div>
                   <div className={`text-[9px] font-bold ${s.accent ? "text-[#2D8CFF]" : "text-slate-800"}`}>{s.value}</div>
                   <div className="text-[6.5px] text-slate-400">{s.sub}</div>
@@ -125,7 +125,7 @@ function DashboardMockup() {
             <div className="grid grid-cols-3 gap-1.5">
               <div className="col-span-2 space-y-1.5">
                 {/* Exam card */}
-                <div className="rounded-xl p-2.5" style={{ background: "rgba(255,255,255,0.88)", border: "1px solid rgba(226,232,240,0.55)" }}>
+                <div className="rounded-xl p-2.5" style={{ background: "var(--glass-card-bg)", border: "1px solid rgba(226,232,240,0.55)" }}>
                   <div className="flex justify-between items-center mb-1">
                     <div className="text-[6.5px] font-semibold text-slate-400 uppercase tracking-wide">DERNIER EXAMEN DE VUE</div>
                     <div className="text-[6.5px] bg-[#EFF6FF] text-[#2D8CFF] px-1.5 py-0.5 rounded-full font-semibold">À jour</div>
@@ -145,7 +145,7 @@ function DashboardMockup() {
                 </div>
 
                 {/* RDV card */}
-                <div className="rounded-xl p-2.5" style={{ background: "rgba(255,255,255,0.88)", border: "1px solid rgba(226,232,240,0.55)" }}>
+                <div className="rounded-xl p-2.5" style={{ background: "var(--glass-card-bg)", border: "1px solid rgba(226,232,240,0.55)" }}>
                   <div className="text-[6.5px] font-semibold text-slate-400 uppercase tracking-wide mb-1.5">PROCHAIN RENDEZ-VOUS</div>
                   <div className="flex items-center gap-2">
                     <div className="w-7 h-7 rounded-lg bg-[#EFF6FF] flex flex-col items-center justify-center shrink-0">
@@ -163,7 +163,7 @@ function DashboardMockup() {
 
               {/* Right col */}
               <div className="space-y-1.5">
-                <div className="rounded-xl p-2.5" style={{ background: "rgba(255,255,255,0.88)", border: "1px solid rgba(226,232,240,0.55)" }}>
+                <div className="rounded-xl p-2.5" style={{ background: "var(--glass-card-bg)", border: "1px solid rgba(226,232,240,0.55)" }}>
                   <div className="text-[6.5px] font-semibold text-slate-400 uppercase tracking-wide mb-1.5">STATUT DOSSIER</div>
                   {[
                     { label: "Dernier examen", val: "15 nov. 2024", color: "#2D8CFF" },
@@ -178,7 +178,7 @@ function DashboardMockup() {
                   ))}
                 </div>
 
-                <div className="rounded-xl p-2.5" style={{ background: "rgba(255,255,255,0.88)", border: "1px solid rgba(226,232,240,0.55)" }}>
+                <div className="rounded-xl p-2.5" style={{ background: "var(--glass-card-bg)", border: "1px solid rgba(226,232,240,0.55)" }}>
                   <div className="text-[6.5px] font-semibold text-slate-400 uppercase tracking-wide mb-1.5">À FAIRE</div>
                   {[
                     { text: "Mettre à jour symptômes", done: false },
@@ -203,7 +203,7 @@ function DashboardMockup() {
       <div
         className="absolute -left-10 bottom-14 rounded-2xl px-3.5 py-2.5"
         style={{
-          background: "rgba(255,255,255,0.97)",
+          background: "var(--glass-card-bg)",
           border: "1px solid rgba(167,243,208,0.60)",
           backdropFilter: "blur(16px)",
           boxShadow: "0 12px 32px rgba(0,201,138,0.14)",
@@ -227,7 +227,7 @@ function DashboardMockup() {
       <div
         className="absolute -right-8 top-16 rounded-2xl px-3.5 py-2.5"
         style={{
-          background: "rgba(255,255,255,0.97)",
+          background: "var(--glass-card-bg)",
           border: "1px solid rgba(191,219,254,0.60)",
           backdropFilter: "blur(16px)",
           boxShadow: "0 12px 32px rgba(45,140,255,0.12)",
@@ -328,7 +328,7 @@ export default function HomeHero() {
                     href="/rendez-vous"
                     className="inline-flex items-center justify-center rounded-full px-6 py-3.5 text-sm font-semibold text-white transition-all duration-200 hover:scale-[1.02]"
                     style={{
-                      background: "linear-gradient(135deg, #2D8CFF, #1A72E8)",
+                      background: "#2D8CFF",
                       boxShadow: "0 4px 20px rgba(45,140,255,0.32)",
                     }}
                   >
@@ -398,7 +398,7 @@ export default function HomeHero() {
                     background: "rgba(255,255,255,0.78)",
                     backdropFilter: "blur(20px)",
                     WebkitBackdropFilter: "blur(20px)",
-                    border: "1px solid rgba(255,255,255,0.85)",
+                    border: "1px solid var(--glass-strong-border)",
                     boxShadow: "0 8px 40px rgba(11,18,32,0.10)",
                   }}
                 >
@@ -410,7 +410,7 @@ export default function HomeHero() {
                     </div>
                     <div
                       className="h-9 w-9 rounded-full flex items-center justify-center text-xs font-bold text-white"
-                      style={{ background: "linear-gradient(135deg, #2D8CFF, #1A72E8)" }}
+                      style={{ background: "#2D8CFF" }}
                     >
                       MD
                     </div>

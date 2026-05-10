@@ -12,15 +12,15 @@ import { AUDIO_CLASSE_1, AUDIO_CLASSE_2, calcRacAudio } from "@/lib/remboursemen
 
 /* ─── Design tokens ──────────────────────────────────────────── */
 const glass: CSSProperties = {
-  background: "rgba(255,255,255,0.58)",
+  background: "var(--glass-bg)",
   backdropFilter: "blur(20px)",
   WebkitBackdropFilter: "blur(20px)",
-  border: "1px solid rgba(255,255,255,0.72)",
+  border: "1px solid var(--glass-border)",
   boxShadow: "0 8px 32px rgba(0,0,0,0.06)",
 };
 const glassSubtle: CSSProperties = {
-  background: "rgba(255,255,255,0.45)",
-  border: "1px solid rgba(255,255,255,0.65)",
+  background: "var(--glass-subtle-bg)",
+  border: "1px solid var(--glass-subtle-border)",
 };
 
 const PRIMARY = "#00C98A";
@@ -288,7 +288,7 @@ function Pill({
         active
           ? { background: PRIMARY, color: "#fff", border: `1px solid ${PRIMARY}` }
           : {
-              background: "rgba(255,255,255,0.55)",
+              background: "var(--glass-subtle-bg)",
               color: "#475569",
               border: "1px solid rgba(203,213,225,0.7)",
             }
@@ -346,7 +346,7 @@ function ModalDevis({ appareil, onClose, onAdded }: ModalDevisProps) {
       defaultWidth={480}
       defaultHeight={400}
     >
-      <div style={{ background: "rgba(255,255,255,0.97)", padding: "24px" }} className="space-y-4">
+      <div style={{ background: "var(--glass-card-bg)", padding: "24px" }} className="space-y-4">
         <div>
           <p className="text-xs font-medium text-slate-400 uppercase tracking-wide">
             {appareil.marque} · {appareil.gamme}
@@ -738,7 +738,7 @@ function Step1({
       </p>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <ChoixCard
-          icon="🆕"
+          icon=""
           label="Premier appareillage"
           description="C'est la première fois que je porte des appareils auditifs."
           selected={q.typeAppareillage === "premier"}
@@ -747,7 +747,7 @@ function Step1({
           }
         />
         <ChoixCard
-          icon="🔄"
+          icon=""
           label="Réappareillage"
           description="Je renouvelle mes appareils existants."
           selected={q.typeAppareillage === "reapparaillage"}
@@ -866,28 +866,28 @@ const PERTES = [
     value: "légère" as const,
     label: "Légère",
     sublabel: "20–40 dB",
-    icon: "🟢",
+    icon: "",
     description: "Difficultés dans le bruit",
   },
   {
     value: "moyenne" as const,
     label: "Moyenne",
     sublabel: "40–70 dB",
-    icon: "🟡",
+    icon: "",
     description: "Parole parfois incompréhensible",
   },
   {
     value: "sévère" as const,
     label: "Sévère",
     sublabel: "70–90 dB",
-    icon: "🟠",
+    icon: "",
     description: "Parole très difficile sans aide",
   },
   {
     value: "profonde" as const,
     label: "Profonde",
     sublabel: "> 90 dB",
-    icon: "🔴",
+    icon: "",
     description: "Appareillage puissant requis",
   },
 ];
@@ -1100,21 +1100,21 @@ function Step4({
       {/* Mode de vie */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
         <ChoixCard
-          icon="🏃"
+          icon=""
           label="Actif / Sportif"
           description="Sport, plein air, activités dynamiques"
           selected={q.modeVie === "actif"}
           onClick={() => setQ((prev) => ({ ...prev, modeVie: "actif" }))}
         />
         <ChoixCard
-          icon="👥"
+          icon=""
           label="Social actif"
           description="Réunions, restaurants, sorties"
           selected={q.modeVie === "social"}
           onClick={() => setQ((prev) => ({ ...prev, modeVie: "social" }))}
         />
         <ChoixCard
-          icon="🏠"
+          icon=""
           label="Calme"
           description="Maison, télé, conversations tranquilles"
           selected={q.modeVie === "calme"}
@@ -1180,9 +1180,9 @@ function Step5({
         <div className="flex flex-wrap gap-2">
           {(
             [
-              ["tres", "🔴 Très importante"],
-              ["assez", "🟡 Assez importante"],
-              ["peu", "🟢 Peu importante"],
+              ["tres", "Très importante"],
+              ["assez", "Assez importante"],
+              ["peu", "Peu importante"],
             ] as const
           ).map(([v, l]) => (
             <button
@@ -1213,9 +1213,9 @@ function Step5({
         <div className="flex flex-wrap gap-2">
           {(
             [
-              ["indispensable", "📱 Indispensable"],
-              ["plus", "👍 Serait un plus"],
-              ["non", "🚫 Pas important"],
+              ["indispensable", "Indispensable"],
+              ["plus", "Serait un plus"],
+              ["non", "Pas important"],
             ] as const
           ).map(([v, l]) => (
             <button
@@ -1244,8 +1244,8 @@ function Step5({
         <div className="flex flex-wrap gap-2">
           {(
             [
-              ["rechargeable", "⚡ Rechargeable préféré"],
-              ["pile", "🔋 Pile standard OK"],
+              ["rechargeable", "Rechargeable préféré"],
+              ["pile", "Pile standard OK"],
               ["indifferent", "↔ Indifférent"],
             ] as const
           ).map(([v, l]) => (
@@ -1277,17 +1277,17 @@ function Step5({
             [
               [
                 "classe1",
-                "✅ 100% Santé — 0 € RAC",
+                "100% Santé — 0 € RAC",
                 `Classe 1 — prix max ${AUDIO_CLASSE_1.plafondTTC.toLocaleString("fr-FR")} €/oreille · aucun reste à charge`,
               ],
               [
                 "classe2-1500",
-                "💶 Classe 2 — jusqu'à 1 500 €/oreille RAC",
+                "Classe 2 — jusqu'à 1 500 €/oreille RAC",
                 "Bonne qualité avec remboursement SS de 840 €/oreille",
               ],
               [
                 "classe2-premium",
-                "⭐ Classe 2 Premium — budget ouvert",
+                "Classe 2 Premium — budget ouvert",
                 `Meilleure technologie disponible · SS ${AUDIO_CLASSE_2.remboursementSS} €/oreille`,
               ],
             ] as const
@@ -1363,7 +1363,7 @@ function ResultCard({
       {/* Header */}
       <div className="flex items-center gap-2">
         <span className="text-base" aria-hidden>
-          {rank === 1 ? "⭐" : "✨"}
+          {""}
         </span>
         <span className="text-xs font-bold uppercase tracking-wide" style={{ color: PRIMARY }}>
           Recommandation {rank}

@@ -540,9 +540,9 @@ function ConnexionPatientPageContent() {
           {/* Glass card */}
           <div
             style={{
-              background: "rgba(255,255,255,0.75)",
+              background: "var(--glass-strong-bg)",
               backdropFilter: "blur(20px)",
-              border: "1px solid rgba(255,255,255,0.80)",
+              border: "1px solid var(--glass-strong-border)",
               boxShadow: "0 8px 40px rgba(0,0,0,0.08)",
               borderRadius: "20px",
               padding: "32px",
@@ -573,7 +573,7 @@ function ConnexionPatientPageContent() {
                   style={
                     space === b.id
                       ? { border: `2px solid ${b.selBorder}`, background: b.selBg, borderRadius: "12px", padding: "14px", textAlign: "left", cursor: "pointer", transition: "all 0.15s" } as React.CSSProperties
-                      : { border: "1px solid #E2E8F0", background: "rgba(255,255,255,0.70)", borderRadius: "12px", padding: "14px", textAlign: "left", cursor: "pointer", transition: "all 0.15s" } as React.CSSProperties
+                      : { border: "1px solid #E2E8F0", background: "var(--glass-nav-bg)", borderRadius: "12px", padding: "14px", textAlign: "left", cursor: "pointer", transition: "all 0.15s" } as React.CSSProperties
                   }
                 >
                   <div style={{ display: "flex", alignItems: "center", gap: "8px" } as React.CSSProperties}>
@@ -606,7 +606,7 @@ function ConnexionPatientPageContent() {
                           style={
                             active
                               ? { border: `1.5px solid ${accentColor}`, background: `${accentColor}0A`, borderRadius: "12px", padding: "12px 14px", textAlign: "left", cursor: "pointer", transition: "all 0.15s", width: "100%" } as React.CSSProperties
-                              : { border: "1px solid #E2E8F0", background: "rgba(255,255,255,0.70)", borderRadius: "12px", padding: "12px 14px", textAlign: "left", cursor: "pointer", transition: "all 0.15s", width: "100%" } as React.CSSProperties
+                              : { border: "1px solid #E2E8F0", background: "var(--glass-nav-bg)", borderRadius: "12px", padding: "12px 14px", textAlign: "left", cursor: "pointer", transition: "all 0.15s", width: "100%" } as React.CSSProperties
                           }
                         >
                           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "8px" } as React.CSSProperties}>

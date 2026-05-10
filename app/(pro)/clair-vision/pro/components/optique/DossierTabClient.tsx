@@ -167,7 +167,7 @@ export default function DossierTabClient({
                 <Link
                   href={`/clair-vision/pro/calculateur-lentilles?dossier=${dossierId}&od_sph=-2.25&od_cyl=-0.50&od_axe=170&og_sph=-1.75&og_cyl=-0.25&og_axe=10`}
                   className="mt-3 inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-semibold text-white transition-all hover:opacity-90"
-                  style={{ background: "linear-gradient(135deg,#2D8CFF,#1A72E8)", boxShadow: "0 2px 8px rgba(45,140,255,.28)" }}
+                  style={{ background: "#2D8CFF", boxShadow: "0 2px 8px rgba(45,140,255,.28)" }}
                 >
                   Ouvrir le calculateur →
                 </Link>

@@ -28,20 +28,20 @@ function IconArrow(props: SVGProps<SVGSVGElement>) {
   );
 }
 
-const patientFeatures: { label: string; icon: string }[] = [
-  { label: "Examens de vue & bilans auditifs",   icon: "👁" },
-  { label: "Ordonnances et documents",            icon: "📋" },
-  { label: "Prise de rendez-vous en ligne",       icon: "📅" },
-  { label: "Messagerie avec votre praticien",     icon: "💬" },
-  { label: "Suivi lentilles & appareils",         icon: "🔬" },
+const patientFeatures: { label: string }[] = [
+  { label: "Examens de vue & bilans auditifs" },
+  { label: "Ordonnances et documents" },
+  { label: "Prise de rendez-vous en ligne" },
+  { label: "Messagerie avec votre praticien" },
+  { label: "Suivi lentilles & appareils" },
 ];
 
-const praticienFeatures: { label: string; icon: string }[] = [
-  { label: "Dossiers patients centralisés",  icon: "🗂" },
-  { label: "Agenda et planification",        icon: "📅" },
-  { label: "Ordonnances numériques",         icon: "📝" },
-  { label: "Bilans & comptes-rendus",        icon: "📊" },
-  { label: "Accès Clair Vision & Audition",  icon: "⚡" },
+const praticienFeatures: { label: string }[] = [
+  { label: "Dossiers patients centralisés" },
+  { label: "Agenda et planification" },
+  { label: "Ordonnances numériques" },
+  { label: "Bilans & comptes-rendus" },
+  { label: "Accès Clair Vision & Audition" },
 ];
 
 export default function ConnexionPage() {
@@ -100,10 +100,10 @@ export default function ConnexionPage() {
             href="/connexion/patient"
             className="group relative overflow-hidden rounded-3xl transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_24px_60px_rgba(45,140,255,0.15)]"
             style={{
-              background: "rgba(255,255,255,0.70)",
+              background: "var(--glass-nav-bg)",
               backdropFilter: "blur(20px)",
               WebkitBackdropFilter: "blur(20px)",
-              border: "1px solid rgba(255,255,255,0.80)",
+              border: "1px solid var(--glass-strong-border)",
               boxShadow: "0 8px 32px rgba(0,0,0,0.07)",
             }}
           >
@@ -142,7 +142,7 @@ export default function ConnexionPage() {
               <div className="flex items-center gap-4">
                 <div
                   className="h-14 w-14 rounded-2xl flex items-center justify-center flex-shrink-0"
-                  style={{ background: "linear-gradient(135deg, #2D8CFF, #1A72E8)", boxShadow: "0 4px 16px rgba(45,140,255,0.30)" }}
+                  style={{ background: "#2D8CFF", boxShadow: "0 4px 16px rgba(45,140,255,0.30)" }}
                 >
                   <IconUser className="h-6 w-6 text-white" />
                 </div>
@@ -158,12 +158,6 @@ export default function ConnexionPage() {
               <ul className="space-y-2.5 mb-7">
                 {patientFeatures.map((f) => (
                   <li key={f.label} className="flex items-center gap-3 text-sm text-slate-600">
-                    <span
-                      className="w-7 h-7 rounded-xl flex items-center justify-center flex-shrink-0 text-base"
-                      style={{ background: "rgba(45,140,255,0.08)", border: "1px solid rgba(45,140,255,0.12)" }}
-                    >
-                      {f.icon}
-                    </span>
                     {f.label}
                   </li>
                 ))}
@@ -171,7 +165,7 @@ export default function ConnexionPage() {
 
               <div
                 className="flex items-center justify-between rounded-2xl px-5 py-3.5 text-sm font-semibold text-white transition-all duration-200 group-hover:shadow-[0_8px_24px_rgba(45,140,255,0.35)]"
-                style={{ background: "linear-gradient(135deg, #2D8CFF, #1A72E8)", boxShadow: "0 4px 16px rgba(45,140,255,0.25)" }}
+                style={{ background: "#2D8CFF", boxShadow: "0 4px 16px rgba(45,140,255,0.25)" }}
               >
                 Accéder à mon espace
                 <IconArrow className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-0.5" />
@@ -184,10 +178,10 @@ export default function ConnexionPage() {
             href="/connexion/praticien"
             className="group relative overflow-hidden rounded-3xl transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_24px_60px_rgba(11,18,32,0.20)]"
             style={{
-              background: "rgba(255,255,255,0.70)",
+              background: "var(--glass-nav-bg)",
               backdropFilter: "blur(20px)",
               WebkitBackdropFilter: "blur(20px)",
-              border: "1px solid rgba(255,255,255,0.80)",
+              border: "1px solid var(--glass-strong-border)",
               boxShadow: "0 8px 32px rgba(0,0,0,0.07)",
             }}
           >
@@ -257,12 +251,6 @@ export default function ConnexionPage() {
               <ul className="space-y-2.5 mb-7">
                 {praticienFeatures.map((f) => (
                   <li key={f.label} className="flex items-center gap-3 text-sm text-slate-600">
-                    <span
-                      className="w-7 h-7 rounded-xl flex items-center justify-center flex-shrink-0 text-base"
-                      style={{ background: "rgba(11,18,32,0.06)", border: "1px solid rgba(11,18,32,0.08)" }}
-                    >
-                      {f.icon}
-                    </span>
                     {f.label}
                   </li>
                 ))}

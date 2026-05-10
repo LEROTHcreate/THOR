@@ -11,15 +11,15 @@ import { loadStoreConfig } from "@/lib/storeConfig";
    STYLE TOKENS
 ═══════════════════════════════════════════════════════════════════════ */
 const glass: CSSProperties = {
-  background: "rgba(255,255,255,0.58)",
+  background: "var(--glass-bg)",
   backdropFilter: "blur(20px)",
   WebkitBackdropFilter: "blur(20px)",
-  border: "1px solid rgba(255,255,255,0.72)",
+  border: "1px solid var(--glass-border)",
   boxShadow: "0 8px 32px rgba(0,0,0,0.06)",
 };
 const glassSubtle: CSSProperties = {
-  background: "rgba(255,255,255,0.45)",
-  border: "1px solid rgba(255,255,255,0.65)",
+  background: "var(--glass-subtle-bg)",
+  border: "1px solid var(--glass-subtle-border)",
 };
 const inputStyle: CSSProperties = {
   width: "100%",
@@ -434,8 +434,8 @@ function CarteVitaleReader({ onRead }: { onRead: (info: ClientInfo) => void }) {
   function handleReset() { setStatus("idle"); setProgress(0); }
 
   return (
-    <div style={{ borderRadius: 16, overflow: "hidden", border: status === "success" ? "1.5px solid #00C98A" : "1.5px dashed rgba(45,140,255,0.35)", background: "rgba(255,255,255,0.5)", transition: "border 0.3s" }}>
-      <div style={{ background: status === "success" ? "linear-gradient(135deg,#00C98A,#059669)" : "linear-gradient(135deg,#1565C0,#1976D2,#1565C0)", padding: "14px 18px", display: "flex", alignItems: "center", gap: 12 }}>
+    <div style={{ borderRadius: 16, overflow: "hidden", border: status === "success" ? "1.5px solid #00C98A" : "1.5px dashed rgba(45,140,255,0.35)", background: "var(--glass-subtle-bg)", transition: "border 0.3s" }}>
+      <div style={{ background: status === "success" ? "#00C98A" : "linear-gradient(135deg,#1565C0,#1976D2,#1565C0)", padding: "14px 18px", display: "flex", alignItems: "center", gap: 12 }}>
         <div style={{ width: 54, height: 36, borderRadius: 6, background: "rgba(255,255,255,0.18)", border: "1px solid rgba(255,255,255,0.3)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
           <svg width="26" height="20" viewBox="0 0 26 20" fill="none">
             <rect x="0.5" y="0.5" width="25" height="19" rx="2.5" stroke="rgba(255,255,255,0.6)" strokeWidth="1"/>
@@ -714,7 +714,7 @@ function CatalogueModal({ onClose, onSelect, selectedVerriers }: CatalogueModalP
                   key={v.id}
                   onClick={() => { onSelect(v); onClose(); }}
                   style={{
-                    background: "rgba(255,255,255,0.7)", border: "1px solid rgba(148,163,184,0.25)", borderRadius: 12,
+                    background: "var(--glass-strong-bg)", border: "1px solid rgba(148,163,184,0.25)", borderRadius: 12,
                     padding: "12px 14px", cursor: "pointer", textAlign: "left", transition: "box-shadow 0.15s",
                   }}
                   onMouseEnter={e => (e.currentTarget.style.boxShadow = "0 4px 16px rgba(45,140,255,0.15)")}
@@ -836,9 +836,9 @@ function OrdonnancePicker({ onApply, onClear, selected }: OrdonnancePickerProps)
             <button
               onClick={() => setOpen(o => !o)}
               onKeyDown={handleKeyDown}
-              style={{ width: "100%", display: "flex", alignItems: "center", gap: 8, padding: "9px 14px", borderRadius: 12, border: "1px solid rgba(148,163,184,0.35)", background: "rgba(255,255,255,0.7)", fontSize: 13, color: "#475569", cursor: "pointer", textAlign: "left" }}
+              style={{ width: "100%", display: "flex", alignItems: "center", gap: 8, padding: "9px 14px", borderRadius: 12, border: "1px solid rgba(148,163,184,0.35)", background: "var(--glass-strong-bg)", fontSize: 13, color: "#475569", cursor: "pointer", textAlign: "left" }}
             >
-              <span style={{ fontSize: 15 }}>📋</span>
+              <span style={{ fontSize: 15 }}></span>
               <span style={{ flex: 1 }}>Choisir une ordonnance</span>
               <svg width="12" height="12" viewBox="0 0 12 12" fill="none" style={{ transform: open ? "rotate(180deg)" : undefined, transition: "transform 0.15s" }}>
                 <path d="M2 4l4 4 4-4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
@@ -942,7 +942,7 @@ function StockModal({ onClose, onSelect }: { onClose: () => void; onSelect: (ite
 
   return (
     <DraggableWindow title="Depuis le stock" badge={`${results.length} article${results.length !== 1 ? "s" : ""}`} onClose={onClose} defaultWidth={700} defaultHeight={500}>
-      <div style={{ display: "flex", flexDirection: "column", height: "100%", background: "rgba(255,255,255,0.97)" }}>
+      <div style={{ display: "flex", flexDirection: "column", height: "100%", background: "var(--glass-card-bg)" }}>
         <div style={{ padding: "12px 20px", borderBottom: "1px solid rgba(148,163,184,0.15)", display: "flex", gap: 10, alignItems: "center" }}>
           <div style={{ position: "relative", flex: 1 }}>
             <input style={{ ...inputStyle, paddingLeft: 32 }} placeholder="Rechercher dans le stock…" value={query} onChange={e => setQuery(e.target.value)} autoFocus />
@@ -963,7 +963,7 @@ function StockModal({ onClose, onSelect }: { onClose: () => void; onSelect: (ite
                 <button
                   key={item.id}
                   onClick={() => onSelect(item)}
-                  style={{ background: "rgba(255,255,255,0.8)", border: "1px solid rgba(148,163,184,0.25)", borderRadius: 12, padding: "11px 13px", cursor: "pointer", textAlign: "left", transition: "box-shadow 0.15s" }}
+                  style={{ background: "var(--glass-strong-bg)", border: "1px solid rgba(148,163,184,0.25)", borderRadius: 12, padding: "11px 13px", cursor: "pointer", textAlign: "left", transition: "box-shadow 0.15s" }}
                   onMouseEnter={e => (e.currentTarget.style.boxShadow = "0 4px 16px rgba(99,102,241,0.15)")}
                   onMouseLeave={e => (e.currentTarget.style.boxShadow = "none")}
                 >
@@ -1036,7 +1036,7 @@ function ModalSignature({ devis, onClose, onSigned, showToast }: { devis: Devis;
         <div style={{ display: "flex", gap: 10, justifyContent: "flex-end" }}>
           <button onClick={onClose} style={{ padding: "9px 18px", borderRadius: 12, border: "1px solid rgba(148,163,184,0.3)", background: "transparent", color: "#475569", fontWeight: 600, fontSize: 13, cursor: "pointer" }}>Annuler</button>
           <button onClick={handleValider} disabled={!checked}
-            style={{ padding: "9px 22px", borderRadius: 12, border: "none", background: checked ? "linear-gradient(135deg,#00C98A,#059669)" : "rgba(148,163,184,0.25)", color: checked ? "#fff" : "#94a3b8", fontWeight: 700, fontSize: 13, cursor: checked ? "pointer" : "default", transition: "all 0.2s" }}>
+            style={{ padding: "9px 22px", borderRadius: 12, border: "none", background: checked ? "#00C98A" : "rgba(148,163,184,0.25)", color: checked ? "#fff" : "#94a3b8", fontWeight: 700, fontSize: 13, cursor: checked ? "pointer" : "default", transition: "all 0.2s" }}>
             <IconSign /> Valider la signature
           </button>
         </div>
@@ -1266,7 +1266,7 @@ function ModalNouveauDevis({ onClose, onSave, allDevis, initialClient }: { onClo
       defaultWidth={760}
       defaultHeight={680}
     >
-      <div style={{ display: "flex", flexDirection: "column", height: "100%", background: "rgba(255,255,255,0.97)" }}>
+      <div style={{ display: "flex", flexDirection: "column", height: "100%", background: "var(--glass-card-bg)" }}>
 
         {/* Stepper */}
         <div style={{ padding: "12px 28px 0", display: "flex", gap: 8, flexShrink: 0 }}>
@@ -1670,12 +1670,12 @@ function ModalNouveauDevis({ onClose, onSave, allDevis, initialClient }: { onClo
           </button>
           {s.step < 4 ? (
             <button onClick={() => upd({ step: (s.step + 1) as 1 | 2 | 3 | 4 })}
-              style={{ padding: "9px 24px", borderRadius: 12, border: "none", background: "linear-gradient(135deg,#2D8CFF,#1976D2)", color: "#fff", fontWeight: 700, fontSize: 13, cursor: "pointer" }}>
+              style={{ padding: "9px 24px", borderRadius: 12, border: "none", background: "#2D8CFF", color: "#fff", fontWeight: 700, fontSize: 13, cursor: "pointer" }}>
               Suivant →
             </button>
           ) : (
             <button onClick={save}
-              style={{ padding: "9px 24px", borderRadius: 12, border: "none", background: s.signatureClient ? "linear-gradient(135deg,#00C98A,#059669)" : "linear-gradient(135deg,#64748b,#475569)", color: "#fff", fontWeight: 700, fontSize: 13, cursor: "pointer" }}>
+              style={{ padding: "9px 24px", borderRadius: 12, border: "none", background: s.signatureClient ? "#00C98A" : "linear-gradient(135deg,#64748b,#475569)", color: "#fff", fontWeight: 700, fontSize: 13, cursor: "pointer" }}>
               {s.signatureClient ? "Enregistrer (Signé)" : "Enregistrer (Brouillon)"}
             </button>
           )}
@@ -1944,7 +1944,7 @@ function ModalModifierStatut({ devis, onClose, onSave, allDevis }: { devis: Devi
             {isGeste && (
               <div style={{ padding: "12px 14px", borderRadius: 10, background: "rgba(245,158,11,0.06)", border: "1px solid rgba(245,158,11,0.25)" }}>
                 <div style={{ fontSize: 11, fontWeight: 700, color: "#b45309", marginBottom: 8 }}>
-                  ✦ Geste commercial — RAC de {formatEur(devis.resteACharge)} offert au patient
+                  Geste commercial — RAC de {formatEur(devis.resteACharge)} offert au patient
                 </div>
                 <FormRow label="Motif (facultatif)">
                   <input style={inputStyle} value={raisonGeste} onChange={e => setRaisonGeste(e.target.value)} placeholder="Ex : fidélisation, situation difficile…" />
@@ -1969,7 +1969,7 @@ function ModalModifierStatut({ devis, onClose, onSave, allDevis }: { devis: Devi
 
         <div style={{ display: "flex", gap: 10, justifyContent: "flex-end", marginTop: 20 }}>
           <button onClick={onClose} style={{ padding: "9px 18px", borderRadius: 12, border: "1px solid rgba(148,163,184,0.3)", background: "transparent", color: "#475569", fontWeight: 600, fontSize: 13, cursor: "pointer" }}>Annuler</button>
-          <button onClick={handleSave} style={{ padding: "9px 22px", borderRadius: 12, border: "none", background: "linear-gradient(135deg,#2D8CFF,#1976D2)", color: "#fff", fontWeight: 700, fontSize: 13, cursor: "pointer" }}>Enregistrer</button>
+          <button onClick={handleSave} style={{ padding: "9px 22px", borderRadius: 12, border: "none", background: "#2D8CFF", color: "#fff", fontWeight: 700, fontSize: 13, cursor: "pointer" }}>Enregistrer</button>
         </div>
       </div>
     </div>
@@ -2218,7 +2218,7 @@ function DevisCard({ d, onVoir, onModifierStatut, onPrint, onDevisUpdated, onDup
     if (!needsRelance || relanceRecente || relanceState !== "idle") return null;
     if (joursDepuis > 15) return (
       <span style={{ display: "inline-flex", alignItems: "center", gap: 4, padding: "2px 9px", borderRadius: 999, background: "rgba(239,68,68,0.12)", color: "#dc2626", fontSize: 11, fontWeight: 700, border: "1px solid rgba(239,68,68,0.3)" }}>
-        ⚠ Relance nécessaire
+        Relance nécessaire
       </span>
     );
     if (joursDepuis > 7) return (
@@ -2289,7 +2289,7 @@ function DevisCard({ d, onVoir, onModifierStatut, onPrint, onDevisUpdated, onDup
         <div style={{ color: "#059669", marginTop: 2 }}>{d.mutuelleNom} : −{formatEur(d.totalMutuelle)}</div>
         <div style={{ color: "#1976D2" }}>SS : −{formatEur(d.totalSS)}</div>
         {d.modePaiement === "Geste commercial" ? (
-          <div style={{ fontWeight: 700, color: "#f59e0b", marginTop: 2 }}>RAC offert ✦</div>
+          <div style={{ fontWeight: 700, color: "#f59e0b", marginTop: 2 }}>RAC offert</div>
         ) : d.racRegle && d.modePaiement ? (
           <div style={{ fontWeight: 700, color: "#059669", marginTop: 2 }}>
             RAC réglé · {d.modePaiement === "Plusieurs fois" ? `${d.nbEcheances}×` : d.modePaiement}
@@ -2329,7 +2329,7 @@ function BandeauFactures({ factures, onVoir, onPrint }: { factures: Devis[]; onV
   return (
     <div style={{ marginTop: 32 }}>
       <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 14 }}>
-        <div style={{ width: 4, height: 22, borderRadius: 2, background: "linear-gradient(180deg,#10B981,#059669)" }} />
+        <div style={{ width: 4, height: 22, borderRadius: 2, background: "#10b981" }} />
         <h2 style={{ margin: 0, fontSize: 16, fontWeight: 700, color: "#1e293b" }}>Factures émises</h2>
         <span style={{ fontSize: 12, color: "#64748b" }}>({factures.length} facture{factures.length > 1 ? "s" : ""})</span>
       </div>
@@ -2587,11 +2587,11 @@ export default function DevisPage() {
           </div>
           <div style={{ display: "flex", gap: 8 }}>
             <button onClick={() => exportCSV(filtered)}
-              style={{ display: "inline-flex", alignItems: "center", gap: 7, padding: "11px 18px", borderRadius: 14, border: "1px solid rgba(148,163,184,0.35)", background: "rgba(255,255,255,0.7)", color: "#475569", fontWeight: 700, fontSize: 13, cursor: "pointer" }}>
+              style={{ display: "inline-flex", alignItems: "center", gap: 7, padding: "11px 18px", borderRadius: 14, border: "1px solid rgba(148,163,184,0.35)", background: "var(--glass-strong-bg)", color: "#475569", fontWeight: 700, fontSize: 13, cursor: "pointer" }}>
               <IconDownload /> Exporter CSV
             </button>
             <button onClick={() => setModalNouveauOpen(true)}
-              style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "11px 22px", borderRadius: 14, border: "none", background: "linear-gradient(135deg,#2D8CFF,#1976D2)", color: "#fff", fontWeight: 700, fontSize: 14, cursor: "pointer", boxShadow: "0 4px 16px rgba(45,140,255,0.3)" }}>
+              style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "11px 22px", borderRadius: 14, border: "none", background: "#2D8CFF", color: "#fff", fontWeight: 700, fontSize: 14, cursor: "pointer", boxShadow: "0 4px 16px rgba(45,140,255,0.3)" }}>
               <IconPlus /> Nouveau devis
             </button>
           </div>
@@ -2610,7 +2610,7 @@ export default function DevisPage() {
                 const active = filterStatus === s && !filterRelancer;
                 return (
                   <button key={s} onClick={() => { setFilterStatus(s); setFilterRelancer(false); }}
-                    style={{ padding: "6px 14px", borderRadius: 999, border: active ? "none" : "1px solid rgba(148,163,184,0.3)", background: active ? "linear-gradient(135deg,#2D8CFF,#1976D2)" : "rgba(255,255,255,0.6)", color: active ? "#fff" : "#475569", fontWeight: 600, fontSize: 12, cursor: "pointer", transition: "all 0.15s" }}>
+                    style={{ padding: "6px 14px", borderRadius: 999, border: active ? "none" : "1px solid rgba(148,163,184,0.3)", background: active ? "#2D8CFF" : "rgba(255,255,255,0.6)", color: active ? "#fff" : "#475569", fontWeight: 600, fontSize: 12, cursor: "pointer", transition: "all 0.15s" }}>
                     {s} ({count})
                   </button>
                 );

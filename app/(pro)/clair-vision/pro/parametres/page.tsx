@@ -27,15 +27,15 @@ import React from "react";
 const PRIMARY = "#2D8CFF";
 
 const glass: CSSProperties = {
-  background: "rgba(255,255,255,0.58)",
+  background: "var(--glass-bg)",
   backdropFilter: "blur(20px)",
   WebkitBackdropFilter: "blur(20px)",
-  border: "1px solid rgba(255,255,255,0.72)",
+  border: "1px solid var(--glass-border)",
   boxShadow: "0 8px 32px rgba(0,0,0,0.06)",
 };
 const glassSubtle: CSSProperties = {
-  background: "rgba(255,255,255,0.45)",
-  border: "1px solid rgba(255,255,255,0.65)",
+  background: "var(--glass-subtle-bg)",
+  border: "1px solid var(--glass-subtle-border)",
 };
 
 // ── Tabs ──────────────────────────────────────────────────────────────────────
@@ -210,7 +210,7 @@ function TabGeneral() {
           <div className="grid h-16 w-16 flex-shrink-0 place-items-center rounded-2xl overflow-hidden"
             style={config.logo
               ? { border: "1px solid rgba(0,0,0,0.08)", boxShadow: "0 2px 8px rgba(0,0,0,0.08)" }
-              : { background: `linear-gradient(135deg,${PRIMARY},#1a6fd4)`, boxShadow: "0 2px 8px rgba(45,140,255,0.25)" }
+              : { background: PRIMARY, boxShadow: "0 2px 8px rgba(45,140,255,0.25)" }
             }>
             {config.logo ? (
               // eslint-disable-next-line @next/next/no-img-element
@@ -487,7 +487,7 @@ function TabAgenda() {
                     </div>
                     {/* Pause déjeuner inline */}
                     <div className={`flex items-center gap-1.5 rounded-lg border px-2 py-1 transition ${day.pauseActive ? "border-amber-300 bg-amber-50" : "border-slate-200 bg-slate-50"}`}>
-                      <span className="text-sm leading-none">☕</span>
+                      <span className="text-sm leading-none"></span>
                       <button
                         onClick={() => setDay(key, "pauseActive", !day.pauseActive)}
                         className={`relative inline-flex h-4 w-7 flex-shrink-0 rounded-full transition-colors ${day.pauseActive ? "bg-amber-400" : "bg-slate-200"}`}
@@ -728,7 +728,7 @@ function TabTarification() {
       <div className="flex justify-end">
         <button onClick={handleSave}
           className="rounded-xl px-6 py-2.5 text-sm font-semibold text-white transition"
-          style={{ background: saved ? "#10b981" : `linear-gradient(135deg,${PRIMARY},#1a6fd4)` }}>
+          style={{ background: saved ? "#10b981" : PRIMARY }}>
           {saved ? "✓ Enregistré" : "Enregistrer les tarifs"}
         </button>
       </div>
@@ -871,7 +871,7 @@ function SectionImportVision() {
         <div className="flex items-center gap-3">
           <button onClick={doImport} disabled={!mapping.nom || !mapping.prenom}
             className="rounded-xl px-5 py-2.5 text-sm font-semibold text-white transition disabled:opacity-40"
-            style={{ background: `linear-gradient(135deg,${PRIMARY},#1a6fd4)` }}>
+            style={{ background: PRIMARY }}>
             Importer {rows.length} patient{rows.length > 1 ? "s" : ""}
           </button>
           <button onClick={reset} className="text-sm text-slate-500 hover:text-slate-700">Annuler</button>
@@ -992,7 +992,7 @@ function ZoneDangerVision() {
                 Contactez le SAV THOR à <strong>sav@thor-logiciel.fr</strong> ou au <strong>01 XX XX XX XX</strong> avec votre numéro de licence. Le code sera envoyé à <strong>{gerantEmail || "votre adresse email"}</strong>.
               </p>
               <p className="text-[11px] text-slate-400 mt-2 italic">
-                ⚙ Code démo du jour : <span className="font-mono font-semibold text-slate-600">{code}</span>
+                Code démo du jour : <span className="font-mono font-semibold text-slate-600">{code}</span>
               </p>
             </div>
           </div>

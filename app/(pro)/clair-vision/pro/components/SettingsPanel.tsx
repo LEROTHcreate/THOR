@@ -18,15 +18,15 @@ import {
 
 // ── Design tokens ─────────────────────────────────────────────────────────────
 const glass: CSSProperties = {
-  background: "rgba(255,255,255,0.58)",
+  background: "var(--glass-bg)",
   backdropFilter: "blur(20px)",
   WebkitBackdropFilter: "blur(20px)",
-  border: "1px solid rgba(255,255,255,0.72)",
+  border: "1px solid var(--glass-border)",
   boxShadow: "0 8px 32px rgba(0,0,0,0.06)",
 };
 const glassSubtle: CSSProperties = {
-  background: "rgba(255,255,255,0.45)",
-  border: "1px solid rgba(255,255,255,0.65)",
+  background: "var(--glass-subtle-bg)",
+  border: "1px solid var(--glass-subtle-border)",
 };
 
 // ── Color helpers ─────────────────────────────────────────────────────────────
@@ -355,7 +355,7 @@ function SectionCompte({
             style={
               config.logo
                 ? { border: "1px solid rgba(0,0,0,0.08)", boxShadow: "0 2px 8px rgba(0,0,0,0.08)" }
-                : { background: "linear-gradient(135deg,#2D8CFF,#1A72E8)", boxShadow: "0 2px 8px rgba(45,140,255,0.25)" }
+                : { background: "#2D8CFF", boxShadow: "0 2px 8px rgba(45,140,255,0.25)" }
             }
           >
             {config.logo ? (
@@ -538,7 +538,7 @@ function SectionApparence({
               {/* Mini sidebar */}
               <div
                 className="w-36 rounded-xl py-3 px-2 flex flex-col gap-1"
-                style={{ background: "rgba(255,255,255,0.75)", border: "1px solid rgba(255,255,255,0.8)" }}
+                style={{ background: "var(--glass-strong-bg)", border: "1px solid rgba(255,255,255,0.8)" }}
               >
                 {/* Logo area */}
                 <div className="flex items-center gap-2 px-1 mb-2">
@@ -1067,7 +1067,7 @@ function SectionAgenda() {
 
                     {/* Pause déjeuner inline */}
                     <div className={`flex items-center gap-1.5 rounded-lg border px-2 py-1 transition ${day.pauseActive ? "border-amber-300 bg-amber-50" : "border-slate-200 bg-slate-50"}`}>
-                      <span className="text-sm leading-none">☕</span>
+                      <span className="text-sm leading-none"></span>
                       <button
                         onClick={() => setDay(key, "pauseActive", !day.pauseActive)}
                         className={`relative inline-flex h-4 w-7 flex-shrink-0 rounded-full transition-colors ${day.pauseActive ? "bg-amber-400" : "bg-slate-200"}`}
@@ -1429,7 +1429,7 @@ function SectionImport() {
         <div className="flex items-center gap-3">
           <button onClick={doImport} disabled={!mapping.nom || !mapping.prenom}
             className="rounded-xl px-5 py-2.5 text-sm font-semibold text-white transition disabled:opacity-40"
-            style={{ background: "linear-gradient(135deg, #2D8CFF, #1A72E8)" }}>
+            style={{ background: "#2D8CFF" }}>
             Importer {rows.length} patient{rows.length > 1 ? "s" : ""}
           </button>
           <button onClick={reset} className="text-sm text-slate-500 hover:text-slate-700">Annuler</button>
@@ -1533,7 +1533,7 @@ function ZoneDangerVision() {
               </p>
               {/* Code du jour visible pour la démo */}
               <p className="text-[11px] text-slate-400 mt-2 italic">
-                ⚙ Code démo du jour : <span className="font-mono font-semibold text-slate-600">{code}</span>
+                Code démo du jour : <span className="font-mono font-semibold text-slate-600">{code}</span>
               </p>
             </div>
           </div>
@@ -1722,7 +1722,7 @@ export default function SettingsPanel({
           <aside
             className="w-[220px] flex-shrink-0 flex flex-col gap-0.5 py-4 px-3 overflow-y-auto"
             style={{
-              background: "rgba(255,255,255,0.45)",
+              background: "var(--glass-subtle-bg)",
               borderRight: "1px solid rgba(0,0,0,0.05)",
             }}
           >

@@ -13,7 +13,7 @@ type Product = "vision" | "audition";
 const PRODUCT_CFG = {
   vision: {
     accent:   "#2D8CFF",
-    gradient: "linear-gradient(160deg,#1558c0 0%,#2D8CFF 55%,#60aeff 100%)",
+    gradient: "#2D8CFF",
     label:    "Clair Vision",
     tagline:  "Logiciel pro pour opticiens & optométristes",
     icon: (
@@ -25,7 +25,7 @@ const PRODUCT_CFG = {
   },
   audition: {
     accent:   "#00C98A",
-    gradient: "linear-gradient(160deg,#007a55 0%,#00C98A 55%,#34e8aa 100%)",
+    gradient: "#00C98A",
     label:    "Clair Audition",
     tagline:  "Logiciel pro pour audioprothésistes",
     icon: (

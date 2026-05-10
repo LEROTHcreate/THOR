@@ -483,7 +483,7 @@ export default function NosCentresPage() {
             href="/"
             className="hidden md:inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold transition-all"
             style={{
-              background: "rgba(255,255,255,0.72)",
+              background: "var(--glass-strong-bg)",
               backdropFilter: "blur(16px)",
               border: "1px solid rgba(255,255,255,0.8)",
               boxShadow: "0 4px 16px rgba(0,0,0,0.06)",
@@ -501,7 +501,7 @@ export default function NosCentresPage() {
           <div
             className="p-6 flex flex-col gap-0"
             style={{
-              background: "rgba(255,255,255,0.72)",
+              background: "var(--glass-strong-bg)",
               backdropFilter: "blur(20px)",
               border: "1px solid rgba(255,255,255,0.8)",
               borderRadius: 24,
@@ -538,7 +538,7 @@ export default function NosCentresPage() {
                     placeholder="Adresse, ville ou code postal"
                     className="w-full rounded-2xl py-3 pl-9 pr-4 text-sm outline-none transition-shadow"
                     style={{
-                      background: "rgba(255,255,255,0.80)",
+                      background: "var(--glass-strong-bg)",
                       border: "1px solid #E2E8F0",
                       color: "#0B1220",
                     }}
@@ -561,7 +561,7 @@ export default function NosCentresPage() {
                         }
                       : {
                           background:
-                            "linear-gradient(135deg, #2D8CFF 0%, #1A72E8 100%)",
+                            "#2D8CFF",
                           border: "none",
                           color: "#fff",
                           boxShadow: "0 8px 24px rgba(45,140,255,0.30)",
@@ -580,7 +580,7 @@ export default function NosCentresPage() {
                   disabled={locLoading}
                   className="inline-flex items-center gap-2 rounded-2xl px-4 py-2.5 text-sm font-semibold transition-all"
                   style={{
-                    background: "rgba(255,255,255,0.80)",
+                    background: "var(--glass-strong-bg)",
                     border: "1px solid #E2E8F0",
                     color: locLoading ? "#94A3B8" : "#0B1220",
                     cursor: locLoading ? "not-allowed" : "pointer",
@@ -596,7 +596,7 @@ export default function NosCentresPage() {
                   rel="noreferrer"
                   className="inline-flex items-center gap-1.5 rounded-2xl px-4 py-2.5 text-sm font-semibold transition-all"
                   style={{
-                    background: "rgba(255,255,255,0.80)",
+                    background: "var(--glass-strong-bg)",
                     border: "1px solid #E2E8F0",
                     color: "#0B1220",
                   }}
@@ -643,11 +643,11 @@ export default function NosCentresPage() {
                 let activeColor = "#0B1220";
                 if (active && key === "vision") {
                   activeBg =
-                    "linear-gradient(135deg, #2D8CFF 0%, #1A72E8 100%)";
+                    "#2D8CFF";
                   activeColor = "#fff";
                 } else if (active && key === "audition") {
                   activeBg =
-                    "linear-gradient(135deg, #00C98A 0%, #00A872 100%)";
+                    "#00C98A";
                   activeColor = "#fff";
                 }
                 return (
@@ -696,7 +696,7 @@ export default function NosCentresPage() {
                 placeholder="Rechercher un centre (nom, ville...)"
                 className="w-full rounded-2xl py-3 px-4 text-sm outline-none"
                 style={{
-                  background: "rgba(255,255,255,0.80)",
+                  background: "var(--glass-strong-bg)",
                   border: "1px solid #E2E8F0",
                   color: "#0B1220",
                 }}
@@ -858,7 +858,7 @@ export default function NosCentresPage() {
           <div
             className="overflow-hidden flex flex-col"
             style={{
-              background: "rgba(255,255,255,0.72)",
+              background: "var(--glass-strong-bg)",
               backdropFilter: "blur(20px)",
               border: "1px solid rgba(255,255,255,0.8)",
               borderRadius: 24,
@@ -917,7 +917,7 @@ export default function NosCentresPage() {
             href="/"
             className="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold transition-all"
             style={{
-              background: "rgba(255,255,255,0.72)",
+              background: "var(--glass-strong-bg)",
               border: "1px solid rgba(255,255,255,0.8)",
               boxShadow: "0 4px 16px rgba(0,0,0,0.06)",
               color: "#0B1220",

@@ -215,7 +215,7 @@ function LoginScreen({ onSuccess }: { onSuccess: () => void }) {
     >
       <div
         style={{
-          background: "rgba(255,255,255,0.88)",
+          background: "var(--glass-card-bg)",
           backdropFilter: "blur(24px)",
           WebkitBackdropFilter: "blur(24px)",
           borderRadius: "24px",
@@ -441,7 +441,7 @@ function EditModal({
       <div
         onClick={(e) => e.stopPropagation()}
         style={{
-          background: "rgba(255,255,255,0.95)",
+          background: "var(--glass-card-bg)",
           backdropFilter: "blur(24px)",
           WebkitBackdropFilter: "blur(24px)",
           borderRadius: "20px",

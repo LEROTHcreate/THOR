@@ -103,7 +103,7 @@ export default function AudDashboard() {
           </div>
           <Link href="/clair-audition/pro/patients" style={{
             display:"flex",alignItems:"center",gap:8,padding:"11px 22px",
-            background:"linear-gradient(135deg,#00C98A,#009d6e)",
+            background:"#00C98A",
             color:"#fff",borderRadius:14,fontSize:13,fontWeight:700,
             textDecoration:"none",boxShadow:"0 8px 24px rgba(0,201,138,.35),0 2px 8px rgba(0,201,138,.2)",letterSpacing:".01em"
           }}>
@@ -116,7 +116,7 @@ export default function AudDashboard() {
         <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(180px,1fr))",gap:16,marginBottom:32}}>
 
           {/* Card 1 – RDV */}
-          <div style={{borderRadius:24,padding:"26px 28px 22px",background:"linear-gradient(135deg,rgba(0,201,138,0.08) 0%,rgba(255,255,255,0.60) 100%)",backdropFilter:"blur(16px)",WebkitBackdropFilter:"blur(16px)",boxShadow:"0 8px 32px rgba(0,201,138,.10),0 2px 8px rgba(0,0,0,.04)",border:"1px solid rgba(255,255,255,0.72)",position:"relative",overflow:"hidden"}}>
+          <div style={{borderRadius:24,padding:"26px 28px 22px",background:"linear-gradient(135deg,rgba(0,201,138,0.08) 0%,rgba(255,255,255,0.60) 100%)",backdropFilter:"blur(16px)",WebkitBackdropFilter:"blur(16px)",boxShadow:"0 8px 32px rgba(0,201,138,.10),0 2px 8px rgba(0,0,0,.04)",border:"1px solid var(--glass-border)",position:"relative",overflow:"hidden"}}>
             <div style={{position:"absolute",top:-28,right:-28,width:110,height:110,borderRadius:"50%",background:"rgba(255,255,255,.45)",pointerEvents:"none"}}/>
             <div style={{position:"absolute",bottom:-12,right:18,width:64,height:64,borderRadius:"50%",background:"rgba(255,255,255,.30)",pointerEvents:"none"}}/>
             <p style={{fontSize:10,fontWeight:800,color:"#00C98A",letterSpacing:".1em",textTransform:"uppercase",margin:"0 0 16px",opacity:.8}}>RDV aujourd'hui</p>
@@ -129,7 +129,7 @@ export default function AudDashboard() {
           </div>
 
           {/* Card 2 – Patients */}
-          <div style={{borderRadius:24,padding:"26px 28px 22px",background:"linear-gradient(135deg,rgba(99,102,241,0.08) 0%,rgba(255,255,255,0.60) 100%)",backdropFilter:"blur(16px)",WebkitBackdropFilter:"blur(16px)",boxShadow:"0 8px 32px rgba(99,102,241,.10),0 2px 8px rgba(0,0,0,.04)",border:"1px solid rgba(255,255,255,0.72)",position:"relative",overflow:"hidden"}}>
+          <div style={{borderRadius:24,padding:"26px 28px 22px",background:"linear-gradient(135deg,rgba(99,102,241,0.08) 0%,rgba(255,255,255,0.60) 100%)",backdropFilter:"blur(16px)",WebkitBackdropFilter:"blur(16px)",boxShadow:"0 8px 32px rgba(99,102,241,.10),0 2px 8px rgba(0,0,0,.04)",border:"1px solid var(--glass-border)",position:"relative",overflow:"hidden"}}>
             <div style={{position:"absolute",top:-28,right:-28,width:110,height:110,borderRadius:"50%",background:"rgba(255,255,255,.45)",pointerEvents:"none"}}/>
             <div style={{position:"absolute",bottom:-12,right:18,width:64,height:64,borderRadius:"50%",background:"rgba(255,255,255,.30)",pointerEvents:"none"}}/>
             <p style={{fontSize:10,fontWeight:800,color:"#6366f1",letterSpacing:".1em",textTransform:"uppercase",margin:"0 0 16px",opacity:.8}}>Patients suivis</p>
@@ -142,7 +142,7 @@ export default function AudDashboard() {
           </div>
 
           {/* Card 3 – CA */}
-          <div style={{borderRadius:24,padding:"26px 28px 22px",background:"linear-gradient(135deg,rgba(16,185,129,0.08) 0%,rgba(255,255,255,0.60) 100%)",backdropFilter:"blur(16px)",WebkitBackdropFilter:"blur(16px)",boxShadow:"0 8px 32px rgba(16,185,129,.10),0 2px 8px rgba(0,0,0,.04)",border:"1px solid rgba(255,255,255,0.72)",position:"relative",overflow:"hidden"}}>
+          <div style={{borderRadius:24,padding:"26px 28px 22px",background:"linear-gradient(135deg,rgba(16,185,129,0.08) 0%,rgba(255,255,255,0.60) 100%)",backdropFilter:"blur(16px)",WebkitBackdropFilter:"blur(16px)",boxShadow:"0 8px 32px rgba(16,185,129,.10),0 2px 8px rgba(0,0,0,.04)",border:"1px solid var(--glass-border)",position:"relative",overflow:"hidden"}}>
             <div style={{position:"absolute",top:-28,right:-28,width:110,height:110,borderRadius:"50%",background:"rgba(255,255,255,.45)",pointerEvents:"none"}}/>
             <div style={{position:"absolute",bottom:-12,right:18,width:64,height:64,borderRadius:"50%",background:"rgba(255,255,255,.30)",pointerEvents:"none"}}/>
             <p style={{fontSize:10,fontWeight:800,color:"#10b981",letterSpacing:".1em",textTransform:"uppercase",margin:"0 0 16px",opacity:.8}}>CA du mois</p>
@@ -240,7 +240,7 @@ export default function AudDashboard() {
                     </div>
                     <div style={{display:"flex",alignItems:"center",gap:10}}>
                       <div style={{flex:1,height:5,background:"rgba(0,0,0,.06)",borderRadius:3,overflow:"hidden"}}>
-                        <div style={{width:`${pct}%`,height:"100%",background:eli?`linear-gradient(90deg,#10b981,#059669)`:`linear-gradient(90deg,#93c5fd,#3b82f6)`,borderRadius:3,transition:"width .6s"}}/>
+                        <div style={{width:`${pct}%`,height:"100%",background:eli?`#10b981`:`linear-gradient(90deg,#93c5fd,#3b82f6)`,borderRadius:3,transition:"width .6s"}}/>
                       </div>
                       <span style={{fontSize:11,fontWeight:700,color:bc,flexShrink:0}}>{pct}%</span>
                       <span style={{fontSize:11,color:"#94a3b8",flexShrink:0}}>

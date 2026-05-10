@@ -85,7 +85,7 @@ export function Expertises() {
                     }
                   `}
                   style={{
-                    background: "rgba(255,255,255,0.58)",
+                    background: "var(--glass-bg)",
                     backdropFilter: "blur(20px)",
                     WebkitBackdropFilter: "blur(20px)",
                     border: isVision

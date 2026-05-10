@@ -6,15 +6,15 @@ import DraggableWindow from "@/components/ui/DraggableWindow";
 
 /* ── Glass style tokens ─────────────────────────────────────────────────── */
 const glass: CSSProperties = {
-  background: "rgba(255,255,255,0.58)",
+  background: "var(--glass-bg)",
   backdropFilter: "blur(20px)",
   WebkitBackdropFilter: "blur(20px)",
-  border: "1px solid rgba(255,255,255,0.72)",
+  border: "1px solid var(--glass-border)",
   boxShadow: "0 8px 32px rgba(0,0,0,0.06)",
 };
 const glassSubtle: CSSProperties = {
-  background: "rgba(255,255,255,0.45)",
-  border: "1px solid rgba(255,255,255,0.65)",
+  background: "var(--glass-subtle-bg)",
+  border: "1px solid var(--glass-subtle-border)",
 };
 
 const PRIMARY = "#00C98A";
@@ -295,7 +295,7 @@ function NouveauTicketModal({ tickets, onSave, onClose }: { tickets: TicketSAV[]
       defaultWidth={600}
       defaultHeight={640}
     >
-      <div style={{ background: "rgba(255,255,255,0.97)", padding: "24px" }}>
+      <div style={{ background: "var(--glass-card-bg)", padding: "24px" }}>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div className="grid grid-cols-2 gap-3">
           <div>
@@ -450,7 +450,7 @@ function DetailModal({ ticket, onSave, onDelete, onClose }: { ticket: TicketSAV;
       defaultWidth={640}
       defaultHeight={700}
     >
-      <div style={{ background: "rgba(255,255,255,0.97)", padding: "24px" }}>
+      <div style={{ background: "var(--glass-card-bg)", padding: "24px" }}>
       <div className="flex items-center gap-2 mb-4">
         <Badge label={edited.priorite} {...PRIORITE_COLORS[edited.priorite]} />
         <Badge label={edited.status} {...STATUS_COLORS[edited.status]} />
@@ -575,7 +575,7 @@ function DetailModal({ ticket, onSave, onDelete, onClose }: { ticket: TicketSAV;
             <button
               onClick={resolveTicket}
               className="rounded-xl px-4 py-2 text-sm font-semibold text-white transition-opacity hover:opacity-90"
-              style={{ background: "linear-gradient(135deg, #10b981, #059669)" }}
+              style={{ background: "#10b981" }}
             >
               Marquer résolu
             </button>
@@ -697,7 +697,7 @@ function TicketCard({ ticket, onView, onResolve }: { ticket: TicketSAV; onView: 
             <span>Ouvert le {fmtDate(ticket.dateOuverture)}</span>
             {ticket.dateEcheance && (
               <span className={isOverdue ? "text-red-500 font-semibold" : "text-amber-500"}>
-                {isOverdue ? "⚠ En retard — " : "Échéance "}{fmtDate(ticket.dateEcheance)}
+                {isOverdue ? "En retard — " : "Échéance "}{fmtDate(ticket.dateEcheance)}
               </span>
             )}
             {ticket.technicien && <span>Audiol: {ticket.technicien}</span>}
@@ -718,7 +718,7 @@ function TicketCard({ ticket, onView, onResolve }: { ticket: TicketSAV; onView: 
             <button
               onClick={onResolve}
               className="rounded-xl px-3 py-1.5 text-xs font-semibold text-white transition-opacity hover:opacity-90"
-              style={{ background: "linear-gradient(135deg, #10b981, #059669)" }}
+              style={{ background: "#10b981" }}
             >
               Résoudre
             </button>

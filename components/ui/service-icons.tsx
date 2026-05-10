@@ -2,7 +2,7 @@ import * as React from "react";
 
 type IconProps = React.SVGProps<SVGSVGElement>;
 
-/* ✅ Optique (on ne touche pas) */
+/* Optique (on ne touche pas) */
 export function EyeIcon(props: IconProps) {
   return (
     <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" {...props}>
@@ -45,7 +45,7 @@ export function LensIcon(props: IconProps) {
   );
 }
 
-/* ✅ Audio : TEST AUDITIF = vraie oreille (plus “oreille” visuellement) */
+/* Audio : TEST AUDITIF = vraie oreille (plus “oreille” visuellement) */
 export function EarIcon(props: IconProps) {
   return (
     <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" {...props}>
@@ -76,7 +76,7 @@ export function EarIcon(props: IconProps) {
   );
 }
 
-/* ✅ Audio : APPAREILLAGE = appareil auditif simple (BTE) */
+/* Audio : APPAREILLAGE = appareil auditif simple (BTE) */
 export function HearingAidIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg viewBox="0 0 24 24" fill="none" {...props}>

@@ -7,10 +7,10 @@ import {
 } from "recharts";
 
 const glass: CSSProperties = {
-  background: "rgba(255,255,255,0.58)",
+  background: "var(--glass-bg)",
   backdropFilter: "blur(20px)",
   WebkitBackdropFilter: "blur(20px)",
-  border: "1px solid rgba(255,255,255,0.72)",
+  border: "1px solid var(--glass-border)",
   boxShadow: "0 8px 32px rgba(0,0,0,0.06)",
 };
 
@@ -47,7 +47,7 @@ function CustomTooltip({ active, payload, label }: any) {
   return (
     <div
       className="rounded-xl px-3 py-2 text-xs shadow-lg"
-      style={{ background: "rgba(255,255,255,0.95)", border: "1px solid rgba(0,201,138,0.2)" }}
+      style={{ background: "var(--glass-card-bg)", border: "1px solid rgba(0,201,138,0.2)" }}
     >
       <div className="font-semibold text-slate-700 mb-1">{label}</div>
       {payload.map((p: any) => (

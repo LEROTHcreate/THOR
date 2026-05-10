@@ -9,11 +9,11 @@ const glass: CSSProperties = {
   background: "rgba(255,255,255,0.62)",
   backdropFilter: "blur(20px)",
   WebkitBackdropFilter: "blur(20px)",
-  border: "1px solid rgba(255,255,255,0.75)",
+  border: "1px solid var(--glass-strong-border)",
   boxShadow: "0 4px 24px rgba(0,0,0,0.06)",
 };
 const white: CSSProperties = {
-  background: "rgba(255,255,255,0.92)",
+  background: "var(--glass-card-bg)",
   border: "1px solid rgba(226,232,240,0.8)",
   boxShadow: "0 1px 4px rgba(0,0,0,0.04)",
 };
@@ -90,10 +90,10 @@ const MOCK_DOSSIERS: Record<string, FullDossier> = {
       { produit: "Verres Varilux X Design OD+OG",   garantieFab: "Jan. 2028", garantieMag: "Jan. 2027", statut: "Valide" },
     ],
     documents: [
-      { nom: "Ordonnance Dr. Aubert — 20 jan. 2026", type: "ordonnance", date: "20 jan. 2026", icon: "📋" },
-      { nom: "Attestation mutuelle MGEN",             type: "mutuelle",   date: "15 jan. 2026", icon: "🏥" },
-      { nom: "Bon de livraison — FAC-2026-003",       type: "livraison",  date: "25 jan. 2026", icon: "📦" },
-      { nom: "Facture acquittée — FAC-2026-003",      type: "facture",    date: "25 jan. 2026", icon: "🧾" },
+      { nom: "Ordonnance Dr. Aubert — 20 jan. 2026", type: "ordonnance", date: "20 jan. 2026", icon: "" },
+      { nom: "Attestation mutuelle MGEN",             type: "mutuelle",   date: "15 jan. 2026", icon: "" },
+      { nom: "Bon de livraison — FAC-2026-003",       type: "livraison",  date: "25 jan. 2026", icon: "" },
+      { nom: "Facture acquittée — FAC-2026-003",      type: "facture",    date: "25 jan. 2026", icon: "" },
     ],
     notes: "Première paire de progressifs. Montage soigneux — cliente très satisfaite.",
   },
@@ -117,8 +117,8 @@ const MOCK_DOSSIERS: Record<string, FullDossier> = {
     pecMutuelle: { nom: "MGEN", contrat: "MGEN Santé Confort", garantieOptique: "30 € / an lentilles", montant: 30, reseauAdherent: true },
     rac: 103.60,
     documents: [
-      { nom: "Ordonnance Dr. Lefebvre — mars 2025", type: "ordonnance", date: "3 mars 2025",    icon: "📋" },
-      { nom: "Fiche de suivi lentilles",             type: "suivi",      date: "10 sept. 2025", icon: "📄" },
+      { nom: "Ordonnance Dr. Lefebvre — mars 2025", type: "ordonnance", date: "3 mars 2025",    icon: "" },
+      { nom: "Fiche de suivi lentilles",             type: "suivi",      date: "10 sept. 2025", icon: "" },
     ],
     notes: "Pack 6 mois Air Optix Aqua mensuelle.",
   },
@@ -134,16 +134,16 @@ const MOCK_DOSSIERS: Record<string, FullDossier> = {
     totalHT: 447.57, totalTTC: 455, devisId: "25050077",
     pecMutuelle: { nom: "MGEN", contrat: "MGEN Santé Confort", garantieOptique: "80 € / monture", montant: 80, reseauAdherent: true },
     rac: 375,
-    documents: [{ nom: "Devis DEV-2025-077", type: "devis", date: "2 mai 2025", icon: "📄" }],
+    documents: [{ nom: "Devis DEV-2025-077", type: "devis", date: "2 mai 2025", icon: "" }],
     notes: "Verres polarisants pour conduite.",
   },
 };
 
 const EQUIP_META: Record<EquipementType, { label: string; icon: string; color: string; bg: string }> = {
-  "lunettes-vue":    { label: "Lunettes de vue",    icon: "👓", color: ACCENT,    bg: "rgba(45,140,255,0.10)" },
-  "lunettes-soleil": { label: "Lunettes de soleil", icon: "😎", color: "#F59E0B", bg: "rgba(245,158,11,0.10)"  },
-  "lentilles":       { label: "Lentilles",          icon: "👁",  color: "#00C98A", bg: "rgba(0,201,138,0.10)"  },
-  "divers":          { label: "Divers",             icon: "📎", color: "#8B5CF6", bg: "rgba(139,92,246,0.10)" },
+  "lunettes-vue":    { label: "Lunettes de vue",    icon: "", color: ACCENT,    bg: "rgba(45,140,255,0.10)" },
+  "lunettes-soleil": { label: "Lunettes de soleil", icon: "", color: "#F59E0B", bg: "rgba(245,158,11,0.10)"  },
+  "lentilles":       { label: "Lentilles",          icon: "",  color: "#00C98A", bg: "rgba(0,201,138,0.10)"  },
+  "divers":          { label: "Divers",             icon: "", color: "#8B5CF6", bg: "rgba(139,92,246,0.10)" },
 };
 const STATUT_META: Record<string, { color: string; bg: string }> = {
   "Payé":       { color: "#15803d", bg: "rgba(21,128,61,0.10)"   },
@@ -258,7 +258,7 @@ function OrdoDate({ dateOrd, dateExp, type }: { dateOrd: string; dateExp: string
       </span>
       {show && (
         <span style={{ position: "absolute", bottom: "calc(100% + 6px)", left: "50%", transform: "translateX(-50%)", background: "rgba(15,23,42,0.92)", color: "white", fontSize: 11, padding: "6px 12px", borderRadius: 8, zIndex: 200, boxShadow: "0 4px 12px rgba(0,0,0,0.25)", lineHeight: 1.6, textAlign: "center", minWidth: 220 }}>
-          <div>{expired ? "⚠ Expirée le " : "Valable jusqu'au "}<strong>{expFr}</strong></div>
+          <div>{expired ? "Expirée le " : "Valable jusqu'au "}<strong>{expFr}</strong></div>
           <div style={{ opacity: 0.75, fontSize: 10, marginTop: 2 }}>{regle}</div>
         </span>
       )}
@@ -446,7 +446,7 @@ function TabDossier({
             {dossier.lignes.map((l, idx) => {
               const cat = CAT_OPTS.find(c => c.v === l.categorie);
               return (
-                <div key={l.id} style={{ display: "grid", gridTemplateColumns: editing ? "88px minmax(0,1fr) 95px 58px 72px 72px 58px 28px" : "88px minmax(0,1fr) 130px 58px 78px 78px 58px", gap: "0 6px", padding: "8px 12px", borderTop: idx > 0 ? "1px solid rgba(241,245,249,1)" : "none", alignItems: "center", background: "rgba(255,255,255,0.8)" }}>
+                <div key={l.id} style={{ display: "grid", gridTemplateColumns: editing ? "88px minmax(0,1fr) 95px 58px 72px 72px 58px 28px" : "88px minmax(0,1fr) 130px 58px 78px 78px 58px", gap: "0 6px", padding: "8px 12px", borderTop: idx > 0 ? "1px solid rgba(241,245,249,1)" : "none", alignItems: "center", background: "var(--glass-strong-bg)" }}>
                   {editing ? (
                     <select value={l.categorie} onChange={e => updLigne(l.id, { categorie: e.target.value as LigneEquipement["categorie"] })}
                       style={{ ...iBase, fontSize: 10, padding: "3px 5px" }}>
@@ -638,7 +638,7 @@ function TabDossier({
         )}
 
         {/* NOTES */}
-        <Section title="Notes internes 🔒">
+        <Section title="Notes internes">
           <textarea value={dossier.notes ?? ""} onChange={e => setDossier(d => ({ ...d, notes: e.target.value }))}
             rows={3} placeholder="Notes internes…"
             style={{ ...iBase, width: "100%", resize: "vertical", boxSizing: "border-box", fontSize: 12 }} />
@@ -716,7 +716,7 @@ function TabTiersPayant({ dossier }: { dossier: FullDossier }) {
           <div>
             <div style={{ fontSize: 10, fontWeight: 700, color: "#94a3b8", textTransform: "uppercase", letterSpacing: "0.07em", marginBottom: 6 }}>Mode de lecture</div>
             <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
-              {([["sesam-vitale", "💳 Sesam-Vitale"], ["vitale-degr", "⌨ Saisie dégradée"], ["noemie", "🔗 Flux NOEMIE"], ["manuel", "✏ Manuel"]] as [ModeLecture, string][]).map(([k, l]) => (
+              {([["sesam-vitale", "Sesam-Vitale"], ["vitale-degr", "Saisie dégradée"], ["noemie", "Flux NOEMIE"], ["manuel", "Manuel"]] as [ModeLecture, string][]).map(([k, l]) => (
                 <button key={k} onClick={() => setModeLecture(k)}
                   style={{ padding: "6px 12px", borderRadius: 8, fontSize: 12, fontWeight: 600, cursor: "pointer", border: "none", background: modeLecture === k ? `linear-gradient(135deg,${ACCENT},${ACCENT_D})` : "rgba(241,245,249,0.9)", color: modeLecture === k ? "white" : "#475569" }}>
                   {l}
@@ -763,7 +763,7 @@ function TabTiersPayant({ dossier }: { dossier: FullDossier }) {
               </div>
               {/* Délai de carence */}
               <div style={{ borderTop: "1px solid rgba(21,128,61,0.15)", paddingTop: 10, display: "flex", alignItems: "center", gap: 8 }}>
-                <span style={{ fontSize: 18 }}>📅</span>
+                <span style={{ fontSize: 18 }}></span>
                 <div>
                   <div style={{ fontSize: 11, fontWeight: 700, color: "#374151" }}>Délai de carence : <span style={{ color: "#15803d" }}>✓ Renouvellement autorisé</span></div>
                   <div style={{ fontSize: 10, color: "#64748b" }}>Dernier équipement remboursé : &gt; 2 ans · Adulte ≥ 16 ans — délai minimal 2 ans (art. R.165-1 CSS)</div>
@@ -796,7 +796,7 @@ function TabTiersPayant({ dossier }: { dossier: FullDossier }) {
             <span style={{ textAlign: "right" }}>Part SS</span>
           </div>
           {lignesRemb.map((l, i) => (
-            <div key={l.id} style={{ display: "grid", gridTemplateColumns: "1fr 90px 80px 70px 80px", gap: "0 8px", padding: "8px 14px", borderTop: "1px solid rgba(241,245,249,1)", background: "rgba(255,255,255,0.8)", alignItems: "center" }}>
+            <div key={l.id} style={{ display: "grid", gridTemplateColumns: "1fr 90px 80px 70px 80px", gap: "0 8px", padding: "8px 14px", borderTop: "1px solid rgba(241,245,249,1)", background: "var(--glass-strong-bg)", alignItems: "center" }}>
               <div>
                 <div style={{ fontSize: 12, fontWeight: 600, color: "#1e293b" }}>{l.designation}</div>
                 <div style={{ fontSize: 10, color: "#94a3b8", marginTop: 1, display: "flex", gap: 6 }}>
@@ -828,7 +828,7 @@ function TabTiersPayant({ dossier }: { dossier: FullDossier }) {
           {dossier.lignes.every(l => !l.classe || l.classe === "B") && (
             <div style={{ padding: "8px 14px", background: "rgba(245,158,11,0.05)", borderTop: "1px solid rgba(245,158,11,0.2)" }}>
               <p style={{ fontSize: 10, color: "#b45309", margin: 0 }}>
-                ⚠ <strong>Équipement 100 % Classe B (libre tarifaire)</strong> — La part SS est symbolique (LPPR Titre II, bases non revalorisées).
+                <strong>Équipement 100 % Classe B (libre tarifaire)</strong> — La part SS est symbolique (LPPR Titre II, bases non revalorisées).
                 La prise en charge réelle provient de la mutuelle. Proposer un équipement Classe A pour un RAC nul (100 % Santé, arrêté du 11/07/2019).
               </p>
             </div>
@@ -940,7 +940,7 @@ function TabTiersPayant({ dossier }: { dossier: FullDossier }) {
               </div>
               <button onClick={() => { setNoemie("loading"); setTimeout(() => setNoemie("ok"), 2000); }} disabled={noemie !== "idle"}
                 style={{ padding: "9px 20px", borderRadius: 10, fontSize: 12, fontWeight: 700, color: "white", border: "none", cursor: noemie !== "idle" ? "default" : "pointer", background: noemie === "ok" ? "#15803d" : noemie === "loading" ? "#94a3b8" : `linear-gradient(135deg,${ACCENT},${ACCENT_D})` }}>
-                {noemie === "ok" ? "✓ FSE transmise" : noemie === "loading" ? "Envoi en cours…" : "📤 Transmettre la FSE"}
+                {noemie === "ok" ? "✓ FSE transmise" : noemie === "loading" ? "Envoi en cours…" : "Transmettre la FSE"}
               </button>
             </div>
             {noemie === "ok" && (
@@ -969,12 +969,12 @@ function TabTiersPayant({ dossier }: { dossier: FullDossier }) {
    DOCUMENTS
 ═══════════════════════════════════════════════════════════════════════════ */
 const DOC_TYPES_OPT = [
-  { id: "ordonnance",   label: "Ordonnance",          icon: "📋" },
-  { id: "mutuelle",     label: "Attestation mutuelle", icon: "🏥" },
+  { id: "ordonnance",   label: "Ordonnance",          icon: "" },
+  { id: "mutuelle",     label: "Attestation mutuelle", icon: "" },
   { id: "carte-vitale", label: "Carte vitale",         icon: "🪪" },
-  { id: "facture",      label: "Facture / Devis",      icon: "🧾" },
-  { id: "livraison",    label: "Bon de livraison",     icon: "📦" },
-  { id: "autre",        label: "Autre document",       icon: "📎" },
+  { id: "facture",      label: "Facture / Devis",      icon: "" },
+  { id: "livraison",    label: "Bon de livraison",     icon: "" },
+  { id: "autre",        label: "Autre document",       icon: "" },
 ] as const;
 
 interface DocItem { nom: string; type: string; date: string; icon: string }
@@ -1047,7 +1047,7 @@ function TabDocuments({ dossier, setDossier }: {
       nom: finalNom + ".pdf",
       type: dropModal.type || "autre",
       date: new Date().toLocaleDateString("fr-FR"),
-      icon: meta?.icon ?? "📎",
+      icon: meta?.icon ?? "",
     }]);
     // Auto-remplir le dossier depuis l'OCR
     if (Object.keys(dropModal.extracted).length > 0) {
@@ -1082,7 +1082,7 @@ function TabDocuments({ dossier, setDossier }: {
         onDrop={e => { e.preventDefault(); setDragOver(false); const f = e.dataTransfer.files[0]; if (f) handleFile(f); }}
         onClick={() => document.getElementById("opt-doc-in")?.click()}
         style={{ borderRadius: 14, padding: "36px 24px", display: "flex", flexDirection: "column", alignItems: "center", gap: 8, cursor: "pointer", transition: "all 0.2s", border: `2px dashed ${dragOver ? ACCENT : ACCENT + "44"}`, background: dragOver ? `${ACCENT}06` : "transparent" }}>
-        <span style={{ fontSize: 32 }}>📂</span>
+        <span style={{ fontSize: 32 }}></span>
         <p style={{ fontSize: 13, fontWeight: 700, color: ACCENT, margin: 0 }}>Glissez un document ici</p>
         <p style={{ fontSize: 11, color: "#94a3b8", margin: 0 }}>ou cliquez pour parcourir — OCR automatique</p>
         <input id="opt-doc-in" type="file" style={{ display: "none" }} onChange={e => { const f = e.target.files?.[0]; if (f) handleFile(f); }} />
@@ -1094,7 +1094,7 @@ function TabDocuments({ dossier, setDossier }: {
               <span style={{ fontSize: 14, fontWeight: 700, color: "#1e293b" }}>Type de document</span>
               <button onClick={() => setDropModal(null)} style={{ background: "none", border: "none", cursor: "pointer", fontSize: 20, color: "#94a3b8" }}>×</button>
             </div>
-            <div style={{ borderRadius: 8, padding: "6px 10px", background: "rgba(241,245,249,0.9)", fontSize: 12, color: "#64748b", marginBottom: 12 }}>📎 {dropModal.file.name}</div>
+            <div style={{ borderRadius: 8, padding: "6px 10px", background: "rgba(241,245,249,0.9)", fontSize: 12, color: "#64748b", marginBottom: 12 }}>{dropModal.file.name}</div>
             {!dropModal.type && (
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 7 }}>
                 {DOC_TYPES_OPT.map(dt => (
@@ -1180,7 +1180,7 @@ export default function DossierVisitePage({ params }: { params: Promise<{ id: st
   if (!base) {
     return (
       <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", minHeight: "60vh", gap: 12 }}>
-        <span style={{ fontSize: 40 }}>🔍</span>
+        <span style={{ fontSize: 40 }}></span>
         <p style={{ color: "#94a3b8", fontSize: 14 }}>Dossier introuvable.</p>
         <Link href={`/clair-vision/pro/patients/${id}`} style={{ color: ACCENT, fontSize: 13, fontWeight: 600 }}>← Retour à la fiche patient</Link>
       </div>
@@ -1211,9 +1211,9 @@ export default function DossierVisitePage({ params }: { params: Promise<{ id: st
   const canFacture = dossier.statut === "Accepté";
 
   const TABS: { key: TabKey; label: string; icon: string }[] = [
-    { key: "dossier",     label: "Dossier",     icon: "📋" },
-    { key: "tierspayant", label: "Tiers Payant", icon: "🏦" },
-    { key: "documents",   label: `Documents${(dossier.documents?.length ?? 0) > 0 ? ` (${dossier.documents?.length})` : ""}`, icon: "📂" },
+    { key: "dossier",     label: "Dossier",     icon: "" },
+    { key: "tierspayant", label: "Tiers Payant", icon: "" },
+    { key: "documents",   label: `Documents${(dossier.documents?.length ?? 0) > 0 ? ` (${dossier.documents?.length})` : ""}`, icon: "" },
   ];
 
   return (
@@ -1247,7 +1247,7 @@ export default function DossierVisitePage({ params }: { params: Promise<{ id: st
                 <span style={{ fontSize: 15, fontWeight: 800, color: "#1e293b" }}>{meta.label}</span>
                 <span style={{ fontSize: 11, fontWeight: 700, padding: "2px 9px", borderRadius: 20, background: statutMeta.bg, color: statutMeta.color }}>{dossier.statut}</span>
                 {dossier.devisId && <span style={{ fontSize: 11, color: "#94a3b8", fontFamily: "monospace" }}>{dossier.devisId}</span>}
-                {editing && tab === "dossier" && <span style={{ fontSize: 11, fontWeight: 700, color: ACCENT, padding: "2px 8px", borderRadius: 6, background: `${ACCENT}12` }}>✏ Mode édition</span>}
+                {editing && tab === "dossier" && <span style={{ fontSize: 11, fontWeight: 700, color: ACCENT, padding: "2px 8px", borderRadius: 6, background: `${ACCENT}12` }}>Mode édition</span>}
               </div>
               <div style={{ fontSize: 11, color: "#64748b" }}>{dossier.dateFr}{dossier.praticien && ` · ${dossier.praticien}`}</div>
             </div>
@@ -1269,7 +1269,7 @@ export default function DossierVisitePage({ params }: { params: Promise<{ id: st
               {tab === "dossier" && !editing && (
                 <button onClick={() => setEditing(true)}
                   style={{ padding: "7px 14px", borderRadius: 8, fontSize: 12, fontWeight: 600, color: ACCENT, background: `${ACCENT}10`, border: `1px solid ${ACCENT}25`, cursor: "pointer" }}>
-                  ✏ Modifier
+                  Modifier
                 </button>
               )}
               {tab === "dossier" && editing && (
@@ -1288,22 +1288,22 @@ export default function DossierVisitePage({ params }: { params: Promise<{ id: st
               <button
                 onClick={() => window.open(`/clair-vision/pro/patients/${id}/visites/${visiteId}/facture?autoprint=1`, "_blank")}
                 style={{ padding: "7px 12px", borderRadius: 8, fontSize: 12, fontWeight: 600, color: "#374151", background: "rgba(241,245,249,0.9)", border: "none", cursor: "pointer" }}
-              >🖨 Imprimer</button>
+              >Imprimer</button>
               <button
                 onClick={() => setEmailModal(true)}
                 style={{ padding: "7px 12px", borderRadius: 8, fontSize: 12, fontWeight: 600, color: "#374151", background: "rgba(241,245,249,0.9)", border: "none", cursor: "pointer" }}
-              >✉ Envoyer</button>
+              >Envoyer</button>
 
               {canAccept && (
                 <button onClick={accepterPEC}
-                  style={{ padding: "8px 16px", borderRadius: 9, fontSize: 12, fontWeight: 700, color: "white", border: "none", cursor: "pointer", background: "linear-gradient(135deg, #10b981, #059669)", boxShadow: "0 2px 8px rgba(16,185,129,0.35)" }}>
+                  style={{ padding: "8px 16px", borderRadius: 9, fontSize: 12, fontWeight: 700, color: "white", border: "none", cursor: "pointer", background: "#10b981", boxShadow: "0 2px 8px rgba(16,185,129,0.35)" }}>
                   ✓ Accepter la prise en charge
                 </button>
               )}
               {canFacture && (
                 <button onClick={facturer}
                   style={{ padding: "8px 16px", borderRadius: 9, fontSize: 12, fontWeight: 700, color: "white", border: "none", cursor: "pointer", background: `linear-gradient(135deg, ${ACCENT}, ${ACCENT_D})`, boxShadow: `0 2px 8px ${ACCENT}40` }}>
-                  🧾 Facturer — {eur(rac)}
+                  Facturer — {eur(rac)}
                 </button>
               )}
               {dossier.statut === "Facturé" && (
@@ -1346,7 +1346,7 @@ export default function DossierVisitePage({ params }: { params: Promise<{ id: st
           >
             {emailSent ? (
               <div style={{ textAlign: "center", padding: "16px 0" }}>
-                <div style={{ fontSize: 40, marginBottom: 12 }}>✅</div>
+                <div style={{ fontSize: 40, marginBottom: 12 }}></div>
                 <p style={{ fontSize: 16, fontWeight: 700, color: "#1e293b", margin: "0 0 6px" }}>Email envoyé !</p>
                 <p style={{ fontSize: 13, color: "#64748b", margin: 0 }}>La facture a été transmise à {dossier.patientNom}.</p>
                 <button
@@ -1357,7 +1357,7 @@ export default function DossierVisitePage({ params }: { params: Promise<{ id: st
             ) : (
               <>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20 }}>
-                  <span style={{ fontSize: 15, fontWeight: 700, color: "#1e293b" }}>✉ Envoyer par email</span>
+                  <span style={{ fontSize: 15, fontWeight: 700, color: "#1e293b" }}>Envoyer par email</span>
                   <button onClick={() => setEmailModal(false)} style={{ background: "none", border: "none", fontSize: 20, cursor: "pointer", color: "#94a3b8", lineHeight: 1 }}>×</button>
                 </div>
                 <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
@@ -1384,7 +1384,7 @@ export default function DossierVisitePage({ params }: { params: Promise<{ id: st
                     />
                   </label>
                   <div style={{ fontSize: 11, color: "#94a3b8", background: "#f8fafc", borderRadius: 8, padding: "8px 10px" }}>
-                    📎 Pièce jointe : <strong>{dossier.facture ? `facture_${dossier.facture.id}` : `devis_${dossier.devisId}`}.pdf</strong> (généré automatiquement)
+                    Pièce jointe : <strong>{dossier.facture ? `facture_${dossier.facture.id}` : `devis_${dossier.devisId}`}.pdf</strong> (généré automatiquement)
                   </div>
                 </div>
                 <div style={{ display: "flex", justifyContent: "flex-end", gap: 8, marginTop: 20 }}>
@@ -1395,7 +1395,7 @@ export default function DossierVisitePage({ params }: { params: Promise<{ id: st
                   <button
                     onClick={() => setEmailSent(true)}
                     style={{ padding: "9px 18px", borderRadius: 8, background: ACCENT, color: "#fff", border: "none", fontWeight: 600, fontSize: 13, cursor: "pointer" }}
-                  >✉ Envoyer</button>
+                  >Envoyer</button>
                 </div>
               </>
             )}

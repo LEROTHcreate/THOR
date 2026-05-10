@@ -4,16 +4,16 @@ import { useMemo, useState } from "react";
 import { roleLabel, type ProRole } from "@/lib/utils";
 
 const glass = {
-  background: "rgba(255,255,255,0.58)",
+  background: "var(--glass-bg)",
   backdropFilter: "blur(20px)",
   WebkitBackdropFilter: "blur(20px)",
-  border: "1px solid rgba(255,255,255,0.72)",
+  border: "1px solid var(--glass-border)",
   boxShadow: "0 8px 32px rgba(0,0,0,0.06)",
 } as React.CSSProperties;
 
 const glassSubtle = {
-  background: "rgba(255,255,255,0.45)",
-  border: "1px solid rgba(255,255,255,0.65)",
+  background: "var(--glass-subtle-bg)",
+  border: "1px solid var(--glass-subtle-border)",
 } as React.CSSProperties;
 
 type ThreadType = "Centre" | "Praticien" | "Support";
@@ -146,7 +146,7 @@ export default function MessagesPage() {
                 onClick={() => setFilter(k)}
                 className="rounded-full px-3 py-1 text-xs font-semibold transition"
                 style={filter === k
-                  ? { background: "linear-gradient(135deg, #2D8CFF, #1A72E8)", color: "#fff", border: "none" }
+                  ? { background: "#2D8CFF", color: "#fff", border: "none" }
                   : glassSubtle}
               >
                 {k}
@@ -187,7 +187,7 @@ export default function MessagesPage() {
         {/* RIGHT */}
         <div className="lg:col-span-8 rounded-2xl overflow-hidden flex flex-col" style={glass}>
           {/* chat header */}
-          <div className="flex items-center justify-between gap-3 px-4 py-3" style={{ borderBottom: "1px solid rgba(255,255,255,0.60)" }}>
+          <div className="flex items-center justify-between gap-3 px-4 py-3" style={{ borderBottom: "1px solid var(--glass-sep)" }}>
             <div className="min-w-0">
               <div className="flex items-center gap-2">
                 <div className="truncate text-sm font-semibold text-slate-900">{active?.title ?? "—"}</div>
@@ -208,7 +208,7 @@ export default function MessagesPage() {
                 <div key={m.id} className="flex">
                   {m.side === "out" ? (
                     <div className="ml-auto max-w-[72%] rounded-2xl px-4 py-3 text-sm text-white shadow-sm"
-                         style={{ background: "linear-gradient(135deg, #2D8CFF, #1A72E8)" }}>
+                         style={{ background: "#2D8CFF" }}>
                       <div>{m.text}</div>
                       <div className="mt-1 text-[11px] text-white/80">{m.time}</div>
                     </div>
@@ -225,7 +225,7 @@ export default function MessagesPage() {
           </div>
 
           {/* input */}
-          <div className="p-3" style={{ borderTop: "1px solid rgba(255,255,255,0.60)" }}>
+          <div className="p-3" style={{ borderTop: "1px solid var(--glass-sep)" }}>
             <div className="flex items-center gap-2">
               <input
                 value={draft}
@@ -237,7 +237,7 @@ export default function MessagesPage() {
               <button
                 onClick={() => setDraft("")}
                 className="h-11 rounded-2xl px-5 text-sm font-semibold text-white hover:opacity-95 flex-shrink-0"
-                style={{ background: "linear-gradient(135deg, #2D8CFF, #1A72E8)" }}
+                style={{ background: "#2D8CFF" }}
               >
                 Envoyer
               </button>

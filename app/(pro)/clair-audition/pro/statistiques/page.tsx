@@ -10,15 +10,15 @@ import {
 
 /* ─── Style tokens ─────────────────────────────────────────────────── */
 const glass: CSSProperties = {
-  background: "rgba(255,255,255,0.58)",
+  background: "var(--glass-bg)",
   backdropFilter: "blur(20px)",
   WebkitBackdropFilter: "blur(20px)",
-  border: "1px solid rgba(255,255,255,0.72)",
+  border: "1px solid var(--glass-border)",
   boxShadow: "0 8px 32px rgba(0,0,0,0.06)",
 };
 const glassSubtle: CSSProperties = {
-  background: "rgba(255,255,255,0.45)",
-  border: "1px solid rgba(255,255,255,0.65)",
+  background: "var(--glass-subtle-bg)",
+  border: "1px solid var(--glass-subtle-border)",
 };
 
 /* ─── Period ────────────────────────────────────────────────────────── */
@@ -261,7 +261,7 @@ export default function StatistiquesAuditionPage() {
   const kpi = dynKpiPeriod[period];
 
   const periodBtnActive: CSSProperties = {
-    background: "linear-gradient(135deg, #00C98A, #059669)",
+    background: "#00C98A",
     color: "#fff",
     boxShadow: "0 2px 8px rgba(0,201,138,0.25)",
     border: "1px solid transparent",
@@ -272,9 +272,9 @@ export default function StatistiquesAuditionPage() {
     cursor: "pointer",
   };
   const periodBtnInactive: CSSProperties = {
-    background: "rgba(255,255,255,0.55)",
+    background: "var(--glass-subtle-bg)",
     color: "#64748b",
-    border: "1px solid rgba(255,255,255,0.65)",
+    border: "1px solid var(--glass-subtle-border)",
     borderRadius: 10,
     padding: "6px 16px",
     fontSize: 13,
@@ -301,7 +301,7 @@ export default function StatistiquesAuditionPage() {
             <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 4 }}>
               <div style={{
                 width: 36, height: 36, borderRadius: 10,
-                background: "linear-gradient(135deg, #00C98A, #059669)",
+                background: "#00C98A",
                 display: "flex", alignItems: "center", justifyContent: "center",
                 boxShadow: "0 2px 8px rgba(0,201,138,0.30)",
               }}>
@@ -361,7 +361,7 @@ export default function StatistiquesAuditionPage() {
       }}>
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 14 }}>
           <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-            <span style={{ fontSize: 16 }}>📊</span>
+            <span style={{ fontSize: 16 }}></span>
             <span style={{ fontSize: 14, fontWeight: 700, color: "#0f172a" }}>Données réelles (cabinet)</span>
           </div>
           <span style={{ fontSize: 11, color: "#64748b", fontWeight: 500 }}>Mis à jour en live</span>
@@ -374,8 +374,8 @@ export default function StatistiquesAuditionPage() {
             { label: "Renouvellements à venir",    value: realRenouvellements },
           ].map(m => (
             <div key={m.label} style={{
-              background: "rgba(255,255,255,0.60)",
-              border: "1px solid rgba(255,255,255,0.80)",
+              background: "var(--glass-strong-bg)",
+              border: "1px solid var(--glass-strong-border)",
               borderRadius: 12,
               padding: "12px 14px",
               textAlign: "center",
@@ -457,7 +457,7 @@ export default function StatistiquesAuditionPage() {
           gap: 12,
         }}>
           <div style={{ fontSize: 13, color: "#b91c1c", fontWeight: 600 }}>
-            🔴 {realEssaisActifs} essai(s) en cours — pensez à les suivre
+            {realEssaisActifs} essai(s) en cours — pensez à les suivre
           </div>
           <a
             href="/clair-audition/pro/essais"
@@ -605,7 +605,7 @@ export default function StatistiquesAuditionPage() {
         </div>
         <div style={{ marginTop: 20, padding: "12px 16px", borderRadius: 10, background: "rgba(0,201,138,0.06)", border: "1px solid rgba(0,201,138,0.15)" }}>
           <div style={{ fontSize: 12, color: "#047857", fontWeight: 600 }}>
-            💡 Insight — 59% de votre patientèle présente une perte sévère ou profonde (classe 2 recommandée)
+            Insight — 59% de votre patientèle présente une perte sévère ou profonde (classe 2 recommandée)
           </div>
         </div>
       </div>
@@ -680,7 +680,7 @@ export default function StatistiquesAuditionPage() {
             <div style={{ fontSize: 13, color: "#94a3b8" }}>147 avis</div>
             <div style={{ display: "flex", justifyContent: "center", gap: 3, marginTop: 6 }}>
               {[1,2,3,4,5].map(s => (
-                <span key={s} style={{ fontSize: 14, color: s <= 4 ? "#F59E0B" : "#e2e8f0" }}>★</span>
+                <span key={s} style={{ fontSize: 14, color: s <= 4 ? "#F59E0B" : "#e2e8f0" }}></span>
               ))}
             </div>
           </div>

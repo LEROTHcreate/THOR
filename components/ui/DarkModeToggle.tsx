@@ -8,7 +8,6 @@ export function useDarkMode() {
   const [dark, setDark] = useState(false);
 
   useEffect(() => {
-    // On mount: read from localStorage + apply
     const stored = localStorage.getItem(LS_KEY);
     const isDark = stored === "1";
     setDark(isDark);
@@ -27,11 +26,7 @@ export function useDarkMode() {
   return { dark, toggle };
 }
 
-export default function DarkModeToggle({
-  accent = "#2D8CFF",
-}: {
-  accent?: string;
-}) {
+export default function DarkModeToggle({ accent = "#2D8CFF" }: { accent?: string }) {
   const { dark, toggle } = useDarkMode();
 
   return (
@@ -43,19 +38,17 @@ export default function DarkModeToggle({
         alignItems: "center",
         gap: 8,
         width: "100%",
-        background: "rgba(255,255,255,0.45)",
-        border: `1px solid rgba(255,255,255,0.65)`,
+        background: dark ? "rgba(15,23,42,0.65)" : "var(--glass-subtle-bg)",
+        border: `1px solid ${dark ? "rgba(255,255,255,0.10)" : "var(--glass-subtle-border)"}`,
         borderRadius: 10,
         padding: "7px 12px",
         fontSize: 12,
         fontWeight: 500,
-        color: "#64748b",
+        color: dark ? "#94a3b8" : "#64748b",
         cursor: "pointer",
         marginTop: 6,
-        transition: "all 0.15s",
+        transition: "all 0.2s",
       }}
-      onMouseEnter={e => { e.currentTarget.style.background = "rgba(255,255,255,0.65)"; }}
-      onMouseLeave={e => { e.currentTarget.style.background = "rgba(255,255,255,0.45)"; }}
     >
       {/* Icon */}
       {dark ? (
@@ -75,7 +68,7 @@ export default function DarkModeToggle({
           <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
         </svg>
       )}
-      {dark ? "Mode clair" : "Mode sombre"}
+      <span>{dark ? "Mode clair" : "Mode sombre"}</span>
       {/* Toggle pill */}
       <span style={{
         marginLeft: "auto",
@@ -96,7 +89,7 @@ export default function DarkModeToggle({
           borderRadius: "50%",
           background: "#fff",
           transition: "left 0.2s",
-          boxShadow: "0 1px 3px rgba(0,0,0,0.2)",
+          boxShadow: "0 1px 3px rgba(0,0,0,0.25)",
         }} />
       </span>
     </button>

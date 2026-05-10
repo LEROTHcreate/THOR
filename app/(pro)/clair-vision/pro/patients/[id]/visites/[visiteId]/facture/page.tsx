@@ -271,9 +271,9 @@ export default function FacturePage() {
         <span style={{ flex: 1, fontSize: 13, fontWeight: 600, color: "#1e293b" }}>
           {docType} N° {docId} — {d.patientNom}
         </span>
-        <button style={{ ...btn, background: "linear-gradient(135deg,#2D8CFF,#1A72E8)", color: "white" }}
+        <button style={{ ...btn, background: "#2D8CFF", color: "white" }}
           onClick={() => window.print()}>
-          🖨 Imprimer / PDF
+          Imprimer / PDF
         </button>
       </div>
 
@@ -288,7 +288,7 @@ export default function FacturePage() {
               <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 10 }}>
                 {config?.logo
                   ? <img src={config.logo} alt="logo" style={{ height: 40, maxWidth: 120, objectFit: "contain" }} />
-                  : <span style={{ fontSize: 26 }}>👓</span>
+                  : <span style={{ fontSize: 26 }}></span>
                 }
                 <span style={{ fontSize: 17, fontWeight: 900, color: "#1e293b", letterSpacing: "-0.02em" }}>
                   {cab.nom}
@@ -519,7 +519,7 @@ export default function FacturePage() {
               </table>
               {latestGarantieDate && (
                 <div style={{ marginTop: 5, fontSize: 9, color: "#1d4ed8", fontStyle: "italic" }}>
-                  🛡 Vous avez jusqu&apos;au <strong>{dateLong(latestGarantieDate)}</strong> pour prolonger la protection de votre équipement — renseignez-vous en magasin.
+                  Vous avez jusqu&apos;au <strong>{dateLong(latestGarantieDate)}</strong> pour prolonger la protection de votre équipement — renseignez-vous en magasin.
                 </div>
               )}
             </div>

@@ -9,21 +9,21 @@ import { downloadElementAsPdf, factureFilename } from "@/lib/generatePdf";
    STYLE TOKENS
 ═══════════════════════════════════════════════════════════════════════ */
 const glass: CSSProperties = {
-  background: "rgba(255,255,255,0.58)",
+  background: "var(--glass-bg)",
   backdropFilter: "blur(20px)",
   WebkitBackdropFilter: "blur(20px)",
-  border: "1px solid rgba(255,255,255,0.72)",
+  border: "1px solid var(--glass-border)",
   boxShadow: "0 8px 32px rgba(0,0,0,0.06)",
 };
 const glassSubtle: CSSProperties = {
-  background: "rgba(255,255,255,0.45)",
-  border: "1px solid rgba(255,255,255,0.65)",
+  background: "var(--glass-subtle-bg)",
+  border: "1px solid var(--glass-subtle-border)",
 };
 const inputStyle: CSSProperties = {
   padding: "9px 12px",
   borderRadius: 10,
   border: "1px solid rgba(148,163,184,0.35)",
-  background: "rgba(255,255,255,0.7)",
+  background: "var(--glass-strong-bg)",
   fontSize: 13,
   color: "#1e293b",
   outline: "none",
@@ -221,7 +221,7 @@ function Toast({ message, onClose }: { message: string; onClose: () => void }) {
   return (
     <div style={{
       position: "fixed", bottom: 24, right: 24, zIndex: 9999,
-      background: "linear-gradient(135deg,#10b981,#059669)",
+      background: "#10b981",
       color: "#fff", borderRadius: 14, padding: "12px 20px",
       fontSize: 14, fontWeight: 600, boxShadow: "0 8px 32px rgba(16,185,129,0.35)",
       display: "flex", alignItems: "center", gap: 10,
@@ -365,7 +365,7 @@ function FactureModal({
               </button>
             </div>
             {lignes.map((l, i) => (
-              <div key={i} style={{ background: "rgba(255,255,255,0.5)", border: "1px solid rgba(148,163,184,0.15)", borderRadius: 12, padding: 12, marginBottom: 10 }}>
+              <div key={i} style={{ background: "var(--glass-subtle-bg)", border: "1px solid rgba(148,163,184,0.15)", borderRadius: 12, padding: 12, marginBottom: 10 }}>
                 <div style={{ display: "grid", gridTemplateColumns: "2fr 1fr 1fr 80px", gap: 8, marginBottom: 8 }}>
                   <div><label style={fieldLabel}>Désignation</label><input style={inputStyle} value={l.designation} onChange={e => updateLigne(i, { designation: e.target.value })} placeholder="Phonak Lumity 90 R" /></div>
                   <div><label style={fieldLabel}>Marque</label><input style={inputStyle} value={l.marque} onChange={e => updateLigne(i, { marque: e.target.value })} placeholder="Phonak" /></div>
@@ -479,7 +479,7 @@ function FactureModal({
           <button onClick={onClose} style={{ padding: "9px 20px", borderRadius: 10, border: "1px solid rgba(148,163,184,0.3)", background: "rgba(255,255,255,0.6)", fontSize: 13, fontWeight: 600, color: "#64748b", cursor: "pointer" }}>
             Annuler
           </button>
-          <button onClick={handleSave} style={{ padding: "9px 24px", borderRadius: 10, border: "none", background: "linear-gradient(135deg,#10b981,#059669)", fontSize: 13, fontWeight: 700, color: "#fff", cursor: "pointer", boxShadow: "0 2px 8px rgba(16,185,129,0.30)" }}>
+          <button onClick={handleSave} style={{ padding: "9px 24px", borderRadius: 10, border: "none", background: "#10b981", fontSize: 13, fontWeight: 700, color: "#fff", cursor: "pointer", boxShadow: "0 2px 8px rgba(16,185,129,0.30)" }}>
             {initial ? "Enregistrer" : "Créer la facture"}
           </button>
         </div>
@@ -529,7 +529,7 @@ function DevisPickerModal({
             <button
               key={d.id}
               onClick={() => onSelect(d)}
-              style={{ width: "100%", textAlign: "left", padding: "12px 16px", borderRadius: 12, border: "1px solid rgba(148,163,184,0.15)", background: "rgba(255,255,255,0.5)", marginBottom: 8, cursor: "pointer" }}
+              style={{ width: "100%", textAlign: "left", padding: "12px 16px", borderRadius: 12, border: "1px solid rgba(148,163,184,0.15)", background: "var(--glass-subtle-bg)", marginBottom: 8, cursor: "pointer" }}
             >
               <div style={{ fontWeight: 700, color: "#1e293b", fontSize: 13 }}>{d.numero ?? d.id}</div>
               <div style={{ fontSize: 12, color: "#64748b", marginTop: 2 }}>{d.patientPrenom} {d.patientNom} — {d.totalTTC?.toLocaleString("fr-FR")} €</div>
@@ -583,20 +583,20 @@ function PrintModal({ facture, onClose }: { facture: Facture; onClose: () => voi
             <button
               onClick={handleDownloadPdf}
               disabled={pdfLoading}
-              style={{ padding: "5px 14px", borderRadius: 8, border: "none", background: pdfLoading ? "#94a3b8" : "linear-gradient(135deg,#00C98A,#059669)", color: "#fff", fontSize: 12, fontWeight: 600, cursor: pdfLoading ? "wait" : "pointer", display: "flex", alignItems: "center", gap: 5 }}
+              style={{ padding: "5px 14px", borderRadius: 8, border: "none", background: pdfLoading ? "#94a3b8" : "#00C98A", color: "#fff", fontSize: 12, fontWeight: 600, cursor: pdfLoading ? "wait" : "pointer", display: "flex", alignItems: "center", gap: 5 }}
             >
-              {pdfLoading ? "⏳ Génération…" : "⬇ Télécharger PDF"}
+              {pdfLoading ? "Génération…" : "Télécharger PDF"}
             </button>
             <button
               onClick={() => window.print()}
               style={{ padding: "5px 14px", borderRadius: 8, border: "1px solid rgba(0,201,138,0.35)", background: "rgba(0,201,138,0.08)", color: "#059669", fontSize: 12, fontWeight: 600, cursor: "pointer" }}
             >
-              🖨 Imprimer
+              Imprimer
             </button>
           </div>
         }
       >
-        <div style={{ background: "rgba(255,255,255,0.97)", padding: 24 }}>
+        <div style={{ background: "var(--glass-card-bg)", padding: 24 }}>
           <div id="aud-facture-print" style={{ background: "#fff", padding: 40, borderRadius: 12, fontFamily: "'Inter', -apple-system, sans-serif", fontSize: 13, color: "#1e293b", lineHeight: 1.6 }}>
 
             {/* Header */}
@@ -780,7 +780,7 @@ export default function FacturationAuditionPage() {
         <div style={{ display: "flex", gap: 10 }}>
           <button
             onClick={() => exportCSV(factures)}
-            style={{ display: "flex", alignItems: "center", gap: 6, padding: "9px 18px", borderRadius: 12, fontSize: 13, fontWeight: 600, color: "#475569", cursor: "pointer", background: "rgba(255,255,255,0.55)", border: "1px solid rgba(255,255,255,0.65)" }}
+            style={{ display: "flex", alignItems: "center", gap: 6, padding: "9px 18px", borderRadius: 12, fontSize: 13, fontWeight: 600, color: "#475569", cursor: "pointer", background: "var(--glass-subtle-bg)", border: "1px solid var(--glass-subtle-border)" }}
           >
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
@@ -795,7 +795,7 @@ export default function FacturationAuditionPage() {
           </button>
           <button
             onClick={() => { setEditFacture(undefined); setModalOpen(true); }}
-            style={{ padding: "9px 18px", borderRadius: 12, border: "none", background: "linear-gradient(135deg,#10b981,#059669)", fontSize: 13, fontWeight: 700, color: "#fff", cursor: "pointer", boxShadow: "0 2px 8px rgba(16,185,129,0.25)" }}
+            style={{ padding: "9px 18px", borderRadius: 12, border: "none", background: "#10b981", fontSize: 13, fontWeight: 700, color: "#fff", cursor: "pointer", boxShadow: "0 2px 8px rgba(16,185,129,0.25)" }}
           >
             + Nouvelle facture
           </button>
@@ -832,7 +832,7 @@ export default function FacturationAuditionPage() {
               style={{
                 padding: "6px 14px", borderRadius: 20, fontSize: 12, fontWeight: 600, cursor: "pointer",
                 ...(filterStatus === s
-                  ? { background: "linear-gradient(135deg,#10b981,#059669)", color: "#fff", border: "none", boxShadow: "0 2px 8px rgba(16,185,129,0.25)" }
+                  ? { background: "#10b981", color: "#fff", border: "none", boxShadow: "0 2px 8px rgba(16,185,129,0.25)" }
                   : { ...glassSubtle, color: "#64748b", border: "1px solid rgba(148,163,184,0.25)" }
                 ),
               }}
@@ -901,7 +901,7 @@ export default function FacturationAuditionPage() {
               )}
               <button
                 onClick={() => { setEditFacture(f); setModalOpen(true); }}
-                style={{ padding: "4px 10px", borderRadius: 8, border: "1px solid rgba(148,163,184,0.2)", background: "rgba(255,255,255,0.5)", color: "#64748b", fontSize: 11, fontWeight: 600, cursor: "pointer" }}
+                style={{ padding: "4px 10px", borderRadius: 8, border: "1px solid rgba(148,163,184,0.2)", background: "var(--glass-subtle-bg)", color: "#64748b", fontSize: 11, fontWeight: 600, cursor: "pointer" }}
               >
                 Modifier
               </button>
@@ -910,7 +910,7 @@ export default function FacturationAuditionPage() {
                 title="Imprimer / PDF"
                 style={{ padding: "4px 8px", borderRadius: 8, border: "none", background: "rgba(0,201,138,0.10)", color: "#00C98A", fontSize: 11, fontWeight: 600, cursor: "pointer" }}
               >
-                🖨
+
               </button>
             </div>
           </div>

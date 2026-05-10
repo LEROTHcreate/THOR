@@ -44,7 +44,7 @@ function PatientMockup({ brand }: { brand: Brand }) {
   return (
     <div
       className="rounded-2xl overflow-hidden shadow-[0_32px_80px_rgba(11,18,32,0.16)]"
-      style={{ background: "rgba(255,255,255,0.95)", border: "1px solid rgba(255,255,255,0.85)" }}
+      style={{ background: "var(--glass-card-bg)", border: "1px solid var(--glass-strong-border)" }}
     >
       {/* Browser bar */}
       <div className="flex items-center gap-2 px-4 py-2.5 border-b border-slate-100" style={{ background: "#f8fafc" }}>
@@ -203,7 +203,7 @@ function PraticienMockup({ brand }: { brand: Brand }) {
   return (
     <div
       className="rounded-2xl overflow-hidden shadow-[0_32px_80px_rgba(11,18,32,0.16)]"
-      style={{ background: "rgba(255,255,255,0.95)", border: "1px solid rgba(255,255,255,0.85)" }}
+      style={{ background: "var(--glass-card-bg)", border: "1px solid var(--glass-strong-border)" }}
     >
       {/* Browser bar */}
       <div className="flex items-center gap-2 px-4 py-2.5 border-b border-slate-100" style={{ background: "#f8fafc" }}>

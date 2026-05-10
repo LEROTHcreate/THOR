@@ -50,10 +50,10 @@ export default function NotFound() {
         <div
           className="rounded-3xl px-8 py-8 mb-8"
           style={{
-            background: "rgba(255,255,255,0.72)",
+            background: "var(--glass-strong-bg)",
             backdropFilter: "blur(20px)",
             WebkitBackdropFilter: "blur(20px)",
-            border: "1px solid rgba(255,255,255,0.80)",
+            border: "1px solid var(--glass-strong-border)",
             boxShadow: "0 8px 32px rgba(0,0,0,0.07)",
           }}
         >
@@ -80,7 +80,7 @@ export default function NotFound() {
             href="/"
             className="inline-flex items-center justify-center gap-2 rounded-full px-6 py-3.5 text-sm font-semibold text-white transition-all duration-200 hover:scale-[1.02]"
             style={{
-              background: "linear-gradient(135deg, #2D8CFF, #1A72E8)",
+              background: "#2D8CFF",
               boxShadow: "0 4px 20px rgba(45,140,255,0.30)",
             }}
           >

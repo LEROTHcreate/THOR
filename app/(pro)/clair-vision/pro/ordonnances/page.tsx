@@ -8,15 +8,15 @@ import DraggableWindow from "@/components/ui/DraggableWindow";
 
 /* ── Glass style tokens ─────────────────────────────────────────────────── */
 const glass: CSSProperties = {
-  background: "rgba(255,255,255,0.58)",
+  background: "var(--glass-bg)",
   backdropFilter: "blur(20px)",
   WebkitBackdropFilter: "blur(20px)",
-  border: "1px solid rgba(255,255,255,0.72)",
+  border: "1px solid var(--glass-border)",
   boxShadow: "0 8px 32px rgba(0,0,0,0.06)",
 };
 const glassSubtle: CSSProperties = {
-  background: "rgba(255,255,255,0.45)",
-  border: "1px solid rgba(255,255,255,0.65)",
+  background: "var(--glass-subtle-bg)",
+  border: "1px solid var(--glass-subtle-border)",
 };
 
 /* ── Data model ─────────────────────────────────────────────────────────── */
@@ -526,7 +526,7 @@ function NewOrdonnanceModal({
       defaultWidth={620}
       defaultHeight={640}
     >
-      <div className="px-6 py-5 space-y-6" style={{ background: "rgba(255,255,255,0.97)" }}>
+      <div className="px-6 py-5 space-y-6" style={{ background: "var(--glass-card-bg)" }}>
           {/* Patient */}
           <section>
             <div className="text-xs font-bold text-[#6366f1] uppercase tracking-widest mb-3">Patient</div>
@@ -768,7 +768,7 @@ export default function OrdonnancesPage() {
           const expirantes = ordonnances.filter(o => { const d = new Date(o.dateExpiration); return d >= now && d <= in30; });
           if (expirees.length === 0 && expirantes.length === 0) return null;
           return (
-            <div className="rounded-2xl p-4" style={{ background: "rgba(255,255,255,0.55)", backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)", border: "1px solid rgba(239,68,68,0.25)" }}>
+            <div className="rounded-2xl p-4" style={{ background: "var(--glass-subtle-bg)", backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)", border: "1px solid rgba(239,68,68,0.25)" }}>
               {expirees.length > 0 && (
                 <div className="mb-3">
                   <div className="flex items-center gap-2 mb-2">
@@ -836,7 +836,7 @@ export default function OrdonnancesPage() {
             </span>
             {warningSoon > 0 && (
               <span className="inline-flex items-center gap-1.5 rounded-[var(--radius-pill)] px-3 py-1.5 text-xs font-semibold text-[#EF4444]" style={{ background: "rgba(239,68,68,0.08)", border: "1px solid rgba(239,68,68,0.20)" }}>
-                ⚠ {warningSoon} expire bientôt
+                {warningSoon} expire bientôt
               </span>
             )}
             {/* New ordonnance button */}
@@ -960,7 +960,7 @@ export default function OrdonnancesPage() {
                         {status === "Expirée"
                           ? `Expirée il y a ${Math.abs(daysLeft)}j`
                           : daysLeft <= 30
-                          ? `⚠ ${daysLeft}j restants`
+                          ? `${daysLeft}j restants`
                           : `${daysLeft}j restants`}
                       </span>
                     </div>
@@ -1003,7 +1003,7 @@ export default function OrdonnancesPage() {
                   <button
                     className="inline-flex items-center gap-1.5 rounded-[var(--radius-pill)] px-4 py-2 text-xs font-semibold text-white transition-all hover:opacity-90"
                     style={{
-                      background: "linear-gradient(135deg, #2D8CFF, #1A72E8)",
+                      background: "#2D8CFF",
                       boxShadow: "0 2px 8px rgba(45,140,255,0.22)",
                     }}
                   >

@@ -15,16 +15,16 @@ import {
 } from "recharts";
 
 const glass = {
-  background: "rgba(255,255,255,0.58)",
+  background: "var(--glass-bg)",
   backdropFilter: "blur(20px)",
   WebkitBackdropFilter: "blur(20px)",
-  border: "1px solid rgba(255,255,255,0.72)",
+  border: "1px solid var(--glass-border)",
   boxShadow: "0 8px 32px rgba(0,0,0,0.06)",
 } as React.CSSProperties;
 
 const glassSubtle = {
-  background: "rgba(255,255,255,0.45)",
-  border: "1px solid rgba(255,255,255,0.65)",
+  background: "var(--glass-subtle-bg)",
+  border: "1px solid var(--glass-subtle-border)",
 } as React.CSSProperties;
 
 type Exam = {
@@ -194,10 +194,10 @@ function VisionEvolutionChart() {
     <div
       className="rounded-2xl p-5"
       style={{
-        background: "rgba(255,255,255,0.58)",
+        background: "var(--glass-bg)",
         backdropFilter: "blur(20px)",
         WebkitBackdropFilter: "blur(20px)",
-        border: "1px solid rgba(255,255,255,0.72)",
+        border: "1px solid var(--glass-border)",
         boxShadow: "0 8px 32px rgba(0,0,0,0.06)",
       }}
     >
@@ -268,7 +268,7 @@ function VisionEvolutionChart() {
             <Tooltip
               formatter={tooltipFormatter}
               contentStyle={{
-                background: "rgba(255,255,255,0.92)",
+                background: "var(--glass-card-bg)",
                 border: "1px solid rgba(0,0,0,0.08)",
                 borderRadius: "10px",
                 fontSize: "12px",
@@ -413,7 +413,7 @@ export default function ExamensDeVuePage() {
                 ) : (
                   <button
                     className="rounded-xl px-4 py-2.5 text-sm font-semibold text-white"
-                    style={{ background: "linear-gradient(135deg, #2D8CFF, #1A72E8)" }}
+                    style={{ background: "#2D8CFF" }}
                   >
                     Voir le détail
                   </button>

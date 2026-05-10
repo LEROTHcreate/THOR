@@ -8,16 +8,16 @@ import { loadUsers, loadCurrentUserId } from "@/lib/users";
 ═══════════════════════════════════════════════════════════════════════ */
 const ACCENT = "#2D8CFF";
 const glass: CSSProperties = {
-  background: "rgba(255,255,255,0.58)", backdropFilter: "blur(20px)",
-  WebkitBackdropFilter: "blur(20px)", border: "1px solid rgba(255,255,255,0.72)",
+  background: "var(--glass-bg)", backdropFilter: "blur(20px)",
+  WebkitBackdropFilter: "blur(20px)", border: "1px solid var(--glass-border)",
   boxShadow: "0 8px 32px rgba(0,0,0,0.06)",
 };
 const glassSubtle: CSSProperties = {
-  background: "rgba(255,255,255,0.45)", border: "1px solid rgba(255,255,255,0.65)",
+  background: "var(--glass-subtle-bg)", border: "1px solid var(--glass-subtle-border)",
 };
 const input: CSSProperties = {
   padding: "9px 12px", borderRadius: 10, border: "1px solid rgba(148,163,184,0.35)",
-  background: "rgba(255,255,255,0.7)", fontSize: 13, color: "#1e293b",
+  background: "var(--glass-strong-bg)", fontSize: 13, color: "#1e293b",
   outline: "none", width: "100%", boxSizing: "border-box",
 };
 const labelSt: CSSProperties = { display: "block", fontSize: 11.5, fontWeight: 500, color: "#64748b", marginBottom: 5 };
@@ -99,8 +99,8 @@ interface Fse {
 
 const FSE_LS = "thor_pro_vision_fse";
 const FSE_STATUT_CONF: Record<FseStatut, { label: string; color: string; bg: string; icon: string }> = {
-  a_transmettre: { label: "À transmettre", color: "#b45309",  bg: "rgba(245,158,11,.12)", icon: "📤" },
-  en_cours:      { label: "En cours…",     color: "#6366f1",  bg: "rgba(99,102,241,.12)", icon: "⏳" },
+  a_transmettre: { label: "À transmettre", color: "#b45309",  bg: "rgba(245,158,11,.12)", icon: "" },
+  en_cours:      { label: "En cours…",     color: "#6366f1",  bg: "rgba(99,102,241,.12)", icon: "" },
   accepte:       { label: "Accepté",        color: "#047857",  bg: "rgba(16,185,129,.12)", icon: "✓" },
   partiel:       { label: "Partiel",        color: "#0369a1",  bg: "rgba(14,165,233,.12)", icon: "◑" },
   rejete:        { label: "Rejeté",         color: "#b91c1c",  bg: "rgba(239,68,68,.12)",  icon: "✕" },
@@ -272,7 +272,7 @@ function btnSmall(color: string): CSSProperties {
 function ConfidenceBadge({ m }: { m: MatchProposal }) {
   const color = m.confidence === "high" ? "#10b981" : "#f59e0b";
   const bg = m.confidence === "high" ? "rgba(16,185,129,0.1)" : "rgba(245,158,11,0.1)";
-  return <span style={{ fontSize: 11, fontWeight: 600, color, background: bg, padding: "2px 8px", borderRadius: 10 }}>{m.grouped ? `🔗 ${m.matchedIds.length} dossiers regroupés` : m.confidence === "high" ? "✓ Exact" : "≈ Proche"}</span>;
+  return <span style={{ fontSize: 11, fontWeight: 600, color, background: bg, padding: "2px 8px", borderRadius: 10 }}>{m.grouped ? `${m.matchedIds.length} dossiers regroupés` : m.confidence === "high" ? "✓ Exact" : "≈ Proche"}</span>;
 }
 
 /* ═══════════════════════════════════════════════════════════════════════
@@ -481,7 +481,7 @@ export default function TiersPayantVisionPage() {
       <div style={{ display: "flex", gap: 4, marginBottom: 20, flexWrap: "wrap" }}>
         {([["suivi", "Suivi des remboursements"], ["fse", "Télétransmission FSE"], ["releve", "Contrôle règlement"]] as const).map(([key, lbl]) => (
           <button key={key} onClick={() => setTab(key)} style={{ padding: "9px 20px", borderRadius: 10, border: "none", cursor: "pointer", fontSize: 13, fontWeight: 600, background: tab === key ? ACCENT : "rgba(148,163,184,0.15)", color: tab === key ? "#fff" : "#475569", display: "flex", alignItems: "center", gap: 7 }}>
-            {lbl}{key === "releve" && !isGerant && <span style={{ fontSize: 10 }}>🔒</span>}
+            {lbl}{key === "releve" && !isGerant && <span style={{ fontSize: 10 }}></span>}
           </button>
         ))}
       </div>
@@ -493,14 +493,14 @@ export default function TiersPayantVisionPage() {
           {alerteCount30 > 0 && (
             <div style={{ borderRadius: 14, marginBottom: 16, overflow: "hidden", border: "1px solid rgba(245,158,11,0.35)" }}>
               <div style={{ background: "rgba(245,158,11,0.10)", padding: "12px 18px", display: "flex", alignItems: "center", gap: 10 }}>
-                <span style={{ fontSize: 16 }}>⚠️</span>
+                <span style={{ fontSize: 16 }}></span>
                 <span style={{ fontSize: 13, fontWeight: 600, color: "#92400e" }}>
                   {alerteCount30} dossier{alerteCount30 > 1 ? "s" : ""} tiers payant en attente depuis plus de 30 jours
                 </span>
               </div>
               {alerteCount60 > 0 && (
                 <div style={{ background: "rgba(239,68,68,0.09)", padding: "10px 18px", borderTop: "1px solid rgba(239,68,68,0.2)", display: "flex", alignItems: "center", gap: 10 }}>
-                  <span style={{ fontSize: 14 }}>🔴</span>
+                  <span style={{ fontSize: 14 }}></span>
                   <span style={{ fontSize: 12.5, fontWeight: 600, color: "#991b1b" }}>
                     {alerteCount60} dossier{alerteCount60 > 1 ? "s" : ""} en attente depuis plus de 60 jours — relance recommandée
                   </span>
@@ -628,7 +628,7 @@ export default function TiersPayantVisionPage() {
         <>
           {!isGerant ? (
             <div style={{ ...glass, borderRadius: 16, padding: "60px 32px", textAlign: "center" }}>
-              <div style={{ fontSize: 36, marginBottom: 12 }}>🔒</div>
+              <div style={{ fontSize: 36, marginBottom: 12 }}></div>
               <div style={{ fontSize: 16, fontWeight: 700, color: "#1e293b", marginBottom: 6 }}>Accès réservé au Gérant</div>
               <div style={{ fontSize: 13.5, color: "#64748b" }}>Connectez-vous en tant que Gérant pour accéder au contrôle des règlements bancaires.</div>
             </div>
@@ -639,7 +639,7 @@ export default function TiersPayantVisionPage() {
                 onClick={() => fileRef.current?.click()}
                 style={{ ...glass, borderRadius: 16, padding: "36px 24px", textAlign: "center", cursor: "pointer", border: dragOver ? `2px dashed ${ACCENT}` : "2px dashed rgba(148,163,184,0.4)", background: dragOver ? `rgba(45,140,255,0.06)` : "rgba(255,255,255,0.45)", marginBottom: 20, transition: "all 0.15s" }}>
                 <input ref={fileRef} type="file" accept=".csv,.txt,.ofx" style={{ display: "none" }} onChange={e => { const f = e.target.files?.[0]; if (f) handleFile(f); }} />
-                <div style={{ fontSize: 28, marginBottom: 10 }}>📂</div>
+                <div style={{ fontSize: 28, marginBottom: 10 }}></div>
                 <div style={{ fontSize: 14, fontWeight: 600, color: "#334155", marginBottom: 4 }}>{fileName || "Déposez votre relevé bancaire"}</div>
                 <div style={{ fontSize: 12, color: "#94a3b8" }}>{txs.length > 0 ? `${txs.length} transactions · ${entrées.length} entrées · ${sorties.length} sorties · ${nbMatched} correspondance(s) trouvée(s)` : "Format CSV — BNP, SG, CIC, CA, Boursorama, LBP, Qonto…"}</div>
               </div>
@@ -746,10 +746,10 @@ export default function TiersPayantVisionPage() {
             {/* FSE stats */}
             <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 14, marginBottom: 20 }}>
               {[
-                { label: "À transmettre", value: aTransmettre, color: "#b45309", icon: "📤" },
-                { label: "En cours",       value: enCours,     color: "#6366f1", icon: "⏳" },
+                { label: "À transmettre", value: aTransmettre, color: "#b45309", icon: "" },
+                { label: "En cours",       value: enCours,     color: "#6366f1", icon: "" },
                 { label: "Acceptées",      value: acceptes,    color: "#047857", icon: "✓"  },
-                { label: "Taux d'accept.", value: `${tauxAccept}%`, color: ACCENT, icon: "📊" },
+                { label: "Taux d'accept.", value: `${tauxAccept}%`, color: ACCENT, icon: "" },
               ].map(s => (
                 <div key={s.label} style={{ ...glass, borderRadius: 16, padding: "16px 18px" }}>
                   <div style={{ fontSize: 11, fontWeight: 700, color: "#94a3b8", textTransform: "uppercase", letterSpacing: ".06em", marginBottom: 6 }}>{s.icon} {s.label}</div>
@@ -761,7 +761,7 @@ export default function TiersPayantVisionPage() {
             {/* SESAM-Vitale banner */}
             <div style={{ background: "linear-gradient(135deg,rgba(45,140,255,0.08),rgba(99,102,241,0.06))", border: "1px solid rgba(45,140,255,0.20)", borderRadius: 14, padding: "12px 18px", marginBottom: 20, display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12, flexWrap: "wrap" }}>
               <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                <div style={{ width: 36, height: 36, borderRadius: 10, background: "linear-gradient(135deg,#2D8CFF,#6366f1)", display: "grid", placeItems: "center", fontSize: 18 }}>🏥</div>
+                <div style={{ width: 36, height: 36, borderRadius: 10, background: "linear-gradient(135deg,#2D8CFF,#6366f1)", display: "grid", placeItems: "center", fontSize: 18 }}></div>
                 <div>
                   <div style={{ fontSize: 13, fontWeight: 800, color: "#1e293b" }}>SESAM-Vitale — Télétransmission AMO</div>
                   <div style={{ fontSize: 12, color: "#64748b" }}>
@@ -775,7 +775,7 @@ export default function TiersPayantVisionPage() {
                 <span style={{ fontSize: 12, fontWeight: 700, color: "#047857" }}>Connecté</span>
                 {aTransmettre > 0 && (
                   <button onClick={transmettreToutes} style={{ padding: "8px 18px", background: `linear-gradient(135deg,${ACCENT},#6366f1)`, color: "#fff", border: "none", borderRadius: 10, fontSize: 13, fontWeight: 700, cursor: "pointer", boxShadow: `0 4px 12px ${ACCENT}30` }}>
-                    📤 Transmettre tout ({aTransmettre})
+                    Transmettre tout ({aTransmettre})
                   </button>
                 )}
               </div>
@@ -832,8 +832,8 @@ export default function TiersPayantVisionPage() {
                     {/* Actions */}
                     <div style={{ flexShrink: 0 }}>
                       {fse.statut === "a_transmettre" && (
-                        <button onClick={() => transmettreFse(fse.id)} style={{ padding: "9px 18px", background: `linear-gradient(135deg,${ACCENT},#1a6fd4)`, color: "#fff", border: "none", borderRadius: 10, fontSize: 13, fontWeight: 700, cursor: "pointer" }}>
-                          📤 Transmettre
+                        <button onClick={() => transmettreFse(fse.id)} style={{ padding: "9px 18px", background: ACCENT, color: "#fff", border: "none", borderRadius: 10, fontSize: 13, fontWeight: 700, cursor: "pointer" }}>
+                          Transmettre
                         </button>
                       )}
                       {fse.statut === "en_cours" && (

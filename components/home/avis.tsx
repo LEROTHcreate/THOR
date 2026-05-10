@@ -56,11 +56,11 @@ export function Avis() {
           <div className="flex items-center gap-3 text-xs text-slate-500">
             <div className="flex items-center gap-1.5">
               <div className="w-2 h-2 rounded-full bg-[#2D8CFF]" />
-              <span>Clair Vision · 4,9★</span>
+              <span>Clair Vision · 4,9/5</span>
             </div>
             <div className="flex items-center gap-1.5">
               <div className="w-2 h-2 rounded-full bg-[#00C98A]" />
-              <span>Clair Audition · 4,8★</span>
+              <span>Clair Audition · 4,8/5</span>
             </div>
           </div>
         </div>
@@ -82,7 +82,7 @@ export function Avis() {
                   key={idx}
                   className="min-w-[340px] max-w-[340px] rounded-[var(--radius-large)] p-6"
                   style={{
-                    background: "rgba(255,255,255,0.58)",
+                    background: "var(--glass-bg)",
                     backdropFilter: "blur(20px)",
                     WebkitBackdropFilter: "blur(20px)",
                     border: isAudio

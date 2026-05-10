@@ -232,7 +232,7 @@ export function generateDevisVisionHtml(devis: DevisPdf, config: StoreConfig): s
 <body>
 
   <button class="no-print print-btn" onclick="window.print()">
-    🖨 Imprimer / Enregistrer en PDF
+    Imprimer / Enregistrer en PDF
   </button>
 
   <!-- ═══ EN-TÊTE ═══════════════════════════════════════════════════════════ -->
@@ -369,7 +369,7 @@ export function generateDevisVisionHtml(devis: DevisPdf, config: StoreConfig): s
     return `
   <div style="margin-bottom:18px;padding:14px 16px;border-radius:10px;border:2px solid ${isGeste ? "#f59e0b" : "#10b981"};background:${isGeste ? "rgba(245,158,11,0.06)" : "rgba(16,185,129,0.06)"}">
     <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:${isGeste ? "#b45309" : "#065F46"};margin-bottom:8px">
-      ${isGeste ? "✦ Geste commercial — Reste à charge offert" : "✓ Reste à charge réglé"}
+      ${isGeste ? "Geste commercial — Reste à charge offert" : "✓ Reste à charge réglé"}
     </div>
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;font-size:11px">
       <div>

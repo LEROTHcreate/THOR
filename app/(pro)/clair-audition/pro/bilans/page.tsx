@@ -5,15 +5,15 @@ import type { CSSProperties } from "react";
 
 /* ── Glass tokens ─────────────────────────────────────────────────────────── */
 const glass: CSSProperties = {
-  background: "rgba(255,255,255,0.58)",
+  background: "var(--glass-bg)",
   backdropFilter: "blur(20px)",
   WebkitBackdropFilter: "blur(20px)",
-  border: "1px solid rgba(255,255,255,0.72)",
+  border: "1px solid var(--glass-border)",
   boxShadow: "0 8px 32px rgba(0,0,0,0.06)",
 };
 const glassSubtle: CSSProperties = {
-  background: "rgba(255,255,255,0.45)",
-  border: "1px solid rgba(255,255,255,0.65)",
+  background: "var(--glass-subtle-bg)",
+  border: "1px solid var(--glass-subtle-border)",
 };
 
 /* ── Data model ───────────────────────────────────────────────────────────── */
@@ -360,8 +360,8 @@ function InteractiveAudiogram({
           className="inline-flex items-center gap-1.5 rounded-lg px-3 py-1 text-xs font-semibold transition-all"
           style={activeEar === "od"
             ? { background: "rgba(239,68,68,0.12)", color: "#ef4444", border: "1.5px solid rgba(239,68,68,0.4)" }
-            : { background: "rgba(255,255,255,0.45)", color: "#94a3b8", border: "1px solid rgba(255,255,255,0.65)" }}>
-          <span>✕</span> OD (droite)
+            : { background: "var(--glass-subtle-bg)", color: "#94a3b8", border: "1px solid var(--glass-subtle-border)" }}>
+          OD (droite)
         </button>
         <button
           type="button"
@@ -369,7 +369,7 @@ function InteractiveAudiogram({
           className="inline-flex items-center gap-1.5 rounded-lg px-3 py-1 text-xs font-semibold transition-all"
           style={activeEar === "og"
             ? { background: "rgba(59,130,246,0.12)", color: "#3b82f6", border: "1.5px solid rgba(59,130,246,0.4)" }
-            : { background: "rgba(255,255,255,0.45)", color: "#94a3b8", border: "1px solid rgba(255,255,255,0.65)" }}>
+            : { background: "var(--glass-subtle-bg)", color: "#94a3b8", border: "1px solid var(--glass-subtle-border)" }}>
           <span>○</span> OG (gauche)
         </button>
         <span className="ml-auto text-[10px] text-slate-400 italic">Cliquez sur le graphe pour placer/effacer un point</span>
@@ -696,7 +696,7 @@ function DetailModal({ bilan, onClose, onUpdate }: {
               </button>
               <button type="button" onClick={handleSaveEdit}
                 className="px-5 py-2 rounded-xl text-sm font-semibold text-white transition-all hover:opacity-90"
-                style={{ background: "linear-gradient(135deg, #00C98A, #059669)", boxShadow: "0 2px 8px rgba(0,201,138,0.3)" }}>
+                style={{ background: "#00C98A", boxShadow: "0 2px 8px rgba(0,201,138,0.3)" }}>
                 Enregistrer les modifications
               </button>
             </div>
@@ -919,7 +919,7 @@ function NouveauBilanModal({ onClose, onSave }: { onClose: () => void; onSave: (
                   onClick={() => fileInputRef.current?.click()}
                   disabled={ocrLoading}
                   className="inline-flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-[11px] font-semibold text-white transition-all hover:opacity-90 disabled:opacity-50"
-                  style={{ background: "linear-gradient(135deg,#00C98A,#059669)", boxShadow: "0 2px 6px rgba(0,201,138,.25)" }}
+                  style={{ background: "#00C98A", boxShadow: "0 2px 6px rgba(0,201,138,.25)" }}
                 >
                   {ocrLoading ? (
                     <>
@@ -1009,7 +1009,7 @@ function NouveauBilanModal({ onClose, onSave }: { onClose: () => void; onSave: (
             </button>
             <button type="submit"
               className="px-5 py-2 rounded-xl text-sm font-semibold text-white transition-all hover:opacity-90 active:scale-[0.98]"
-              style={{ background: "linear-gradient(135deg, #00C98A, #059669)", boxShadow: "0 2px 8px rgba(0,201,138,0.3)" }}>
+              style={{ background: "#00C98A", boxShadow: "0 2px 8px rgba(0,201,138,0.3)" }}>
               Enregistrer le bilan
             </button>
           </div>
@@ -1074,7 +1074,7 @@ export default function BilansPage() {
         <button
           onClick={() => setShowNew(true)}
           className="inline-flex items-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold text-white transition-all hover:opacity-90 active:scale-[0.98]"
-          style={{ background: "linear-gradient(135deg, #00C98A, #059669)", boxShadow: "0 2px 8px rgba(0,201,138,0.3)" }}
+          style={{ background: "#00C98A", boxShadow: "0 2px 8px rgba(0,201,138,0.3)" }}
         >
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="w-4 h-4">
             <path d="M12 5v14M5 12h14" strokeLinecap="round" />

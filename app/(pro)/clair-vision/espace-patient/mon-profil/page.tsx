@@ -5,15 +5,15 @@ import type { CSSProperties } from "react";
 
 /* ── Design tokens ──────────────────────────────────────────────────── */
 const glass: CSSProperties = {
-  background: "rgba(255,255,255,0.72)",
+  background: "var(--glass-strong-bg)",
   backdropFilter: "blur(20px)",
   WebkitBackdropFilter: "blur(20px)",
-  border: "1px solid rgba(255,255,255,0.85)",
+  border: "1px solid var(--glass-strong-border)",
   boxShadow: "0 8px 32px rgba(0,0,0,0.06)",
 };
 const glassSubtle: CSSProperties = {
-  background: "rgba(255,255,255,0.45)",
-  border: "1px solid rgba(255,255,255,0.65)",
+  background: "var(--glass-subtle-bg)",
+  border: "1px solid var(--glass-subtle-border)",
 };
 const ACCENT = "#2D8CFF";
 
@@ -218,7 +218,7 @@ function Toast({ visible }: { visible: boolean }) {
     <div
       className="fixed bottom-6 left-1/2 z-50 flex items-center gap-2 rounded-2xl px-5 py-3 text-sm font-semibold text-white shadow-[0_8px_32px_rgba(16,185,129,0.35)] transition-all duration-300"
       style={{
-        background: "linear-gradient(135deg, #10b981, #059669)",
+        background: "#10b981",
         opacity: visible ? 1 : 0,
         transform: visible ? "translate(-50%, 0)" : "translate(-50%, 24px)",
         pointerEvents: "none",
@@ -343,7 +343,7 @@ export default function MonProfilPage() {
           <div className="flex items-center gap-4">
             <div
               className="grid h-14 w-14 place-items-center rounded-2xl text-sm font-bold text-white shadow-[0_4px_20px_rgba(45,140,255,0.32)] flex-shrink-0"
-              style={{ background: `linear-gradient(135deg, ${ACCENT}, #1A72E8)` }}
+              style={{ background: ACCENT }}
             >
               {initials}
             </div>
@@ -561,7 +561,7 @@ export default function MonProfilPage() {
                 <button
                   type="submit"
                   className="flex items-center gap-2 rounded-xl px-5 py-2.5 text-sm font-semibold text-white shadow-[0_4px_18px_rgba(45,140,255,0.32)] transition-all"
-                  style={{ background: `linear-gradient(135deg, ${ACCENT}, #1A72E8)` }}
+                  style={{ background: ACCENT }}
                 >
                   <IconCheck />
                   Enregistrer

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Link from "next/link";
 
 /* ── Types ─────────────────────────────────────────────────────────────── */
@@ -90,10 +90,10 @@ const MARQUES_LIST = ["Phonak", "Oticon", "Starkey", "Widex", "ReSound", "Signia
 
 /* ── Styles partagés ───────────────────────────────────────────────────── */
 const glass: React.CSSProperties = {
-  background: "rgba(255,255,255,0.58)",
+  background: "var(--glass-bg)",
   backdropFilter: "blur(20px)",
   WebkitBackdropFilter: "blur(20px)",
-  border: "1px solid rgba(255,255,255,0.72)",
+  border: "1px solid var(--glass-border)",
   borderRadius: 18,
 };
 
@@ -119,7 +119,7 @@ const inputStyle: React.CSSProperties = {
   padding: "9px 12px",
   borderRadius: 10,
   border: "1px solid rgba(0,0,0,0.10)",
-  background: "rgba(255,255,255,0.80)",
+  background: "var(--glass-strong-bg)",
   fontSize: 14,
   color: "#1e293b",
   outline: "none",
@@ -132,6 +132,136 @@ const textareaStyle: React.CSSProperties = {
   resize: "vertical",
   minHeight: 80,
 };
+
+/* ── Patient Picker ──────────────────────────────────────────────────────── */
+interface SearchablePatient { id: string; nom: string; prenom: string; dateNaissance?: string; telephone?: string; mutuelle?: string; }
+
+function calcPatientAge(dob?: string): string {
+  if (!dob) return "";
+  const y = dob.match(/\d{4}/)?.[0];
+  if (!y) return "";
+  return `${new Date().getFullYear() - parseInt(y)} ans`;
+}
+
+function PatientPicker({
+  patients,
+  onSelect,
+}: {
+  patients: SearchablePatient[];
+  onSelect: (p: SearchablePatient | null) => void;
+}) {
+  const [query, setQuery] = useState("");
+  const [open, setOpen] = useState(false);
+  const [selected, setSelected] = useState<SearchablePatient | null>(null);
+  const ref = useRef<HTMLDivElement>(null);
+
+  const filtered = patients
+    .filter(p => {
+      const q = query.toLowerCase();
+      return (
+        `${p.prenom} ${p.nom}`.toLowerCase().includes(q) ||
+        `${p.nom} ${p.prenom}`.toLowerCase().includes(q)
+      );
+    })
+    .slice(0, 8);
+
+  useEffect(() => {
+    if (!open) return;
+    const h = (e: MouseEvent) => {
+      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
+    };
+    document.addEventListener("mousedown", h);
+    return () => document.removeEventListener("mousedown", h);
+  }, [open]);
+
+  function select(p: SearchablePatient) {
+    setSelected(p);
+    setOpen(false);
+    setQuery("");
+    onSelect(p);
+  }
+
+  function clear() {
+    setSelected(null);
+    setQuery("");
+    onSelect(null);
+  }
+
+  function initials(p: SearchablePatient) {
+    return ((p.prenom[0] ?? "") + (p.nom[0] ?? "")).toUpperCase();
+  }
+
+  if (selected) {
+    return (
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "12px 14px", borderRadius: 12, background: `${ACCENT}0d`, border: `1.5px solid ${ACCENT}40`, gap: 12 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+          <div style={{ width: 40, height: 40, borderRadius: "50%", background: ACCENT, color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 14, fontWeight: 800, flexShrink: 0 }}>
+            {initials(selected)}
+          </div>
+          <div>
+            <div style={{ fontSize: 15, fontWeight: 700, color: "#0f172a" }}>{selected.prenom} {selected.nom}</div>
+            <div style={{ fontSize: 12, color: "#64748b", marginTop: 2 }}>
+              {calcPatientAge(selected.dateNaissance)}
+              {selected.mutuelle ? ` · ${selected.mutuelle}` : ""}
+              {selected.telephone ? ` · ${selected.telephone}` : ""}
+            </div>
+          </div>
+        </div>
+        <button onClick={clear} style={{ padding: "5px 12px", borderRadius: 8, border: "1px solid rgba(0,0,0,.1)", background: "rgba(255,255,255,.9)", fontSize: 12, fontWeight: 600, color: "#64748b", cursor: "pointer", flexShrink: 0 }}>
+          Changer
+        </button>
+      </div>
+    );
+  }
+
+  return (
+    <div ref={ref} style={{ position: "relative" }}>
+      <div style={{ position: "relative" }}>
+        <svg style={{ position: "absolute", left: 11, top: "50%", transform: "translateY(-50%)", width: 15, height: 15, color: "#94a3b8", pointerEvents: "none" }} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+          <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+        </svg>
+        <input
+          value={query}
+          onChange={e => { setQuery(e.target.value); setOpen(true); }}
+          onFocus={() => setOpen(true)}
+          placeholder={patients.length > 0 ? `Rechercher parmi ${patients.length} patient${patients.length > 1 ? "s" : ""}…` : "Aucun patient enregistré"}
+          style={{ ...inputStyle, paddingLeft: 34 }}
+        />
+      </div>
+      {open && (
+        <div style={{ position: "absolute", top: "calc(100% + 4px)", left: 0, right: 0, background: "rgba(255,255,255,.98)", borderRadius: 12, border: "1px solid rgba(0,0,0,.08)", boxShadow: "0 8px 32px rgba(0,0,0,.14)", zIndex: 300, overflow: "hidden" }}>
+          {filtered.length === 0 ? (
+            <div style={{ padding: "14px 16px", fontSize: 13, color: "#94a3b8", textAlign: "center" }}>
+              {patients.length === 0
+                ? <span>Aucun patient enregistré — <a href="/clair-audition/pro/patients" style={{ color: ACCENT, fontWeight: 600 }}>Ajouter →</a></span>
+                : "Aucun résultat"
+              }
+            </div>
+          ) : (
+            filtered.map(p => (
+              <button key={p.id} onClick={() => select(p)}
+                style={{ display: "flex", alignItems: "center", gap: 12, width: "100%", padding: "10px 14px", background: "none", border: "none", borderBottom: "1px solid rgba(0,0,0,.04)", cursor: "pointer", textAlign: "left" }}
+                onMouseOver={e => (e.currentTarget.style.background = `${ACCENT}08`)}
+                onMouseOut={e => (e.currentTarget.style.background = "none")}
+              >
+                <div style={{ width: 34, height: 34, borderRadius: "50%", background: ACCENT, color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12, fontWeight: 800, flexShrink: 0 }}>
+                  {initials(p)}
+                </div>
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <div style={{ fontSize: 13, fontWeight: 700, color: "#0f172a" }}>{p.prenom} {p.nom}</div>
+                  <div style={{ fontSize: 11, color: "#94a3b8", marginTop: 1 }}>
+                    {calcPatientAge(p.dateNaissance)}
+                    {p.mutuelle ? ` · ${p.mutuelle}` : ""}
+                  </div>
+                </div>
+              </button>
+            ))
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
 
 /* ── Page ───────────────────────────────────────────────────────────────── */
 export default function ConsultationPage() {
@@ -272,7 +402,7 @@ export default function ConsultationPage() {
 
   /* ── Render ── */
   return (
-    <div style={{ padding: "28px 24px", maxWidth: 900, margin: "0 auto", position: "relative" }}>
+    <div style={{ padding: "28px 0", position: "relative" }}>
 
       {/* Toast */}
       {toast && (
@@ -303,7 +433,7 @@ export default function ConsultationPage() {
         <div style={{ marginBottom: 20, background: "linear-gradient(135deg,rgba(0,201,138,0.10),rgba(0,201,138,0.04))", border: "1.5px solid rgba(0,201,138,0.30)", borderRadius: 16, padding: "14px 20px" }}>
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 10 }}>
             <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-              <span style={{ fontSize: 22 }}>📋</span>
+              <span style={{ fontSize: 22 }}></span>
               <div>
                 <div style={{ fontSize: 14, fontWeight: 800, color: "#065f46", marginBottom: 2 }}>Formulaire pré-consultation reçu aujourd&apos;hui</div>
                 <div style={{ fontSize: 13, color: "#059669" }}>
@@ -325,7 +455,7 @@ export default function ConsultationPage() {
                 if (!v || (Array.isArray(v) && v.length === 0)) return null;
                 const labels: Record<string, string> = { motif: "Motif", genesAuditives: "Gênes auditives", portActuel: "Port actuel", appareillageMarque: "Appareillage", appareillageAge: "Âge appareil", situationsDifficiles: "Situations difficiles", acouphenes: "Acouphènes", vertiges: "Vertiges", antecedents: "Antécédents", medicaments: "Médicaments", questions: "Questions" };
                 return (
-                  <div key={k} style={{ background: "rgba(255,255,255,0.7)", borderRadius: 10, padding: "8px 12px", border: "1px solid rgba(0,201,138,0.12)" }}>
+                  <div key={k} style={{ background: "var(--glass-strong-bg)", borderRadius: 10, padding: "8px 12px", border: "1px solid rgba(0,201,138,0.12)" }}>
                     <div style={{ fontSize: 11, fontWeight: 700, color: "#94a3b8", textTransform: "uppercase", letterSpacing: ".04em", marginBottom: 3 }}>{labels[k] ?? k}</div>
                     <div style={{ color: "#1e293b", fontWeight: 600 }}>{Array.isArray(v) ? v.join(", ") : String(v)}</div>
                   </div>
@@ -342,37 +472,16 @@ export default function ConsultationPage() {
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
 
           {/* Patient */}
-          <div>
+          <div style={{ gridColumn: "1 / -1" }}>
             <label style={label}>Patient</label>
-            {patients.length > 0 ? (
-              <select
-                style={selectStyle}
-                value={patientId}
-                onChange={(e) => handlePatientChange(e.target.value)}
-              >
-                <option value="">— Sélectionner un patient —</option>
-                {patients.map((p) => (
-                  <option key={p.id} value={p.id}>
-                    {p.nom} {p.prenom}
-                  </option>
-                ))}
-              </select>
-            ) : (
-              <div style={{ display: "flex", gap: 8 }}>
-                <input
-                  style={{ ...inputStyle, flex: 1 }}
-                  placeholder="Nom"
-                  value={patientNom}
-                  onChange={(e) => setPatientNom(e.target.value)}
-                />
-                <input
-                  style={{ ...inputStyle, flex: 1 }}
-                  placeholder="Prénom"
-                  value={patientPrenom}
-                  onChange={(e) => setPatientPrenom(e.target.value)}
-                />
-              </div>
-            )}
+            <PatientPicker
+              patients={patients}
+              onSelect={p => {
+                setPatientId(p?.id ?? "");
+                setPatientNom(p?.nom ?? "");
+                setPatientPrenom(p?.prenom ?? "");
+              }}
+            />
           </div>
 
           {/* Date */}
@@ -756,7 +865,7 @@ export default function ConsultationPage() {
         <button
           onClick={handleSave}
           style={{
-            background: `linear-gradient(135deg, ${ACCENT}, #00a872)`,
+            background: ACCENT,
             color: "#fff",
             border: "none",
             borderRadius: 12,

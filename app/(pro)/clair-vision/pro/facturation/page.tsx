@@ -9,21 +9,21 @@ import { downloadElementAsPdf, factureFilename } from "@/lib/generatePdf";
    STYLE TOKENS
 ═══════════════════════════════════════════════════════════════════════ */
 const glass: CSSProperties = {
-  background: "rgba(255,255,255,0.58)",
+  background: "var(--glass-bg)",
   backdropFilter: "blur(20px)",
   WebkitBackdropFilter: "blur(20px)",
-  border: "1px solid rgba(255,255,255,0.72)",
+  border: "1px solid var(--glass-border)",
   boxShadow: "0 8px 32px rgba(0,0,0,0.06)",
 };
 const glassSubtle: CSSProperties = {
-  background: "rgba(255,255,255,0.45)",
-  border: "1px solid rgba(255,255,255,0.65)",
+  background: "var(--glass-subtle-bg)",
+  border: "1px solid var(--glass-subtle-border)",
 };
 const inputStyle: CSSProperties = {
   padding: "9px 12px",
   borderRadius: 10,
   border: "1px solid rgba(148,163,184,0.35)",
-  background: "rgba(255,255,255,0.7)",
+  background: "var(--glass-strong-bg)",
   fontSize: 13,
   color: "#1e293b",
   outline: "none",
@@ -305,7 +305,7 @@ function Toast({ message, onClose }: { message: string; onClose: () => void }) {
         bottom: 24,
         right: 24,
         zIndex: 9999,
-        background: "linear-gradient(135deg,#10b981,#059669)",
+        background: "#10b981",
         color: "#fff",
         borderRadius: 14,
         padding: "12px 20px",
@@ -391,7 +391,7 @@ function PrintModal({ facture, onClose }: { facture: Facture; onClose: () => voi
               disabled={pdfLoading}
               style={{
                 padding: "5px 14px", borderRadius: 8, border: "none",
-                background: pdfLoading ? "#94a3b8" : "linear-gradient(135deg,#2D8CFF,#1a6cd4)",
+                background: pdfLoading ? "#94a3b8" : "#2D8CFF",
                 color: "#fff", fontSize: 12, fontWeight: 600,
                 cursor: pdfLoading ? "wait" : "pointer",
                 display: "flex", alignItems: "center", gap: 5,
@@ -408,12 +408,12 @@ function PrintModal({ facture, onClose }: { facture: Facture; onClose: () => voi
                 color: "#4f46e5", fontSize: 12, fontWeight: 600, cursor: "pointer",
               }}
             >
-              🖨 Imprimer
+              Imprimer
             </button>
           </div>
         }
       >
-        <div style={{ background: "rgba(255,255,255,0.97)", padding: 24 }}>
+        <div style={{ background: "var(--glass-card-bg)", padding: 24 }}>
           <div
             id="facture-print-zone"
               style={{
@@ -1508,7 +1508,7 @@ function FactureCard({
               padding: "7px 16px",
               borderRadius: 10,
               border: "none",
-              background: "linear-gradient(135deg,#10b981,#059669)",
+              background: "#10b981",
               color: "#fff",
               fontSize: 12,
               fontWeight: 600,

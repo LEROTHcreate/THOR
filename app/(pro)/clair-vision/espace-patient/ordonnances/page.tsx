@@ -5,15 +5,15 @@ import type { CSSProperties } from "react";
 
 /* ── Design tokens ──────────────────────────────────────────────────── */
 const glass: CSSProperties = {
-  background: "rgba(255,255,255,0.72)",
+  background: "var(--glass-strong-bg)",
   backdropFilter: "blur(20px)",
   WebkitBackdropFilter: "blur(20px)",
-  border: "1px solid rgba(255,255,255,0.85)",
+  border: "1px solid var(--glass-strong-border)",
   boxShadow: "0 8px 32px rgba(0,0,0,0.06)",
 };
 const glassSubtle: CSSProperties = {
-  background: "rgba(255,255,255,0.45)",
-  border: "1px solid rgba(255,255,255,0.65)",
+  background: "var(--glass-subtle-bg)",
+  border: "1px solid var(--glass-subtle-border)",
 };
 const ACCENT = "#2D8CFF";
 
@@ -253,7 +253,7 @@ function OrdonnanceModal({ ord, onClose }: { ord: Ordonnance; onClose: () => voi
             type="button"
             onClick={onClose}
             className="rounded-xl px-4 py-2.5 text-sm font-semibold text-white"
-            style={{ background: `linear-gradient(135deg, ${ACCENT}, #1A72E8)` }}
+            style={{ background: ACCENT }}
           >
             Fermer
           </button>

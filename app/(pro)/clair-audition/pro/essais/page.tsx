@@ -7,21 +7,21 @@ import Link from "next/link";
    STYLE TOKENS
 ═══════════════════════════════════════════════════════════════════════ */
 const glass: CSSProperties = {
-  background: "rgba(255,255,255,0.58)",
+  background: "var(--glass-bg)",
   backdropFilter: "blur(20px)",
   WebkitBackdropFilter: "blur(20px)",
-  border: "1px solid rgba(255,255,255,0.72)",
+  border: "1px solid var(--glass-border)",
   boxShadow: "0 8px 32px rgba(0,0,0,0.06)",
 };
 const glassSubtle: CSSProperties = {
-  background: "rgba(255,255,255,0.45)",
-  border: "1px solid rgba(255,255,255,0.65)",
+  background: "var(--glass-subtle-bg)",
+  border: "1px solid var(--glass-subtle-border)",
 };
 const inputStyle: CSSProperties = {
   padding: "9px 12px",
   borderRadius: 10,
   border: "1px solid rgba(148,163,184,0.35)",
-  background: "rgba(255,255,255,0.7)",
+  background: "var(--glass-strong-bg)",
   fontSize: 13,
   color: "#1e293b",
   outline: "none",
@@ -202,7 +202,7 @@ function Toast({ message, onClose }: { message: string; onClose: () => void }) {
   return (
     <div style={{
       position: "fixed", bottom: 24, right: 24, zIndex: 9999,
-      background: "linear-gradient(135deg,#10b981,#059669)",
+      background: "#10b981",
       color: "#fff", borderRadius: 14, padding: "12px 20px",
       fontSize: 14, fontWeight: 600, boxShadow: "0 8px 32px rgba(16,185,129,0.35)",
       display: "flex", alignItems: "center", gap: 10,
@@ -263,7 +263,7 @@ function EssaiModal({
   const radioBtn = (active: boolean): CSSProperties => ({
     padding: "5px 14px", borderRadius: 20, fontSize: 12, fontWeight: 600, cursor: "pointer",
     ...(active
-      ? { background: "linear-gradient(135deg,#10b981,#059669)", color: "#fff", border: "none" }
+      ? { background: "#10b981", color: "#fff", border: "none" }
       : { ...glassSubtle, color: "#64748b", border: "1px solid rgba(148,163,184,0.3)" }),
   });
 
@@ -369,7 +369,7 @@ function EssaiModal({
             disabled={!isValid}
             style={{
               padding: "9px 24px", borderRadius: 10, border: "none",
-              background: isValid ? "linear-gradient(135deg,#10b981,#059669)" : "rgba(148,163,184,0.3)",
+              background: isValid ? "#10b981" : "rgba(148,163,184,0.3)",
               fontSize: 13, fontWeight: 700,
               color: isValid ? "#fff" : "#94a3b8",
               cursor: isValid ? "pointer" : "not-allowed",
@@ -569,7 +569,7 @@ function EssaiCard({
               onClick={() => onConvertir(essai.id)}
               style={{
                 padding: "6px 14px", borderRadius: 10, border: "none",
-                background: "linear-gradient(135deg,#10b981,#059669)",
+                background: "#10b981",
                 fontSize: 12, fontWeight: 700, color: "#fff", cursor: "pointer",
                 textDecoration: "none", display: "inline-flex", alignItems: "center",
                 boxShadow: "0 2px 6px rgba(16,185,129,0.25)",
@@ -585,7 +585,7 @@ function EssaiCard({
             </button>
             <button
               onClick={() => onAbandonner(essai.id)}
-              style={{ padding: "6px 14px", borderRadius: 10, border: "1px solid rgba(148,163,184,0.25)", background: "rgba(255,255,255,0.55)", color: "#94a3b8", fontSize: 12, fontWeight: 600, cursor: "pointer" }}
+              style={{ padding: "6px 14px", borderRadius: 10, border: "1px solid rgba(148,163,184,0.25)", background: "var(--glass-subtle-bg)", color: "#94a3b8", fontSize: 12, fontWeight: 600, cursor: "pointer" }}
             >
               Abandonner
             </button>
@@ -598,7 +598,7 @@ function EssaiCard({
               onClick={() => onConvertir(essai.id)}
               style={{
                 padding: "6px 14px", borderRadius: 10, border: "none",
-                background: "linear-gradient(135deg,#10b981,#059669)",
+                background: "#10b981",
                 fontSize: 12, fontWeight: 700, color: "#fff", cursor: "pointer",
                 textDecoration: "none", display: "inline-flex", alignItems: "center",
               }}
@@ -607,7 +607,7 @@ function EssaiCard({
             </Link>
             <button
               onClick={() => onAbandonner(essai.id)}
-              style={{ padding: "6px 14px", borderRadius: 10, border: "1px solid rgba(148,163,184,0.25)", background: "rgba(255,255,255,0.55)", color: "#94a3b8", fontSize: 12, fontWeight: 600, cursor: "pointer" }}
+              style={{ padding: "6px 14px", borderRadius: 10, border: "1px solid rgba(148,163,184,0.25)", background: "var(--glass-subtle-bg)", color: "#94a3b8", fontSize: 12, fontWeight: 600, cursor: "pointer" }}
             >
               Abandonner
             </button>
@@ -623,7 +623,7 @@ function EssaiCard({
             </span>
             <button
               onClick={() => onReouvrir(essai.id)}
-              style={{ padding: "6px 14px", borderRadius: 10, border: "1px solid rgba(148,163,184,0.25)", background: "rgba(255,255,255,0.55)", color: "#64748b", fontSize: 12, fontWeight: 600, cursor: "pointer" }}
+              style={{ padding: "6px 14px", borderRadius: 10, border: "1px solid rgba(148,163,184,0.25)", background: "var(--glass-subtle-bg)", color: "#64748b", fontSize: 12, fontWeight: 600, cursor: "pointer" }}
             >
               Rouvrir
             </button>
@@ -758,7 +758,7 @@ export default function EssaisAuditionPage() {
           onClick={() => setModalOpen(true)}
           style={{
             padding: "9px 18px", borderRadius: 12, border: "none",
-            background: "linear-gradient(135deg,#10b981,#059669)",
+            background: "#10b981",
             fontSize: 13, fontWeight: 700, color: "#fff", cursor: "pointer",
             boxShadow: "0 2px 8px rgba(16,185,129,0.25)",
           }}
@@ -775,7 +775,7 @@ export default function EssaisAuditionPage() {
           border: "1px solid rgba(239,68,68,0.28)",
           display: "flex", alignItems: "center", gap: 12,
         }}>
-          <span style={{ fontSize: 18 }}>⚠️</span>
+          <span style={{ fontSize: 18 }}></span>
           <div>
             <div style={{ fontSize: 13, fontWeight: 700, color: "#b91c1c" }}>
               {alertEssais.length === 1
@@ -814,7 +814,7 @@ export default function EssaisAuditionPage() {
               padding: "7px 14px", borderRadius: 20, fontSize: 12, fontWeight: 600, cursor: "pointer",
               display: "flex", alignItems: "center", gap: 6,
               ...(filter === tab.key
-                ? { background: "linear-gradient(135deg,#10b981,#059669)", color: "#fff", border: "none", boxShadow: "0 2px 8px rgba(16,185,129,0.25)" }
+                ? { background: "#10b981", color: "#fff", border: "none", boxShadow: "0 2px 8px rgba(16,185,129,0.25)" }
                 : { ...glassSubtle, color: "#64748b", border: "1px solid rgba(148,163,184,0.25)" }),
             }}
           >

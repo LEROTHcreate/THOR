@@ -78,7 +78,7 @@ function SidebarContent({
       <div className="px-5 pt-6 pb-5" style={{ borderBottom: "1px solid rgba(255,255,255,0.50)" }}>
         <div className="flex items-center gap-3">
           <div className="grid h-10 w-10 place-items-center rounded-2xl text-white shadow-[0_4px_16px_rgba(45,140,255,0.35)]"
-               style={{ background: "linear-gradient(135deg, #2D8CFF, #1A72E8)" }}>
+               style={{ background: "#2D8CFF" }}>
             <IconEye />
           </div>
           <div>
@@ -90,7 +90,7 @@ function SidebarContent({
         <div className="mt-4 flex items-center gap-3 rounded-2xl p-3"
              style={{ background: "rgba(255,255,255,0.50)", border: "1px solid rgba(255,255,255,0.70)" }}>
           <div className="grid h-9 w-9 place-items-center rounded-full text-xs font-bold text-white shadow-[0_2px_10px_rgba(45,140,255,0.30)]"
-               style={{ background: "linear-gradient(135deg, #2D8CFF, #1A72E8)" }}>
+               style={{ background: "#2D8CFF" }}>
             MD
           </div>
           <div className="min-w-0">
@@ -109,11 +109,11 @@ function SidebarContent({
               className={["flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all duration-200",
                 active ? "text-white shadow-[0_4px_18px_rgba(45,140,255,0.32)]" : "text-slate-600 hover:text-slate-900 hover:bg-white/55",
               ].join(" ")}
-              style={active ? { background: "linear-gradient(135deg, #2D8CFF, #1A72E8)" } : {}}>
+              style={active ? { background: "#2D8CFF" } : {}}>
               <span className={["grid h-7 w-7 place-items-center rounded-lg flex-shrink-0",
                 active ? "bg-white/25" : "bg-white/60",
               ].join(" ")}
-                    style={!active ? { border: "1px solid rgba(255,255,255,0.60)" } : {}}>
+                    style={!active ? { border: "1px solid var(--glass-nav-border)" } : {}}>
                 <span className={active ? "text-white" : "text-blue-500"}><Icon /></span>
               </span>
               {label}
@@ -134,7 +134,7 @@ function SidebarContent({
         <button type="button"
           onClick={() => { clearCookie("thor_patient"); router.replace("/"); }}
           className="w-full rounded-xl py-2 text-sm font-medium text-slate-500 transition-all hover:text-slate-800"
-          style={{ background: "rgba(255,255,255,0.45)", border: "1px solid rgba(255,255,255,0.65)" }}>
+          style={{ background: "var(--glass-subtle-bg)", border: "1px solid var(--glass-subtle-border)" }}>
           Déconnexion
         </button>
       </div>
@@ -157,11 +157,11 @@ export default function VisionPatientLayout({ children }: { children: ReactNode 
 
       {/* MOBILE TOP BAR */}
       <div className="lg:hidden"
-           style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 50, height: 56, background: "rgba(255,255,255,0.80)", backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)", borderBottom: "1px solid rgba(255,255,255,0.60)" }}>
+           style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 50, height: 56, background: "var(--glass-strong-bg)", backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)", borderBottom: "1px solid var(--glass-sep)" }}>
         <div className="flex h-full items-center justify-between px-4">
           <div className="flex items-center gap-2.5">
             <div className="grid h-8 w-8 place-items-center rounded-xl text-white shadow-[0_2px_10px_rgba(45,140,255,0.30)]"
-                 style={{ background: "linear-gradient(135deg, #2D8CFF, #1A72E8)" }}>
+                 style={{ background: "#2D8CFF" }}>
               <IconEye />
             </div>
             <div className="text-sm font-semibold text-slate-800">Clair Vision</div>
@@ -170,7 +170,7 @@ export default function VisionPatientLayout({ children }: { children: ReactNode 
             type="button"
             onClick={() => setMobileOpen((v) => !v)}
             className="grid h-9 w-9 place-items-center rounded-xl text-slate-700"
-            style={{ background: "rgba(255,255,255,0.60)", border: "1px solid rgba(255,255,255,0.72)" }}
+            style={{ background: "var(--glass-strong-bg)", border: "1px solid var(--glass-border)" }}
             aria-label="Menu">
             {mobileOpen ? (
               <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none">
@@ -199,10 +199,10 @@ export default function VisionPatientLayout({ children }: { children: ReactNode 
         className="fixed top-0 left-0 bottom-0 flex w-[280px] flex-col lg:hidden"
         style={{
           zIndex: 45,
-          background: "rgba(255,255,255,0.92)",
+          background: "var(--glass-card-bg)",
           backdropFilter: "blur(24px)",
           WebkitBackdropFilter: "blur(24px)",
-          borderRight: "1px solid rgba(255,255,255,0.72)",
+          borderRight: "1px solid var(--glass-border)",
           transform: mobileOpen ? "translateX(0)" : "translateX(-100%)",
           transition: "transform 0.28s cubic-bezier(0.4,0,0.2,1)",
         }}>
@@ -222,7 +222,7 @@ export default function VisionPatientLayout({ children }: { children: ReactNode 
 
       {/* ── Barre navigation mobile basse ── */}
       <nav className="lg:hidden fixed bottom-0 left-0 right-0 z-50 flex items-center justify-around px-2 py-2"
-        style={{ background: "rgba(255,255,255,0.92)", backdropFilter: "blur(20px)", WebkitBackdropFilter: "blur(20px)", borderTop: "1px solid rgba(45,140,255,0.10)", boxShadow: "0 -4px 24px rgba(0,0,0,0.08)" }}>
+        style={{ background: "var(--glass-card-bg)", backdropFilter: "blur(20px)", WebkitBackdropFilter: "blur(20px)", borderTop: "1px solid rgba(45,140,255,0.10)", boxShadow: "0 -4px 24px rgba(0,0,0,0.08)" }}>
         {[
           { href: "/clair-vision/espace-patient",                label: "Accueil",   icon: <IconHome /> },
           { href: "/clair-vision/espace-patient/rendez-vous",   label: "RDV",       icon: <IconCalendar /> },

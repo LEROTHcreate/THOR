@@ -99,6 +99,10 @@ function ConnexionPraticienPageContent() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  // login state UI
+  const [loginError, setLoginError] = useState<string | null>(null);
+  const [loginLoading, setLoginLoading] = useState(false);
+
   // module selection
   const [module, setModule] = useState<Module>("vision");
 
@@ -364,9 +368,9 @@ function ConnexionPraticienPageContent() {
           <div
             className="rounded-2xl p-8"
             style={{
-              background: "rgba(255,255,255,0.80)",
+              background: "var(--glass-strong-bg)",
               backdropFilter: "blur(20px)",
-              border: "1px solid rgba(255,255,255,0.85)",
+              border: "1px solid var(--glass-strong-border)",
               boxShadow: "0 8px 40px rgba(0,0,0,0.08)",
             } as React.CSSProperties}
           >
@@ -501,12 +505,29 @@ function ConnexionPraticienPageContent() {
                   </button>
                 </p>
 
+                {/* Erreur inline */}
+                {loginError && (
+                  <div
+                    role="alert"
+                    className="mt-4 flex items-start gap-2 rounded-xl border border-red-200 bg-red-50 px-3 py-2.5 text-sm text-red-700"
+                  >
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" className="mt-0.5 shrink-0">
+                      <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2" />
+                      <line x1="12" y1="8" x2="12" y2="12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+                      <circle cx="12" cy="16" r="1" fill="currentColor" />
+                    </svg>
+                    <span>{loginError}</span>
+                  </div>
+                )}
+
                 {/* Accéder button */}
                 <div className="mt-6 pt-5 border-t border-slate-100 flex justify-end">
                   <button
                     type="button"
                     onClick={async () => {
-                      if (module === "both") return;
+                      if (module === "both" || loginLoading) return;
+                      setLoginError(null);
+                      setLoginLoading(true);
                       try {
                         const res = await fetch("/api/auth/login", {
                           method: "POST",
@@ -520,17 +541,25 @@ function ConnexionPraticienPageContent() {
                           router.push(routes[module]);
                         } else {
                           const data = await res.json().catch(() => ({}));
-                          alert(data.error ?? "Erreur de connexion");
+                          setLoginError(data.error ?? "Erreur de connexion");
+                          setLoginLoading(false);
                         }
                       } catch {
-                        alert("Impossible de contacter le serveur. Réessayez.");
+                        setLoginError("Impossible de contacter le serveur. Réessayez.");
+                        setLoginLoading(false);
                       }
                     }}
-                    disabled={module === "both"}
-                    className="rounded-xl font-semibold text-sm px-6 py-2.5 text-white transition-all hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed"
+                    disabled={module === "both" || loginLoading}
+                    className="inline-flex items-center gap-2 rounded-xl font-semibold text-sm px-6 py-2.5 text-white transition-all hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed"
                     style={{ background: "linear-gradient(135deg, #0B1220, #1E2A3A)" } as React.CSSProperties}
                   >
-                    {module === "both" ? "Bientôt disponible" : "Accéder à mon espace"}
+                    {loginLoading && (
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" className="animate-spin">
+                        <circle cx="12" cy="12" r="10" stroke="currentColor" strokeOpacity="0.3" strokeWidth="3" />
+                        <path d="M12 2a10 10 0 0 1 10 10" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
+                      </svg>
+                    )}
+                    {module === "both" ? "Bientôt disponible" : loginLoading ? "Connexion…" : "Accéder à mon espace"}
                   </button>
                 </div>
               </>
@@ -947,7 +976,9 @@ function ConnexionPraticienPageContent() {
                   <button
                     type="button"
                     onClick={async () => {
-                      if (module === "both") return;
+                      if (module === "both" || loginLoading) return;
+                      setLoginError(null);
+                      setLoginLoading(true);
                       try {
                         const res = await fetch("/api/auth/login", {
                           method: "POST",
@@ -960,13 +991,15 @@ function ConnexionPraticienPageContent() {
                           if (data.userId) saveCurrentUserId(data.userId);
                           router.push(routes[module]);
                         } else {
-                          alert("Erreur de connexion");
+                          setLoginError("Erreur de connexion");
+                          setLoginLoading(false);
                         }
                       } catch {
-                        alert("Impossible de contacter le serveur.");
+                        setLoginError("Impossible de contacter le serveur.");
+                        setLoginLoading(false);
                       }
                     }}
-                    disabled={module === "both"}
+                    disabled={module === "both" || loginLoading}
                     className="rounded-xl font-semibold text-sm px-6 py-2.5 text-white transition-all hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed"
                     style={{ background: "linear-gradient(135deg, #0B1220, #1E2A3A)" } as React.CSSProperties}
                   >

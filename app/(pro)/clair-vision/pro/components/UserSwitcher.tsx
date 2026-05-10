@@ -9,8 +9,8 @@ import {
 import type { StoreConfig } from "@/lib/storeConfig";
 
 const glassSubtle: CSSProperties = {
-  background: "rgba(255,255,255,0.45)",
-  border: "1px solid rgba(255,255,255,0.65)",
+  background: "var(--glass-subtle-bg)",
+  border: "1px solid var(--glass-subtle-border)",
 };
 
 const ALL_ROLES: UserRole[] = ["Gérant", "Optométriste", "Opticien", "Visagiste", "Assistant(e)"];
@@ -104,7 +104,7 @@ function Modal({
       <div className="absolute inset-0 bg-black/35 backdrop-blur-[3px]" />
       <div
         className="relative w-full max-w-md rounded-2xl overflow-hidden shadow-2xl"
-        style={{ background: "rgba(255,255,255,0.97)", border: "1px solid rgba(255,255,255,0.85)" }}
+        style={{ background: "var(--glass-card-bg)", border: "1px solid var(--glass-strong-border)" }}
         onClick={e => e.stopPropagation()}
       >
         <div className="flex items-center justify-between px-6 py-4 border-b border-slate-200/60">
@@ -347,7 +347,7 @@ export default function UserSwitcher({
               />
               {pwdError && (
                 <p className="text-xs text-[#EF4444] flex items-center gap-1 mt-1">
-                  <span>⚠</span>{pwdError}
+                  {pwdError}
                 </p>
               )}
             </div>
@@ -363,7 +363,7 @@ export default function UserSwitcher({
               <button
                 onClick={handleValidatePwd}
                 className="flex-1 inline-flex items-center justify-center gap-2 rounded-[var(--radius-pill)] py-2.5 text-sm font-semibold text-white transition-all hover:opacity-90"
-                style={{ background:"linear-gradient(135deg,#2D8CFF,#1A72E8)", boxShadow:"0 2px 8px rgba(45,140,255,.28)" }}
+                style={{ background:"#2D8CFF", boxShadow:"0 2px 8px rgba(45,140,255,.28)" }}
               >
                 <IconCheck className="w-4 h-4" />
                 Connexion
@@ -435,7 +435,7 @@ export default function UserSwitcher({
                       <button
                         onClick={() => handleSaveEditPwd(u.id)}
                         className="flex-1 rounded-xl py-2 text-xs font-semibold text-white transition-all hover:opacity-90"
-                        style={{ background:"linear-gradient(135deg,#2D8CFF,#1A72E8)" }}
+                        style={{ background:"#2D8CFF" }}
                       >
                         Enregistrer
                       </button>
@@ -451,7 +451,7 @@ export default function UserSwitcher({
               <button
                 onClick={() => setView("add")}
                 className="inline-flex items-center gap-1.5 rounded-[var(--radius-pill)] px-4 py-2 text-xs font-semibold text-white transition-all hover:opacity-90"
-                style={{ background:"linear-gradient(135deg,#2D8CFF,#1A72E8)", boxShadow:"0 2px 8px rgba(45,140,255,.25)" }}
+                style={{ background:"#2D8CFF", boxShadow:"0 2px 8px rgba(45,140,255,.25)" }}
               >
                 <IconPlus className="w-3.5 h-3.5" />
                 Ajouter un compte
@@ -484,7 +484,7 @@ export default function UserSwitcher({
                   className="h-14 w-14 rounded-xl flex-shrink-0 overflow-hidden grid place-items-center"
                   style={settingsForm.logo
                     ? { border: "1px solid rgba(0,0,0,0.10)" }
-                    : { background: "linear-gradient(135deg, #2D8CFF, #1A72E8)" }}
+                    : { background: "#2D8CFF" }}
                 >
                   {settingsForm.logo ? (
                     // eslint-disable-next-line @next/next/no-img-element
@@ -590,7 +590,7 @@ export default function UserSwitcher({
                 onClick={handleSaveSettings}
                 disabled={!settingsForm.nom.trim()}
                 className="flex-1 inline-flex items-center justify-center gap-2 rounded-[var(--radius-pill)] py-2.5 text-sm font-semibold text-white transition-all hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed"
-                style={{ background:"linear-gradient(135deg,#2D8CFF,#1A72E8)", boxShadow:"0 2px 8px rgba(45,140,255,.28)" }}
+                style={{ background:"#2D8CFF", boxShadow:"0 2px 8px rgba(45,140,255,.28)" }}
               >
                 {settingsSaved ? (
                   <><IconCheck className="w-4 h-4" />Enregistré !</>
@@ -659,7 +659,7 @@ export default function UserSwitcher({
             </div>
 
             {addError && (
-              <p className="text-xs text-[#EF4444] flex items-center gap-1">⚠ {addError}</p>
+              <p className="text-xs text-[#EF4444] flex items-center gap-1">{addError}</p>
             )}
 
             <div className="flex gap-2 pt-1">
@@ -673,7 +673,7 @@ export default function UserSwitcher({
               <button
                 onClick={handleAddUser}
                 className="flex-1 inline-flex items-center justify-center gap-2 rounded-[var(--radius-pill)] py-2.5 text-sm font-semibold text-white transition-all hover:opacity-90"
-                style={{ background:"linear-gradient(135deg,#2D8CFF,#1A72E8)", boxShadow:"0 2px 8px rgba(45,140,255,.28)" }}
+                style={{ background:"#2D8CFF", boxShadow:"0 2px 8px rgba(45,140,255,.28)" }}
               >
                 <IconCheck className="w-4 h-4" />
                 Créer le compte

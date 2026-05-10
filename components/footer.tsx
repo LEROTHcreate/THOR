@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 
 export default function Footer() {
@@ -17,18 +18,19 @@ export default function Footer() {
           <div className="space-y-4">
             <Link href="/" className="inline-flex items-center gap-3 group" aria-label="THOR — Accueil">
               <div
-                className="relative h-9 w-9 rounded-xl grid place-items-center overflow-hidden transition-transform duration-200 group-hover:scale-[1.04]"
+                className="relative h-9 w-9 rounded-xl overflow-hidden transition-transform duration-200 group-hover:scale-[1.04]"
                 style={{
-                  background: "rgba(255,255,255,0.10)",
                   border: "1px solid rgba(255,255,255,0.15)",
                   boxShadow: "0 2px 8px rgba(0,0,0,0.25)",
                 }}
               >
-                <svg className="w-4 h-4 text-white/90" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                  <path d="M6 7h12M12 7v12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-                  <path d="M16.8 9.2c.9.9 1.4 2.1 1.4 3.4 0 2.7-2.2 5-5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" opacity="0.7" />
-                  <circle cx="17.7" cy="9.1" r="1.1" fill="currentColor" opacity="0.9" />
-                </svg>
+                <Image
+                  src="/images/logos/thor.png"
+                  alt="THOR"
+                  fill
+                  sizes="36px"
+                  className="object-cover"
+                />
               </div>
               <div className="leading-tight">
                 <div className="text-sm font-semibold text-white tracking-tight">THOR</div>
@@ -41,7 +43,7 @@ export default function Footer() {
             </Link>
 
             <p className="text-sm leading-[1.7] text-white/45">
-              Votre expérience premium en santé visuelle et auditive. Parcours clairs, suivi structuré, prise de rendez-vous simplifiée.
+              Le logiciel certifié pour opticiens et audioprothésistes. Agenda, dossiers patients, devis normalisés, hébergement HDS — tout-en-un.
             </p>
 
             {/* Badges marques */}
@@ -63,15 +65,15 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Services */}
+          {/* Modules */}
           <div className="space-y-4">
-            <div className="text-xs font-semibold uppercase tracking-[0.08em] text-white/30">Services</div>
+            <div className="text-xs font-semibold uppercase tracking-[0.08em] text-white/30">Solutions</div>
             <ul className="space-y-2.5">
               {[
-                { href: "/clair-vision",   label: "Optique — Clair Vision" },
-                { href: "/clair-audition", label: "Audition — Clair Audition" },
-                { href: "/rendez-vous",    label: "Prendre rendez-vous" },
-                { href: "/nos-centres",    label: "Nos centres" },
+                { href: "/clair-vision",        label: "Optique — Clair Vision" },
+                { href: "/clair-audition",      label: "Audition — Clair Audition" },
+                { href: "/demo",                label: "Démonstration interactive" },
+                { href: "/tarifs",              label: "Tarifs praticiens" },
               ].map((l) => (
                 <li key={l.href}>
                   <Link href={l.href} className="text-sm text-white/45 transition-colors duration-200 hover:text-white">
@@ -84,13 +86,13 @@ export default function Footer() {
 
           {/* Informations */}
           <div className="space-y-4">
-            <div className="text-xs font-semibold uppercase tracking-[0.08em] text-white/30">Informations</div>
+            <div className="text-xs font-semibold uppercase tracking-[0.08em] text-white/30">Praticiens</div>
             <ul className="space-y-2.5">
               {[
-                { href: "/connexion",        label: "Connexion" },
-                { href: "/contact",          label: "Contact" },
-                { href: "/tarifs",           label: "Tarifs praticiens" },
-                { href: "/mentions-legales", label: "Mentions légales" },
+                { href: "/connexion/praticien", label: "Connexion praticien" },
+                { href: "/contact?sujet=demo",  label: "Demander une démo" },
+                { href: "/contact?sujet=support", label: "Support technique" },
+                { href: "/contact?sujet=partenariat", label: "Partenariat / revendeur" },
               ].map((l) => (
                 <li key={l.href}>
                   <Link href={l.href} className="text-sm text-white/45 hover:text-white transition-colors duration-200">
@@ -103,21 +105,20 @@ export default function Footer() {
 
           {/* Contact */}
           <div className="space-y-4">
-            <div className="text-xs font-semibold uppercase tracking-[0.08em] text-white/30">Contact</div>
+            <div className="text-xs font-semibold uppercase tracking-[0.08em] text-white/30">Déployer THOR</div>
             <div className="space-y-3 text-sm text-white/45">
               <div className="leading-relaxed">
-                12 rue de la Santé<br />
-                75014 Paris
+                Discutons de votre cabinet — onboarding, certification SESAM-Vitale, migration de données, formation.
               </div>
-              <a href="mailto:contact@thor.fr" className="block hover:text-white transition-colors duration-200">
-                contact@thor.fr
+              <a href="mailto:pro@thor.fr" className="block hover:text-white transition-colors duration-200">
+                pro@thor.fr
               </a>
               <Link
-                href="/rendez-vous"
+                href="/contact?sujet=demo"
                 className="inline-flex items-center gap-2 rounded-xl px-4 py-2.5 text-xs font-semibold text-white transition-all duration-200 hover:opacity-90 hover:scale-[1.02]"
-                style={{ background: "linear-gradient(135deg, #2D8CFF, #1A72E8)", boxShadow: "0 4px 16px rgba(45,140,255,0.22)" }}
+                style={{ background: "#2D8CFF", boxShadow: "0 4px 16px rgba(45,140,255,0.22)" }}
               >
-                Prendre rendez-vous →
+                Réserver une démo →
               </Link>
             </div>
           </div>

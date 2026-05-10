@@ -5,10 +5,10 @@ import { useState, useEffect } from "react";
 const A = "#00C98A";
 
 const glass = {
-  background: "rgba(255,255,255,0.72)",
+  background: "var(--glass-strong-bg)",
   backdropFilter: "blur(20px)" as const,
   WebkitBackdropFilter: "blur(20px)" as const,
-  border: "1px solid rgba(255,255,255,0.80)",
+  border: "1px solid var(--glass-strong-border)",
   borderRadius: 20,
 };
 
@@ -91,7 +91,7 @@ function ReferentCard({ referent, onEdit }: { referent: Referent; onEdit: () => 
           <div style={{ fontSize: 12, color: "#64748b", marginTop: 1 }}>{referent.centreName}</div>
         </div>
       </div>
-      <button onClick={onEdit} style={{ padding: "6px 14px", borderRadius: 10, border: `1.5px solid rgba(0,0,0,.12)`, background: "rgba(255,255,255,.8)", fontSize: 12, fontWeight: 600, color: "#64748b", cursor: "pointer", whiteSpace: "nowrap", flexShrink: 0 }}>
+      <button onClick={onEdit} style={{ padding: "6px 14px", borderRadius: 10, border: `1.5px solid rgba(0,0,0,.12)`, background: "var(--glass-strong-bg)", fontSize: 12, fontWeight: 600, color: "#64748b", cursor: "pointer", whiteSpace: "nowrap", flexShrink: 0 }}>
         Modifier
       </button>
     </div>
@@ -274,7 +274,7 @@ export default function PreConsultationAuditionPage() {
       {/* Header */}
       <div style={{ marginBottom: 28 }}>
         <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 8 }}>
-          <div style={{ width: 36, height: 36, borderRadius: "50%", background: `${A}15`, border: `2px solid ${A}`, display: "grid", placeItems: "center", fontSize: 18 }}>👂</div>
+          <div style={{ width: 36, height: 36, borderRadius: "50%", background: `${A}15`, border: `2px solid ${A}`, display: "grid", placeItems: "center", fontSize: 18 }}></div>
           <div>
             <h1 style={{ fontSize: 20, fontWeight: 800, color: "#0f172a", margin: 0 }}>Pré-consultation</h1>
             <p style={{ fontSize: 13, color: "#64748b", margin: 0 }}>Avant votre rendez-vous · Clair Audition</p>
@@ -363,12 +363,12 @@ export default function PreConsultationAuditionPage() {
               <label style={{ fontSize: 12, fontWeight: 700, color: "#64748b", textTransform: "uppercase", letterSpacing: ".04em", display: "block", marginBottom: 6 }}>Marque / modèle actuel</label>
               <input value={form.appareillageMarque} onChange={e => setForm(f => ({ ...f, appareillageMarque: e.target.value }))}
                 placeholder="Ex : Phonak Audéo M90"
-                style={{ width: "100%", padding: "10px 12px", borderRadius: 10, border: "1px solid rgba(0,0,0,.12)", fontSize: 13, outline: "none", boxSizing: "border-box", background: "rgba(255,255,255,.8)" }} />
+                style={{ width: "100%", padding: "10px 12px", borderRadius: 10, border: "1px solid rgba(0,0,0,.12)", fontSize: 13, outline: "none", boxSizing: "border-box", background: "var(--glass-strong-bg)" }} />
             </div>
             <div>
               <label style={{ fontSize: 12, fontWeight: 700, color: "#64748b", textTransform: "uppercase", letterSpacing: ".04em", display: "block", marginBottom: 6 }}>Âge de l&apos;appareillage</label>
               <select value={form.appareillageAge} onChange={e => setForm(f => ({ ...f, appareillageAge: e.target.value }))}
-                style={{ width: "100%", padding: "10px 12px", borderRadius: 10, border: "1px solid rgba(0,0,0,.12)", fontSize: 13, outline: "none", boxSizing: "border-box", background: "rgba(255,255,255,.8)" }}>
+                style={{ width: "100%", padding: "10px 12px", borderRadius: 10, border: "1px solid rgba(0,0,0,.12)", fontSize: 13, outline: "none", boxSizing: "border-box", background: "var(--glass-strong-bg)" }}>
                 <option value="">Sélectionner</option>
                 <option>Moins d&apos;un an</option>
                 <option>1 à 2 ans</option>
@@ -435,7 +435,7 @@ export default function PreConsultationAuditionPage() {
             <textarea value={form.medicaments} onChange={e => setForm(f => ({ ...f, medicaments: e.target.value }))}
               placeholder="Ex : diurétiques, anti-inflammatoires, antibiotiques (aminosides)…"
               rows={3}
-              style={{ width: "100%", padding: "10px 12px", borderRadius: 10, border: "1px solid rgba(0,0,0,.12)", fontSize: 13, outline: "none", resize: "vertical", fontFamily: "inherit", lineHeight: 1.5, boxSizing: "border-box", background: "rgba(255,255,255,.8)" }} />
+              style={{ width: "100%", padding: "10px 12px", borderRadius: 10, border: "1px solid rgba(0,0,0,.12)", fontSize: 13, outline: "none", resize: "vertical", fontFamily: "inherit", lineHeight: 1.5, boxSizing: "border-box", background: "var(--glass-strong-bg)" }} />
           </div>
 
           <div style={{ marginBottom: 8 }}>
@@ -453,7 +453,7 @@ export default function PreConsultationAuditionPage() {
       {/* Navigation */}
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: 20 }}>
         {step > 1 ? (
-          <button onClick={() => setStep(s => s - 1)} style={{ padding: "12px 24px", borderRadius: 14, border: "1.5px solid rgba(0,0,0,.12)", background: "rgba(255,255,255,.8)", fontSize: 14, fontWeight: 700, color: "#64748b", cursor: "pointer" }}>
+          <button onClick={() => setStep(s => s - 1)} style={{ padding: "12px 24px", borderRadius: 14, border: "1.5px solid rgba(0,0,0,.12)", background: "var(--glass-strong-bg)", fontSize: 14, fontWeight: 700, color: "#64748b", cursor: "pointer" }}>
             ← Précédent
           </button>
         ) : <div />}
@@ -471,7 +471,7 @@ export default function PreConsultationAuditionPage() {
             onClick={handleSubmit}
             disabled={!referent}
             title={!referent ? "Veuillez d'abord choisir un praticien référent" : undefined}
-            style={{ padding: "12px 28px", borderRadius: 14, border: "none", background: !referent ? "#e2e8f0" : `linear-gradient(135deg,#10b981,#059669)`, color: !referent ? "#94a3b8" : "#fff", fontSize: 14, fontWeight: 700, cursor: !referent ? "not-allowed" : "pointer", boxShadow: referent ? "0 4px 14px rgba(16,185,129,.35)" : "none" }}
+            style={{ padding: "12px 28px", borderRadius: 14, border: "none", background: !referent ? "#e2e8f0" : `#10b981`, color: !referent ? "#94a3b8" : "#fff", fontSize: 14, fontWeight: 700, cursor: !referent ? "not-allowed" : "pointer", boxShadow: referent ? "0 4px 14px rgba(16,185,129,.35)" : "none" }}
           >
             ✓ Envoyer à mon audioprothésiste
           </button>

@@ -1,23 +1,17 @@
-import HomeHero from "@/components/home/home-hero";
-import { TrustBar } from "@/components/home/trust-bar";
-import { EspacesDedies } from "@/components/home/espaces-dedies";
-import { Expertises } from "@/components/home/expertises";
-import { HowItWorks } from "@/components/home/how-it-works";
-import CentresPreview from "@/components/home/centres-preview";
-import { Avis } from "@/components/home/avis";
-import { FinalCTA } from "@/components/home/final-cta";
+import AnimatedBackground from "@/components/home/animated-background";
+import ThorHero from "@/components/home/thor-hero";
+import { SaasPortfolio } from "@/components/home/saas-portfolio";
+import { ThorValues } from "@/components/home/thor-values";
+import { ThorProCTA } from "@/components/home/thor-pro-cta";
 
 export default function Page() {
   return (
     <>
-      <HomeHero />
-      <TrustBar />
-      <EspacesDedies />
-      <Expertises />
-      <HowItWorks />
-      <CentresPreview />
-      <Avis />
-      <FinalCTA />
+      <AnimatedBackground />
+      <ThorHero />
+      <SaasPortfolio />
+      <ThorValues />
+      <ThorProCTA />
     </>
   );
 }

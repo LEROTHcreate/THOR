@@ -11,7 +11,7 @@ const centres = [
 ];
 
 const SUJETS = [
-  { value: "demo",       label: "Demander une démo",   tag: "⚡ Recommandé" },
+  { value: "demo",       label: "Demander une démo",   tag: "Recommandé" },
   { value: "tarifs",     label: "Information tarifs",   tag: "" },
   { value: "support",    label: "Support technique",    tag: "" },
   { value: "partenariat",label: "Partenariat / revendeur", tag: "" },
@@ -19,10 +19,10 @@ const SUJETS = [
 ];
 
 const TRUST = [
-  { icon: "🔒", label: "HDS certifié", sub: "Hébergement données de santé" },
-  { icon: "🩺", label: "GIE SESAM-Vitale", sub: "Partenaire officiel" },
-  { icon: "⚡", label: "Réponse < 4h", sub: "En jours ouvrés" },
-  { icon: "🇫🇷", label: "100% français", sub: "Équipe et données en France" },
+  { label: "HDS certifié", sub: "Hébergement données de santé" },
+  { label: "GIE SESAM-Vitale", sub: "Partenaire officiel" },
+  { label: "Réponse < 4h", sub: "En jours ouvrés" },
+  { label: "100% français", sub: "Équipe et données en France" },
 ];
 
 function ContactForm() {
@@ -79,7 +79,7 @@ function ContactForm() {
           {isDemo ? (
             <>
               <span className="inline-flex items-center gap-2 rounded-full border border-[rgba(45,140,255,0.35)] bg-[rgba(45,140,255,0.08)] px-4 py-1.5 text-xs font-semibold text-[#2D8CFF] mb-4">
-                ⚡ Demande de démonstration
+                Demande de démonstration
               </span>
               <h1 className="text-4xl md:text-5xl font-light tracking-tight text-thor-text h-title">
                 Votre cabinet,{" "}
@@ -109,7 +109,6 @@ function ContactForm() {
         <div className="fade-up fade-up-2 grid grid-cols-2 md:grid-cols-4 gap-3 mb-12">
           {TRUST.map((t) => (
             <div key={t.label} className="rounded-xl border border-thor-border bg-white shadow-[0_1px_4px_rgba(0,0,0,0.04)] px-4 py-3 flex items-center gap-3">
-              <span className="text-xl shrink-0">{t.icon}</span>
               <div>
                 <div className="text-xs font-semibold text-thor-text">{t.label}</div>
                 <div className="text-[11px] text-thor-muted leading-tight mt-0.5">{t.sub}</div>
@@ -289,7 +288,7 @@ function ContactForm() {
                   className="w-full rounded-xl text-white py-3.5 text-sm font-bold tracking-wide transition-all duration-200 disabled:opacity-70 disabled:cursor-not-allowed"
                   style={{
                     background: isDemo
-                      ? "linear-gradient(135deg, #2D8CFF 0%, #1A72E8 100%)"
+                      ? "#2D8CFF"
                       : "#2D8CFF",
                     boxShadow: submitting ? "none" : "0 4px 16px rgba(45,140,255,0.32)",
                   }}
@@ -303,7 +302,7 @@ function ContactForm() {
                       Envoi en cours…
                     </span>
                   ) : (
-                    isDemo ? "⚡ Réserver ma démo gratuite" : "Envoyer le message"
+                    isDemo ? "Réserver ma démo gratuite" : "Envoyer le message"
                   )}
                 </button>
 
@@ -349,12 +348,11 @@ function ContactForm() {
               <h2 className="text-xs font-bold uppercase tracking-wider text-thor-muted mb-4">Contact direct</h2>
               <div className="space-y-3">
                 {[
-                  { icon: "✉️", label: "Email", value: "contact@thor.fr", href: "mailto:contact@thor.fr" },
-                  { icon: "📞", label: "Téléphone", value: "01 00 00 00 00", href: "tel:+33100000000" },
-                  { icon: "🕐", label: "Horaires", value: "Lun–Sam : 9h–19h", href: null },
+                  { label: "Email", value: "contact@thor.fr", href: "mailto:contact@thor.fr" },
+                  { label: "Téléphone", value: "01 00 00 00 00", href: "tel:+33100000000" },
+                  { label: "Horaires", value: "Lun–Sam : 9h–19h", href: null },
                 ].map((c) => (
                   <div key={c.label} className="flex items-center gap-3">
-                    <span className="text-base w-6 text-center shrink-0">{c.icon}</span>
                     <div>
                       <div className="text-[11px] text-thor-muted">{c.label}</div>
                       {c.href ? (

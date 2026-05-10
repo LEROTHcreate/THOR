@@ -8,16 +8,16 @@ import { loadUsers, loadCurrentUserId } from "@/lib/users";
 ═══════════════════════════════════════════════════════════════════════ */
 const ACCENT = "#00C98A";
 const glass: CSSProperties = {
-  background: "rgba(255,255,255,0.58)", backdropFilter: "blur(20px)",
-  WebkitBackdropFilter: "blur(20px)", border: "1px solid rgba(255,255,255,0.72)",
+  background: "var(--glass-bg)", backdropFilter: "blur(20px)",
+  WebkitBackdropFilter: "blur(20px)", border: "1px solid var(--glass-border)",
   boxShadow: "0 8px 32px rgba(0,0,0,0.06)",
 };
 const glassSubtle: CSSProperties = {
-  background: "rgba(255,255,255,0.45)", border: "1px solid rgba(255,255,255,0.65)",
+  background: "var(--glass-subtle-bg)", border: "1px solid var(--glass-subtle-border)",
 };
 const input: CSSProperties = {
   padding: "9px 12px", borderRadius: 10, border: "1px solid rgba(148,163,184,0.35)",
-  background: "rgba(255,255,255,0.7)", fontSize: 13, color: "#1e293b",
+  background: "var(--glass-strong-bg)", fontSize: 13, color: "#1e293b",
   outline: "none", width: "100%", boxSizing: "border-box",
 };
 const label: CSSProperties = { display: "block", fontSize: 11.5, fontWeight: 500, color: "#64748b", marginBottom: 5 };
@@ -79,11 +79,11 @@ type FseStatut = "a_transmettre" | "en_cours" | "accepte" | "partiel" | "rejete"
 interface Fse { id:string; factureId:string; factureNumero:string; patientNom:string; patientPrenom:string; dateFacture:string; montantAMO:number; statut:FseStatut; transmisAt?:string; retourAt?:string; retourRef?:string; retourMontant?:number; retourCode?:string; retourMotifRejet?:string; lots?:string; }
 const FSE_LS = "thor_pro_audition_fse";
 const FSE_STATUT_CONF: Record<FseStatut, { label:string; color:string; bg:string; icon:string }> = {
-  a_transmettre: { label:"À transmettre", color:"#b45309", bg:"rgba(245,158,11,.12)", icon:"📤" },
-  en_cours:      { label:"En cours…",     color:"#6366f1", bg:"rgba(99,102,241,.12)", icon:"⏳" },
+  a_transmettre: { label:"À transmettre", color:"#b45309", bg:"rgba(245,158,11,.12)", icon:"" },
+  en_cours:      { label:"En cours…",     color:"#6366f1", bg:"rgba(99,102,241,.12)", icon:"" },
   accepte:       { label:"Accepté",        color:"#047857", bg:"rgba(16,185,129,.12)", icon:"✓"  },
   partiel:       { label:"Partiel",        color:"#0369a1", bg:"rgba(14,165,233,.12)", icon:"◑"  },
-  rejete:        { label:"Rejeté",         color:"#b91c1c", bg:"rgba(239,68,68,.12)",  icon:"✕"  },
+  rejete:        { label:"Rejeté",         color:"#b91c1c", bg:"rgba(239,68,68,.12)",  icon:""  },
 };
 const MOTIFS_REJET = ["Droits non ouverts — patient non assuré","Doublon de facturation","Code acte incompatible","Dépassement du plafond de remboursement","Ordonnance manquante ou expirée"];
 function genRef() { return `NOM-${new Date().getFullYear()}-${Math.floor(100000+Math.random()*899999)}`; }
@@ -288,7 +288,7 @@ function ConfidenceBadge({ m, grouped }: { m: MatchProposal; grouped: boolean })
   const bg = m.confidence === "high" ? "rgba(16,185,129,0.1)" : "rgba(245,158,11,0.1)";
   return (
     <span style={{ fontSize: 11, fontWeight: 600, color, background: bg, padding: "2px 8px", borderRadius: 10 }}>
-      {grouped ? `🔗 ${m.matchedIds.length} dossiers regroupés` : m.confidence === "high" ? "✓ Exact" : "≈ Proche"}
+      {grouped ? `${m.matchedIds.length} dossiers regroupés` : m.confidence === "high" ? "✓ Exact" : "≈ Proche"}
     </span>
   );
 }
@@ -457,7 +457,7 @@ export default function TiersPayantAuditionPage() {
       ? {statut:"partiel", retourAt:new Date().toISOString(), retourRef:genRef(), retourMontant:Math.round(fse.montantAMO*0.7*100)/100, retourCode:"206 Partiel", lots:genLot()}
       : {statut:"rejete", retourAt:new Date().toISOString(), retourCode:"601 Rejet", retourMotifRejet:MOTIFS_REJET[Math.floor(Math.random()*MOTIFS_REJET.length)]};
     saveFses(fses.map(f => f.id===id ? {...f, statut:"en_cours" as FseStatut, transmisAt:new Date().toISOString(), ...result} : f));
-    showFseToast(`${result.statut==="accepte"?"✓ FSE acceptée":result.statut==="partiel"?"◑ FSE partielle":"✕ FSE rejetée"} — ${fse.patientPrenom} ${fse.patientNom}`);
+    showFseToast(`${result.statut==="accepte"?"✓ FSE acceptée":result.statut==="partiel"?"◑ FSE partielle":"FSE rejetée"} — ${fse.patientPrenom} ${fse.patientNom}`);
   }
 
   async function transmettreToutes() {
@@ -513,7 +513,7 @@ export default function TiersPayantAuditionPage() {
             display: "flex", alignItems: "center", gap: 7,
           }}>
             {lbl}
-            {key === "releve" && !isGerant && <span style={{ fontSize: 10 }}>🔒</span>}
+            {key === "releve" && !isGerant && <span style={{ fontSize: 10 }}></span>}
           </button>
         ))}
       </div>
@@ -620,7 +620,7 @@ export default function TiersPayantAuditionPage() {
         <>
           {!isGerant ? (
             <div style={{ ...glass, borderRadius: 16, padding: "60px 32px", textAlign: "center" }}>
-              <div style={{ fontSize: 36, marginBottom: 12 }}>🔒</div>
+              <div style={{ fontSize: 36, marginBottom: 12 }}></div>
               <div style={{ fontSize: 16, fontWeight: 700, color: "#1e293b", marginBottom: 6 }}>Accès réservé au Gérant</div>
               <div style={{ fontSize: 13.5, color: "#64748b" }}>Connectez-vous en tant que Gérant pour accéder au contrôle des règlements bancaires.</div>
             </div>
@@ -640,7 +640,7 @@ export default function TiersPayantAuditionPage() {
                 }}
               >
                 <input ref={fileRef} type="file" accept=".csv,.txt,.ofx" style={{ display: "none" }} onChange={e => { const f = e.target.files?.[0]; if (f) handleFile(f); }} />
-                <div style={{ fontSize: 28, marginBottom: 10 }}>📂</div>
+                <div style={{ fontSize: 28, marginBottom: 10 }}></div>
                 <div style={{ fontSize: 14, fontWeight: 600, color: "#334155", marginBottom: 4 }}>
                   {fileName ? fileName : "Déposez votre relevé bancaire"}
                 </div>
@@ -767,7 +767,7 @@ export default function TiersPayantAuditionPage() {
           <>
             {fseToast && <div style={{position:"fixed",top:24,right:24,zIndex:9999,padding:"12px 22px",borderRadius:14,fontSize:14,fontWeight:700,color:"#fff",background:"#0f172a",boxShadow:"0 8px 32px rgba(0,0,0,.25)",animation:"fadeIn .2s"}}>{fseToast}</div>}
             <div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:14,marginBottom:20}}>
-              {[{label:"À transmettre",value:aTransmettre,color:"#b45309",icon:"📤"},{label:"En cours",value:enCours,color:"#6366f1",icon:"⏳"},{label:"Acceptées",value:acceptes,color:"#047857",icon:"✓"},{label:"Taux d'accept.",value:`${tauxAccept}%`,color:ACCENT,icon:"📊"}].map(s=>(
+              {[{label:"À transmettre",value:aTransmettre,color:"#b45309",icon:""},{label:"En cours",value:enCours,color:"#6366f1",icon:""},{label:"Acceptées",value:acceptes,color:"#047857",icon:"✓"},{label:"Taux d'accept.",value:`${tauxAccept}%`,color:ACCENT,icon:""}].map(s=>(
                 <div key={s.label} style={{...glass,borderRadius:16,padding:"16px 18px"}}>
                   <div style={{fontSize:11,fontWeight:700,color:"#94a3b8",textTransform:"uppercase" as const,letterSpacing:".06em",marginBottom:6}}>{s.icon} {s.label}</div>
                   <div style={{fontSize:26,fontWeight:900,color:s.color}}>{s.value}</div>
@@ -776,7 +776,7 @@ export default function TiersPayantAuditionPage() {
             </div>
             <div style={{background:`linear-gradient(135deg,rgba(0,201,138,0.08),rgba(16,185,129,0.04))`,border:`1px solid rgba(0,201,138,0.20)`,borderRadius:14,padding:"12px 18px",marginBottom:20,display:"flex",alignItems:"center",justifyContent:"space-between",gap:12,flexWrap:"wrap" as const}}>
               <div style={{display:"flex",alignItems:"center",gap:10}}>
-                <div style={{width:36,height:36,borderRadius:10,background:`linear-gradient(135deg,${ACCENT},#059669)`,display:"grid",placeItems:"center",fontSize:18}}>🏥</div>
+                <div style={{width:36,height:36,borderRadius:10,background:ACCENT,display:"grid",placeItems:"center",fontSize:18}}></div>
                 <div>
                   <div style={{fontSize:13,fontWeight:800,color:"#1e293b"}}>SESAM-Vitale — Télétransmission AMO</div>
                   <div style={{fontSize:12,color:"#64748b"}}>{totalAMO>0?`${fmt(totalAMO)} accordés · `:""}Terminal connecté · Clé PS active</div>
@@ -785,7 +785,7 @@ export default function TiersPayantAuditionPage() {
               <div style={{display:"flex",gap:8,alignItems:"center"}}>
                 <div style={{width:8,height:8,borderRadius:"50%",background:"#10b981",boxShadow:"0 0 6px #10b981"}}/>
                 <span style={{fontSize:12,fontWeight:700,color:"#047857"}}>Connecté</span>
-                {aTransmettre>0&&<button onClick={transmettreToutes} style={{padding:"8px 18px",background:`linear-gradient(135deg,${ACCENT},#059669)`,color:"#fff",border:"none",borderRadius:10,fontSize:13,fontWeight:700,cursor:"pointer"}}>📤 Transmettre tout ({aTransmettre})</button>}
+                {aTransmettre>0&&<button onClick={transmettreToutes} style={{padding:"8px 18px",background:ACCENT,color:"#fff",border:"none",borderRadius:10,fontSize:13,fontWeight:700,cursor:"pointer"}}>Transmettre tout ({aTransmettre})</button>}
               </div>
             </div>
             <div style={{display:"flex",gap:8,marginBottom:16,flexWrap:"wrap" as const}}>
@@ -815,11 +815,11 @@ export default function TiersPayantAuditionPage() {
                         {fse.retourMontant!==undefined&&<span style={{color:fse.statut==="rejete"?"#ef4444":"#047857"}}>AMO accordé : <strong>{fmt(fse.retourMontant)}</strong></span>}
                         {fse.retourRef&&<span style={{fontFamily:"monospace",fontSize:11}}>Réf : {fse.retourRef}</span>}
                       </div>
-                      {fse.retourMotifRejet&&<div style={{marginTop:6,fontSize:12,color:"#b91c1c",background:"rgba(239,68,68,.06)",borderRadius:8,padding:"5px 10px",border:"1px solid rgba(239,68,68,.15)"}}>✕ Motif rejet : {fse.retourMotifRejet}</div>}
+                      {fse.retourMotifRejet&&<div style={{marginTop:6,fontSize:12,color:"#b91c1c",background:"rgba(239,68,68,.06)",borderRadius:8,padding:"5px 10px",border:"1px solid rgba(239,68,68,.15)"}}>Motif rejet : {fse.retourMotifRejet}</div>}
                       {fse.retourAt&&fse.statut!=="rejete"&&<div style={{marginTop:4,fontSize:11,color:"#94a3b8"}}>Retour NOEMIE le {new Date(fse.retourAt).toLocaleString("fr-FR",{day:"numeric",month:"short",hour:"2-digit",minute:"2-digit"})} · Paiement sous 5j</div>}
                     </div>
                     <div style={{flexShrink:0}}>
-                      {fse.statut==="a_transmettre"&&<button onClick={()=>transmettreFse(fse.id)} style={{padding:"9px 18px",background:`linear-gradient(135deg,${ACCENT},#059669)`,color:"#fff",border:"none",borderRadius:10,fontSize:13,fontWeight:700,cursor:"pointer"}}>📤 Transmettre</button>}
+                      {fse.statut==="a_transmettre"&&<button onClick={()=>transmettreFse(fse.id)} style={{padding:"9px 18px",background:ACCENT,color:"#fff",border:"none",borderRadius:10,fontSize:13,fontWeight:700,cursor:"pointer"}}>Transmettre</button>}
                       {fse.statut==="en_cours"&&<div style={{fontSize:12,color:"#6366f1",fontWeight:700,display:"flex",alignItems:"center",gap:6}}><span style={{display:"inline-block",width:12,height:12,borderRadius:"50%",border:"2px solid #6366f1",borderTopColor:"transparent",animation:"spin 1s linear infinite"}}/>Transmission…</div>}
                       {fse.statut==="rejete"&&<button onClick={()=>{saveFses(fses.map(f=>f.id===fse.id?{...f,statut:"a_transmettre" as FseStatut,retourAt:undefined,retourCode:undefined,retourMotifRejet:undefined}:f));}} style={{padding:"8px 14px",background:"rgba(239,68,68,.1)",color:"#b91c1c",border:"1px solid rgba(239,68,68,.2)",borderRadius:10,fontSize:12,fontWeight:700,cursor:"pointer"}}>↺ Corriger et renvoyer</button>}
                     </div>

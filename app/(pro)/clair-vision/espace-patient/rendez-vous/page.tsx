@@ -5,15 +5,15 @@ import type { CSSProperties } from "react";
 
 /* ── Design tokens ──────────────────────────────────────────────────── */
 const glass: CSSProperties = {
-  background: "rgba(255,255,255,0.72)",
+  background: "var(--glass-strong-bg)",
   backdropFilter: "blur(20px)",
   WebkitBackdropFilter: "blur(20px)",
-  border: "1px solid rgba(255,255,255,0.85)",
+  border: "1px solid var(--glass-strong-border)",
   boxShadow: "0 8px 32px rgba(0,0,0,0.06)",
 };
 const glassSubtle: CSSProperties = {
-  background: "rgba(255,255,255,0.45)",
-  border: "1px solid rgba(255,255,255,0.65)",
+  background: "var(--glass-subtle-bg)",
+  border: "1px solid var(--glass-subtle-border)",
 };
 const ACCENT = "#2D8CFF";
 
@@ -41,10 +41,10 @@ interface SlotInfo { heure: string; praticiens: string[] }
 
 /* ── Constants ──────────────────────────────────────────────────────── */
 const TYPE_OPTIONS: { value: RdvType; label: string; icon: string; description: string }[] = [
-  { value: "controle",   label: "Contrôle de vue",      icon: "👁",  description: "Examen visuel complet" },
-  { value: "adaptation", label: "Adaptation lentilles",  icon: "🔵", description: "Essai et réglage de lentilles" },
-  { value: "livraison",  label: "Livraison",             icon: "📦", description: "Retrait de commande" },
-  { value: "urgence",    label: "Urgence",               icon: "🚨", description: "Problème urgent" },
+  { value: "controle",   label: "Contrôle de vue",      icon: "",  description: "Examen visuel complet" },
+  { value: "adaptation", label: "Adaptation lentilles",  icon: "", description: "Essai et réglage de lentilles" },
+  { value: "livraison",  label: "Livraison",             icon: "", description: "Retrait de commande" },
+  { value: "urgence",    label: "Urgence",               icon: "", description: "Problème urgent" },
 ];
 const TYPE_LABELS: Record<string, string> = {
   controle: "Contrôle", adaptation: "Adaptation lentilles", livraison: "Livraison",
@@ -250,7 +250,7 @@ function RdvCard({ rdv, past=false }: { rdv: RendezVous; past?: boolean }) {
   return (
     <div className="rounded-2xl p-5" style={glass}>
       <div className="flex items-start gap-4">
-        <div className="flex-shrink-0 rounded-xl px-4 py-3 text-center text-white" style={{ background:`linear-gradient(135deg,${ACCENT},#1A72E8)`, boxShadow:"0 4px 16px rgba(45,140,255,0.28)" }}>
+        <div className="flex-shrink-0 rounded-xl px-4 py-3 text-center text-white" style={{ background:ACCENT, boxShadow:"0 4px 16px rgba(45,140,255,0.28)" }}>
           <div className="text-2xl font-bold leading-none">{new Date(rdv.date).getDate()}</div>
           <div className="mt-0.5 text-xs font-medium uppercase tracking-wide opacity-90">{FR_MONTHS[new Date(rdv.date).getMonth()]?.slice(0,3)}</div>
           <div className="text-xs opacity-75">{new Date(rdv.date).getFullYear()}</div>
@@ -285,7 +285,7 @@ function RdvCard({ rdv, past=false }: { rdv: RendezVous; past?: boolean }) {
 function Toast({ visible }: { visible: boolean }) {
   return (
     <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 flex items-center gap-3 rounded-2xl px-5 py-3 text-sm font-semibold text-white transition-all duration-300"
-      style={{ background:"linear-gradient(135deg,#10b981,#059669)", boxShadow:"0 8px 32px rgba(16,185,129,0.35)", opacity:visible?1:0, transform:visible?"translate(-50%,0)":"translate(-50%,24px)", pointerEvents:"none" }}>
+      style={{ background:"#10b981", boxShadow:"0 8px 32px rgba(16,185,129,0.35)", opacity:visible?1:0, transform:visible?"translate(-50%,0)":"translate(-50%,24px)", pointerEvents:"none" }}>
       <IconCheck /> Rendez-vous confirmé ✓
     </div>
   );
@@ -417,7 +417,7 @@ function SlotPicker({
           <button
             onClick={() => onConfirm(selectedDate, selectedSlot.heure, praticien, message)}
             className="flex-1 flex items-center justify-center gap-2 rounded-xl py-2.5 text-sm font-semibold text-white transition hover:opacity-90"
-            style={{ background:`linear-gradient(135deg,${ACCENT},#1A72E8)`, boxShadow:"0 4px 16px rgba(45,140,255,0.3)" }}
+            style={{ background:ACCENT, boxShadow:"0 4px 16px rgba(45,140,255,0.3)" }}
           >
             <IconCalendar /> Confirmer le rendez-vous
           </button>
@@ -490,7 +490,7 @@ function SlotPicker({
                   className="flex flex-col items-center rounded-2xl py-3 px-1 transition-all text-center disabled:opacity-35 disabled:cursor-not-allowed"
                   style={
                     isSelected
-                      ? { background:`linear-gradient(135deg,${ACCENT},#1A72E8)`, color:"white", border:"none", boxShadow:`0 4px 14px rgba(45,140,255,0.35)` }
+                      ? { background:ACCENT, color:"white", border:"none", boxShadow:`0 4px 14px rgba(45,140,255,0.35)` }
                       : isOpen
                         ? { background:"rgba(16,185,129,0.08)", border:"1.5px solid rgba(16,185,129,0.3)", cursor:"pointer" }
                         : glassSubtle
@@ -557,7 +557,7 @@ function SlotPicker({
                       className="rounded-xl py-2.5 text-sm font-semibold transition-all"
                       style={
                         isSelected
-                          ? { background:`linear-gradient(135deg,${ACCENT},#1A72E8)`, color:"white", border:"none", boxShadow:`0 4px 12px rgba(45,140,255,0.3)` }
+                          ? { background:ACCENT, color:"white", border:"none", boxShadow:`0 4px 12px rgba(45,140,255,0.3)` }
                           : { ...glassSubtle, color:"#334155", cursor:"pointer" }
                       }
                     >
@@ -574,7 +574,7 @@ function SlotPicker({
                   <button
                     onClick={() => setStep("confirm")}
                     className="ml-3 rounded-lg px-3 py-1 text-xs font-semibold text-white"
-                    style={{ background:`linear-gradient(135deg,${ACCENT},#1A72E8)` }}
+                    style={{ background:ACCENT }}
                   >
                     Confirmer →
                   </button>
@@ -646,7 +646,7 @@ export default function RendezVousVisionPage() {
           <button
             onClick={startBooking}
             className="flex items-center gap-2 rounded-xl px-5 py-2.5 text-sm font-semibold text-white transition-all hover:opacity-90"
-            style={{ background:`linear-gradient(135deg,${ACCENT},#1A72E8)`, boxShadow:"0 4px 18px rgba(45,140,255,0.32)" }}
+            style={{ background:ACCENT, boxShadow:"0 4px 18px rgba(45,140,255,0.32)" }}
           >
             <IconPlus /> Prendre un rendez-vous
           </button>
@@ -672,7 +672,7 @@ export default function RendezVousVisionPage() {
                 onClick={() => { setRdvType(opt.value); setSelectingType(false); setBookingOpen(true); }}
                 className="flex items-start gap-3 rounded-2xl px-4 py-4 text-left transition-all hover:scale-[1.02]"
                 style={rdvType===opt.value
-                  ? { background:`linear-gradient(135deg,${ACCENT},#1A72E8)`, color:"white", boxShadow:`0 4px 16px rgba(45,140,255,0.3)` }
+                  ? { background:ACCENT, color:"white", boxShadow:`0 4px 16px rgba(45,140,255,0.3)` }
                   : { ...glassSubtle, color:"#334155" }}
               >
                 <span className="text-2xl leading-none">{opt.icon}</span>

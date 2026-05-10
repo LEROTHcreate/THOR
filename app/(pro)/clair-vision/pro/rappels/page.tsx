@@ -89,7 +89,7 @@ const DEMO_P: Patient[] = [
 ];
 
 /* ── Canal helpers ───────────────────────────────────────────────────────── */
-const CANAL_ICON: Record<Canal, string> = { sms: "💬", email: "✉️", appel: "📞", manuel: "✓" };
+const CANAL_ICON: Record<Canal, string> = { sms: "", email: "", appel: "", manuel: "✓" };
 const CANAL_LABEL: Record<Canal, string> = { sms: "SMS", email: "Email", appel: "Appel", manuel: "Manuel" };
 const CANAL_COLOR: Record<Canal, string> = { sms: "#6366f1", email: A, appel: "#f59e0b", manuel: "#94a3b8" };
 
@@ -213,7 +213,7 @@ export default function RappelsPage() {
     await new Promise(r => setTimeout(r, 1200));
     markContacted(item, canal, message, noteVal || undefined);
     const dest = canal === "sms" ? item.telephone : item.email;
-    showToast(`${canal === "sms" ? "💬 SMS" : "✉️ Email"} envoyé à ${item.prenom} ${item.nom}${dest ? ` (${dest})` : ""}`, canal === "sms" ? "#6366f1" : A);
+    showToast(`${canal === "sms" ? "SMS" : "Email"} envoyé à ${item.prenom} ${item.nom}${dest ? ` (${dest})` : ""}`, canal === "sms" ? "#6366f1" : A);
   }
 
   async function simulateBulkSend(items: RappelItem[], canal: Canal) {
@@ -229,7 +229,7 @@ export default function RappelsPage() {
     safeSet("thor_pro_rappels_contacted", updated);
     setSelected(new Set());
     setBulkSending(false);
-    showToast(`${canal === "sms" ? "💬" : "✉️"} ${items.length} ${canal === "sms" ? "SMS" : "emails"} envoyés`, canal === "sms" ? "#6366f1" : A);
+    showToast(`${items.length} ${canal === "sms" ? "SMS" : "emails"} envoyés`, canal === "sms" ? "#6366f1" : A);
   }
 
   const RAISON_LABEL: Record<RappelRaison, string> = {
@@ -283,14 +283,14 @@ export default function RappelsPage() {
               disabled={bulkSending}
               style={{ padding: "9px 18px", background: bulkSending ? "#94a3b8" : "linear-gradient(135deg,#6366f1,#4f46e5)", color: "#fff", border: "none", borderRadius: 10, fontSize: 13, fontWeight: 700, cursor: bulkSending ? "wait" : "pointer" }}
             >
-              {bulkSending ? "⏳ Envoi…" : `💬 Envoyer SMS (${selected.size})`}
+              {bulkSending ? "Envoi…" : `Envoyer SMS (${selected.size})`}
             </button>
             <button
               onClick={() => simulateBulkSend(selectedItems, "email")}
               disabled={bulkSending}
               style={{ padding: "9px 18px", background: bulkSending ? "#94a3b8" : `linear-gradient(135deg,${A},#1a6fd4)`, color: "#fff", border: "none", borderRadius: 10, fontSize: 13, fontWeight: 700, cursor: bulkSending ? "wait" : "pointer" }}
             >
-              {bulkSending ? "⏳ Envoi…" : `✉️ Envoyer email (${selected.size})`}
+              {bulkSending ? "Envoi…" : `Envoyer email (${selected.size})`}
             </button>
           </div>
         )}
@@ -313,7 +313,7 @@ export default function RappelsPage() {
 
       {/* Tabs + Filter */}
       <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 20, flexWrap: "wrap" }}>
-        <div style={{ display: "flex", background: "rgba(255,255,255,.8)", border: "1px solid rgba(0,0,0,.06)", borderRadius: 12, padding: 4, gap: 4 }}>
+        <div style={{ display: "flex", background: "var(--glass-strong-bg)", border: "1px solid rgba(0,0,0,.06)", borderRadius: 12, padding: 4, gap: 4 }}>
           {([["aFaire", `À contacter (${aFaire.length})`], ["archives", `Archivés (${archives.length})`]] as const).map(([t, l]) => (
             <button key={t} onClick={() => { setTab(t); setSelected(new Set()); }} style={{
               padding: "7px 16px", borderRadius: 9, fontSize: 13, fontWeight: 700, cursor: "pointer", border: "none",
@@ -339,7 +339,7 @@ export default function RappelsPage() {
               if (selected.size === filtered.length) setSelected(new Set());
               else setSelected(new Set(filtered.map(r => r.key)));
             }}
-            style={{ padding: "7px 14px", borderRadius: 10, fontSize: 12, fontWeight: 700, cursor: "pointer", border: "1px solid rgba(0,0,0,.08)", background: "rgba(255,255,255,.8)", color: "#64748b", marginLeft: "auto" }}
+            style={{ padding: "7px 14px", borderRadius: 10, fontSize: 12, fontWeight: 700, cursor: "pointer", border: "1px solid rgba(0,0,0,.08)", background: "var(--glass-strong-bg)", color: "#64748b", marginLeft: "auto" }}
           >
             {selected.size === filtered.length ? "Tout désélectionner" : "Tout sélectionner"}
           </button>
@@ -348,7 +348,7 @@ export default function RappelsPage() {
 
       {/* List */}
       {filtered.length === 0 ? (
-        <div style={{ textAlign: "center", padding: "60px 0", background: "rgba(255,255,255,.7)", borderRadius: 20, border: "1px solid rgba(255,255,255,.9)" }}>
+        <div style={{ textAlign: "center", padding: "60px 0", background: "var(--glass-strong-bg)", borderRadius: 20, border: "1px solid rgba(255,255,255,.9)" }}>
           <div style={{ fontSize: 40, marginBottom: 12 }}>✓</div>
           <p style={{ fontSize: 16, fontWeight: 700, color: "#0f172a", marginBottom: 6 }}>
             {tab === "aFaire" ? "Aucun rappel en attente" : "Aucun rappel archivé"}
@@ -403,8 +403,8 @@ export default function RappelsPage() {
                   </div>
                   <p style={{ fontSize: 13, color: "#64748b", margin: "0 0 3px" }}>{item.detail}</p>
                   <div style={{ display: "flex", gap: 14, flexWrap: "wrap" }}>
-                    {item.telephone && <span style={{ fontSize: 12, color: "#94a3b8" }}>📞 {item.telephone}</span>}
-                    {item.email     && <span style={{ fontSize: 12, color: "#94a3b8" }}>✉ {item.email}</span>}
+                    {item.telephone && <span style={{ fontSize: 12, color: "#94a3b8" }}>{item.telephone}</span>}
+                    {item.email     && <span style={{ fontSize: 12, color: "#94a3b8" }}>{item.email}</span>}
                     {rc && <span style={{ fontSize: 12, color: "#94a3b8" }}>Contacté le {fmtDateTime(rc.contactedAt)}{rc.note ? ` · ${rc.note}` : ""}</span>}
                   </div>
                 </div>
@@ -418,7 +418,7 @@ export default function RappelsPage() {
                           padding: "8px 14px", background: "linear-gradient(135deg,#6366f1,#4f46e5)",
                           color: "#fff", border: "none", borderRadius: 10, fontSize: 12, fontWeight: 700, cursor: "pointer"
                         }}>
-                          💬 SMS
+                          SMS
                         </button>
                       )}
                       {item.email && (
@@ -426,7 +426,7 @@ export default function RappelsPage() {
                           padding: "8px 14px", background: `linear-gradient(135deg,${A},#1a6fd4)`,
                           color: "#fff", border: "none", borderRadius: 10, fontSize: 12, fontWeight: 700, cursor: "pointer"
                         }}>
-                          ✉️ Email
+                          Email
                         </button>
                       )}
                       <button onClick={() => markContacted(item, "manuel")} style={{
@@ -470,7 +470,7 @@ export default function RappelsPage() {
               <div style={{ marginBottom: 20 }}>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8 }}>
                   <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                    <span style={{ fontSize: 12, fontWeight: 700, color: "#6366f1", textTransform: "uppercase", letterSpacing: ".06em" }}>💬 SMS</span>
+                    <span style={{ fontSize: 12, fontWeight: 700, color: "#6366f1", textTransform: "uppercase", letterSpacing: ".06em" }}>SMS</span>
                     <span style={{ fontSize: 11, color: "#94a3b8" }}>{modalItem.telephone}</span>
                   </div>
                   <span style={{ fontSize: 11, color: smsCount > 320 ? "#ef4444" : "#94a3b8" }}>
@@ -488,7 +488,7 @@ export default function RappelsPage() {
                   disabled={!!sending}
                   style={{ marginTop: 8, width: "100%", padding: "11px", background: sending === "sms" ? "#94a3b8" : "linear-gradient(135deg,#6366f1,#4f46e5)", color: "#fff", border: "none", borderRadius: 12, fontSize: 14, fontWeight: 700, cursor: sending ? "wait" : "pointer", display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }}
                 >
-                  {sending === "sms" ? "⏳ Envoi en cours…" : "💬 Envoyer le SMS"}
+                  {sending === "sms" ? "Envoi en cours…" : "Envoyer le SMS"}
                 </button>
               </div>
             )}
@@ -507,7 +507,7 @@ export default function RappelsPage() {
               <div style={{ marginBottom: 20 }}>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8 }}>
                   <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                    <span style={{ fontSize: 12, fontWeight: 700, color: A, textTransform: "uppercase", letterSpacing: ".06em" }}>✉️ Email</span>
+                    <span style={{ fontSize: 12, fontWeight: 700, color: A, textTransform: "uppercase", letterSpacing: ".06em" }}>Email</span>
                     <span style={{ fontSize: 11, color: "#94a3b8" }}>{modalItem.email}</span>
                   </div>
                 </div>
@@ -525,7 +525,7 @@ export default function RappelsPage() {
                   disabled={!!sending}
                   style={{ marginTop: 8, width: "100%", padding: "11px", background: sending === "email" ? "#94a3b8" : `linear-gradient(135deg,${A},#1a6fd4)`, color: "#fff", border: "none", borderRadius: 12, fontSize: 14, fontWeight: 700, cursor: sending ? "wait" : "pointer", display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }}
                 >
-                  {sending === "email" ? "⏳ Envoi en cours…" : "✉️ Envoyer l'email"}
+                  {sending === "email" ? "Envoi en cours…" : "Envoyer l'email"}
                 </button>
               </div>
             )}
@@ -540,7 +540,7 @@ export default function RappelsPage() {
 
             <div style={{ display: "flex", gap: 10, justifyContent: "space-between", flexWrap: "wrap" }}>
               <button onClick={() => markContacted(modalItem, "appel", undefined, noteVal || undefined)} style={{ padding: "10px 18px", background: "rgba(245,158,11,.1)", color: "#d97706", border: "1px solid rgba(245,158,11,.2)", borderRadius: 12, fontSize: 13, fontWeight: 700, cursor: "pointer" }}>
-                📞 Appel passé
+                Appel passé
               </button>
               <div style={{ display: "flex", gap: 8 }}>
                 <button onClick={() => setModalItem(null)} style={{ padding: "10px 18px", background: "rgba(0,0,0,.06)", color: "#64748b", border: "none", borderRadius: 12, fontSize: 13, fontWeight: 700, cursor: "pointer" }}>

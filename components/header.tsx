@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useMemo, useState, useEffect } from "react";
@@ -9,12 +10,10 @@ function cn(...classes: Array<string | false | null | undefined>) {
 }
 
 const navLinks = [
-  { href: "/",              label: "Accueil" },
-  { href: "/clair-vision",  label: "Clair Vision",   brand: "vision"   },
-  { href: "/clair-audition",label: "Clair Audition", brand: "audition" },
-  { href: "/nos-centres",   label: "Nos Centres" },
-  { href: "/demo",          label: "Démo" },
-  { href: "/tarifs",        label: "Tarifs" },
+  { href: "/",            label: "Accueil" },
+  { href: "/demo",        label: "Démo" },
+  { href: "/tarifs",      label: "Tarifs" },
+  { href: "/nos-centres", label: "Nos Centres" },
 ];
 
 export default function Header() {
@@ -61,18 +60,18 @@ export default function Header() {
 
           {/* ── Logo THOR ── */}
           <Link href="/" className="flex items-center gap-3 group" aria-label="THOR — Accueil">
-            <div className="
-              relative h-11 w-11
-              grid place-items-center
-              transition-transform duration-200 group-hover:scale-[1.05]
-            ">
-              <svg viewBox="0 0 44 44" fill="none" className="w-full h-full" aria-hidden="true">
-                <rect width="44" height="44" rx="12" fill="#0f172a"/>
-                {/* T — barre horizontale */}
-                <rect x="11" y="12" width="22" height="4" rx="2" fill="white"/>
-                {/* T — montant vertical */}
-                <rect x="20" y="16" width="4" height="16" rx="2" fill="white"/>
-              </svg>
+            <div
+              className="relative h-11 w-11 rounded-xl overflow-hidden transition-transform duration-200 group-hover:scale-[1.05]"
+              style={{ boxShadow: "0 2px 8px rgba(11,18,32,0.18)" }}
+            >
+              <Image
+                src="/images/logos/thor.png"
+                alt="THOR"
+                fill
+                sizes="44px"
+                className="object-cover"
+                priority
+              />
             </div>
 
             <div className="leading-tight">
@@ -95,16 +94,6 @@ export default function Header() {
             {navLinks.map((l) => {
               const active = isActive(l.href);
 
-              // Classe de couleur au repos quand actif
-              const activeColor =
-                l.brand === "vision"   ? "text-vision-accent"   :
-                l.brand === "audition" ? "text-audition-accent" : "text-thor-text";
-
-              // Classe de hover explicite (Tailwind doit voir les classes littérales)
-              const hoverColor =
-                l.brand === "vision"   ? "hover:text-vision-accent"   :
-                l.brand === "audition" ? "hover:text-audition-accent" : "hover:text-thor-text";
-
               return (
                 <Link
                   key={l.href}
@@ -114,8 +103,8 @@ export default function Header() {
                     "transition-all duration-200",
                     "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-vision-accent/40",
                     active
-                      ? cn("bg-white shadow-[var(--shadow-soft)]", activeColor)
-                      : cn("text-thor-muted hover:bg-white/60", hoverColor),
+                      ? "bg-white shadow-[var(--shadow-soft)] text-thor-text"
+                      : "text-thor-muted hover:bg-white/60 hover:text-thor-text",
                   )}
                 >
                   {l.label}
@@ -138,7 +127,7 @@ export default function Header() {
             </Link>
 
             <Link
-              href="/rendez-vous"
+              href="/contact?sujet=demo"
               className="
                 shine-sweep
                 relative inline-flex items-center justify-center
@@ -152,7 +141,7 @@ export default function Header() {
                 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-vision-accent/50
               "
             >
-              Prendre rendez-vous
+              Réserver une démo
             </Link>
           </div>
 
@@ -185,15 +174,6 @@ export default function Header() {
               <div className="flex flex-col">
                 {navLinks.map((l) => {
                   const active = isActive(l.href);
-
-                  const activeColor =
-                    l.brand === "vision"   ? "text-vision-accent"   :
-                    l.brand === "audition" ? "text-audition-accent" : "text-thor-text";
-
-                  const hoverColor =
-                    l.brand === "vision"   ? "hover:text-vision-accent"   :
-                    l.brand === "audition" ? "hover:text-audition-accent" : "hover:text-thor-text";
-
                   return (
                     <Link
                       key={l.href}
@@ -203,8 +183,8 @@ export default function Header() {
                         "px-4 py-3 rounded-xl text-sm font-medium transition-colors duration-200",
                         "min-h-[44px] flex items-center",
                         active
-                          ? cn("bg-thor-surface-2", activeColor)
-                          : cn("text-thor-muted hover:bg-thor-surface-2", hoverColor),
+                          ? "bg-thor-surface-2 text-thor-text"
+                          : "text-thor-muted hover:bg-thor-surface-2 hover:text-thor-text",
                       )}
                     >
                       {l.label}
@@ -228,7 +208,7 @@ export default function Header() {
                 </Link>
 
                 <Link
-                  href="/rendez-vous"
+                  href="/contact?sujet=demo"
                   onClick={() => setOpen(false)}
                   className="
                     shine-sweep
@@ -241,7 +221,7 @@ export default function Header() {
                     hover:bg-[#1A72E8]
                   "
                 >
-                  Prendre rendez-vous
+                  Réserver une démo
                 </Link>
               </div>
             </div>

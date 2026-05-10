@@ -3,16 +3,16 @@ import React from "react";
 const ACCENT = "#2D8CFF";
 
 const glass = {
-  background: "rgba(255,255,255,0.58)",
+  background: "var(--glass-bg)",
   backdropFilter: "blur(20px)",
   WebkitBackdropFilter: "blur(20px)",
-  border: "1px solid rgba(255,255,255,0.72)",
+  border: "1px solid var(--glass-border)",
   boxShadow: "0 8px 32px rgba(0,0,0,0.06)",
 } as React.CSSProperties;
 
 const glassSubtle = {
-  background: "rgba(255,255,255,0.45)",
-  border: "1px solid rgba(255,255,255,0.65)",
+  background: "var(--glass-subtle-bg)",
+  border: "1px solid var(--glass-subtle-border)",
 } as React.CSSProperties;
 
 function IconTag() {
@@ -120,7 +120,7 @@ export default function ActualitesVisionPage() {
       <div
         className="relative overflow-hidden rounded-2xl p-7"
         style={{
-          background: "linear-gradient(135deg, #1A72E8 0%, #2D8CFF 50%, #06b6d4 100%)",
+          background: "#2D8CFF",
           boxShadow: "0 12px 40px rgba(45,140,255,0.30)",
         }}
       >
@@ -150,7 +150,7 @@ export default function ActualitesVisionPage() {
           </p>
           <button
             className="mt-5 inline-flex items-center gap-2 rounded-xl px-5 py-2.5 text-sm font-semibold text-blue-700 transition-all hover:shadow-lg"
-            style={{ background: "rgba(255,255,255,0.92)" }}
+            style={{ background: "var(--glass-card-bg)" }}
           >
             En savoir plus
             <IconArrow />
@@ -224,7 +224,7 @@ export default function ActualitesVisionPage() {
           <div className="rounded-xl p-3 flex items-center gap-3" style={glassSubtle}>
             <div
               className="grid h-9 w-9 flex-shrink-0 place-items-center rounded-lg text-white"
-              style={{ background: `linear-gradient(135deg, ${ACCENT}, #1A72E8)` }}
+              style={{ background: ACCENT }}
             >
               <IconTag />
             </div>
@@ -245,7 +245,7 @@ export default function ActualitesVisionPage() {
               <div className="flex items-start gap-4">
                 <div
                   className="grid h-10 w-10 flex-shrink-0 place-items-center rounded-xl text-white shadow-[0_4px_16px_rgba(45,140,255,0.28)]"
-                  style={{ background: `linear-gradient(135deg, ${ACCENT}, #1A72E8)` }}
+                  style={{ background: ACCENT }}
                 >
                   <IconCalendar />
                 </div>
@@ -261,7 +261,7 @@ export default function ActualitesVisionPage() {
                   </div>
                 </div>
               </div>
-              <div className="mt-4 pt-3" style={{ borderTop: "1px solid rgba(255,255,255,0.65)" }}>
+              <div className="mt-4 pt-3" style={{ borderTop: "1px solid var(--glass-sep)" }}>
                 <button
                   className="inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-semibold transition-all"
                   style={{ ...glassSubtle, color: ACCENT }}

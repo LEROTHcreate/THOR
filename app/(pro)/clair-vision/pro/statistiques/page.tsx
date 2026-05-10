@@ -7,7 +7,7 @@ import {
   XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
 } from "recharts";
 
-const glass: CSSProperties = { background:"rgba(255,255,255,0.58)", backdropFilter:"blur(20px)", WebkitBackdropFilter:"blur(20px)", border:"1px solid rgba(255,255,255,0.72)", boxShadow:"0 8px 32px rgba(0,0,0,0.06)" };
+const glass: CSSProperties = { background:"var(--glass-bg)", backdropFilter:"blur(20px)", WebkitBackdropFilter:"blur(20px)", border:"1px solid var(--glass-border)", boxShadow:"0 8px 32px rgba(0,0,0,0.06)" };
 const glassSubtle: CSSProperties = { background:"rgba(255,255,255,0.45)", border:"1px solid rgba(255,255,255,0.65)" };
 
 type Period = "mois" | "trimestre" | "annee";
@@ -270,7 +270,7 @@ export default function StatistiquesPage() {
                 key={p}
                 onClick={() => setPeriod(p)}
                 className={`rounded-full px-4 py-1.5 text-xs font-semibold transition-all ${period === p ? "text-white" : "text-slate-500 hover:text-slate-700"}`}
-                style={period === p ? { background:"linear-gradient(135deg,#2D8CFF,#1A72E8)", boxShadow:"0 2px 8px rgba(45,140,255,.25)" } : {}}
+                style={period === p ? { background:"#2D8CFF", boxShadow:"0 2px 8px rgba(45,140,255,.25)" } : {}}
               >
                 {periodLabels[p]}
               </button>
@@ -282,7 +282,7 @@ export default function StatistiquesPage() {
       {/* ── Données réelles ── */}
       <div style={{ ...glass, borderRadius: 16, padding: "18px 22px", marginBottom: 24, border: "1px solid rgba(45,140,255,0.18)", background: "rgba(45,140,255,0.04)" }}>
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 14 }}>
-          <div style={{ fontSize: 14, fontWeight: 700, color: "#0f172a" }}>📊 Données réelles — Cabinet</div>
+          <div style={{ fontSize: 14, fontWeight: 700, color: "#0f172a" }}>Données réelles — Cabinet</div>
           <div style={{ fontSize: 11, color: "#94a3b8" }}>Mis à jour en temps réel</div>
         </div>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 12 }}>
@@ -332,7 +332,7 @@ export default function StatistiquesPage() {
           background: "rgba(245,158,11,0.08)", border: "1px solid rgba(245,158,11,0.25)",
           borderRadius: 12, padding: "10px 16px", marginBottom: 24, textDecoration: "none",
         }}>
-          <span style={{ fontSize: 16 }}>🔔</span>
+          <span style={{ fontSize: 16 }}></span>
           <span style={{ fontSize: 13, color: "#92400e", fontWeight: 500 }}>
             {realRenouvellements} renouvellement{realRenouvellements > 1 ? "s" : ""} à traiter dans les 60 prochains jours
           </span>

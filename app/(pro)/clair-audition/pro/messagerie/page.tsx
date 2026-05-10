@@ -51,25 +51,25 @@ const LS_PATIENT_KEY  = "thor_aud_patient_messages";
 const PRIMARY         = "#00C98A";
 
 const MSG_TEMPLATES = [
-  { label: "📅 Rappel RDV",            text: "Bonjour, nous vous rappelons votre rendez-vous chez Clair Audition. Merci de confirmer votre présence ou de nous contacter pour tout changement." },
-  { label: "🎧 Appareil prêt",          text: "Bonjour, votre appareil auditif est prêt. Vous pouvez venir le récupérer aux heures d'ouverture. N'hésitez pas si vous avez des questions !" },
-  { label: "📋 Devis disponible",      text: "Bonjour, votre devis est disponible et consultable sur votre espace patient. Pensez à le signer pour confirmer votre commande." },
-  { label: "🔄 Renouvellement",        text: "Bonjour, c'est bientôt le moment de renouveler votre appareillage auditif. Prenez rendez-vous en ligne ou appelez-nous pour planifier un bilan." },
-  { label: "🩺 Suivi adaptation",      text: "Comment se passe l'adaptation avec votre nouvel appareil ? N'hésitez pas à nous contacter si vous ressentez une gêne ou souhaitez un ajustement." },
-  { label: "🔋 Entretien appareil",    text: "Bonjour, pensez à bien entretenir votre appareil : nettoyez-le quotidiennement et changez les piles/chargez la batterie régulièrement." },
-  { label: "💬 Réponse personnalisée", text: "" },
+  { label: "Rappel RDV",            text: "Bonjour, nous vous rappelons votre rendez-vous chez Clair Audition. Merci de confirmer votre présence ou de nous contacter pour tout changement." },
+  { label: "Appareil prêt",          text: "Bonjour, votre appareil auditif est prêt. Vous pouvez venir le récupérer aux heures d'ouverture. N'hésitez pas si vous avez des questions !" },
+  { label: "Devis disponible",      text: "Bonjour, votre devis est disponible et consultable sur votre espace patient. Pensez à le signer pour confirmer votre commande." },
+  { label: "Renouvellement",        text: "Bonjour, c'est bientôt le moment de renouveler votre appareillage auditif. Prenez rendez-vous en ligne ou appelez-nous pour planifier un bilan." },
+  { label: "Suivi adaptation",      text: "Comment se passe l'adaptation avec votre nouvel appareil ? N'hésitez pas à nous contacter si vous ressentez une gêne ou souhaitez un ajustement." },
+  { label: "Entretien appareil",    text: "Bonjour, pensez à bien entretenir votre appareil : nettoyez-le quotidiennement et changez les piles/chargez la batterie régulièrement." },
+  { label: "Réponse personnalisée", text: "" },
 ];
 
 const glass: CSSProperties = {
-  background: "rgba(255,255,255,0.58)",
+  background: "var(--glass-bg)",
   backdropFilter: "blur(20px)",
   WebkitBackdropFilter: "blur(20px)",
-  border: "1px solid rgba(255,255,255,0.72)",
+  border: "1px solid var(--glass-border)",
   boxShadow: "0 8px 32px rgba(0,0,0,0.06)",
 };
 const glassSubtle: CSSProperties = {
-  background: "rgba(255,255,255,0.45)",
-  border: "1px solid rgba(255,255,255,0.65)",
+  background: "var(--glass-subtle-bg)",
+  border: "1px solid var(--glass-subtle-border)",
 };
 
 /* ── Mock team members ──────────────────────────────────────────────────── */
@@ -226,7 +226,7 @@ function SendButton({ onClick, disabled }: { onClick: () => void; disabled: bool
       onClick={onClick}
       disabled={disabled}
       className="flex-shrink-0 grid h-9 w-9 place-items-center rounded-xl text-white transition-opacity disabled:opacity-40"
-      style={{ background: `linear-gradient(135deg, ${PRIMARY}, #009e6e)` }}
+      style={{ background: PRIMARY }}
     >
       <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
         <line x1="22" y1="2" x2="11" y2="13" />
@@ -483,8 +483,8 @@ export default function MessageriePage() {
           <div
             className="px-3.5 py-2.5 rounded-2xl text-sm leading-relaxed"
             style={isOwn
-              ? { background: `linear-gradient(135deg, ${PRIMARY}, #009e6e)`, color: "white", borderBottomRightRadius: 4 }
-              : { ...glass, color: "#1e293b", borderBottomLeftRadius: 4 }}
+              ? { background: PRIMARY, color: "white", borderBottomRightRadius: 4 }
+              : { background: "#F1F5F9", color: "#0F172A", borderBottomLeftRadius: 4 }}
           >
             {content}
           </div>
@@ -534,7 +534,7 @@ export default function MessageriePage() {
       <button
         onClick={() => setActiveTab(id)}
         className="flex-1 flex items-center justify-center gap-1.5 py-1.5 rounded-lg text-xs font-semibold transition-all"
-        style={active ? { background: `linear-gradient(135deg, ${PRIMARY}, #009e6e)`, color: "white" } : { color: "#64748b" }}
+        style={active ? { background: PRIMARY, color: "white" } : { color: "#64748b" }}
       >
         {label}
         {badge > 0 && (
@@ -553,7 +553,7 @@ export default function MessageriePage() {
     <div className="flex h-full rounded-2xl overflow-hidden" style={glass}>
 
       {/* ── Left panel ── */}
-      <div className="w-[300px] flex-shrink-0 flex flex-col border-r" style={{ borderColor: "rgba(255,255,255,0.60)" }}>
+      <div className="w-[300px] flex-shrink-0 flex flex-col border-r" style={{ borderColor: "var(--glass-sep)" }}>
         <div className="px-3 pt-3 pb-2 flex-shrink-0">
           <div className="flex rounded-xl p-0.5 gap-0.5" style={glassSubtle}>
             <TabBtn id="pro"      label="Équipe & Partenaires" badge={totalProUnread}     />
@@ -599,7 +599,7 @@ export default function MessageriePage() {
                   onChange={e => setPatientSearch(e.target.value)}
                   placeholder="Rechercher un patient…"
                   className="w-full rounded-xl pl-8 pr-3 py-1.5 text-xs text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-2 transition-all"
-                  style={{ background: "rgba(255,255,255,0.55)", border: "1px solid rgba(203,213,225,0.6)", focusRingColor: PRIMARY } as React.CSSProperties}
+                  style={{ background: "var(--glass-subtle-bg)", border: "1px solid rgba(203,213,225,0.6)", focusRingColor: PRIMARY } as React.CSSProperties}
                 />
                 {patientSearch && (
                   <button onClick={() => setPatientSearch("")} className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600">
@@ -671,7 +671,7 @@ export default function MessageriePage() {
 
         {activeTab === "pro" && (
           <>
-            <div className="flex items-center gap-3 px-5 py-3.5 border-b flex-shrink-0" style={{ borderColor: "rgba(255,255,255,0.60)", ...glassSubtle }}>
+            <div className="flex items-center gap-3 px-5 py-3.5 border-b flex-shrink-0" style={{ borderColor: "var(--glass-sep)", ...glassSubtle }}>
               <Avatar initials={convHeader.initials} color={convHeader.color} size={36} />
               <div>
                 <div className="text-sm font-semibold text-slate-800">{convHeader.name}</div>
@@ -707,7 +707,7 @@ export default function MessageriePage() {
               />
             </div>
 
-            <div className="pl-4 pr-24 pb-4 pt-3 flex-shrink-0" style={{ borderTop: "1px solid rgba(255,255,255,0.60)" }}>
+            <div className="pl-4 pr-24 pb-4 pt-3 flex-shrink-0" style={{ borderTop: "1px solid var(--glass-sep)" }}>
               {pendingAttachment && (
                 <div className="mb-2 flex items-center gap-2">
                   <span className="flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium"
@@ -717,7 +717,7 @@ export default function MessageriePage() {
                     </svg>
                     {pendingAttachment}
                   </span>
-                  <button onClick={() => setPendingAttachment(null)} className="text-xs text-slate-400 hover:text-slate-600">✕</button>
+                  <button onClick={() => setPendingAttachment(null)} className="text-xs text-slate-400 hover:text-slate-600">×</button>
                 </div>
               )}
               <div className="flex items-end gap-2">
@@ -735,7 +735,7 @@ export default function MessageriePage() {
                   </button>
                   {showTemplates && (
                     <div className="absolute bottom-11 left-0 z-20 rounded-xl shadow-xl min-w-[240px] overflow-hidden" style={glass}>
-                      <div className="px-3 py-2 text-xs font-semibold text-slate-500 border-b" style={{ borderColor: "rgba(255,255,255,0.6)" }}>
+                      <div className="px-3 py-2 text-xs font-semibold text-slate-500 border-b" style={{ borderColor: "var(--glass-sep)" }}>
                         Modèles de messages
                       </div>
                       {MSG_TEMPLATES.map(tpl => (
@@ -765,7 +765,7 @@ export default function MessageriePage() {
                   </button>
                   {showDossierPicker && (
                     <div className="absolute bottom-11 left-0 z-20 rounded-xl shadow-xl min-w-[180px] overflow-hidden" style={glass}>
-                      <div className="px-3 py-2 text-xs font-semibold text-slate-500 border-b" style={{ borderColor: "rgba(255,255,255,0.6)" }}>
+                      <div className="px-3 py-2 text-xs font-semibold text-slate-500 border-b" style={{ borderColor: "var(--glass-sep)" }}>
                         Dossiers récents
                       </div>
                       {dossierLabels.length === 0 ? (
@@ -801,7 +801,7 @@ export default function MessageriePage() {
         {activeTab === "patients" && (
           activePatientConv ? (
             <>
-              <div className="flex items-center gap-3 px-5 py-3.5 border-b flex-shrink-0" style={{ borderColor: "rgba(255,255,255,0.60)", ...glassSubtle }}>
+              <div className="flex items-center gap-3 px-5 py-3.5 border-b flex-shrink-0" style={{ borderColor: "var(--glass-sep)", ...glassSubtle }}>
                 <Avatar initials={activePatientConv.patientInitials} color={activePatientConv.patientColor} size={36} />
                 <div className="flex-1">
                   <div className="text-sm font-semibold text-slate-800">{activePatientConv.patientName}</div>
@@ -839,7 +839,7 @@ export default function MessageriePage() {
                 />
               </div>
 
-              <div className="pl-4 pr-24 pb-4 pt-3 flex-shrink-0" style={{ borderTop: "1px solid rgba(255,255,255,0.60)" }}>
+              <div className="pl-4 pr-24 pb-4 pt-3 flex-shrink-0" style={{ borderTop: "1px solid var(--glass-sep)" }}>
                 <div className="flex items-end gap-2">
                   {/* Templates button — patients */}
                   <div className="relative">
@@ -855,7 +855,7 @@ export default function MessageriePage() {
                     </button>
                     {showTemplates && (
                       <div className="absolute bottom-11 left-0 z-20 rounded-xl shadow-xl min-w-[240px] overflow-hidden" style={glass}>
-                        <div className="px-3 py-2 text-xs font-semibold text-slate-500 border-b" style={{ borderColor: "rgba(255,255,255,0.6)" }}>
+                        <div className="px-3 py-2 text-xs font-semibold text-slate-500 border-b" style={{ borderColor: "var(--glass-sep)" }}>
                           Modèles de messages
                         </div>
                         {MSG_TEMPLATES.map(tpl => (
@@ -904,7 +904,7 @@ export default function MessageriePage() {
           defaultWidth={380}
           defaultHeight={420}
         >
-          <div style={{ background: "rgba(255,255,255,0.97)", padding: 24 }}>
+          <div style={{ background: "var(--glass-card-bg)", padding: 24 }}>
             <div className="mb-3">
               <input
                 autoFocus

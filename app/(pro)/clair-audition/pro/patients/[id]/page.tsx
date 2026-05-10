@@ -6,15 +6,15 @@ import type { CSSProperties } from "react";
 
 /* ── Design tokens ──────────────────────────────────────────────────────── */
 const glass: CSSProperties = {
-  background: "rgba(255,255,255,0.58)",
+  background: "var(--glass-bg)",
   backdropFilter: "blur(20px)",
   WebkitBackdropFilter: "blur(20px)",
-  border: "1px solid rgba(255,255,255,0.72)",
+  border: "1px solid var(--glass-border)",
   boxShadow: "0 8px 32px rgba(0,0,0,0.06)",
 };
 const glassSubtle: CSSProperties = {
-  background: "rgba(255,255,255,0.45)",
-  border: "1px solid rgba(255,255,255,0.65)",
+  background: "var(--glass-subtle-bg)",
+  border: "1px solid var(--glass-subtle-border)",
 };
 
 /* ── Couleur principale émeraude ────────────────────────────────────────── */
@@ -217,24 +217,24 @@ const STATUT_META: Record<string, { color: string; bg: string; label: string }> 
   "Accepté":    { color: PRIMARY,   bg: "rgba(16,185,129,0.10)",  label: "Accepté" },
   "En attente": { color: "#F59E0B", bg: "rgba(245,158,11,0.10)",  label: "En attente" },
   "Refusé":     { color: "#EF4444", bg: "rgba(239,68,68,0.10)",   label: "Refusé" },
-  "Payé":       { color: "#15803D", bg: "rgba(21,128,61,0.10)",   label: "Payé ✓" },
+  "Payé":       { color: "#15803D", bg: "rgba(21,128,61,0.10)",   label: "Payé" },
 };
 
 const DOC_ICONS: Record<DocumentRef["type"], string> = {
-  "carte-vitale": "🪪",
-  "mutuelle":     "🏥",
-  "bilan":        "🦻",
-  "compte-rendu": "📄",
-  "autre":        "📎",
+  "carte-vitale": "",
+  "mutuelle":     "",
+  "bilan":        "",
+  "compte-rendu": "",
+  "autre":        "",
 };
 
 const TIMELINE_META: Record<TimelineEvent["type"], { dot: string; icon: string }> = {
-  rdv:          { dot: "#00C98A", icon: "📅" },
-  bilan:        { dot: PRIMARY,   icon: "🦻" },
-  devis:        { dot: "#6366f1", icon: "📄" },
-  facture:      { dot: "#00C98A", icon: "🧾" },
-  appareillage: { dot: PRIMARY_D, icon: "🎧" },
-  document:     { dot: "#64748b", icon: "📎" },
+  rdv:          { dot: "#00C98A", icon: "" },
+  bilan:        { dot: PRIMARY,   icon: "" },
+  devis:        { dot: "#6366f1", icon: "" },
+  facture:      { dot: "#00C98A", icon: "" },
+  appareillage: { dot: PRIMARY_D, icon: "" },
+  document:     { dot: "#64748b", icon: "" },
 };
 
 /* ── Classification perte auditive ──────────────────────────────────────── */
@@ -451,11 +451,11 @@ export default function PatientAudFichePage({ params }: { params: Promise<{ id: 
   const [docDragOver,  setDocDragOver]  = useState(false);
 
   const DOC_TYPES_AUD = [
-    { id: "bilan",        label: "Bilan audiométrique", icon: "🦻" },
-    { id: "compte-rendu", label: "Compte-rendu ORL",    icon: "📄" },
-    { id: "mutuelle",     label: "Attestation mutuelle", icon: "🏥" },
-    { id: "carte-vitale", label: "Carte vitale",         icon: "🪪" },
-    { id: "autre",        label: "Autre document",       icon: "📎" },
+    { id: "bilan",        label: "Bilan audiométrique", icon: "" },
+    { id: "compte-rendu", label: "Compte-rendu ORL",    icon: "" },
+    { id: "mutuelle",     label: "Attestation mutuelle", icon: "" },
+    { id: "carte-vitale", label: "Carte vitale",         icon: "" },
+    { id: "autre",        label: "Autre document",       icon: "" },
   ] as const;
 
   function handleDocFile(file: File) {
@@ -576,7 +576,7 @@ export default function PatientAudFichePage({ params }: { params: Promise<{ id: 
   if (!patient) {
     return (
       <div className="flex flex-col items-center justify-center min-h-[60vh] gap-4">
-        <div className="text-4xl">🔍</div>
+        <div className="text-4xl"></div>
         <p className="text-slate-500 text-sm">Patient introuvable.</p>
         <Link href="/clair-audition/pro/patients"
           className="text-sm font-medium hover:underline" style={{ color: PRIMARY }}>
@@ -633,10 +633,10 @@ export default function PatientAudFichePage({ params }: { params: Promise<{ id: 
 
   const TABS: { key: Tab; label: string; badge?: number }[] = [
     { key: "overview",  label: "Vue d'ensemble" },
-    { key: "bilans",    label: "Bilans auditifs 🔒" },
+    { key: "bilans",    label: "Bilans auditifs" },
     { key: "devis",     label: "Devis & Factures", badge: reglEnAttente.length },
     { key: "documents", label: "Documents" },
-    { key: "notes",     label: "Notes 🔒" },
+    { key: "notes",     label: "Notes" },
     { key: "suivi",     label: "Suivi" },
     { key: "courriers", label: "Courriers" },
   ];
@@ -665,10 +665,10 @@ export default function PatientAudFichePage({ params }: { params: Promise<{ id: 
                 <h1 className="text-xl font-semibold text-slate-800">{patient.firstName} {patient.lastName}</h1>
                 <p className="text-sm text-slate-500 mt-0.5">{age} ans · {patient.ville} · N°SS {maskSS(patient.numeroSS)}</p>
                 <div className="flex flex-wrap gap-x-4 gap-y-1 mt-1.5 text-sm text-slate-600">
-                  <span>📞 {patient.telephone}</span>
-                  <span>✉ {patient.email}</span>
-                  <span>🏥 {patient.mutuelle}</span>
-                  <span>🎧 {patient.audioprothesisteReferent}</span>
+                  <span>{patient.telephone}</span>
+                  <span>{patient.email}</span>
+                  <span>{patient.mutuelle}</span>
+                  <span>{patient.audioprothesisteReferent}</span>
                 </div>
               </div>
             </div>
@@ -683,23 +683,23 @@ export default function PatientAudFichePage({ params }: { params: Promise<{ id: 
             </Link>
             <button onClick={() => setShowBilanModal(true)}
               className="flex items-center gap-1.5 rounded-xl px-4 py-2 text-sm font-semibold text-white transition-all hover:opacity-90"
-              style={{ background: `linear-gradient(135deg, ${PRIMARY}, ${PRIMARY_D})`, boxShadow: `0 2px 8px ${PRIMARY}40` }}>
-              🦻 Nouveau bilan
+              style={{ background: PRIMARY, boxShadow: `0 2px 8px ${PRIMARY}40` }}>
+              Nouveau bilan
             </button>
             <Link href="/clair-audition/pro/facturation"
               className="flex items-center gap-1.5 rounded-xl px-4 py-2 text-sm font-semibold transition-all hover:bg-white/60"
               style={{ ...glassSubtle, color: "#374151" }}>
-              🧾 Facturer
+              Facturer
             </Link>
             <button onClick={() => setShowRdvModal(true)}
               className="flex items-center gap-1.5 rounded-xl px-4 py-2 text-sm font-semibold transition-all hover:bg-white/60"
               style={{ ...glassSubtle, color: "#374151" }}>
-              📅 Poser RDV
+              Poser RDV
             </button>
             <button onClick={() => setToast("Télétransmission en cours de déploiement.")}
               className="flex items-center gap-1.5 rounded-xl px-4 py-2 text-sm font-semibold transition-all hover:bg-white/60"
               style={{ ...glassSubtle, color: "#374151" }}>
-              📤 Télétransmettre
+              Télétransmettre
             </button>
             <Link
               href="/clair-audition/pro/messagerie"
@@ -731,7 +731,7 @@ export default function PatientAudFichePage({ params }: { params: Promise<{ id: 
                   className={`flex items-center gap-1.5 whitespace-nowrap rounded-lg px-3 py-2 text-sm font-medium transition-all ${
                     tab === t.key ? "text-white shadow-sm" : "text-slate-500 hover:text-slate-700"
                   }`}
-                  style={tab === t.key ? { background: `linear-gradient(135deg, ${PRIMARY}, ${PRIMARY_D})` } : undefined}>
+                  style={tab === t.key ? { background: PRIMARY } : undefined}>
                   {t.label}
                   {t.badge != null && t.badge > 0 && (
                     <span className="rounded-full bg-red-500 px-1.5 py-0.5 text-[10px] font-bold text-white leading-none">{t.badge}</span>
@@ -862,11 +862,11 @@ export default function PatientAudFichePage({ params }: { params: Promise<{ id: 
               <div className="space-y-3">
                 <div className="flex items-start justify-between gap-3">
                   <p className="text-xs text-slate-500 leading-relaxed">
-                    🔒 Les bilans sont <strong>privés par défaut</strong>. Cliquez sur le cadenas pour les partager avec le patient.
+                    Les bilans sont <strong>privés par défaut</strong>. Cliquez sur le cadenas pour les partager avec le patient.
                   </p>
                   <button onClick={() => setShowBilanModal(true)}
                     className="flex-shrink-0 rounded-xl px-4 py-2 text-sm font-semibold text-white"
-                    style={{ background: `linear-gradient(135deg, ${PRIMARY}, ${PRIMARY_D})`, boxShadow: `0 2px 8px ${PRIMARY}30` }}>
+                    style={{ background: PRIMARY, boxShadow: `0 2px 8px ${PRIMARY}30` }}>
                     + Nouveau bilan
                   </button>
                 </div>
@@ -892,11 +892,11 @@ export default function PatientAudFichePage({ params }: { params: Promise<{ id: 
                               ? { background: "rgba(16,185,129,0.10)", color: PRIMARY }
                               : { background: "rgba(239,68,68,0.10)", color: "#EF4444" }}>
                             <IconLock locked={!bilan.visiblePatient} />
-                            {bilan.visiblePatient ? "🌐 Partagé" : "🔒 Privé"}
+                            {bilan.visiblePatient ? "Partagé" : "Privé"}
                           </button>
                           <button onClick={() => setToast("Impression…")}
                             className="rounded-lg px-2 py-1 text-xs font-medium text-slate-500 hover:bg-slate-100 transition-colors">
-                            🖨 Imprimer
+                            Imprimer
                           </button>
                         </div>
                       </div>
@@ -1014,7 +1014,7 @@ export default function PatientAudFichePage({ params }: { params: Promise<{ id: 
                             ? { background: "rgba(16,185,129,0.10)", color: PRIMARY }
                             : { background: "rgba(239,68,68,0.10)", color: "#EF4444" }}>
                           <IconLock locked={!doc.visiblePatient} />
-                          {doc.visiblePatient ? "🌐" : "🔒"}
+                          {doc.visiblePatient ? "Partagé" : "Privé"}
                         </button>
                         <button onClick={() => setToast(`Ouverture de "${doc.nom}"`)}
                           className="text-[10px] font-medium hover:underline" style={{ color: PRIMARY }}>
@@ -1037,7 +1037,7 @@ export default function PatientAudFichePage({ params }: { params: Promise<{ id: 
                   }}
                   onClick={() => document.getElementById("aud-doc-input")?.click()}
                 >
-                  <span className="text-3xl">📂</span>
+                  <span className="text-3xl"></span>
                   <div className="text-center">
                     <p className="text-sm font-semibold" style={{ color: PRIMARY }}>Glissez un document ici</p>
                     <p className="text-xs text-slate-400 mt-1">ou cliquez pour parcourir — le document sera scanné automatiquement</p>
@@ -1055,7 +1055,7 @@ export default function PatientAudFichePage({ params }: { params: Promise<{ id: 
                   <h2 className="text-sm font-semibold text-slate-700">Notes internes</h2>
                   <span className="flex items-center gap-1 rounded-lg px-2.5 py-1 text-xs font-medium"
                     style={{ background: "rgba(239,68,68,0.08)", color: "#EF4444" }}>
-                    🔒 Jamais partagé avec le patient
+                    Jamais partagé avec le patient
                   </span>
                 </div>
                 <textarea
@@ -1069,7 +1069,7 @@ export default function PatientAudFichePage({ params }: { params: Promise<{ id: 
                   <p className="text-xs text-slate-400">Dernière modification : 12 jan. 2026 · M. Laurent Girard</p>
                   <button onClick={() => setToast("Notes enregistrées.")}
                     className="rounded-xl px-4 py-2 text-sm font-semibold text-white"
-                    style={{ background: `linear-gradient(135deg, ${PRIMARY}, ${PRIMARY_D})`, boxShadow: `0 2px 8px ${PRIMARY}25` }}>
+                    style={{ background: PRIMARY, boxShadow: `0 2px 8px ${PRIMARY}25` }}>
                     Enregistrer
                   </button>
                 </div>
@@ -1161,7 +1161,7 @@ export default function PatientAudFichePage({ params }: { params: Promise<{ id: 
                                     <button
                                       onClick={() => { setSuiviDone(prev => ({ ...prev, [cp.key]: true })); setToast("Contrôle marqué comme réalisé."); }}
                                       className="rounded-lg px-2.5 py-0.5 text-xs font-semibold text-white transition-all hover:opacity-90"
-                                      style={{ background: `linear-gradient(135deg, ${PRIMARY}, ${PRIMARY_D})` }}>
+                                      style={{ background: PRIMARY }}>
                                       Marquer réalisé
                                     </button>
                                   )}
@@ -1202,7 +1202,7 @@ export default function PatientAudFichePage({ params }: { params: Promise<{ id: 
                       <button
                         onClick={() => { setShowIoiForm(true); setIoiDraft([3, 3, 3, 3, 3, 3, 3]); }}
                         className="rounded-xl px-4 py-2 text-sm font-semibold text-white flex-shrink-0 transition-all hover:opacity-90"
-                        style={{ background: `linear-gradient(135deg, ${PRIMARY}, ${PRIMARY_D})`, boxShadow: `0 2px 8px ${PRIMARY}30` }}>
+                        style={{ background: PRIMARY, boxShadow: `0 2px 8px ${PRIMARY}30` }}>
                         + Nouveau questionnaire
                       </button>
                     </div>
@@ -1258,7 +1258,7 @@ export default function PatientAudFichePage({ params }: { params: Promise<{ id: 
                     {/* IOI-HA new questionnaire form */}
                     {showIoiForm && (
                       <div className="rounded-xl p-4 space-y-4 border border-slate-200"
-                        style={{ background: "rgba(255,255,255,0.75)" }}>
+                        style={{ background: "var(--glass-strong-bg)" }}>
                         <p className="text-xs font-semibold text-slate-700">Nouveau questionnaire — {new Date().toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" })}</p>
                         {IOI_QUESTIONS.map((q, qi) => (
                           <div key={qi} className="space-y-1.5">
@@ -1272,7 +1272,7 @@ export default function PatientAudFichePage({ params }: { params: Promise<{ id: 
                                   onClick={() => setIoiDraft(d => d.map((x, i) => i === qi ? v : x))}
                                   className="w-9 h-9 rounded-xl text-sm font-bold transition-all hover:scale-105"
                                   style={ioiDraft[qi] === v
-                                    ? { background: `linear-gradient(135deg, ${PRIMARY}, ${PRIMARY_D})`, color: "#fff", boxShadow: `0 2px 8px ${PRIMARY}40` }
+                                    ? { background: PRIMARY, color: "#fff", boxShadow: `0 2px 8px ${PRIMARY}40` }
                                     : { ...glassSubtle, color: "#64748b" }}>
                                   {v}
                                 </button>
@@ -1300,7 +1300,7 @@ export default function PatientAudFichePage({ params }: { params: Promise<{ id: 
                               setToast("Questionnaire IOI-HA enregistré.");
                             }}
                               className="rounded-xl px-4 py-2 text-sm font-semibold text-white transition-all hover:opacity-90"
-                              style={{ background: `linear-gradient(135deg, ${PRIMARY}, ${PRIMARY_D})` }}>
+                              style={{ background: PRIMARY }}>
                               Enregistrer
                             </button>
                           </div>
@@ -1321,31 +1321,31 @@ export default function PatientAudFichePage({ params }: { params: Promise<{ id: 
               const COURRIERS: CourrierCard[] = [
                 {
                   key: "cr-audioprothétique",
-                  icon: "📋",
+                  icon: "",
                   title: "Compte-rendu audioprothétique",
                   description: "À destination de l'ORL prescripteur — synthèse de l'appareillage et du suivi.",
                   body: `Objet : Compte-rendu d'appareillage audioprothétique\n\nÀ l'attention du Dr Arnaud Perrin (ORL)\n\nParis, le ${new Date().toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" })}\n\nDr Perrin,\n\nNous avons l'honneur de vous adresser le compte-rendu d'appareillage de votre patient(e) :\n\nPatient(e) : ${p.firstName} ${p.lastName}\nDate de naissance : ${dobFormatted}\nN° de Sécurité Sociale : ${p.numeroSS}\n\nAppareillage réalisé le 15 janvier 2025 par M. Laurent Girard, audioprothésiste.\n\nMatériel appareillé :\n  - OD : Phonak Lumity 90 RITE — Classe 2\n  - OG : Phonak Lumity 90 RITE — Classe 2\n\nRésultats :\n  - Intelligibilité en champ libre appareillé : 84 % (vs 52 % sans appareils)\n  - Gain fonctionnel moyen : +28 dB\n  - Satisfaction patient (IOI-HA) : 26/35 — Bon\n\nLe patient bénéficie d'un suivi régulier semestriel. Prochain contrôle prévu le 15 janvier 2026.\n\nNous restons à votre disposition pour tout renseignement complémentaire.\n\nCordialement,\n\nM. Laurent Girard\nAudioprothésiste D.E.\nClair Audition — ${p.ville}\n`,
                 },
                 {
                   key: "accueil-patient",
-                  icon: "👋",
+                  icon: "",
                   title: "Lettre d'accueil patient",
                   description: "Lettre de bienvenue expliquant le programme de suivi obligatoire.",
-                  body: `Paris, le ${new Date().toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" })}\n\nMadame, Monsieur ${p.firstName} ${p.lastName}\n${p.adresse}\n${p.codePostal} ${p.ville}\n\nObjet : Votre suivi audioprothétique chez Clair Audition\n\nCher(e) ${p.firstName},\n\nNous vous remercions de la confiance que vous accordez à notre centre Clair Audition pour votre appareillage auditif.\n\nSuite à la pose de vos appareils Phonak Lumity 90 RITE le 15 janvier 2025, nous vous rappelons votre programme de suivi réglementaire :\n\n  ✓  Contrôle 1 mois       — 14 février 2025       (réalisé)\n  ✓  Contrôle 6 mois       — 15 juillet 2025       (réalisé)\n  →  Contrôle 1 an         — 15 janvier 2026       (à venir)\n     Contrôle 2 ans        — 15 janvier 2027\n     Renouvellement 4 ans  — 15 janvier 2029\n\nCes contrôles sont obligatoires pour le maintien de votre remboursement par l'Assurance Maladie Obligatoire (AMO).\n\nPour prendre rendez-vous, vous pouvez nous contacter au :\n  📞 01 23 45 67 89\n  ✉  contact@clair-audition.fr\n\nNous restons à votre disposition pour toute question.\n\nCordialement,\n\nM. Laurent Girard\nAudioprothésiste D.E.\nClair Audition\n`,
+                  body: `Paris, le ${new Date().toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" })}\n\nMadame, Monsieur ${p.firstName} ${p.lastName}\n${p.adresse}\n${p.codePostal} ${p.ville}\n\nObjet : Votre suivi audioprothétique chez Clair Audition\n\nCher(e) ${p.firstName},\n\nNous vous remercions de la confiance que vous accordez à notre centre Clair Audition pour votre appareillage auditif.\n\nSuite à la pose de vos appareils Phonak Lumity 90 RITE le 15 janvier 2025, nous vous rappelons votre programme de suivi réglementaire :\n\n  ✓  Contrôle 1 mois       — 14 février 2025       (réalisé)\n  ✓  Contrôle 6 mois       — 15 juillet 2025       (réalisé)\n  →  Contrôle 1 an         — 15 janvier 2026       (à venir)\n     Contrôle 2 ans        — 15 janvier 2027\n     Renouvellement 4 ans  — 15 janvier 2029\n\nCes contrôles sont obligatoires pour le maintien de votre remboursement par l'Assurance Maladie Obligatoire (AMO).\n\nPour prendre rendez-vous, vous pouvez nous contacter au :\n  Téléphone : 01 23 45 67 89\n  Email : contact@clair-audition.fr\n\nNous restons à votre disposition pour toute question.\n\nCordialement,\n\nM. Laurent Girard\nAudioprothésiste D.E.\nClair Audition\n`,
                 },
                 {
                   key: "rappel-controle",
-                  icon: "🔔",
+                  icon: "",
                   title: "Rappel de contrôle",
                   description: "Courrier de rappel pour un contrôle de suivi à venir.",
-                  body: `Paris, le ${new Date().toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" })}\n\nMadame, Monsieur ${p.firstName} ${p.lastName}\n${p.adresse}\n${p.codePostal} ${p.ville}\n\nObjet : Rappel — Contrôle audioprothétique 1 an\n\nCher(e) ${p.firstName},\n\nNous vous contactons afin de vous rappeler que votre contrôle audioprothétique annuel est prévu le 15 janvier 2026.\n\nCe contrôle est obligatoire dans le cadre de votre remboursement AMO. Il permettra de :\n  - Vérifier le bon fonctionnement de vos appareils\n  - Ajuster les réglages si nécessaire\n  - Compléter le questionnaire de satisfaction IOI-HA\n  - Mettre à jour votre dossier audioprothétique\n\nSi cette date ne vous convient pas, nous vous invitons à contacter notre secrétariat au plus tôt afin de fixer un nouveau rendez-vous.\n\n  📞 01 23 45 67 89\n  ✉  contact@clair-audition.fr\n\nNous vous rappelons que tout retard dans la réalisation de ces contrôles peut entraîner une suspension du remboursement par votre caisse d'assurance maladie.\n\nCordialement,\n\nM. Laurent Girard\nAudioprothésiste D.E.\nClair Audition\n`,
+                  body: `Paris, le ${new Date().toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" })}\n\nMadame, Monsieur ${p.firstName} ${p.lastName}\n${p.adresse}\n${p.codePostal} ${p.ville}\n\nObjet : Rappel — Contrôle audioprothétique 1 an\n\nCher(e) ${p.firstName},\n\nNous vous contactons afin de vous rappeler que votre contrôle audioprothétique annuel est prévu le 15 janvier 2026.\n\nCe contrôle est obligatoire dans le cadre de votre remboursement AMO. Il permettra de :\n  - Vérifier le bon fonctionnement de vos appareils\n  - Ajuster les réglages si nécessaire\n  - Compléter le questionnaire de satisfaction IOI-HA\n  - Mettre à jour votre dossier audioprothétique\n\nSi cette date ne vous convient pas, nous vous invitons à contacter notre secrétariat au plus tôt afin de fixer un nouveau rendez-vous.\n\n  Téléphone : 01 23 45 67 89\n  Email : contact@clair-audition.fr\n\nNous vous rappelons que tout retard dans la réalisation de ces contrôles peut entraîner une suspension du remboursement par votre caisse d'assurance maladie.\n\nCordialement,\n\nM. Laurent Girard\nAudioprothésiste D.E.\nClair Audition\n`,
                 },
                 {
                   key: "renouvellement",
-                  icon: "🔄",
+                  icon: "",
                   title: "Lettre de renouvellement",
                   description: "Courrier informant le patient de l'approche du renouvellement à 4 ans.",
-                  body: `Paris, le ${new Date().toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" })}\n\nMadame, Monsieur ${p.firstName} ${p.lastName}\n${p.adresse}\n${p.codePostal} ${p.ville}\n\nObjet : Renouvellement de votre appareillage auditif — janvier 2029\n\nCher(e) ${p.firstName},\n\nNous vous informons que votre appareillage auditif (Phonak Lumity 90 RITE, posé le 15 janvier 2025) arrivera à échéance de renouvellement en janvier 2029, conformément à la réglementation en vigueur.\n\nDans les mois précédant cette échéance, nous vous contacterons pour :\n  - Effectuer un bilan audiométrique complet\n  - Vous présenter les nouvelles technologies disponibles\n  - Établir un nouveau devis avec prise en charge AMO et mutuelle\n\nVotre mutuelle actuelle : ${p.mutuelle}\n\nNous vous conseillons de prendre contact avec votre mutuelle dès maintenant pour vérifier vos droits au renouvellement.\n\nNous restons à votre entière disposition pour toute question.\n\n  📞 01 23 45 67 89\n  ✉  contact@clair-audition.fr\n\nCordialement,\n\nM. Laurent Girard\nAudioprothésiste D.E.\nClair Audition\n`,
+                  body: `Paris, le ${new Date().toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" })}\n\nMadame, Monsieur ${p.firstName} ${p.lastName}\n${p.adresse}\n${p.codePostal} ${p.ville}\n\nObjet : Renouvellement de votre appareillage auditif — janvier 2029\n\nCher(e) ${p.firstName},\n\nNous vous informons que votre appareillage auditif (Phonak Lumity 90 RITE, posé le 15 janvier 2025) arrivera à échéance de renouvellement en janvier 2029, conformément à la réglementation en vigueur.\n\nDans les mois précédant cette échéance, nous vous contacterons pour :\n  - Effectuer un bilan audiométrique complet\n  - Vous présenter les nouvelles technologies disponibles\n  - Établir un nouveau devis avec prise en charge AMO et mutuelle\n\nVotre mutuelle actuelle : ${p.mutuelle}\n\nNous vous conseillons de prendre contact avec votre mutuelle dès maintenant pour vérifier vos droits au renouvellement.\n\nNous restons à votre entière disposition pour toute question.\n\n  Téléphone : 01 23 45 67 89\n  Email : contact@clair-audition.fr\n\nCordialement,\n\nM. Laurent Girard\nAudioprothésiste D.E.\nClair Audition\n`,
                 },
               ];
 
@@ -1369,7 +1369,7 @@ export default function PatientAudFichePage({ params }: { params: Promise<{ id: 
                           <button
                             onClick={() => setCourrierExpanded(isOpen ? null : c.key)}
                             className="flex-shrink-0 rounded-xl px-4 py-2 text-sm font-semibold text-white transition-all hover:opacity-90"
-                            style={{ background: `linear-gradient(135deg, ${PRIMARY}, ${PRIMARY_D})`, boxShadow: `0 2px 8px ${PRIMARY}30` }}>
+                            style={{ background: PRIMARY, boxShadow: `0 2px 8px ${PRIMARY}30` }}>
                             {isOpen ? "Fermer" : "Générer"}
                           </button>
                         </div>
@@ -1390,13 +1390,13 @@ export default function PatientAudFichePage({ params }: { params: Promise<{ id: 
                                 }}
                                 className="flex items-center gap-1.5 rounded-xl px-4 py-2 text-sm font-medium transition-all hover:bg-white/60"
                                 style={{ ...glassSubtle, color: "#374151" }}>
-                                📋 Copier
+                                Copier
                               </button>
                               <button
                                 onClick={() => window.print()}
                                 className="flex items-center gap-1.5 rounded-xl px-4 py-2 text-sm font-semibold text-white transition-all hover:opacity-90"
-                                style={{ background: `linear-gradient(135deg, ${PRIMARY}, ${PRIMARY_D})`, boxShadow: `0 2px 8px ${PRIMARY}30` }}>
-                                🖨 Imprimer
+                                style={{ background: PRIMARY, boxShadow: `0 2px 8px ${PRIMARY}30` }}>
+                                Imprimer
                               </button>
                             </div>
                           </div>
@@ -1414,7 +1414,7 @@ export default function PatientAudFichePage({ params }: { params: Promise<{ id: 
 
             {/* Appareillage actuel */}
             <div className="rounded-2xl p-4 space-y-3" style={glass}>
-              <h3 className="text-[11px] font-semibold text-slate-500 uppercase tracking-wide">🎧 Appareillage actuel</h3>
+              <h3 className="text-[11px] font-semibold text-slate-500 uppercase tracking-wide">Appareillage actuel</h3>
               {(["OD", "OG"] as const).map(ear => (
                 <div key={ear} className="rounded-xl p-3 space-y-0.5" style={glassSubtle}>
                   <div className="mb-1">
@@ -1460,7 +1460,7 @@ export default function PatientAudFichePage({ params }: { params: Promise<{ id: 
 
             {/* Prochain RDV */}
             <div className="rounded-2xl p-4 space-y-2" style={glass}>
-              <h3 className="text-[11px] font-semibold text-slate-500 uppercase tracking-wide">📅 Prochain RDV</h3>
+              <h3 className="text-[11px] font-semibold text-slate-500 uppercase tracking-wide">Prochain RDV</h3>
               <div className="rounded-xl p-3 space-y-1" style={glassSubtle}>
                 <p className="text-sm font-semibold text-slate-800">Jeu. 26 mar. 2026 · 10h30</p>
                 <p className="text-xs text-slate-500">Contrôle semestriel</p>
@@ -1482,7 +1482,7 @@ export default function PatientAudFichePage({ params }: { params: Promise<{ id: 
 
             {/* Résumé */}
             <div className="rounded-2xl p-4 space-y-2" style={glass}>
-              <h3 className="text-[11px] font-semibold text-slate-500 uppercase tracking-wide">📊 Résumé</h3>
+              <h3 className="text-[11px] font-semibold text-slate-500 uppercase tracking-wide">Résumé</h3>
               <div className="space-y-1.5 text-xs text-slate-600">
                 {([
                   ["Bilans",         bilans.length.toString()],
@@ -1550,7 +1550,7 @@ export default function PatientAudFichePage({ params }: { params: Promise<{ id: 
               </button>
               <button onClick={handleAddBilan}
                 className="rounded-xl px-4 py-2 text-sm font-semibold text-white"
-                style={{ background: `linear-gradient(135deg, ${PRIMARY}, ${PRIMARY_D})` }}>
+                style={{ background: PRIMARY }}>
                 Enregistrer le bilan
               </button>
             </div>
@@ -1582,7 +1582,7 @@ export default function PatientAudFichePage({ params }: { params: Promise<{ id: 
               </button>
               <button onClick={() => { setShowRdvModal(false); setToast("Rendez-vous posé avec succès."); }}
                 className="rounded-xl px-4 py-2 text-sm font-semibold text-white"
-                style={{ background: `linear-gradient(135deg, ${PRIMARY}, ${PRIMARY_D})` }}>
+                style={{ background: PRIMARY }}>
                 Confirmer le RDV
               </button>
             </div>
@@ -1606,7 +1606,7 @@ export default function PatientAudFichePage({ params }: { params: Promise<{ id: 
             {/* File name */}
             <div className="mb-4 flex items-center gap-2 rounded-xl px-3 py-2 text-sm text-slate-600"
               style={{ background: "rgba(241,245,249,0.8)" }}>
-              <span>📎</span>
+              <span></span>
               <span className="truncate font-medium">{docDropModal.file.name}</span>
             </div>
 
@@ -1660,7 +1660,7 @@ export default function PatientAudFichePage({ params }: { params: Promise<{ id: 
                   </button>
                   <button onClick={handleDocSave}
                     className="flex-1 rounded-xl py-2 text-sm font-semibold text-white"
-                    style={{ background: `linear-gradient(135deg, ${PRIMARY}, ${PRIMARY_D})` }}>
+                    style={{ background: PRIMARY }}>
                     Enregistrer
                   </button>
                 </div>
@@ -1696,7 +1696,7 @@ export default function PatientAudFichePage({ params }: { params: Promise<{ id: 
               </button>
               <button onClick={handleEncaisser}
                 className="rounded-xl px-4 py-2 text-sm font-semibold text-white"
-                style={{ background: `linear-gradient(135deg, ${PRIMARY}, ${PRIMARY_D})` }}>
+                style={{ background: PRIMARY }}>
                 Valider l&apos;encaissement
               </button>
             </div>

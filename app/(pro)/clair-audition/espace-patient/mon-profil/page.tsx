@@ -4,16 +4,16 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 
 const glass = {
-  background: "rgba(255,255,255,0.58)",
+  background: "var(--glass-bg)",
   backdropFilter: "blur(20px)",
   WebkitBackdropFilter: "blur(20px)",
-  border: "1px solid rgba(255,255,255,0.72)",
+  border: "1px solid var(--glass-border)",
   boxShadow: "0 8px 32px rgba(0,0,0,0.06)",
 } as React.CSSProperties;
 
 const glassSubtle = {
-  background: "rgba(255,255,255,0.45)",
-  border: "1px solid rgba(255,255,255,0.65)",
+  background: "var(--glass-subtle-bg)",
+  border: "1px solid var(--glass-subtle-border)",
 } as React.CSSProperties;
 
 function SmallBadge({ children, green }: { children: React.ReactNode; green?: boolean }) {
@@ -154,7 +154,7 @@ export default function ProfilAuditionPage() {
                   <button
                     onClick={() => router.push("/clair-audition/espace-patient/rendez-vous")}
                     className="flex-1 rounded-lg py-2 text-xs font-semibold text-white transition-all hover:opacity-90"
-                    style={{ background: "linear-gradient(135deg, #00C98A, #00A574)" }}>
+                    style={{ background: "#00C98A" }}>
                     Prendre RDV
                   </button>
                 </div>
@@ -165,7 +165,7 @@ export default function ProfilAuditionPage() {
           <button
             onClick={() => router.push("/clair-audition/espace-patient/centres")}
             className="mt-3 w-full rounded-xl py-2.5 text-sm font-semibold text-white transition-all hover:opacity-90"
-            style={{ background: "linear-gradient(135deg, #00C98A, #00A574)" }}>
+            style={{ background: "#00C98A" }}>
             Voir tous les centres
           </button>
         </div>
