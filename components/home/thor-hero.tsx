@@ -10,53 +10,19 @@ const NB_PROJETS = LIVRES.length;
 const NB_SECTEURS = new Set(LIVRES.map((r) => r.sector)).size;
 
 /* ──────────────────────────────────────────────────────────────────────────
-   Gouttes de verre.
+   Hero de la page nocturne.
 
-   Elles ne décorent pas : elles montrent le matériau. Chacune est une vraie
-   lentille (backdrop-filter) qui réfracte et sature le fond derrière elle,
-   ce qu'aucun calque blanc ne sait imiter.
+   Les quatre gouttes de verre ont disparu, et ce n'est pas un choix de goût :
+   une goutte est un `backdrop-filter`, et son arrière-plan est désormais un
+   canvas WebGL qui change à chaque frame. Le compositeur devrait re-flouter
+   quatre calques soixante fois par seconde, sans jamais rien mettre en cache
+   — exactement la boucle qu'on a passé la session à supprimer. Le décor
+   derrière étant devenu un vrai volume, il porte à lui seul la profondeur que
+   les gouttes simulaient.
 
-   Quatre au maximum — chaque goutte est une passe de composition plein
-   calque. Elles disparaissent sous 768 px (règle .lg-drop dans globals.css).
-
-   PERF — elles ne dérivent plus. Une goutte est un `backdrop-filter` : la
-   déplacer en boucle interdit au compositeur de mettre son flou en cache et
-   le force à re-flouter à chaque frame, indéfiniment. Posées sur un fond
-   désormais immobile, les quatre gouttes sont floutées une fois puis ne
-   coûtent plus rien au repos. `depth` module ce qu'il reste de mouvement :
-   le parallaxe au pointeur, qui ne tourne que pendant le geste. Les grosses
-   gouttes, perçues plus proches, se déplacent davantage.
+   Ce qui reste du geste : le parallaxe au pointeur sur le texte, en variables
+   CSS, sans re-rendu React.
    ──────────────────────────────────────────────────────────────────────── */
-const DROPS = [
-  { size: 148, top: "10%", left: "6%",   depth: 1.6 },
-  { size: 86,  top: "24%", right: "10%", depth: 2.4 },
-  { size: 196, top: "64%", right: "4%",  depth: 1.1 },
-  { size: 62,  top: "76%", left: "13%",  depth: 3.0 },
-];
-
-function GlassDrops() {
-  return (
-    <div aria-hidden="true" className="absolute inset-0 overflow-hidden">
-      {DROPS.map((d, i) => (
-        <div
-          key={i}
-          className="lg-drop"
-          style={{
-            width: d.size,
-            height: d.size,
-            top: d.top,
-            left: d.left,
-            right: d.right,
-            transform: `translate(calc(var(--px) * ${d.depth}), calc(var(--py) * ${d.depth}))`,
-            transition: "transform 700ms var(--lg-ease)",
-          }}
-        />
-      ))}
-    </div>
-  );
-}
-
-/* ──────────────────────────────────────────────────────────────────────── */
 
 export default function ThorHero() {
   const ref = usePointerParallax<HTMLElement>(14, 10);
@@ -64,11 +30,9 @@ export default function ThorHero() {
   return (
     <section
       ref={ref}
-      className="relative flex items-center justify-center overflow-hidden"
+      className="relative flex items-center justify-center"
       style={{ minHeight: "calc(100vh - 5rem)", ...PARALLAX_INITIAL }}
     >
-      <GlassDrops />
-
       <div className="relative z-10 mx-auto w-full max-w-[900px] px-5 sm:px-6 py-20 text-center">
 
         <div className="rise">
@@ -77,6 +41,7 @@ export default function ThorHero() {
             style={{
               transform: "translate(calc(var(--px) * 0.4), calc(var(--py) * 0.4))",
               transition: "transform 700ms var(--lg-ease)",
+              color: "rgba(233,237,245,0.74)",
             }}
           >
             <span>Studio de création · Éditeur de logiciels métier</span>
@@ -85,10 +50,13 @@ export default function ThorHero() {
 
         <div className="rise" style={{ animationDelay: "80ms" }}>
           <h1
-            className="h-title text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-semibold leading-[0.95] tracking-tight text-slate-900"
+            className="h-title text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-semibold leading-[0.95] tracking-tight text-white"
             style={{
               transform: "translate(calc(var(--px) * -0.5), calc(var(--py) * -0.3))",
               transition: "transform 700ms var(--lg-ease)",
+              /* Le titre traverse le champ d'étoiles : sans cette ombre, une
+                 étoile qui passe derrière une lettre la troue. */
+              textShadow: "0 2px 44px rgba(2,3,10,0.8)",
             }}
           >
             De l’idée
@@ -98,7 +66,10 @@ export default function ThorHero() {
         </div>
 
         <div className="rise" style={{ animationDelay: "160ms" }}>
-          <p className="mx-auto mt-8 max-w-xl text-lg sm:text-xl text-slate-500 leading-[1.6]">
+          <p
+            className="mx-auto mt-8 max-w-xl text-lg sm:text-xl leading-[1.6] text-slate-300/85"
+            style={{ textShadow: "0 1px 22px rgba(2,3,10,0.85)" }}
+          >
             On cadre le projet, on mesure le marché que vous pouvez atteindre,
             on construit. Puis on reste là.
           </p>
@@ -122,10 +93,13 @@ export default function ThorHero() {
             { value: String(NB_SECTEURS), label: "secteurs couverts" },
           ].map((s) => (
             <div key={s.label} className="text-center">
-              <div className="h-title text-3xl sm:text-4xl font-semibold text-slate-900 tabular-nums">
+              <div
+                className="h-title text-3xl sm:text-4xl font-semibold text-white tabular-nums"
+                style={{ textShadow: "0 1px 20px rgba(2,3,10,0.8)" }}
+              >
                 {s.value}
               </div>
-              <div className="mt-1.5 text-[13px] text-slate-500">{s.label}</div>
+              <div className="mt-1.5 text-[13px] text-slate-400">{s.label}</div>
             </div>
           ))}
         </div>
@@ -134,7 +108,7 @@ export default function ThorHero() {
       {/* Repère de défilement — la seule invitation à descendre */}
       <div
         aria-hidden="true"
-        className="absolute bottom-10 left-1/2 -translate-x-1/2 text-slate-500"
+        className="absolute bottom-10 left-1/2 -translate-x-1/2 text-white/35"
         style={{ animation: "floatY 3s ease-in-out infinite" }}
       >
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none">

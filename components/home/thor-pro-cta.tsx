@@ -33,10 +33,10 @@ export function ThorProCTA() {
       <div className="mx-auto max-w-[900px] px-5 sm:px-6">
         <Reveal>
           <div className="text-center">
-            <h2 className="h-title mx-auto max-w-xl text-4xl sm:text-5xl font-semibold tracking-tight text-slate-900 leading-[1.05]">
+            <h2 className="h-title mx-auto max-w-xl text-4xl sm:text-5xl font-semibold tracking-tight text-white leading-[1.05]">
               Parlons de votre projet.
             </h2>
-            <p className="mx-auto mt-6 max-w-lg text-lg text-slate-500 leading-[1.6]">
+            <p className="mx-auto mt-6 max-w-lg text-lg text-slate-300/75 leading-[1.6]">
               Décrivez votre activité en quelques lignes. On revient vers vous
               rapidement, et le premier échange ne coûte rien.
             </p>
@@ -54,16 +54,16 @@ export function ThorProCTA() {
                   href={c.href}
                   className="lg lg-card group flex items-center gap-4 p-5 text-left"
                 >
-                  <span className="grid place-items-center w-11 h-11 rounded-2xl bg-slate-900/[0.04] text-slate-500 shrink-0">
+                  <span className="grid place-items-center w-11 h-11 rounded-2xl bg-white/[0.07] text-slate-300/75 shrink-0">
                     {c.icon}
                   </span>
                   <span className="min-w-0 flex-1">
-                    <span className="block text-[13px] text-slate-500">{c.label}</span>
-                    <span className="block text-[15px] font-medium text-slate-900 truncate">
+                    <span className="block text-[13px] text-slate-300/75">{c.label}</span>
+                    <span className="block text-[15px] font-medium text-white truncate">
                       {c.value}
                     </span>
                   </span>
-                  <svg className="w-4 h-4 text-slate-300 shrink-0 transition-transform duration-300 group-hover:translate-x-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <svg className="w-4 h-4 text-white/25 shrink-0 transition-transform duration-300 group-hover:translate-x-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                     <path d="M5 12h14M13 5l7 7-7 7" />
                   </svg>
                 </a>

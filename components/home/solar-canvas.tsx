@@ -1,0 +1,360 @@
+"use client";
+
+import Link from "next/link";
+import { useEffect, useRef, useState } from "react";
+import * as THREE from "three";
+import { getAllRealisations, type Realisation } from "@/lib/realisations";
+
+/* ──────────────────────────────────────────────────────────────────────────
+   Le système solaire de la page d'accueil, en WebGL.
+
+   POURQUOI PAS EN CSS — trois tentatives en dégradés l'ont montré : un
+   `radial-gradient` circulaire reste une pastille. Une sphère qui tourne,
+   éclairée par une source ponctuelle, avec une texture et un halo additif,
+   n'existe pas en CSS. Les deux références (Solar System Scope, Eyes on the
+   Solar System) sont des applications WebGL ; il fallait le même outil.
+
+   PAS DE POST-TRAITEMENT — un `UnrealBloomPass` imposerait un EffectComposer,
+   deux cibles de rendu supplémentaires et une passe plein écran par frame.
+   Le halo du soleil est obtenu par trois sprites en fusion additive, ce qui
+   coûte trois quads et rend le même service.
+
+   BUDGET — le rendu s'arrête dès que l'onglet passe en arrière-plan ou que la
+   page a défilé au-delà de la scène. Le ratio de pixels est plafonné, la
+   géométrie et le nombre d'étoiles baissent sur petit écran, et en mouvement
+   réduit une seule frame est produite puis la boucle s'arrête : l'image reste,
+   le GPU se taît.
+   ──────────────────────────────────────────────────────────────────────── */
+
+const LIVE = getAllRealisations().filter((r) => r.status === "live");
+
+/** Rayon d'orbite, inclinaison (rad), rayon de la planète, période (s). */
+const ORBITS = [
+  { radius: 5.2,  incl: 0.16, tiltZ: -0.22, size: 0.42, period: 34 },
+  { radius: 7.4,  incl: 0.05, tiltZ:  0.14, size: 0.52, period: 52 },
+  { radius: 9.8,  incl: 0.22, tiltZ: -0.09, size: 0.38, period: 74 },
+  { radius: 12.4, incl: 0.10, tiltZ:  0.26, size: 0.60, period: 98 },
+  { radius: 15.2, incl: 0.27, tiltZ: -0.05, size: 0.46, period: 126 },
+  { radius: 18.4, incl: 0.13, tiltZ:  0.19, size: 0.55, period: 158 },
+];
+
+/** Halo radial réutilisé pour la couronne et les étoiles. */
+function glowTexture(inner: string, outer: string) {
+  const c = document.createElement("canvas");
+  c.width = c.height = 128;
+  const g = c.getContext("2d")!;
+  const grad = g.createRadialGradient(64, 64, 0, 64, 64, 64);
+  grad.addColorStop(0, inner);
+  grad.addColorStop(0.35, outer);
+  grad.addColorStop(1, "rgba(255,255,255,0)");
+  g.fillStyle = grad;
+  g.fillRect(0, 0, 128, 128);
+  const t = new THREE.CanvasTexture(c);
+  t.colorSpace = THREE.SRGBColorSpace;
+  return t;
+}
+
+/**
+ * Texture de planète, dérivée de la couleur du projet.
+ *
+ * Des bandes horizontales d'une même teinte à des clartés différentes : c'est
+ * ce que donne une géante gazeuse, et c'est surtout ce qui fait lire la
+ * rotation. Une sphère de couleur unie tourne sans qu'on le voie.
+ */
+function planetTexture(hex: string) {
+  const c = document.createElement("canvas");
+  c.width = 256;
+  c.height = 128;
+  const g = c.getContext("2d")!;
+  const base = new THREE.Color(hex);
+
+  const hsl = { h: 0, s: 0, l: 0 };
+  base.getHSL(hsl);
+
+  g.fillStyle = `#${base.getHexString()}`;
+  g.fillRect(0, 0, 256, 128);
+
+  /* Suite déterministe : la texture doit être identique d'un rendu à l'autre. */
+  let seed = Math.round(hsl.h * 10000) + 7919;
+  const next = () => (seed = (seed * 1103515245 + 12345) % 2147483648) / 2147483648;
+
+  for (let y = 0; y < 128; ) {
+    const h = 3 + next() * 11;
+    const l = Math.min(0.92, Math.max(0.08, hsl.l + (next() - 0.5) * 0.34));
+    const band = new THREE.Color().setHSL(hsl.h, hsl.s * (0.7 + next() * 0.5), l);
+    g.fillStyle = `#${band.getHexString()}`;
+    g.fillRect(0, y, 256, h);
+    y += h;
+  }
+
+  /* Pôles éclaircis — repère supplémentaire pour la rotation. */
+  const poles = g.createLinearGradient(0, 0, 0, 128);
+  poles.addColorStop(0, "rgba(255,255,255,0.30)");
+  poles.addColorStop(0.2, "rgba(255,255,255,0)");
+  poles.addColorStop(0.8, "rgba(255,255,255,0)");
+  poles.addColorStop(1, "rgba(255,255,255,0.24)");
+  g.fillStyle = poles;
+  g.fillRect(0, 0, 256, 128);
+
+  const t = new THREE.CanvasTexture(c);
+  t.colorSpace = THREE.SRGBColorSpace;
+  return t;
+}
+
+type Body = { mesh: THREE.Mesh; pivot: THREE.Object3D; item: Realisation; speed: number; spin: number };
+
+export default function SolarCanvas() {
+  const hostRef = useRef<HTMLDivElement>(null);
+  const tipRef = useRef<HTMLAnchorElement>(null);
+  /* L'état ne suit pas la position — seulement l'identité du survolé, qui ne
+     change que lorsque le curseur entre ou sort d'une planète. La position,
+     elle, s'écrit sur le nœud à chaque frame, sans repasser par React. */
+  const [hover, setHover] = useState<{ name: string; slug: string } | null>(null);
+
+  useEffect(() => {
+    const host = hostRef.current;
+    if (!host) return;
+
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const small = window.innerWidth < 768;
+
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(38, 1, 0.1, 260);
+    const baseZ = small ? 54 : 46;
+    camera.position.set(0, 11.5, baseZ);
+    camera.lookAt(0, 0, 0);
+
+    const renderer = new THREE.WebGLRenderer({ antialias: !small, alpha: true, powerPreference: "high-performance" });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, small ? 1 : 1.35));
+    renderer.setClearColor(0x000000, 0);
+    host.appendChild(renderer.domElement);
+    renderer.domElement.style.display = "block";
+
+    /* ── L'étoile ───────────────────────────────────────────────────────── */
+    const sun = new THREE.Mesh(
+      new THREE.SphereGeometry(1.5, 48, 32),
+      new THREE.MeshBasicMaterial({ color: 0xfff0c4 }),
+    );
+    scene.add(sun);
+
+    const corona = glowTexture("rgba(255,255,255,0.95)", "rgba(255,178,72,0.42)");
+    [
+      { s: 7.5, o: 0.92 },
+      { s: 17, o: 0.42 },
+      { s: 38, o: 0.16 },
+    ].forEach(({ s, o }) => {
+      const sprite = new THREE.Sprite(
+        new THREE.SpriteMaterial({
+          map: corona,
+          blending: THREE.AdditiveBlending,
+          transparent: true,
+          opacity: o,
+          depthWrite: false,
+        }),
+      );
+      sprite.scale.setScalar(s);
+      scene.add(sprite);
+    });
+
+    scene.add(new THREE.PointLight(0xffd9a0, 460, 0, 2).translateY(0));
+    scene.add(new THREE.AmbientLight(0x2b3a5c, 1.1));
+
+    /* ── Les planètes et leurs trajectoires ─────────────────────────────── */
+    const bodies: Body[] = LIVE.map((item, i) => {
+      const o = ORBITS[i % ORBITS.length];
+      const color = new THREE.Color(item.accent);
+
+      const pivot = new THREE.Object3D();
+      pivot.rotation.x = o.incl;
+      pivot.rotation.z = o.tiltZ;
+      /* Le nombre d'or étale les positions de départ, quel que soit le nombre. */
+      pivot.rotation.y = ((i * 137.508) % 360) * (Math.PI / 180);
+      scene.add(pivot);
+
+      const mesh = new THREE.Mesh(
+        new THREE.SphereGeometry(o.size, small ? 20 : 40, small ? 14 : 28),
+        new THREE.MeshStandardMaterial({
+          map: planetTexture(item.accent),
+          roughness: 0.82,
+          metalness: 0.06,
+        }),
+      );
+      mesh.position.x = o.radius;
+      pivot.add(mesh);
+
+      /* Le tracé : une ellipse fine à la couleur du projet, dans le plan du
+         pivot pour rester rigoureusement sous la planète. */
+      const pts = new THREE.EllipseCurve(0, 0, o.radius, o.radius, 0, Math.PI * 2)
+        .getPoints(180)
+        .map((p) => new THREE.Vector3(p.x, 0, -p.y));
+      const line = new THREE.LineLoop(
+        new THREE.BufferGeometry().setFromPoints(pts),
+        new THREE.LineBasicMaterial({ color, transparent: true, opacity: 0.34 }),
+      );
+      pivot.add(line);
+
+      const halo = new THREE.Sprite(
+        new THREE.SpriteMaterial({
+          map: glowTexture(`#${color.getHexString()}`, `#${color.getHexString()}`),
+          blending: THREE.AdditiveBlending,
+          transparent: true,
+          opacity: 0.34,
+          depthWrite: false,
+        }),
+      );
+      halo.scale.setScalar(o.size * 3.1);
+      mesh.add(halo);
+
+      return { mesh, pivot, item, speed: (Math.PI * 2) / o.period, spin: 0.22 + (i % 3) * 0.1 };
+    });
+
+    /* ── Le ciel ────────────────────────────────────────────────────────── */
+    const starCount = small ? 800 : 1500;
+    const pos = new Float32Array(starCount * 3);
+    let s2 = 20261;
+    const rnd = () => (s2 = (s2 * 1103515245 + 12345) % 2147483648) / 2147483648;
+    for (let i = 0; i < starCount; i++) {
+      /* Répartition sur une coquille : un cube donnerait des coins visibles. */
+      const th = Math.acos(2 * rnd() - 1);
+      const ph = rnd() * Math.PI * 2;
+      const r = 96 + rnd() * 70;
+      pos[i * 3] = r * Math.sin(th) * Math.cos(ph);
+      pos[i * 3 + 1] = r * Math.cos(th);
+      pos[i * 3 + 2] = r * Math.sin(th) * Math.sin(ph);
+    }
+    const stars = new THREE.Points(
+      new THREE.BufferGeometry().setAttribute("position", new THREE.BufferAttribute(pos, 3)),
+      new THREE.PointsMaterial({
+        size: 0.5,
+        map: glowTexture("rgba(255,255,255,1)", "rgba(200,220,255,0.5)"),
+        transparent: true,
+        depthWrite: false,
+        blending: THREE.AdditiveBlending,
+        sizeAttenuation: true,
+      }),
+    );
+    scene.add(stars);
+
+    /* ── Dimensionnement ────────────────────────────────────────────────── */
+    function resize() {
+      const w = host!.clientWidth;
+      const h = host!.clientHeight;
+      renderer.setSize(w, h, false);
+      camera.aspect = w / h;
+      camera.updateProjectionMatrix();
+    }
+    resize();
+    const ro = new ResizeObserver(resize);
+    ro.observe(host);
+
+    /* ── Survol : la planète sous le curseur devient un lien ────────────── */
+    const ray = new THREE.Raycaster();
+    const ndc = new THREE.Vector2(-2, -2);
+    let hovered: Body | null = null;
+
+    function onMove(e: PointerEvent) {
+      const r = renderer.domElement.getBoundingClientRect();
+      ndc.x = ((e.clientX - r.left) / r.width) * 2 - 1;
+      ndc.y = -((e.clientY - r.top) / r.height) * 2 + 1;
+    }
+    window.addEventListener("pointermove", onMove, { passive: true });
+
+    /* ── La boucle ──────────────────────────────────────────────────────── */
+    const clock = new THREE.Clock();
+    let raf = 0;
+    let running = true;
+
+    function frame() {
+      raf = 0;
+      const dt = Math.min(clock.getDelta(), 0.05);
+      const t = clock.elapsedTime;
+
+      for (const b of bodies) {
+        b.pivot.rotation.y += b.speed * dt;
+        b.mesh.rotation.y += b.spin * dt;
+      }
+
+      /* La scène s'approche à la descente, et respire très lentement au repos. */
+      const progress = Math.min(1, window.scrollY / Math.max(1, window.innerHeight * 2.2));
+      camera.position.z = baseZ - progress * 16 + Math.sin(t * 0.07) * 0.9;
+      camera.position.y = 11.5 - progress * 5.2;
+      camera.lookAt(0, 0, 0);
+      stars.rotation.y = t * 0.0045;
+
+      /* Le survol ne coûte un lancer de rayon que lorsque le curseur a bougé. */
+      ray.setFromCamera(ndc, camera);
+      const hit = ray.intersectObjects(bodies.map((b) => b.mesh), false)[0];
+      const next = hit ? bodies.find((b) => b.mesh === hit.object) ?? null : null;
+      if (next !== hovered) {
+        hovered = next;
+        setHover(next ? { name: next.item.name, slug: next.item.slug } : null);
+        renderer.domElement.style.cursor = next ? "pointer" : "";
+      }
+      if (hovered && tipRef.current) {
+        const v = hovered.mesh.getWorldPosition(new THREE.Vector3()).project(camera);
+        const r = renderer.domElement.getBoundingClientRect();
+        tipRef.current.style.transform = `translate(-50%, -140%) translate(${((v.x + 1) / 2) * r.width}px, ${((-v.y + 1) / 2) * r.height}px)`;
+      }
+
+      renderer.render(scene, camera);
+      if (running) raf = requestAnimationFrame(frame);
+    }
+
+    if (reduced) {
+      renderer.render(scene, camera);
+      running = false;
+    } else {
+      raf = requestAnimationFrame(frame);
+    }
+
+    /* Onglet caché : plus une frame. */
+    function onVisibility() {
+      if (document.hidden) {
+        running = false;
+        if (raf) cancelAnimationFrame(raf);
+        raf = 0;
+      } else if (!reduced && !running) {
+        running = true;
+        clock.getDelta();
+        raf = requestAnimationFrame(frame);
+      }
+    }
+    document.addEventListener("visibilitychange", onVisibility);
+
+    return () => {
+      running = false;
+      if (raf) cancelAnimationFrame(raf);
+      document.removeEventListener("visibilitychange", onVisibility);
+      window.removeEventListener("pointermove", onMove);
+      ro.disconnect();
+      scene.traverse((o) => {
+        const m = o as THREE.Mesh;
+        m.geometry?.dispose?.();
+        const mat = m.material as THREE.Material | THREE.Material[] | undefined;
+        if (Array.isArray(mat)) mat.forEach((x) => x.dispose());
+        else mat?.dispose?.();
+      });
+      corona.dispose();
+      renderer.dispose();
+      renderer.domElement.remove();
+    };
+  }, []);
+
+  return (
+    <>
+      <div ref={hostRef} className="absolute inset-0" aria-hidden="true" />
+      {/* Étiquette de survol. C'est un vrai lien : la planète est cliquable
+          sans que le canvas ait à gérer la navigation. */}
+      <Link
+        ref={tipRef}
+        href={hover ? `/realisations/${hover.slug}` : "/realisations"}
+        aria-hidden={hover ? undefined : true}
+        tabIndex={hover ? 0 : -1}
+        className="absolute left-0 top-0 z-10 whitespace-nowrap rounded-full border border-white/20 bg-[#050810]/85 px-3 py-1.5 text-[11px] font-medium uppercase tracking-[0.14em] text-white transition-opacity duration-200"
+        style={{ opacity: hover ? 1 : 0, pointerEvents: hover ? "auto" : "none" }}
+      >
+        {hover?.name ?? " "}
+      </Link>
+    </>
+  );
+}

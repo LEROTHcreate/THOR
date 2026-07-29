@@ -37,6 +37,10 @@ export default function Header() {
     };
   }, [pathname]);
 
+  /* La page d'accueil est nocturne : le header y passe en clair. Les autres
+     pages gardent l'encre sur verre blanc. */
+  const night = pathname === "/";
+
   if (hideThorHeader) return null;
 
   return (
@@ -52,10 +56,10 @@ export default function Header() {
             />
 
             <div className="leading-tight">
-              <div className="text-[16px] font-bold text-thor-text tracking-tight">
+              <div className={cn("text-[16px] font-bold tracking-tight", night ? "text-white" : "text-thor-text")}>
                 THOR
               </div>
-              <div className="text-[10px] text-thor-muted tracking-wide">
+              <div className={cn("text-[10px] tracking-wide", night ? "text-white/50" : "text-thor-muted")}>
                 <span className="text-indigo-500 font-medium">Studio</span>
                 {" · "}
                 <span className="text-vision-accent font-medium">Produits</span>
@@ -80,8 +84,8 @@ export default function Header() {
                     "transition-all duration-300",
                     "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900/20",
                     active
-                      ? "bg-white/90 shadow-[var(--shadow-soft)] text-thor-text"
-                      : "text-thor-muted hover:bg-white/50 hover:text-thor-text",
+                      ? (night ? "bg-white/15 text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.18)]" : "bg-white/90 shadow-[var(--shadow-soft)] text-thor-text")
+                      : (night ? "text-white/60 hover:bg-white/10 hover:text-white" : "text-thor-muted hover:bg-white/50 hover:text-thor-text"),
                   )}
                 >
                   {l.label}
@@ -114,9 +118,9 @@ export default function Header() {
           >
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
               {open ? (
-                <path d="M6 6l12 12M18 6L6 18" stroke="#0B1220" strokeWidth="2" strokeLinecap="round" />
+                <path d="M6 6l12 12M18 6L6 18" stroke={night ? "#FFFFFF" : "#0B1220"} strokeWidth="2" strokeLinecap="round" />
               ) : (
-                <path d="M4 7h16M4 12h16M4 17h16" stroke="#0B1220" strokeWidth="2" strokeLinecap="round" />
+                <path d="M4 7h16M4 12h16M4 17h16" stroke={night ? "#FFFFFF" : "#0B1220"} strokeWidth="2" strokeLinecap="round" />
               )}
             </svg>
           </button>

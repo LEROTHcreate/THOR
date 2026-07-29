@@ -419,6 +419,79 @@ body {
   mask: radial-gradient(closest-side, transparent calc(100% - 1.6px), #000 calc(100% - 1.6px));
 }
 
+/* -----------------------------------------------------------
+   PAGE NOCTURNE — la page d'accueil, et elle seule.
+
+   Le système solaire occupe le fond fixe sur toute la hauteur. Le body doit
+   donc cesser d'être blanc, et le verre de la vitrine — taillé pour un fond
+   clair — doit s'inverser : posé tel quel sur du noir, le header devient une
+   barre grise opaque et les cartes des rectangles laiteux.
+
+   Volontairement limité aux surfaces : les couleurs de texte sont traitées
+   dans les composants concernés, qui ne servent que la home. Une règle
+   fourre-tout du genre `[data-page="night"] .text-slate-900` rejouerait
+   l'erreur du mode sombre, où un sélecteur trop large appliquait un flou à
+   310 éléments.
+   ----------------------------------------------------------- */
+[data-page="night"] body {
+  background-color: #02030A;
+  color: #E9EDF5;
+}
+
+[data-page="night"] .glass-liquid-top {
+  background: rgba(8, 13, 26, 0.62);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.07),
+    0 12px 32px -16px rgba(0, 0, 0, 0.65);
+}
+
+[data-page="night"] .glass-liquid-bottom {
+  background: rgba(3, 5, 12, 0.90);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: inset 0 -1px 0 rgba(255, 255, 255, 0.06);
+}
+
+/* Verre sombre, et non verre blanc éclairci.
+   Sur la nuit, une teinte blanche translucide s'ajoute au fond au lieu de le
+   masquer : le soleil traversait les cartes et le texte devenait illisible. Un
+   voile sombre occulte. Et aucun `backdrop-filter` ici, contrairement au mode
+   clair : le fond est un canvas qui change à chaque frame, un flou devrait
+   être recalculé soixante fois par seconde. */
+[data-page="night"] .lg {
+  background: rgba(13, 20, 37, 0.62);
+  border-color: rgba(255, 255, 255, 0.15);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.04),
+    0 12px 34px -14px rgba(0, 0, 0, 0.7);
+}
+
+/* Le reflet spéculaire est calibré pour du verre clair : à pleine opacité sur
+   fond noir il fait une tache laiteuse. */
+[data-page="night"] .lg::before { opacity: 0.20; }
+
+/* Une carte est large : c'est elle qui a le plus besoin d'occulter. */
+[data-page="night"] .lg-card { background: rgba(8, 13, 26, 0.78); }
+[data-page="night"] .lg-card:hover { background: rgba(14, 22, 40, 0.88); }
+
+[data-page="night"] .lg-btn { color: #F2F5FA; }
+[data-page="night"] .lg-btn:hover { background: rgba(24, 34, 56, 0.78); }
+
+/* Le bouton principal s'inverse : encre sur blanc devient blanc sur nuit. */
+[data-page="night"] .lg-btn-ink {
+  background: #FFFFFF;
+  border-color: rgba(255, 255, 255, 0.9);
+  color: #0B1220;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    0 14px 36px -14px rgba(0, 0, 0, 0.7);
+}
+[data-page="night"] .lg-btn-ink:hover { background: #FFFFFF; }
+[data-page="night"] .lg-btn-ink::before { opacity: 0; }
+
 /* La respiration de la couronne — la seule chose vivante dans l'astre.
    `transform` et `opacity` uniquement, et le translate est repris dans les
    images-clés : une animation l'emporte sur le style en ligne, sans quoi la
