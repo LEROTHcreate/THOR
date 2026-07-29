@@ -321,13 +321,9 @@ function Hero() {
                      style={{ background: "#14B8A6", boxShadow: `0 0 20px rgba(20,184,166,0.9)` }} />
               </div>
 
-              {/* Logo oreille au centre — flottant */}
-              <div
-                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
-                style={{ animation: "floatY 6s ease-in-out infinite" }}
-              >
-                <BrandIcon brand="audition" size={340} className="drop-shadow-[0_20px_40px_rgba(0,201,138,0.25)]" />
-              </div>
+              {/* Rien au centre des anneaux : le PNG de l'oreille n'est pas
+                  détouré, il posait un carré blanc au milieu de l'orbite.
+                  Clair Vision laisse ce centre vide, les deux pages s'alignent. */}
 
               {/* Badge — 100% Santé */}
               <div

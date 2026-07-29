@@ -107,6 +107,23 @@ const RESTITUTION = [
   { label: "Objectif 1re année", value: "740", width: "18%" },
 ];
 
+/* ── Qualification ────────────────────────────────────────────────────────
+   Dire à qui ça ne s'adresse pas fait gagner du temps à tout le monde, et
+   c'est ce qui rend crédible la colonne de gauche. */
+
+const POUR_QUI = [
+  "Vous lancez une activité et vous partez d’une page blanche.",
+  "Vous êtes indépendant ou une petite structure, et le site doit ramener des clients, pas des compliments.",
+  "Vous voulez savoir ce que pèse votre marché avant d’y mettre de l’argent.",
+  "Vous préférez un interlocuteur unique à une agence à trois étages.",
+];
+
+const PAS_POUR_QUI = [
+  "Vous cherchez d’abord le prix le plus bas : un gabarit à quelques euros par mois fera le travail.",
+  "Vous devez être en ligne dans trois jours.",
+  "Vous voulez déléguer sans rien relire. On a besoin de vos contenus et de votre avis pour avancer.",
+];
+
 /* ── Ce que le client garde ───────────────────────────────────────────────
    Le fil rouge de la page : il n'est locataire de rien. C'est l'objection
    numéro un d'un créateur qui a déjà été enfermé dans un abonnement. */
@@ -251,7 +268,7 @@ export default function StudioPage() {
               (fact, i) => (
                 <span key={fact} className="flex items-center gap-4">
                   {i > 0 && <span aria-hidden="true" className="text-slate-300">·</span>}
-                  <span className="mono-label text-slate-400">{fact}</span>
+                  <span className="mono-label text-slate-500">{fact}</span>
                 </span>
               ),
             )}
@@ -265,7 +282,7 @@ export default function StudioPage() {
           <div className="mx-auto max-w-[1100px] px-5 sm:px-6">
             <Reveal>
               <div className="flex items-center gap-5">
-                <span className="mono-label shrink-0 text-slate-400">Livré · En ligne</span>
+                <span className="mono-label shrink-0 text-slate-500">Livré · En ligne</span>
                 <span aria-hidden="true" className="h-px flex-1 bg-slate-900/[0.07]" />
               </div>
             </Reveal>
@@ -281,12 +298,62 @@ export default function StudioPage() {
         </section>
       )}
 
+      {/* ── À qui ça s'adresse ────────────────────────────────────────── */}
+      <section className="relative pt-28 sm:pt-36">
+        <div className="mx-auto max-w-[1000px] px-5 sm:px-6">
+          <Reveal>
+            <div className="mx-auto mb-16 max-w-2xl text-center">
+              <span className="mono-label mb-5 block text-slate-500">Avant d’aller plus loin</span>
+              <h2 className="h-title text-4xl sm:text-5xl font-semibold tracking-tight text-slate-900 leading-[1.05]">
+                On n’est pas faits pour tout le monde.
+              </h2>
+            </div>
+          </Reveal>
+
+          <div className="grid gap-4 md:grid-cols-2">
+            <Reveal>
+              <div className="lg lg-card h-full p-8 sm:p-9">
+                <span className="mono-label block" style={{ color: ACCENT }}>
+                  C’est pour vous si
+                </span>
+                <ul className="mt-7 space-y-4">
+                  {POUR_QUI.map((p) => (
+                    <li key={p} className="flex items-start gap-3.5 text-[15px] text-slate-600 leading-[1.6]">
+                      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" className="mt-0.5 shrink-0" style={{ color: ACCENT }} aria-hidden="true">
+                        <path d="M5 13l4 4L19 7" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                      {p}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </Reveal>
+
+            <Reveal>
+              <div className="lg lg-card h-full p-8 sm:p-9">
+                <span className="mono-label block text-slate-500">Passez votre chemin si</span>
+                <ul className="mt-7 space-y-4">
+                  {PAS_POUR_QUI.map((p) => (
+                    <li key={p} className="flex items-start gap-3.5 text-[15px] text-slate-500 leading-[1.6]">
+                      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" className="mt-0.5 shrink-0 text-slate-300" aria-hidden="true">
+                        <path d="M6 12h12" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
+                      </svg>
+                      {p}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </Reveal>
+          </div>
+        </div>
+      </section>
+
       {/* ── Les quatre volets ─────────────────────────────────────────── */}
       <section className="relative pt-28 sm:pt-36">
         <div className="mx-auto max-w-[1100px] px-5 sm:px-6">
           <Reveal>
             <div className="mx-auto mb-16 max-w-2xl text-center">
-              <span className="mono-label mb-5 block text-slate-400">L’accompagnement</span>
+              <span className="mono-label mb-5 block text-slate-500">L’accompagnement</span>
               <h2 className="h-title text-4xl sm:text-5xl font-semibold tracking-tight text-slate-900 leading-[1.05]">
                 Quatre volets, un seul interlocuteur.
               </h2>
@@ -304,7 +371,7 @@ export default function StudioPage() {
                     >
                       {v.icon}
                     </span>
-                    <span className="mono-label text-slate-300">
+                    <span className="mono-label text-slate-500">
                       {String(i + 1).padStart(2, "0")}
                     </span>
                   </div>
@@ -356,13 +423,13 @@ export default function StudioPage() {
 
                 {/* Aperçu schématique de la restitution */}
                 <div className="rounded-[20px] border border-slate-900/[0.07] bg-white/90 p-7">
-                  <div className="mono-label mb-7 text-slate-400">Aperçu de la restitution</div>
+                  <div className="mono-label mb-7 text-slate-500">Aperçu de la restitution</div>
                   <div className="space-y-6">
                     {RESTITUTION.map((row, i) => (
                       <div key={row.label}>
                         <div className="mb-2 flex items-baseline justify-between gap-3">
                           <span className="flex items-baseline gap-2.5 text-[13px] text-slate-500">
-                            <span className="mono-label text-slate-300">
+                            <span className="mono-label text-slate-500">
                               {String(i + 1).padStart(2, "0")}
                             </span>
                             {row.label}
@@ -380,7 +447,7 @@ export default function StudioPage() {
                       </div>
                     ))}
                   </div>
-                  <p className="mt-7 text-[13px] leading-relaxed text-slate-400">
+                  <p className="mt-7 text-[13px] leading-relaxed text-slate-500">
                     Chiffres d’illustration. Les données réelles proviennent des
                     bases publiques de l’INSEE.
                   </p>
@@ -396,7 +463,7 @@ export default function StudioPage() {
         <div className="mx-auto max-w-[1100px] px-5 sm:px-6">
           <Reveal>
             <div className="mx-auto mb-16 max-w-2xl text-center">
-              <span className="mono-label mb-5 block text-slate-400">Le déroulé</span>
+              <span className="mono-label mb-5 block text-slate-500">Le déroulé</span>
               <h2 className="h-title text-4xl sm:text-5xl font-semibold tracking-tight text-slate-900 leading-[1.05]">
                 De l’idée au lancement, étape par étape.
               </h2>
@@ -409,7 +476,7 @@ export default function StudioPage() {
                 <li className="grid grid-cols-[2.5rem_1fr] gap-x-6 sm:grid-cols-[4rem_1fr]">
                   {/* Rail : l'indice, puis le filet qui rejoint l'étape suivante */}
                   <div className="flex flex-col items-center">
-                    <span className="mono-label pt-1.5 text-slate-300">
+                    <span className="mono-label pt-1.5 text-slate-500">
                       {String(i + 1).padStart(2, "0")}
                     </span>
                     {i < ETAPES.length - 1 && (
@@ -422,7 +489,7 @@ export default function StudioPage() {
                       <h3 className="h-title text-xl font-semibold tracking-tight text-slate-900">
                         {e.label}
                       </h3>
-                      <span className="mono-label text-slate-400">{e.duree}</span>
+                      <span className="mono-label text-slate-500">{e.duree}</span>
                     </div>
                     <p className="mt-3 text-[15px] text-slate-500 leading-[1.75]">{e.desc}</p>
                   </div>
@@ -440,7 +507,7 @@ export default function StudioPage() {
         <div className="mx-auto max-w-[900px] px-5 sm:px-6">
           <Reveal>
             <div className="mx-auto mb-16 max-w-2xl text-center">
-              <span className="mono-label mb-5 block text-slate-400">À la livraison</span>
+              <span className="mono-label mb-5 block text-slate-500">À la livraison</span>
               <h2 className="h-title text-4xl sm:text-5xl font-semibold tracking-tight text-slate-900 leading-[1.05]">
                 Ce que vous gardez.
               </h2>
@@ -459,7 +526,7 @@ export default function StudioPage() {
               <ul className="relative divide-y divide-slate-900/[0.06]">
                 {LIVRABLES.map((l, i) => (
                   <li key={l.title} className="grid grid-cols-[2rem_1fr] gap-x-5 py-6 sm:grid-cols-[3rem_1fr]">
-                    <span className="mono-label pt-1.5 text-slate-300">
+                    <span className="mono-label pt-1.5 text-slate-500">
                       {String(i + 1).padStart(2, "0")}
                     </span>
                     <div>
@@ -475,7 +542,7 @@ export default function StudioPage() {
           </Reveal>
 
           <Reveal>
-            <p className="mono-label mt-8 text-center text-slate-400">
+            <p className="mono-label mt-8 text-center text-slate-500">
               Propriété du client · Aucun abonnement imposé
             </p>
           </Reveal>
@@ -489,7 +556,7 @@ export default function StudioPage() {
         <div className="mx-auto max-w-[1100px] px-5 sm:px-6">
           <Reveal>
             <div className="mx-auto mb-16 max-w-2xl text-center">
-              <span className="mono-label mb-5 block text-slate-400">Sous le capot</span>
+              <span className="mono-label mb-5 block text-slate-500">Sous le capot</span>
               <h2 className="h-title text-4xl sm:text-5xl font-semibold tracking-tight text-slate-900 leading-[1.05]">
                 Comment c’est construit.
               </h2>
@@ -522,7 +589,7 @@ export default function StudioPage() {
         <div className="mx-auto max-w-[820px] px-5 sm:px-6">
           <Reveal>
             <div className="mx-auto mb-16 max-w-2xl text-center">
-              <span className="mono-label mb-5 block text-slate-400">Avant de nous écrire</span>
+              <span className="mono-label mb-5 block text-slate-500">Avant de nous écrire</span>
               <h2 className="h-title text-4xl sm:text-5xl font-semibold tracking-tight text-slate-900 leading-[1.05]">
                 Les questions qui reviennent.
               </h2>
@@ -532,14 +599,17 @@ export default function StudioPage() {
           <div className="space-y-3">
             {FAQ.map((f) => (
               <Reveal key={f.q}>
-                <details className="lg lg-card group/faq px-6 py-5 sm:px-8 sm:py-6">
+                <details
+                  className="lg lg-card group/faq px-6 py-5 sm:px-8 sm:py-6"
+                  style={{ borderRadius: 20 }}
+                >
                   <summary className="flex cursor-pointer list-none items-center justify-between gap-6 focus-visible:outline-none [&::-webkit-details-marker]:hidden">
                     <span className="h-title text-[17px] font-semibold tracking-tight text-slate-900">
                       {f.q}
                     </span>
                     <span
                       aria-hidden="true"
-                      className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-slate-900/[0.04] text-slate-400 transition-transform duration-300 group-open/faq:rotate-45"
+                      className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-slate-900/[0.04] text-slate-500 transition-transform duration-300 group-open/faq:rotate-45"
                       style={{ transitionTimingFunction: "var(--lg-ease)" }}
                     >
                       <svg width="14" height="14" viewBox="0 0 24 24" fill="none">

@@ -28,7 +28,7 @@ function Cross() {
 }
 function Chevron({ open }: { open: boolean }) {
   return (
-    <svg viewBox="0 0 24 24" className={cn("w-5 h-5 text-slate-400 transition-transform duration-200", open && "rotate-180")} fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" aria-hidden>
+    <svg viewBox="0 0 24 24" className={cn("w-5 h-5 text-slate-500 transition-transform duration-200", open && "rotate-180")} fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" aria-hidden>
       <path d="M6 9l6 6 6-6" />
     </svg>
   );
@@ -563,7 +563,7 @@ export default function TarifsPage() {
         <div className="mx-auto max-w-[1240px]">
           <Reveal>
             <div className="text-center mb-12">
-              <div className="text-xs font-bold uppercase tracking-widest text-slate-400 mb-3">Ils ont choisi THOR</div>
+              <div className="text-xs font-bold uppercase tracking-widest text-slate-500 mb-3">Ils ont choisi THOR</div>
               <h2 className="text-2xl md:text-3xl font-light tracking-tight text-slate-900 h-title">
                 Approuvé par les <span className="font-semibold">professionnels</span>
               </h2>
@@ -608,7 +608,7 @@ export default function TarifsPage() {
         <div className="mx-auto max-w-[1240px]">
           <Reveal>
             <div className="text-center mb-12">
-              <div className="text-xs font-bold uppercase tracking-widest text-slate-400 mb-3">Comparaison</div>
+              <div className="text-xs font-bold uppercase tracking-widest text-slate-500 mb-3">Comparaison</div>
               <h2 className="text-2xl md:text-3xl font-light tracking-tight text-slate-900 h-title">
                 Toutes les <span className="font-semibold">fonctionnalités</span>
               </h2>
@@ -644,7 +644,7 @@ export default function TarifsPage() {
                     <>
                       {row.category && (
                         <tr key={`cat-${i}`}>
-                          <td colSpan={4} className="px-6 py-3 text-[11px] font-bold uppercase tracking-widest text-slate-400 bg-slate-50/80">
+                          <td colSpan={4} className="px-6 py-3 text-[11px] font-bold uppercase tracking-widest text-slate-500 bg-slate-50/80">
                             {row.category}
                           </td>
                         </tr>
@@ -681,7 +681,7 @@ export default function TarifsPage() {
         <div className="mx-auto max-w-[800px]">
           <Reveal>
             <div className="text-center mb-12">
-              <div className="text-xs font-bold uppercase tracking-widest text-slate-400 mb-3">Questions fréquentes</div>
+              <div className="text-xs font-bold uppercase tracking-widest text-slate-500 mb-3">Questions fréquentes</div>
               <h2 className="text-2xl md:text-3xl font-light tracking-tight text-slate-900 h-title">
                 On répond à vos <span className="font-semibold">questions</span>
               </h2>
@@ -836,10 +836,10 @@ function PlanCard({ plan, annual }: { plan: Plan; annual: boolean }) {
         {/* Prix */}
         <div className="flex items-end gap-1.5 mb-1">
           <span className="text-4xl font-bold tracking-tight text-slate-900">{price}€</span>
-          <span className="text-slate-400 text-sm mb-1.5">/mois</span>
+          <span className="text-slate-500 text-sm mb-1.5">/mois</span>
         </div>
         {annual && (
-          <div className="text-[11px] text-slate-400 mb-1">
+          <div className="text-[11px] text-slate-500 mb-1">
             Facturé {price * 12}€/an — économisez {(plan.monthlyPrice - price) * 12}€
           </div>
         )}

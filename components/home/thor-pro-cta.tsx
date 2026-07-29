@@ -58,12 +58,12 @@ export function ThorProCTA() {
                     {c.icon}
                   </span>
                   <span className="min-w-0 flex-1">
-                    <span className="block text-[13px] text-slate-400">{c.label}</span>
+                    <span className="block text-[13px] text-slate-500">{c.label}</span>
                     <span className="block text-[15px] font-medium text-slate-900 truncate">
                       {c.value}
                     </span>
                   </span>
-                  <svg className="w-4 h-4 text-slate-300 shrink-0 transition-transform duration-500 group-hover:translate-x-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <svg className="w-4 h-4 text-slate-300 shrink-0 transition-transform duration-300 group-hover:translate-x-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                     <path d="M5 12h14M13 5l7 7-7 7" />
                   </svg>
                 </a>

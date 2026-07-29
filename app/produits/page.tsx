@@ -23,7 +23,7 @@ const AUTRES = PRODUITS.filter((r) => r.sector !== "Santé");
 function GroupLabel({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex items-center gap-5">
-      <span className="mono-label shrink-0 text-slate-400">{children}</span>
+      <span className="mono-label shrink-0 text-slate-500">{children}</span>
       <span aria-hidden="true" className="h-px flex-1 bg-slate-900/[0.07]" />
     </div>
   );
@@ -85,7 +85,7 @@ export default function ProduitsPage() {
             ].map((fact, i) => (
               <span key={fact} className="flex items-center gap-4">
                 {i > 0 && <span aria-hidden="true" className="text-slate-300">·</span>}
-                <span className="mono-label text-slate-400">{fact}</span>
+                <span className="mono-label text-slate-500">{fact}</span>
               </span>
             ))}
           </div>

@@ -52,7 +52,7 @@ export function ProjectShowcase({
               style={{ background: item.accent, boxShadow: `0 0 0 3px ${item.accent}1A` }}
             />
           )}
-          <span className="mono-label text-slate-400">
+          <span className="mono-label text-slate-500">
             {item.tagline} · En production
           </span>
         </div>
@@ -85,7 +85,7 @@ export function ProjectShowcase({
                 style={{ color: item.accent }}
               >
                 Ouvrir le site
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" className="transition-transform duration-500 group-hover/link:translate-x-0.5" aria-hidden="true">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" className="transition-transform duration-300 group-hover/link:translate-x-0.5" aria-hidden="true">
                   <path d="M7 17 17 7M9 7h8v8" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
               </a>
@@ -96,7 +96,7 @@ export function ProjectShowcase({
                 style={{ color: item.accent }}
               >
                 Découvrir {item.name}
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" className="transition-transform duration-500 group-hover/link:translate-x-0.5" aria-hidden="true">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" className="transition-transform duration-300 group-hover/link:translate-x-0.5" aria-hidden="true">
                   <path d="M5 12h14M13 5l7 7-7 7" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
               </Link>
@@ -108,7 +108,7 @@ export function ProjectShowcase({
             </Link>
           )}
 
-          <Link href={`/realisations/${item.slug}`} className="text-[15px] text-slate-400 transition-colors hover:text-slate-900">
+          <Link href={`/realisations/${item.slug}`} className="text-[15px] text-slate-500 transition-colors hover:text-slate-900">
             La fiche projet
           </Link>
         </div>

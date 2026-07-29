@@ -20,7 +20,7 @@ export default function RealisationsPage() {
       <div className="mx-auto max-w-[1240px] px-5 sm:px-6">
         <Reveal>
           <div className="mb-16 max-w-3xl">
-            <span className="mono-label mb-5 block text-slate-400">Portfolio</span>
+            <span className="mono-label mb-5 block text-slate-500">Portfolio</span>
             <h1 className="h-title text-5xl sm:text-6xl font-semibold tracking-tight text-slate-900 leading-[0.98]">
               Nos réalisations.
             </h1>

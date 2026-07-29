@@ -105,7 +105,7 @@ export function ThorBranches() {
                   <ul className="space-y-3 mb-10">
                     {b.points.map((p) => (
                       <li key={p} className="flex items-start gap-3 text-[15px] text-slate-600">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" className="mt-1 shrink-0 text-slate-300" aria-hidden="true">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" className="mt-1 shrink-0" style={{ color: b.accent }} aria-hidden="true">
                           <path d="M5 13l4 4L19 7" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
                         </svg>
                         {p}
@@ -114,7 +114,7 @@ export function ThorBranches() {
                   </ul>
                 </div>
 
-                <span className="inline-flex items-center gap-2 text-[15px] font-medium text-slate-900 transition-all duration-500 group-hover:gap-3">
+                <span className="inline-flex items-center gap-2 text-[15px] font-medium text-slate-900 transition-all duration-300 group-hover:gap-3">
                   {b.cta}
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                     <path d="M5 12h14M13 5l7 7-7 7" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />

@@ -23,7 +23,7 @@ export function RealisationCard({ item }: { item: Realisation }) {
             alt=""
             fill
             sizes="(min-width: 1024px) 350px, (min-width: 768px) 45vw, 100vw"
-            className="object-cover object-top transition-transform duration-700 group-hover:scale-[1.03]"
+            className="object-cover object-top transition-transform duration-400 group-hover:scale-[1.03]"
             style={{ transitionTimingFunction: "var(--lg-ease)" }}
           />
         </div>
@@ -47,7 +47,7 @@ export function RealisationCard({ item }: { item: Realisation }) {
           )}
           <span className="text-[13px] font-medium text-slate-500">{item.tagline}</span>
         </span>
-        <span className="text-[13px] text-slate-300 tabular-nums">{item.year}</span>
+        <span className="text-[13px] text-slate-500 tabular-nums">{item.year}</span>
       </div>
 
       <h3 className="h-title text-2xl font-semibold tracking-tight text-slate-900 leading-tight mb-3">
@@ -56,21 +56,21 @@ export function RealisationCard({ item }: { item: Realisation }) {
 
       <p className="text-[15px] text-slate-500 leading-[1.65] mb-6 flex-1">{item.summary}</p>
 
-      <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1.5 mb-7 text-[13px] text-slate-400">
+      <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1.5 mb-7 text-[13px] text-slate-500">
         <span>{CATEGORY_LABELS[item.category]}</span>
         <span className="text-slate-200">·</span>
         <span>{item.sector}</span>
         {item.status === "soon" && (
           <>
             <span className="text-slate-200">·</span>
-            <span className="text-slate-400">Bientôt</span>
+            <span className="text-slate-500">Bientôt</span>
           </>
         )}
       </div>
 
       <Link
         href={`/realisations/${item.slug}`}
-        className="inline-flex items-center gap-2 text-[15px] font-medium transition-all duration-500 group-hover:gap-3 focus-visible:outline-none focus-visible:underline"
+        className="inline-flex items-center gap-2 text-[15px] font-medium transition-all duration-300 group-hover:gap-3 focus-visible:outline-none focus-visible:underline"
         style={{ color: item.accent }}
       >
         Voir le projet

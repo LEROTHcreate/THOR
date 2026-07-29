@@ -39,7 +39,7 @@ export function SocleConformite() {
       <div className="mx-auto max-w-[1100px] px-5 sm:px-6">
         <Reveal>
           <div className="mx-auto mb-16 max-w-2xl text-center">
-            <span className="mono-label mb-5 block text-slate-400">Le socle</span>
+            <span className="mono-label mb-5 block text-slate-500">Le socle</span>
             <h2 className="h-title text-4xl sm:text-5xl font-semibold tracking-tight text-slate-900 leading-[1.05]">
               Conforme avant d’être livré.
             </h2>
@@ -55,7 +55,7 @@ export function SocleConformite() {
           {SOCLE.map((v, i) => (
             <Reveal key={v.title}>
               <div className="lg lg-card h-full p-7">
-                <span className="mono-label block text-slate-300">
+                <span className="mono-label block text-slate-500">
                   {String(i + 1).padStart(2, "0")}
                 </span>
                 <h3 className="h-title mt-5 text-lg font-semibold tracking-tight text-slate-900">

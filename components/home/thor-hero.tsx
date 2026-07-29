@@ -125,7 +125,7 @@ export default function ThorHero() {
               <div className="h-title text-3xl sm:text-4xl font-semibold text-slate-900 tabular-nums">
                 {s.value}
               </div>
-              <div className="mt-1.5 text-[13px] text-slate-400">{s.label}</div>
+              <div className="mt-1.5 text-[13px] text-slate-500">{s.label}</div>
             </div>
           ))}
         </div>
@@ -134,7 +134,7 @@ export default function ThorHero() {
       {/* Repère de défilement — la seule invitation à descendre */}
       <div
         aria-hidden="true"
-        className="absolute bottom-10 left-1/2 -translate-x-1/2 text-slate-300"
+        className="absolute bottom-10 left-1/2 -translate-x-1/2 text-slate-500"
         style={{ animation: "floatY 3s ease-in-out infinite" }}
       >
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none">

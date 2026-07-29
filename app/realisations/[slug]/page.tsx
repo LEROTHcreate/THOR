@@ -58,8 +58,8 @@ export default async function RealisationPage({ params }: Params) {
             >
               {item.tagline}
             </span>
-            <span className="text-slate-300">·</span>
-            <span className="text-xs text-slate-400 uppercase tracking-[0.15em]">
+            <span aria-hidden="true" className="text-slate-300">·</span>
+            <span className="text-xs text-slate-500 uppercase tracking-[0.15em]">
               {CATEGORY_LABELS[item.category]} · {item.year}
             </span>
           </div>
@@ -166,7 +166,7 @@ export default async function RealisationPage({ params }: Params) {
                     boxShadow: "0 4px 24px rgba(15,23,42,0.04), inset 0 1px 0 rgba(255,255,255,0.9)",
                   }}
                 >
-                  <span className="text-[10px] font-mono text-slate-300 tracking-[0.1em]">
+                  <span className="text-[10px] font-mono text-slate-500 tracking-[0.1em]">
                     {String(i + 1).padStart(2, "0")}
                   </span>
                   <div className="mt-2 text-2xl sm:text-3xl font-bold text-slate-900 h-title">
@@ -209,14 +209,14 @@ export default async function RealisationPage({ params }: Params) {
           <Reveal>
             <aside className="space-y-8">
               <div>
-                <h3 className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400 mb-4">
+                <h3 className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500 mb-4">
                   Pour qui
                 </h3>
                 <p className="text-sm text-slate-600 leading-relaxed">{item.audience}</p>
               </div>
 
               <div>
-                <h3 className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400 mb-4">
+                <h3 className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500 mb-4">
                   Fonctionnalités
                 </h3>
                 <ul className="space-y-2">
@@ -230,7 +230,7 @@ export default async function RealisationPage({ params }: Params) {
 
               {item.stack.length > 0 && (
                 <div>
-                  <h3 className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400 mb-4">
+                  <h3 className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500 mb-4">
                     Technologies
                   </h3>
                   <div className="flex flex-wrap gap-2">
@@ -252,7 +252,7 @@ export default async function RealisationPage({ params }: Params) {
         {/* ── Autres projets ──────────────────────────────────────────── */}
         <Reveal>
           <div className="mt-24 border-t border-slate-200 pt-14">
-            <h2 className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400 mb-8">
+            <h2 className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500 mb-8">
               Autres réalisations
             </h2>
             <div className="grid sm:grid-cols-3 gap-4">
@@ -269,7 +269,7 @@ export default async function RealisationPage({ params }: Params) {
                     {o.tagline}
                   </span>
                   <div className="mt-2 text-lg font-semibold text-slate-900 h-title">{o.name}</div>
-                  <div className="mt-3 inline-flex items-center gap-1.5 text-xs font-medium text-slate-400 transition-all group-hover:gap-2.5 group-hover:text-slate-600">
+                  <div className="mt-3 inline-flex items-center gap-1.5 text-xs font-medium text-slate-500 transition-all group-hover:gap-2.5 group-hover:text-slate-600">
                     Voir le projet
                     <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                       <path d="M5 12h14M13 5l7 7-7 7" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />

@@ -3,27 +3,31 @@
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { Reveal } from "@/components/ui/reveal";
-import { ThorMark } from "@/components/thor-mark";
 import { getAllRealisations, type Realisation } from "@/lib/realisations";
 
 /* ──────────────────────────────────────────────────────────────────────────
    Le système solaire de l'écosystème.
 
-   THOR au centre, un satellite par projet en production. Les projets sont
+   Un astre au centre, un satellite par projet en production. Les projets sont
    lus depuis lib/realisations.ts : mettre un projet en ligne le fait
    apparaître ici, sans toucher à ce fichier.
 
-   La scène est en perspective. Chaque plan d'orbite est un cercle basculé sur
-   X — donc projeté en ellipse — puis pivoté sur Z d'un angle qui lui est
-   propre. Trois cercles concentriques donnaient une cible ; trois ellipses
-   d'inclinaisons différentes se croisent et se lisent comme un volume. La
-   profondeur n'est pas peinte : les satellites passent réellement devant et
-   derrière l'astre, et la perspective les agrandit quand ils s'approchent.
+   CE QUI FAIT LA PROFONDEUR — les trois leviers, dans l'ordre d'importance :
 
-   PERF — chaque satellite coûte deux animations de `transform` (la piste
-   tourne, le satellite contre-tourne pour rester lisible et face au
-   spectateur), rien d'autre : pas de flou, pas d'ombre animée, pas de
-   recalcul de mise en page. Tout se fige dès que la section quitte l'écran.
+     1. Une perspective courte. C'est le point qui manquait : à 1150 px de
+        distance focale, un satellite proche n'était que 1,5 fois plus gros
+        qu'un satellite lointain, et l'œil ne lit pas un tel écart. À 700 px
+        le rapport passe à plus du double et la scène devient un volume.
+     2. Des tracés d'opacité variable. Une ellipse uniforme est un dessin
+        plat ; l'arc qui passe devant l'astre doit être plus dense que celui
+        qui passe derrière (cf. .orbit-ring dans globals.css).
+     3. Des satellites sphériques. Un anneau vide reste une décalcomanie —
+        il faut un modelé, une source de lumière et un limbe assombri.
+
+   PERF — deux animations de `transform` par satellite (la piste tourne, le
+   satellite contre-tourne pour rester lisible et face au lecteur), plus une
+   animation de défilement jouée par le compositeur. Aucun écouteur `scroll`,
+   aucun flou, aucune ombre animée. Tout se fige hors écran.
    ──────────────────────────────────────────────────────────────────────── */
 
 /**
@@ -35,17 +39,15 @@ import { getAllRealisations, type Realisation } from "@/lib/realisations";
  * `duration` durée d'un tour — plus c'est loin, plus c'est lent
  */
 const ORBITS = [
-  { size: 38, tilt: 64, roll: -22, duration: 38 },
-  { size: 58, tilt: 73, roll:  15, duration: 58 },
-  { size: 78, tilt: 56, roll:  34, duration: 82 },
+  { size: 50, tilt: 56, roll: -24, duration: 34 },
+  { size: 66, tilt: 70, roll:  14, duration: 54 },
+  { size: 76, tilt: 60, roll:  34, duration: 78 },
 ];
 
-type Satellite = {
-  item: Realisation;
-  orbit: (typeof ORBITS)[number];
-  /** Angle de départ, matérialisé par un délai d'animation négatif. */
-  delay: number;
-};
+/** Distance focale. Plus elle est courte, plus l'écart proche/lointain est marqué. */
+const FOCAL = "700px";
+
+type Satellite = { item: Realisation; delay: number };
 
 const LIVE = getAllRealisations().filter((r) => r.status === "live");
 
@@ -53,39 +55,34 @@ const RINGS: { orbit: (typeof ORBITS)[number]; satellites: Satellite[] }[] = (()
   const buckets: Realisation[][] = ORBITS.map(() => []);
   LIVE.forEach((item, i) => buckets[i % ORBITS.length].push(item));
 
-  return ORBITS.map((orbit, ringIndex) => {
-    const ring = buckets[ringIndex];
-    return {
-      orbit,
-      satellites: ring.map((item, i) => {
-        const angle = (360 / ring.length) * i + ringIndex * 34;
-        const delay = Math.round((angle / 360) * orbit.duration * 100) / 100;
-        return { item, orbit, delay: -delay };
-      }),
-    };
-  });
+  return ORBITS.map((orbit, ringIndex) => ({
+    orbit,
+    satellites: buckets[ringIndex].map((item, i) => {
+      const angle = (360 / buckets[ringIndex].length) * i + ringIndex * 34;
+      const delay = Math.round((angle / 360) * orbit.duration * 100) / 100;
+      return { item, delay: -delay };
+    }),
+  }));
 })();
 
 /**
- * Le corps du satellite.
+ * Le corps du satellite : une sphère, pas une pastille.
  *
- * Un anneau fin plutôt qu'une bille pleine : à cette taille une sphère
- * dégradée devient une pastille lourde qui écrase le tracé de l'orbite.
- * L'anneau porte la couleur, le disque intérieur n'en garde qu'un voile, et
- * le halo tient lieu d'ombre — le relief vient de la perspective, pas du
- * modelé.
+ * Le point blanc en haut à gauche est le reflet spéculaire, à la même place
+ * que sur tout le reste de la vitrine — une seule source de lumière pour
+ * toute la page. `color-mix` assombrit l'accent vers l'encre pour le limbe :
+ * c'est ce dégradé du clair vers le sombre qui fait la bille, pas le contour.
  */
 function Planet({ accent, size = "var(--orb)" }: { accent: string; size?: string }) {
   return (
     <span
       aria-hidden="true"
-      className="block shrink-0 rounded-full transition-transform duration-500 group-hover:scale-125"
+      className="block shrink-0 rounded-full transition-transform duration-500 group-hover:scale-[1.18]"
       style={{
         width: size,
         height: size,
-        border: `1.5px solid ${accent}`,
-        background: `radial-gradient(circle at 34% 28%, rgba(255,255,255,0.95) 0%, ${accent}1A 52%, ${accent}12 100%)`,
-        boxShadow: `0 0 0 3px ${accent}14, 0 4px 12px -6px ${accent}99`,
+        background: `radial-gradient(circle at 33% 27%, #FFFFFF 0%, ${accent} 44%, color-mix(in srgb, ${accent} 58%, #0B1220) 100%)`,
+        boxShadow: `inset -2px -3px 7px -2px rgba(11,18,32,0.55), 0 0 14px 1px ${accent}4D, 0 7px 16px -7px rgba(11,18,32,0.45)`,
         transitionTimingFunction: "var(--lg-ease)",
       }}
     />
@@ -93,44 +90,60 @@ function Planet({ accent, size = "var(--orb)" }: { accent: string; size?: string
 }
 
 /**
- * L'astre. Il reste monochrome : la couleur appartient aux projets, jamais à
- * la marque. Ce qui en fait un soleil n'est donc pas une teinte chaude mais
- * la lumière qu'il émet — couronne diffuse, halos concentriques, et un
- * éclairage en haut à gauche, la même source que le reste de la page.
+ * L'astre.
+ *
+ * Une éclipse plutôt qu'un soleil jaune. Sur un fond quasi blanc, un astre
+ * lumineux ne se détache de rien : c'est le disque sombre qui porte la forme,
+ * et la couronne qui dit la lumière. L'ordre des calques fait tout l'effet —
+ * halo sombre diffus, puis liseré blanc au ras du disque, puis le disque. Le
+ * blanc n'est visible que parce qu'il est posé sur le halo sombre.
+ *
+ * Il reste monochrome : la couleur appartient aux projets.
  */
 function Sun() {
   return (
     <div
-      className="absolute left-1/2 top-1/2 grid place-items-center rounded-full"
+      className="pointer-events-none absolute left-1/2 top-1/2"
       style={{
         width: "var(--sun)",
         height: "var(--sun)",
         transform: "translate(-50%, -50%)",
       }}
+      aria-hidden="true"
     >
-      {/* Couronne — déborde largement du disque, sans jamais capter le pointeur */}
+      {/* Couronne externe — l'atmosphère, très diffuse */}
       <span
-        aria-hidden="true"
-        className="pointer-events-none absolute rounded-full"
+        className="absolute rounded-full"
         style={{
-          inset: "-85%",
+          inset: "-130%",
           background:
-            "radial-gradient(circle, rgba(11,18,32,0.11) 0%, rgba(11,18,32,0.045) 38%, rgba(11,18,32,0) 68%)",
+            "radial-gradient(circle, rgba(11,18,32,0.16) 0%, rgba(11,18,32,0.075) 22%, rgba(11,18,32,0.022) 44%, rgba(11,18,32,0) 64%)",
         }}
       />
 
-      {/* Le disque */}
-      <div
-        className="relative grid h-full w-full place-items-center rounded-full text-white"
+      {/* Le disque.
+          Le modelé va d'un gris bleuté éclairé à un noir d'encre : c'est cet
+          écart, et non le contour, qui fait la sphère. Les `0 0 0 Npx`
+          empilés sont la couronne — des anneaux sombres de plus en plus
+          ténus. Ils comptent autant que le disque : c'est parce qu'ils
+          assombrissent le pourtour que le liseré blanc du limbe devient
+          visible sur une page presque blanche. */}
+      <span
+        className="absolute inset-0 rounded-full"
         style={{
           background:
-            "radial-gradient(circle at 32% 26%, #39415A 0%, #171F30 44%, #0B1220 100%)",
-          boxShadow:
-            "0 24px 56px -22px rgba(11,18,32,0.60), 0 0 0 1px rgba(11,18,32,0.06), inset 0 1px 0 rgba(255,255,255,0.16)",
+            "radial-gradient(circle at 30% 22%, #9AA6C4 0%, #4B5878 15%, #202A46 42%, #0A1020 74%, #02040A 100%)",
+          boxShadow: [
+            "0 0 0 1.5px rgba(255,255,255,0.95)",
+            "0 0 0 8px rgba(11,18,32,0.055)",
+            "0 0 0 20px rgba(11,18,32,0.032)",
+            "0 0 0 40px rgba(11,18,32,0.016)",
+            "inset -11px -13px 30px -12px rgba(0,0,0,0.95)",
+            "inset 8px 8px 22px -10px rgba(255,255,255,0.45)",
+            "0 38px 70px -26px rgba(11,18,32,0.60)",
+          ].join(", "),
         }}
-      >
-        <ThorMark size={40} />
-      </div>
+      />
     </div>
   );
 }
@@ -149,11 +162,11 @@ export function ThorSolarSystem() {
   }, []);
 
   return (
-    <section className="relative overflow-x-clip py-24 sm:py-32 md:py-40">
+    <section id="ecosysteme" className="relative overflow-x-clip py-24 sm:py-32 md:py-40">
       <div className="mx-auto max-w-[1100px] px-5 sm:px-6">
         <Reveal>
-          <div className="mx-auto mb-16 max-w-2xl text-center">
-            <span className="mb-5 block text-[13px] font-medium text-slate-400">
+          <div className="mx-auto mb-14 max-w-2xl text-center">
+            <span className="mb-5 block text-[13px] font-medium text-slate-500">
               En production
             </span>
             <h2 className="h-title text-4xl sm:text-5xl font-semibold tracking-tight text-slate-900 leading-[1.05]">
@@ -169,17 +182,17 @@ export function ThorSolarSystem() {
         {/* ── La scène ─────────────────────────────────────────────────────
             Sous 640 px les étiquettes se marcheraient dessus : on donne la
             même liste, à plat. */}
-        <Reveal>
+        <div className="solar-approach hidden sm:block">
           <div
             ref={stageRef}
             data-spin={spinning ? "running" : "paused"}
-            className="relative mx-auto hidden aspect-[7/5] w-full max-w-[680px] sm:block"
+            className="relative mx-auto aspect-[7/5] w-full max-w-[680px]"
             style={
               {
-                "--orb": "clamp(15px, 2.5vw, 21px)",
-                "--sun": "clamp(76px, 12vw, 104px)",
-                perspective: "1150px",
-                perspectiveOrigin: "50% 42%",
+                "--orb": "clamp(18px, 2.9vw, 26px)",
+                "--sun": "clamp(84px, 13vw, 118px)",
+                perspective: FOCAL,
+                perspectiveOrigin: "50% 32%",
               } as React.CSSProperties
             }
           >
@@ -194,11 +207,7 @@ export function ThorSolarSystem() {
                   transform: `translate(-50%, -50%) rotateX(${orbit.tilt}deg) rotateZ(${orbit.roll}deg)`,
                 }}
               >
-                {/* Tracé de l'orbite */}
-                <div
-                  aria-hidden="true"
-                  className="pointer-events-none absolute inset-0 rounded-full border border-slate-900/[0.09]"
-                />
+                <div aria-hidden="true" className="orbit-ring pointer-events-none absolute inset-0" />
 
                 {satellites.map(({ item, delay }) => (
                   <div
@@ -217,7 +226,10 @@ export function ThorSolarSystem() {
                     >
                       <div className="orbit-upright" style={{ animationDelay: `${delay}s` }}>
                         {/* Défait la bascule du plan : le satellite regarde le
-                            spectateur et reste droit, où qu'il soit sur l'ellipse. */}
+                            lecteur et reste droit, où qu'il soit sur l'ellipse.
+                            Seule l'orientation est annulée — la position en
+                            profondeur demeure, donc la perspective continue de
+                            le grandir quand il s'approche. */}
                         <div
                           style={{
                             transform: `rotateZ(${-orbit.roll}deg) rotateX(${-orbit.tilt}deg)`,
@@ -229,7 +241,7 @@ export function ThorSolarSystem() {
                             aria-label={`${item.name} — ${item.tagline}`}
                           >
                             <Planet accent={item.accent} />
-                            <span className="text-[11px] font-medium whitespace-nowrap text-slate-500 transition-colors duration-300 group-hover:text-slate-900">
+                            <span className="text-[12px] font-medium whitespace-nowrap text-slate-500 transition-colors duration-300 group-hover:text-slate-900">
                               {item.name}
                             </span>
                           </Link>
@@ -241,7 +253,7 @@ export function ThorSolarSystem() {
               </div>
             ))}
           </div>
-        </Reveal>
+        </div>
 
         {/* ── Repli mobile ─────────────────────────────────────────────── */}
         <div className="grid gap-2.5 sm:hidden">
@@ -251,7 +263,7 @@ export function ThorSolarSystem() {
               href={`/realisations/${item.slug}`}
               className="lg lg-card group flex items-center gap-4 p-4"
             >
-              <Planet accent={item.accent} size="28px" />
+              <Planet accent={item.accent} size="30px" />
               <span className="min-w-0 flex-1">
                 <span className="block text-[15px] font-medium text-slate-900">{item.name}</span>
                 <span className="block truncate text-[13px] text-slate-500">{item.tagline}</span>
@@ -264,7 +276,7 @@ export function ThorSolarSystem() {
         </div>
 
         <Reveal>
-          <div className="mt-14 text-center sm:mt-10">
+          <div className="mt-12 text-center sm:mt-20">
             <Link href="/realisations" className="lg lg-btn">
               <span>Tout le portfolio</span>
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true">
