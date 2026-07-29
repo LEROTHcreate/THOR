@@ -479,7 +479,7 @@ export default function DossierAudDetailPage({
           <IconArrowLeft />
           Dossiers
         </Link>
-        <div className="rounded-2xl p-10 text-center text-sm text-slate-400" style={glass}>
+        <div className="rounded-2xl p-10 text-center text-sm text-slate-500" style={glass}>
           Dossier introuvable.
         </div>
       </div>
@@ -539,7 +539,7 @@ export default function DossierAudDetailPage({
                 <p className="text-sm text-slate-500 mt-0.5">
                   {dossier.marque} {dossier.modele} — {dossier.oreille === "binaural" ? "Binaural" : dossier.oreille} — Classe {dossier.classe}
                 </p>
-                <div className="flex flex-wrap gap-3 mt-2 text-xs text-slate-400">
+                <div className="flex flex-wrap gap-3 mt-2 text-xs text-slate-500">
                   <span>Créé le {formatDate(dossier.dateCreation)}</span>
                   {dossier.dateLivraison && (
                     <span>· Livré le {formatDate(dossier.dateLivraison)}</span>
@@ -561,7 +561,7 @@ export default function DossierAudDetailPage({
 
       {/* ── Parcours patient (stepper visuel) ────────────────────────────── */}
       <div className="rounded-[var(--radius-large)] p-5" style={glass}>
-        <div className="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-4">Parcours patient</div>
+        <div className="text-[10px] font-bold uppercase tracking-widest text-slate-500 mb-4">Parcours patient</div>
         <div className="relative flex items-center">
           {STEPPER_STATUSES.map((s, i) => {
             const stepIdx = STEPPER_STATUSES.indexOf(dossier.status);
@@ -649,7 +649,7 @@ export default function DossierAudDetailPage({
       {/* ── Tab: Appareillage ─────────────────────────────────────────────── */}
       {activeTab === "appareillage" && (
         <div className="rounded-[var(--radius-large)] overflow-hidden" style={glass}>
-          <div className="hidden sm:grid grid-cols-12 gap-3 px-5 py-3 border-b border-slate-100/60 text-[10px] font-bold uppercase tracking-widest text-slate-400">
+          <div className="hidden sm:grid grid-cols-12 gap-3 px-5 py-3 border-b border-slate-100/60 text-[10px] font-bold uppercase tracking-widest text-slate-500">
             <div className="col-span-4">Désignation</div>
             <div className="col-span-2">Oreille</div>
             <div className="col-span-1 text-center">Classe</div>
@@ -804,7 +804,7 @@ export default function DossierAudDetailPage({
         <div className="rounded-[var(--radius-large)] p-6" style={glass}>
           <h2 className="text-base font-bold text-slate-800 mb-5">Historique des statuts</h2>
           {historique.length === 0 ? (
-            <p className="text-sm text-slate-400">Aucun changement de statut enregistré.</p>
+            <p className="text-sm text-slate-500">Aucun changement de statut enregistré.</p>
           ) : (
             <div className="relative pl-5">
               {/* Vertical line */}
@@ -827,10 +827,10 @@ export default function DossierAudDetailPage({
                           >
                             {item.status}
                           </span>
-                          <span className="text-xs text-slate-400">
+                          <span className="text-xs text-slate-500">
                             {new Date(item.date).toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" })}
                           </span>
-                          <span className="text-xs text-slate-400">· {item.user}</span>
+                          <span className="text-xs text-slate-500">· {item.user}</span>
                         </div>
                         {item.note && (
                           <p className="text-xs text-slate-500 mt-1">{item.note}</p>
@@ -860,7 +860,7 @@ export default function DossierAudDetailPage({
               </Link>
             </div>
             {essaisPatient.length === 0 ? (
-              <p className="text-sm text-slate-400">Aucun essai pour ce patient.</p>
+              <p className="text-sm text-slate-500">Aucun essai pour ce patient.</p>
             ) : (
               <div className="space-y-3">
                 {essaisPatient.map(essai => {
@@ -880,7 +880,7 @@ export default function DossierAudDetailPage({
                       <div className="flex items-start justify-between gap-3 flex-wrap">
                         <div className="flex-1 min-w-0">
                           <div className="text-sm font-semibold text-slate-800 truncate">{essai.appareil}</div>
-                          <div className="flex flex-wrap gap-3 mt-1.5 text-xs text-slate-400">
+                          <div className="flex flex-wrap gap-3 mt-1.5 text-xs text-slate-500">
                             <span>Début : {formatDate(essai.dateDebut)}</span>
                             <span>· Durée : {essai.dureeJours} j</span>
                             {essai.statut === "en_cours" && (
@@ -924,7 +924,7 @@ export default function DossierAudDetailPage({
               </Link>
             </div>
             {savPatient.length === 0 ? (
-              <p className="text-sm text-slate-400">Aucun ticket SAV pour ce patient.</p>
+              <p className="text-sm text-slate-500">Aucun ticket SAV pour ce patient.</p>
             ) : (
               <div className="space-y-3">
                 {savPatient.map(ticket => {
@@ -963,7 +963,7 @@ export default function DossierAudDetailPage({
                             </span>
                           </div>
                           <div className="text-sm font-semibold text-slate-800 truncate">{ticket.produit}</div>
-                          <div className="text-xs text-slate-400 mt-1">Ouvert le {formatDate(ticket.dateOuverture)}</div>
+                          <div className="text-xs text-slate-500 mt-1">Ouvert le {formatDate(ticket.dateOuverture)}</div>
                         </div>
                       </div>
                     </div>

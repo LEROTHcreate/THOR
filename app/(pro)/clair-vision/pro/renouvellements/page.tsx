@@ -419,7 +419,7 @@ function ModalRappel({ patient, onClose, onSend }: ModalProps) {
           </div>
           <button
             onClick={onClose}
-            className="flex-shrink-0 grid h-8 w-8 place-items-center rounded-xl text-slate-400 hover:text-slate-700 transition-colors"
+            className="flex-shrink-0 grid h-8 w-8 place-items-center rounded-xl text-slate-500 hover:text-slate-700 transition-colors"
             style={glassSubtle}
           >
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" className="w-4 h-4">
@@ -430,11 +430,11 @@ function ModalRappel({ patient, onClose, onSend }: ModalProps) {
 
         {/* Canaux */}
         <div>
-          <div className="text-xs font-semibold uppercase tracking-wide text-slate-400 mb-2">
+          <div className="text-xs font-semibold uppercase tracking-wide text-slate-500 mb-2">
             Canaux disponibles
           </div>
           {canaux.length === 0 ? (
-            <p className="text-sm text-slate-400 italic">Aucun canal disponible pour ce patient.</p>
+            <p className="text-sm text-slate-500 italic">Aucun canal disponible pour ce patient.</p>
           ) : (
             <div className="flex flex-wrap gap-2">
               {canaux.map(c => (
@@ -459,7 +459,7 @@ function ModalRappel({ patient, onClose, onSend }: ModalProps) {
 
         {/* Message */}
         <div>
-          <div className="text-xs font-semibold uppercase tracking-wide text-slate-400 mb-2">
+          <div className="text-xs font-semibold uppercase tracking-wide text-slate-500 mb-2">
             Message personnalisable
           </div>
           <textarea
@@ -529,7 +529,7 @@ function TableRow({
           {patient.prenom} {patient.nom}
         </div>
         {patient.stock !== undefined && (
-          <div className="text-[11px] text-slate-400">{patient.stock} boîte{patient.stock > 1 ? "s" : ""} restante{patient.stock > 1 ? "s" : ""}</div>
+          <div className="text-[11px] text-slate-500">{patient.stock} boîte{patient.stock > 1 ? "s" : ""} restante{patient.stock > 1 ? "s" : ""}</div>
         )}
       </td>
       <td className="py-3 px-4 text-sm text-slate-600 max-w-[200px]">
@@ -591,17 +591,17 @@ function PatientCard({
         </span>
         <CanalIcons patient={patient} />
         {patient.stock !== undefined && (
-          <span className="text-xs text-slate-400">{patient.stock} boîte{patient.stock > 1 ? "s" : ""}</span>
+          <span className="text-xs text-slate-500">{patient.stock} boîte{patient.stock > 1 ? "s" : ""}</span>
         )}
       </div>
 
       <div className="grid grid-cols-2 gap-2 text-xs text-slate-500">
         <div>
-          <div className="text-[10px] uppercase tracking-wide font-semibold text-slate-400">Dernier achat</div>
+          <div className="text-[10px] uppercase tracking-wide font-semibold text-slate-500">Dernier achat</div>
           <div>{formatDate(patient.dernierAchat)}</div>
         </div>
         <div>
-          <div className="text-[10px] uppercase tracking-wide font-semibold text-slate-400">Prochain</div>
+          <div className="text-[10px] uppercase tracking-wide font-semibold text-slate-500">Prochain</div>
           <div>{formatDate(patient.prochainRenouvellement)}</div>
         </div>
       </div>
@@ -682,7 +682,7 @@ function ConfigPatientModal({ sp, onSave, onClose }: { sp: StoredPatient; onSave
             <h2 className="text-base font-bold text-slate-800">Ajouter aux renouvellements</h2>
             <p className="text-sm text-slate-500 mt-0.5">{sp.prenom} {sp.nom}</p>
           </div>
-          <button onClick={onClose} className="grid h-8 w-8 place-items-center rounded-xl text-slate-400 hover:text-slate-700" style={glassSubtle}>
+          <button onClick={onClose} className="grid h-8 w-8 place-items-center rounded-xl text-slate-500 hover:text-slate-700" style={glassSubtle}>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" className="w-4 h-4"><path d="M18 6 6 18M6 6l12 12"/></svg>
           </button>
         </div>
@@ -919,7 +919,7 @@ export default function RenouvellementPage() {
         style={glass}
       >
         <div className="flex flex-wrap gap-2 items-center">
-          <span className="text-[10px] font-bold uppercase tracking-wide text-slate-400 w-14 flex-shrink-0">Période</span>
+          <span className="text-[10px] font-bold uppercase tracking-wide text-slate-500 w-14 flex-shrink-0">Période</span>
           {periodeOptions.map(o => (
             <Pill key={o.value} active={periode === o.value} onClick={() => setPeriode(o.value)}>
               {o.label}
@@ -927,7 +927,7 @@ export default function RenouvellementPage() {
           ))}
         </div>
         <div className="flex flex-wrap gap-2 items-center">
-          <span className="text-[10px] font-bold uppercase tracking-wide text-slate-400 w-14 flex-shrink-0">Fréquence</span>
+          <span className="text-[10px] font-bold uppercase tracking-wide text-slate-500 w-14 flex-shrink-0">Fréquence</span>
           {frequenceOptions.map(o => (
             <Pill key={o.value} active={frequence === o.value} onClick={() => setFrequence(o.value)}>
               {o.label}
@@ -935,7 +935,7 @@ export default function RenouvellementPage() {
           ))}
         </div>
         <div className="flex flex-wrap gap-2 items-center">
-          <span className="text-[10px] font-bold uppercase tracking-wide text-slate-400 w-14 flex-shrink-0">Canaux</span>
+          <span className="text-[10px] font-bold uppercase tracking-wide text-slate-500 w-14 flex-shrink-0">Canaux</span>
           {(["email", "sms", "message_site"] as CanalContact[]).map(c => {
             const info = { email: "Email", sms: "SMS", message_site: "Site" }[c];
             return (
@@ -950,7 +950,7 @@ export default function RenouvellementPage() {
           })}
         </div>
         <div className="flex flex-wrap gap-2 items-center">
-          <span className="text-[10px] font-bold uppercase tracking-wide text-slate-400 w-14 flex-shrink-0">Statut</span>
+          <span className="text-[10px] font-bold uppercase tracking-wide text-slate-500 w-14 flex-shrink-0">Statut</span>
           {statutOptions.map(o => (
             <Pill key={o.value} active={filtreStatut === o.value} onClick={() => setFiltreStatut(o.value)}>
               {o.label}
@@ -986,7 +986,7 @@ export default function RenouvellementPage() {
       )}
 
       {/* Résultats count */}
-      <div className="text-xs text-slate-400 mb-3 font-medium">
+      <div className="text-xs text-slate-500 mb-3 font-medium">
         {filtered.length} patient{filtered.length > 1 ? "s" : ""} affiché{filtered.length > 1 ? "s" : ""}
       </div>
 
@@ -998,7 +998,7 @@ export default function RenouvellementPage() {
               <thead>
                 <tr className="border-b border-slate-100">
                   {["Patient", "Lentille", "Fréquence", "Dernier achat", "Prochain", "J restants", "Canaux", "Rappel", "Actions"].map(h => (
-                    <th key={h} className="py-3 px-4 text-[11px] font-bold uppercase tracking-wide text-slate-400">
+                    <th key={h} className="py-3 px-4 text-[11px] font-bold uppercase tracking-wide text-slate-500">
                       {h}
                     </th>
                   ))}
@@ -1007,7 +1007,7 @@ export default function RenouvellementPage() {
               <tbody>
                 {filtered.length === 0 ? (
                   <tr>
-                    <td colSpan={9} className="py-12 text-center text-slate-400 text-sm">
+                    <td colSpan={9} className="py-12 text-center text-slate-500 text-sm">
                       Aucun patient ne correspond aux filtres sélectionnés.
                     </td>
                   </tr>
@@ -1026,7 +1026,7 @@ export default function RenouvellementPage() {
       {vue === "cartes" && (
         <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
           {filtered.length === 0 ? (
-            <div className="col-span-3 py-16 text-center text-slate-400 text-sm rounded-2xl" style={glass}>
+            <div className="col-span-3 py-16 text-center text-slate-500 text-sm rounded-2xl" style={glass}>
               Aucun patient ne correspond aux filtres sélectionnés.
             </div>
           ) : (

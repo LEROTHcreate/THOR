@@ -19,6 +19,7 @@ export function AppWindow({
   label,
   accent,
   priority = false,
+  sizes = "(min-width: 768px) 520px, 100vw",
   className = "",
 }: {
   /** Capture de l'interface. Absente : plaque au nom du projet. */
@@ -28,6 +29,12 @@ export function AppWindow({
   label: string;
   accent: string;
   priority?: boolean;
+  /**
+   * Largeur réellement occupée par la fenêtre, par palier. À déclarer juste :
+   * sous-estimer cette valeur fait télécharger au navigateur une image trop
+   * petite qu'il étire ensuite — c'est la cause classique d'une capture floue.
+   */
+  sizes?: string;
   className?: string;
 }) {
   return (
@@ -62,7 +69,8 @@ export function AppWindow({
             alt={alt}
             fill
             priority={priority}
-            sizes="(min-width: 1024px) 620px, 100vw"
+            sizes={sizes}
+            quality={90}
             className="object-cover object-top"
           />
         ) : (

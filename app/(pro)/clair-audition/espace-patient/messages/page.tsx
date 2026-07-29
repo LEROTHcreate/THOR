@@ -183,7 +183,7 @@ export default function MessagesAuditionPage() {
             </>
           ) : (
             <div className="flex-1 flex flex-col items-center justify-center text-center p-8">
-              <svg className="w-12 h-12 text-slate-300 mb-3" viewBox="0 0 24 24" fill="none">
+              <svg className="w-12 h-12 text-slate-500 mb-3" viewBox="0 0 24 24" fill="none">
                 <path d="M5 5.5h14A2.5 2.5 0 0 1 21.5 8v7A2.5 2.5 0 0 1 19 17.5H10l-4.5 3v-3H5A2.5 2.5 0 0 1 2.5 15V8A2.5 2.5 0 0 1 5 5.5Z" stroke="currentColor" strokeWidth="1.5" />
               </svg>
               <p className="text-sm font-medium text-slate-800">Sélectionnez une conversation</p>

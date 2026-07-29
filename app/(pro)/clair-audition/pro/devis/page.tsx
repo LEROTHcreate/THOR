@@ -796,7 +796,7 @@ function DevisCard({ d, onUpdate, onFacturer, relances, onRelanceSuccess }: { d:
             {d.patientPrenom} {d.patientNom}
           </div>
           <div className="text-xs text-slate-500">{d.numero}</div>
-          {d.mutuelleNom && <div className="text-xs text-slate-400">{d.mutuelleNom}</div>}
+          {d.mutuelleNom && <div className="text-xs text-slate-500">{d.mutuelleNom}</div>}
         </div>
         <div className="flex flex-col items-end gap-1 flex-shrink-0">
           <span
@@ -860,7 +860,7 @@ function DevisCard({ d, onUpdate, onFacturer, relances, onRelanceSuccess }: { d:
           >
             {d.modeReglementRAC === "Geste commercial" ? "Geste commercial" : `✓ RAC réglé · ${d.modeReglementRAC}${d.nbEcheances ? ` (${d.nbEcheances}×${formatEuro(montantEch)})` : ""}`}
           </span>
-          {d.raisonGeste && <span className="ml-2 text-xs text-slate-400">{d.raisonGeste}</span>}
+          {d.raisonGeste && <span className="ml-2 text-xs text-slate-500">{d.raisonGeste}</span>}
         </div>
       )}
 
@@ -944,7 +944,7 @@ function DevisCard({ d, onUpdate, onFacturer, relances, onRelanceSuccess }: { d:
         </div>
       )}
 
-      <div className="flex items-center justify-between px-5 py-2.5 border-t border-slate-100/60 text-xs text-slate-400">
+      <div className="flex items-center justify-between px-5 py-2.5 border-t border-slate-100/60 text-xs text-slate-500">
         <span>Émis le {new Date(d.date).toLocaleDateString("fr-FR")}</span>
         <span>Valide jusqu&apos;au {new Date(d.dateValidite).toLocaleDateString("fr-FR")}</span>
       </div>
@@ -1210,13 +1210,13 @@ function DevisAuditionContent() {
       {/* Search + status filter */}
       <div className="flex flex-col sm:flex-row gap-3">
         <div className="relative flex-1">
-          <IconSearch className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
+          <IconSearch className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500 pointer-events-none" />
           <input
             type="text"
             placeholder="Rechercher patient, numéro…"
             value={search}
             onChange={e => setSearch(e.target.value)}
-            className="w-full rounded-[var(--radius-large)] pl-10 pr-4 py-2.5 text-sm text-slate-800 placeholder:text-slate-400 outline-none focus:ring-2 focus:ring-[#00C98A]/30 transition bg-transparent"
+            className="w-full rounded-[var(--radius-large)] pl-10 pr-4 py-2.5 text-sm text-slate-800 placeholder:text-slate-500 outline-none focus:ring-2 focus:ring-[#00C98A]/30 transition bg-transparent"
             style={glass}
           />
         </div>
@@ -1254,7 +1254,7 @@ function DevisAuditionContent() {
 
       {/* Devis grid */}
       {filtered.length === 0 ? (
-        <div className="rounded-2xl p-10 text-center text-sm text-slate-400" style={glass}>
+        <div className="rounded-2xl p-10 text-center text-sm text-slate-500" style={glass}>
           Aucun devis ne correspond à vos filtres.
         </div>
       ) : (

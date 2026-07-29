@@ -11,12 +11,13 @@ export const metadata: Metadata = {
     "Les plateformes métier THOR : Clair Vision, Clair Audition, PharmaPlanning, et les outils de l'écosystème. Hébergement HDS et conformité intégrée.",
 };
 
-const PRODUITS = getAllRealisations().filter(
-  (r) => r.branch === "produits" && r.status === "live",
-);
+/* Tout ce qui tourne, quelle que soit la branche : un logiciel livré pour un
+   client reste un produit en service, et cette page sert à montrer ce qui
+   existe pour de vrai. */
+const PRODUITS = getAllRealisations().filter((r) => r.status === "live");
 
-/* Les publics ne se mélangent pas : un praticien et un particulier ne lisent
-   pas la même page. Les deux groupes restent donc séparés par un intertitre. */
+/* Les publics, eux, ne se mélangent pas : un praticien et un particulier ne
+   lisent pas la même page. Les deux groupes restent séparés par un intertitre. */
 const SANTE = PRODUITS.filter((r) => r.sector === "Santé");
 const AUTRES = PRODUITS.filter((r) => r.sector !== "Santé");
 

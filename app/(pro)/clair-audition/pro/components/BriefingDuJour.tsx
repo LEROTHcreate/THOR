@@ -100,7 +100,7 @@ function TaskItem({ task, onToggle }: { task: typeof taches[0]; onToggle: (id: n
       </button>
       <Link
         href={task.href}
-        className={`flex-1 text-sm transition-colors hover:text-[${PRIMARY}] ${task.done ? "line-through text-slate-400" : "text-slate-700"}`}
+        className={`flex-1 text-sm transition-colors hover:text-[${PRIMARY}] ${task.done ? "line-through text-slate-500" : "text-slate-700"}`}
       >
         {task.label}
       </Link>
@@ -238,7 +238,7 @@ export default function BriefingDuJour() {
 
         {/* Alertes du jour */}
         <div className="px-6 py-4">
-          <div className="text-xs font-semibold uppercase tracking-wide text-slate-400 mb-3">Alertes du jour</div>
+          <div className="text-xs font-semibold uppercase tracking-wide text-slate-500 mb-3">Alertes du jour</div>
           {visibleAlertes.length === 0 ? (
             <div className="flex items-center gap-2 text-sm" style={{ color: PRIMARY }}>
               <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><path d="M20 6 9 17l-5-5"/></svg>
@@ -259,7 +259,7 @@ export default function BriefingDuJour() {
                     </Link>
                     <button
                       onClick={() => setAlertDismissed(prev => [...prev, i])}
-                      className="h-4 w-4 flex-shrink-0 flex items-center justify-center rounded text-slate-400 hover:text-slate-600 transition-colors"
+                      className="h-4 w-4 flex-shrink-0 flex items-center justify-center rounded text-slate-500 hover:text-slate-600 transition-colors"
                     >
                       ×
                     </button>
@@ -273,7 +273,7 @@ export default function BriefingDuJour() {
         {/* Tâches du jour */}
         <div className="px-6 py-4">
           <div className="flex items-center justify-between mb-3">
-            <div className="text-xs font-semibold uppercase tracking-wide text-slate-400">Tâches du jour</div>
+            <div className="text-xs font-semibold uppercase tracking-wide text-slate-500">Tâches du jour</div>
             {taskLeft === 0 && (
               <span className="text-xs font-semibold rounded-full px-2 py-0.5" style={{ background: "rgba(0,201,138,0.10)", color: PRIMARY }}>
                 Tout terminé ✓
@@ -291,7 +291,7 @@ export default function BriefingDuJour() {
 
       {/* ── RDV du jour ──────────────────────────────────────────────────────── */}
       <div className="border-t border-slate-200/50 px-6 py-4">
-        <div className="text-xs font-semibold uppercase tracking-wide text-slate-400 mb-3">Agenda du jour</div>
+        <div className="text-xs font-semibold uppercase tracking-wide text-slate-500 mb-3">Agenda du jour</div>
         <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-5">
           {rdvDuJour.map((rdv, i) => (
             <div
@@ -307,10 +307,10 @@ export default function BriefingDuJour() {
                 {rdv.time}
               </div>
               <div className="min-w-0">
-                <div className={`text-xs font-semibold truncate ${rdv.done ? "line-through text-slate-400" : "text-slate-700"}`}>
+                <div className={`text-xs font-semibold truncate ${rdv.done ? "line-through text-slate-500" : "text-slate-700"}`}>
                   {rdv.name.split(" ")[0]}
                 </div>
-                <div className="text-[10px] text-slate-400 truncate">{rdv.type}</div>
+                <div className="text-[10px] text-slate-500 truncate">{rdv.type}</div>
               </div>
             </div>
           ))}

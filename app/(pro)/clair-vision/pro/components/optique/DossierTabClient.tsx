@@ -209,7 +209,7 @@ export default function DossierTabClient({
                       <td className="py-3 px-3 text-center font-mono text-sm font-semibold text-slate-900">{row.sph}</td>
                       <td className="py-3 px-3 text-center font-mono text-sm text-slate-700">{row.cyl}</td>
                       <td className="py-3 px-3 text-center font-mono text-sm text-slate-700">{row.axe}</td>
-                      <td className="py-3 px-3 text-center text-sm text-slate-400">{row.add}</td>
+                      <td className="py-3 px-3 text-center text-sm text-slate-500">{row.add}</td>
                       <td className="py-3 px-3 text-center text-sm text-slate-500">{row.avsc}</td>
                       <td className="py-3 px-3 text-center text-sm font-semibold text-[#00C98A]">{row.avac}</td>
                     </tr>
@@ -254,7 +254,7 @@ export default function DossierTabClient({
                     <div key={m.label} className="text-center">
                       <div className="text-xs text-slate-500">{m.label}</div>
                       <div className="text-lg font-light text-[#2D8CFF] my-0.5">{m.value}</div>
-                      <div className="text-[10px] text-slate-400">{m.sub}</div>
+                      <div className="text-[10px] text-slate-500">{m.sub}</div>
                     </div>
                   ))}
                 </div>
@@ -270,7 +270,7 @@ export default function DossierTabClient({
                     <div key={m.label} className="text-center">
                       <div className="text-xs text-slate-500">{m.label}</div>
                       <div className="text-lg font-light text-[#8B5CF6] my-0.5">{m.value}</div>
-                      <div className="text-[10px] text-slate-400">mm</div>
+                      <div className="text-[10px] text-slate-500">mm</div>
                     </div>
                   ))}
                 </div>
@@ -286,7 +286,7 @@ export default function DossierTabClient({
                     <div key={m.label} className="text-center">
                       <div className="text-xs text-slate-500">{m.label}</div>
                       <div className="text-lg font-light text-[#00C98A] my-0.5">{m.value}</div>
-                      <div className="text-[10px] text-slate-400">{m.unit}</div>
+                      <div className="text-[10px] text-slate-500">{m.unit}</div>
                     </div>
                   ))}
                 </div>
@@ -296,7 +296,7 @@ export default function DossierTabClient({
                 <div className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-3">Distance vertex</div>
                 <div className="text-center">
                   <div className="text-lg font-light text-[#F59E0B] my-0.5">12 mm</div>
-                  <div className="text-[10px] text-slate-400">Standard — à mesurer en adapta. lentilles</div>
+                  <div className="text-[10px] text-slate-500">Standard — à mesurer en adapta. lentilles</div>
                 </div>
               </div>
             </div>

@@ -129,7 +129,7 @@ function Audiogram({ bilan, compare }: { bilan: Bilan; compare?: Bilan }) {
             OG gauche
           </span>
           {compare && (
-            <span className="flex items-center gap-1.5 text-slate-400">
+            <span className="flex items-center gap-1.5 text-slate-500">
               <svg width="16" height="4" viewBox="0 0 16 4">
                 <line x1="0" y1="2" x2="16" y2="2" stroke="#94a3b8" strokeWidth="1.5" strokeDasharray="3,2"/>
               </svg>
@@ -253,7 +253,7 @@ export default function BilansAuditifsPage() {
 
         {/* ── Sidebar bilans ─────────────────────────────────────────────── */}
         <div className="space-y-3">
-          <div className="text-[11px] font-bold uppercase tracking-widest text-slate-400 px-1">Vos bilans</div>
+          <div className="text-[11px] font-bold uppercase tracking-widest text-slate-500 px-1">Vos bilans</div>
 
           {BILANS.map((b) => (
             <button
@@ -266,7 +266,7 @@ export default function BilansAuditifsPage() {
               }
             >
               <div className="flex items-center justify-between mb-1.5">
-                <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wide">{b.dateLabel}</span>
+                <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wide">{b.dateLabel}</span>
                 {b.tag && (
                   <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full" style={{ background: (b.tagColor ?? "#94a3b8") + "18", color: b.tagColor }}>
                     {b.tag}
@@ -283,10 +283,10 @@ export default function BilansAuditifsPage() {
               )}
               {b.locked && (
                 <div className="mt-2.5 flex items-center gap-1.5">
-                  <svg className="w-3.5 h-3.5 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <svg className="w-3.5 h-3.5 text-slate-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                     <rect x="3" y="11" width="18" height="11" rx="2" /><path d="M7 11V7a5 5 0 0 1 10 0v4" />
                   </svg>
-                  <span className="text-xs text-slate-400">Déverrouiller pour consulter</span>
+                  <span className="text-xs text-slate-500">Déverrouiller pour consulter</span>
                 </div>
               )}
             </button>
@@ -294,13 +294,13 @@ export default function BilansAuditifsPage() {
 
           {/* Classification OMS */}
           <div className="rounded-2xl border border-slate-100 bg-slate-50 p-4">
-            <div className="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-3">Classification OMS</div>
+            <div className="text-[10px] font-bold uppercase tracking-widest text-slate-500 mb-3">Classification OMS</div>
             <div className="space-y-1.5">
               {ZONES.map((z) => (
                 <div key={z.label} className="flex items-center gap-2 text-xs text-slate-600">
                   <div className="w-2.5 h-2.5 rounded-sm shrink-0" style={{ background: z.fill.replace(/0\.0[67]/, "0.5") }} />
                   <span>{z.label}</span>
-                  <span className="text-slate-400 ml-auto text-[10px]">{z.y1}–{z.y2 === 120 ? "120+" : z.y2} dB</span>
+                  <span className="text-slate-500 ml-auto text-[10px]">{z.y1}–{z.y2 === 120 ? "120+" : z.y2} dB</span>
                 </div>
               ))}
             </div>
@@ -356,7 +356,7 @@ export default function BilansAuditifsPage() {
                   <div className="flex items-center justify-between mb-4 gap-3 flex-wrap">
                     <div>
                       <div className="text-sm font-semibold text-slate-800">Dernier audiogramme</div>
-                      <div className="text-xs text-slate-400 mt-0.5">{bilan.dateLabel} · {bilan.centre} · {bilan.praticien}</div>
+                      <div className="text-xs text-slate-500 mt-0.5">{bilan.dateLabel} · {bilan.centre} · {bilan.praticien}</div>
                     </div>
                     <div className="flex items-center gap-2">
                       {prevBilan && (
@@ -397,7 +397,7 @@ export default function BilansAuditifsPage() {
                           {ear.side}
                         </div>
                         <div>
-                          <div className="text-[11px] text-slate-400 font-medium mb-0.5">{ear.label}</div>
+                          <div className="text-[11px] text-slate-500 font-medium mb-0.5">{ear.label}</div>
                           <div className="text-base font-bold text-slate-800">{ear.perte}</div>
                           <div className="mt-1"><ClassBadge label={ear.classe} /></div>
                         </div>
@@ -407,7 +407,7 @@ export default function BilansAuditifsPage() {
 
                   {compare && prevBilan && (
                     <div className="mt-4 rounded-xl border border-dashed border-slate-200 bg-slate-50 px-4 py-2.5 text-xs text-slate-500 flex items-center gap-2">
-                      <svg className="w-3.5 h-3.5 text-slate-400 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+                      <svg className="w-3.5 h-3.5 text-slate-500 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
                       Comparaison avec le bilan du <strong className="mx-1">{prevBilan.dateLabel}</strong>
                     </div>
                   )}
@@ -424,10 +424,10 @@ export default function BilansAuditifsPage() {
                       <table className="w-full min-w-[420px]">
                         <thead>
                           <tr className="border-b border-slate-100">
-                            <th className="text-left text-xs font-semibold text-slate-400 pb-3 pr-4 w-32">Oreille</th>
+                            <th className="text-left text-xs font-semibold text-slate-500 pb-3 pr-4 w-32">Oreille</th>
                             {FREQS.map((f, i) => (
-                              <th key={f} className="text-center text-xs font-semibold text-slate-400 pb-3 px-2">
-                                {FREQ_LABELS[i]} <span className="font-normal text-slate-300">Hz</span>
+                              <th key={f} className="text-center text-xs font-semibold text-slate-500 pb-3 px-2">
+                                {FREQ_LABELS[i]} <span className="font-normal text-slate-500">Hz</span>
                               </th>
                             ))}
                           </tr>
@@ -464,13 +464,13 @@ export default function BilansAuditifsPage() {
                         </tbody>
                       </table>
                     </div>
-                    <p className="text-[11px] text-slate-400 mt-3">Valeurs en dB HL — Seuils auditifs minimaux (voie aérienne)</p>
+                    <p className="text-[11px] text-slate-500 mt-3">Valeurs en dB HL — Seuils auditifs minimaux (voie aérienne)</p>
                   </div>
 
                   {/* Praticien + appareillage */}
                   <div className="grid md:grid-cols-2 gap-4">
                     <div className="rounded-2xl border border-slate-200 bg-white p-5" style={{ boxShadow: "0 2px 12px rgba(0,0,0,0.04)" }}>
-                      <div className="text-[11px] font-bold uppercase tracking-widest text-slate-400 mb-4">Praticien</div>
+                      <div className="text-[11px] font-bold uppercase tracking-widest text-slate-500 mb-4">Praticien</div>
                       <div className="flex items-center gap-3 mb-3">
                         <div className="w-10 h-10 rounded-full flex items-center justify-center text-white text-sm font-bold shrink-0"
                           style={{ background: "#00C98A" }}>
@@ -485,7 +485,7 @@ export default function BilansAuditifsPage() {
                     </div>
 
                     <div className="rounded-2xl border border-slate-200 bg-white p-5" style={{ boxShadow: "0 2px 12px rgba(0,0,0,0.04)" }}>
-                      <div className="text-[11px] font-bold uppercase tracking-widest text-slate-400 mb-4">Appareillage prescrit</div>
+                      <div className="text-[11px] font-bold uppercase tracking-widest text-slate-500 mb-4">Appareillage prescrit</div>
                       <div className="text-sm font-semibold text-slate-800 mb-3">{bilan.appareillage}</div>
                       <div className="flex gap-2 flex-wrap">
                         <ClassBadge label={bilan.classOD} />
@@ -496,7 +496,7 @@ export default function BilansAuditifsPage() {
 
                   {/* Commentaire */}
                   <div className="rounded-2xl border border-slate-200 bg-white p-5" style={{ boxShadow: "0 2px 12px rgba(0,0,0,0.04)" }}>
-                    <div className="text-[11px] font-bold uppercase tracking-widest text-slate-400 mb-3">Commentaire du praticien</div>
+                    <div className="text-[11px] font-bold uppercase tracking-widest text-slate-500 mb-3">Commentaire du praticien</div>
                     <p className="text-sm text-slate-600 leading-relaxed">{bilan.commentaire}</p>
                   </div>
 
@@ -526,7 +526,7 @@ export default function BilansAuditifsPage() {
                   <p className="text-xs text-slate-500 mb-6">Comparaison des seuils auditifs moyens sur vos bilans successifs.</p>
 
                   {BILANS.filter((b) => !b.locked).length < 2 ? (
-                    <div className="text-center py-12 text-slate-400">
+                    <div className="text-center py-12 text-slate-500">
                       <div className="w-12 h-12 rounded-2xl mx-auto mb-3 flex items-center justify-center bg-slate-100">
                         <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>
                       </div>
@@ -564,7 +564,7 @@ export default function BilansAuditifsPage() {
                             })}
                           </div>
                           <div className="flex gap-1 mt-1.5">
-                            {FREQ_LABELS.map((l) => <div key={l} className="flex-1 text-center text-[9px] text-slate-400">{l}</div>)}
+                            {FREQ_LABELS.map((l) => <div key={l} className="flex-1 text-center text-[9px] text-slate-500">{l}</div>)}
                           </div>
                         </button>
                       ))}

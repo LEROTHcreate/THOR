@@ -144,7 +144,7 @@ function DiagramLensOrientation() {
             <path d="M50 95c18-38 40-58 70-58s52 20 70 58" stroke="currentColor" strokeWidth="5" className="text-blue-600" />
             <path d="M64 95c10-10 18-14 26-14" stroke="currentColor" strokeWidth="5" className="text-emerald-600" strokeLinecap="round" />
             <path d="M176 95c-10-10-18-14-26-14" stroke="currentColor" strokeWidth="5" className="text-emerald-600" strokeLinecap="round" />
-            <path d="M74 110h92" stroke="currentColor" strokeWidth="3" className="text-slate-300" strokeLinecap="round" />
+            <path d="M74 110h92" stroke="currentColor" strokeWidth="3" className="text-slate-500" strokeLinecap="round" />
           </svg>
         </div>
         <div className="mt-3 text-xs text-slate-600">

@@ -621,7 +621,7 @@ export default function PatientsAuditionPage() {
               if (c === 0) return null;
               return (
                 <span key={s} className="inline-flex items-center gap-1.5 ml-1">
-                  <span className="text-slate-300">·</span>
+                  <span className="text-slate-500">·</span>
                   <span
                     className="inline-block w-1.5 h-1.5 rounded-full"
                     style={{ background: meta.color, boxShadow: `0 0 0 2px ${meta.bg}` }}
@@ -684,13 +684,13 @@ export default function PatientsAuditionPage() {
         {/* Search */}
         <div className="relative flex-1 min-w-[240px]">
           <IconSearch
-            className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none text-slate-400"
+            className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none text-slate-500"
           />
           {query && (
             <button
               onClick={() => setQuery("")}
               aria-label="Effacer la recherche"
-              className="absolute right-2.5 top-1/2 -translate-y-1/2 grid place-items-center h-6 w-6 rounded-md text-slate-400 hover:text-slate-600 transition-colors"
+              className="absolute right-2.5 top-1/2 -translate-y-1/2 grid place-items-center h-6 w-6 rounded-md text-slate-500 hover:text-slate-600 transition-colors"
               style={{ background: "transparent", border: "none", cursor: "pointer" }}
             >
               <IconX className="w-3.5 h-3.5" />
@@ -757,7 +757,7 @@ export default function PatientsAuditionPage() {
       {/* Nouveaux patients (localStorage) */}
       {storedPatients.length > 0 && (
         <div>
-          <div className="text-[11px] font-semibold uppercase tracking-widest text-slate-400 mb-3">
+          <div className="text-[11px] font-semibold uppercase tracking-widest text-slate-500 mb-3">
             Patients récemment créés ({storedPatients.length})
           </div>
           <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
@@ -782,7 +782,7 @@ export default function PatientsAuditionPage() {
 
       {/* Patient list/grid */}
       {filtered.length === 0 ? (
-        <div className="rounded-[var(--radius-large)] p-10 text-center text-sm text-slate-400" style={glass}>
+        <div className="rounded-[var(--radius-large)] p-10 text-center text-sm text-slate-500" style={glass}>
           Aucun patient ne correspond à votre recherche.
         </div>
       ) : viewMode === "list" ? (

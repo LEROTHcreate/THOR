@@ -23,12 +23,12 @@ export default function DossiersListClient({ dossiers }: { dossiers: any[] }) {
       {/* Search + tabs */}
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex w-full items-center gap-2 rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-600 sm:max-w-lg">
-          <span className="text-slate-400">⌕</span>
+          <span className="text-slate-500">⌕</span>
           <input
             value={q}
             onChange={(e) => setQ(e.target.value)}
             placeholder="Rechercher un patient…"
-            className="w-full bg-transparent outline-none placeholder:text-slate-400"
+            className="w-full bg-transparent outline-none placeholder:text-slate-500"
           />
         </div>
 

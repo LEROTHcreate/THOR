@@ -92,7 +92,7 @@ function TaskItem({
           </svg>
         )}
       </button>
-      <Link href={task.href} className={`flex-1 text-sm transition-colors hover:text-[#2D8CFF] ${task.done ? "line-through text-slate-400" : "text-slate-700"}`}>
+      <Link href={task.href} className={`flex-1 text-sm transition-colors hover:text-[#2D8CFF] ${task.done ? "line-through text-slate-500" : "text-slate-700"}`}>
         {task.label}
       </Link>
       <span className="text-[10px] font-semibold rounded-full px-2 py-0.5 flex-shrink-0" style={{ background: priorityStyle.bg, color: priorityStyle.color, border: priorityStyle.border }}>
@@ -233,7 +233,7 @@ export default function BriefingDuJour() {
 
         {/* Alertes prioritaires */}
         <div className="px-6 py-4">
-          <div className="text-xs font-semibold uppercase tracking-wide text-slate-400 mb-3">Alertes du jour</div>
+          <div className="text-xs font-semibold uppercase tracking-wide text-slate-500 mb-3">Alertes du jour</div>
           {visibleAlerts.length === 0 ? (
             <div className="flex items-center gap-2 text-sm text-[#00C98A]">
               <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
@@ -257,7 +257,7 @@ export default function BriefingDuJour() {
                     </Link>
                     <button
                       onClick={() => setAlertDismissed(prev => [...prev, i])}
-                      className="text-slate-300 hover:text-slate-500 transition-colors flex-shrink-0"
+                      className="text-slate-500 hover:text-slate-700 transition-colors flex-shrink-0"
                       aria-label="Ignorer"
                     >
                       <svg className="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
@@ -272,8 +272,8 @@ export default function BriefingDuJour() {
         {/* Tâches */}
         <div className="px-6 py-4">
           <div className="flex items-center justify-between mb-3">
-            <div className="text-xs font-semibold uppercase tracking-wide text-slate-400">Tâches prioritaires</div>
-            <span className="text-[11px] text-slate-400">{tasks.filter(t => t.done).length}/{tasks.length} faites</span>
+            <div className="text-xs font-semibold uppercase tracking-wide text-slate-500">Tâches prioritaires</div>
+            <span className="text-[11px] text-slate-500">{tasks.filter(t => t.done).length}/{tasks.length} faites</span>
           </div>
           <div className="space-y-2">
             {tasks.map(task => (

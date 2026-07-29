@@ -411,7 +411,7 @@ export default function StatistiquesPage() {
                   <div className="text-sm font-semibold text-slate-800">{p.ca}</div>
                   <div className="text-xs text-slate-500">{p.actes} acte{p.actes > 1 ? "s" : ""}</div>
                 </div>
-                <span className={`text-sm font-bold w-5 text-right flex-shrink-0 ${p.evolution === "↑" ? "text-[#00C98A]" : "text-slate-400"}`}>{p.evolution}</span>
+                <span className={`text-sm font-bold w-5 text-right flex-shrink-0 ${p.evolution === "↑" ? "text-[#00C98A]" : "text-slate-500"}`}>{p.evolution}</span>
               </div>
             ))}
           </div>

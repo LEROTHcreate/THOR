@@ -75,7 +75,7 @@ const REALISATIONS: Realisation[] = [
     accentLight: "#F5F3FF",
     status: "live",
     href: "https://monsoldereel.fr/",
-    cover: "/images/captures/monsoldereel.png",
+    cover: "/images/captures/monsoldereel.webp",
     logo: "/images/logos/monsoldereel.png",
     featured: true,
     branch: "studio",
@@ -116,7 +116,7 @@ const REALISATIONS: Realisation[] = [
     status: "live",
     href: "/clair-vision",
     proHref: "/connexion/praticien?module=vision",
-    cover: "/images/captures/clair-vision.png",
+    cover: "/images/captures/clair-vision.webp",
     featured: true,
     branch: "produits",
     context:
@@ -155,7 +155,7 @@ const REALISATIONS: Realisation[] = [
     status: "live",
     href: "/clair-audition",
     proHref: "/connexion/praticien?module=audition",
-    cover: "/images/captures/clair-audition.png",
+    cover: "/images/captures/clair-audition.webp",
     featured: true,
     branch: "produits",
     context:
@@ -193,7 +193,7 @@ const REALISATIONS: Realisation[] = [
     accentLight: "#D1FAE5",
     status: "live",
     href: "https://pharmapinvertagenda.vercel.app/",
-    cover: "/images/captures/pharmaplanning.png",
+    cover: "/images/captures/pharmaplanning.webp",
     featured: true,
     branch: "produits",
     context:
@@ -229,7 +229,7 @@ const REALISATIONS: Realisation[] = [
     accentLight: "#F0F9FF",
     status: "live",
     href: "https://jarvis-pi-pied.vercel.app/",
-    cover: "/images/captures/jarvis.png",
+    cover: "/images/captures/jarvis.webp",
     featured: true,
     branch: "produits",
     context:
@@ -271,7 +271,7 @@ const REALISATIONS: Realisation[] = [
     accentLight: "#FBF6E8",
     status: "live",
     href: "https://draupnir-smoky.vercel.app/",
-    cover: "/images/captures/draupnir.png",
+    cover: "/images/captures/draupnir.webp",
     logo: "/images/logos/draupnir.png",
     featured: true,
     branch: "produits",

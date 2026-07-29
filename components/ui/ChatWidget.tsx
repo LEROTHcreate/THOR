@@ -545,7 +545,7 @@ export default function ChatWidget({ context }: { context: ChatContext }) {
                 </div>
                 <div className="text-center">
                   <p className="text-sm font-semibold text-slate-700">Comment puis-je vous aider ?</p>
-                  <p className="text-xs text-slate-400 mt-1">Posez une question ou choisissez ci-dessous</p>
+                  <p className="text-xs text-slate-500 mt-1">Posez une question ou choisissez ci-dessous</p>
                 </div>
                 <div className="w-full space-y-2">
                   {suggestions.map(s => (
@@ -631,7 +631,7 @@ export default function ChatWidget({ context }: { context: ChatContext }) {
                 placeholder="Posez votre question… (Entrée pour envoyer)"
                 rows={1}
                 disabled={loading}
-                className="flex-1 resize-none bg-transparent text-[13px] text-slate-800 placeholder:text-slate-400 outline-none leading-[1.5] max-h-28 overflow-y-auto disabled:opacity-60"
+                className="flex-1 resize-none bg-transparent text-[13px] text-slate-800 placeholder:text-slate-500 outline-none leading-[1.5] max-h-28 overflow-y-auto disabled:opacity-60"
                 style={{ fontFamily: "inherit" }}
               />
               <button
@@ -640,7 +640,7 @@ export default function ChatWidget({ context }: { context: ChatContext }) {
                 className="flex-shrink-0 w-7 h-7 rounded-lg flex items-center justify-center transition-all duration-150 disabled:opacity-30"
                 style={{ background: input.trim() && !loading ? cfg.gradient : "rgba(148,163,184,0.20)" }}
                 aria-label="Envoyer">
-                <SendIcon className={input.trim() && !loading ? "text-white" : "text-slate-400"} />
+                <SendIcon className={input.trim() && !loading ? "text-white" : "text-slate-500"} />
               </button>
             </div>
           </div>

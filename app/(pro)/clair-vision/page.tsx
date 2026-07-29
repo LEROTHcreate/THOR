@@ -272,7 +272,7 @@ function Hero() {
                 <div key={s.value} className="text-left">
                   <div className="flex items-center gap-1.5">
                     <span
-                      className="text-[10px] font-mono text-slate-300"
+                      className="text-[10px] font-mono text-slate-500"
                       style={{ letterSpacing: "0.1em" }}
                     >
                       {String(i + 1).padStart(2, "0")}
@@ -457,7 +457,7 @@ function Hero() {
       {/* Scroll indicator */}
       <button
         onClick={() => scrollTo("services")}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 text-slate-400 hover:text-slate-600 transition-colors"
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 text-slate-500 hover:text-slate-600 transition-colors"
         style={{ animation: "floatY 2.5s ease-in-out infinite" }}
       >
         <span className="text-[10px] font-medium uppercase tracking-widest">Découvrir</span>
@@ -515,7 +515,7 @@ function Services() {
     <section id="services" className="py-24 relative">
       <div className="mx-auto max-w-7xl px-6">
         <div className="text-center mb-16">
-          <span className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400 mb-4 block">
+          <span className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500 mb-4 block">
             Fonctionnalités
           </span>
           <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-slate-900 mb-4 h-title">
@@ -589,7 +589,7 @@ function Comment() {
     <section id="comment" className="py-24 relative">
       <div className="mx-auto max-w-7xl px-6">
         <div className="text-center mb-16">
-          <span className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400 mb-4 block">
+          <span className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500 mb-4 block">
             Simple & rapide
           </span>
           <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-slate-900 mb-4 h-title">
@@ -610,7 +610,7 @@ function Comment() {
 
           {STEPS.map((step, i) => (
             <div key={step.n} className="step-card relative flex flex-col items-center text-center">
-              <div className="mb-2 text-xs font-mono text-slate-300" style={{ letterSpacing: "0.1em" }}>
+              <div className="mb-2 text-xs font-mono text-slate-500" style={{ letterSpacing: "0.1em" }}>
                 {String(i + 1).padStart(2, "0")}
               </div>
               <div
@@ -640,7 +640,7 @@ function Identite() {
         <div className="grid lg:grid-cols-2 gap-16 items-start">
           {/* Gauche — Notre vision */}
           <div className="lg:sticky lg:top-28">
-            <span className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400 mb-4 block">
+            <span className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500 mb-4 block">
               Notre vision
             </span>
             <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-slate-900 mb-6 leading-[1.05] h-title">
@@ -667,7 +667,7 @@ function Identite() {
             </p>
 
             <div className="rounded-2xl p-5 mb-6" style={{ background: "rgba(255,255,255,0.65)", backdropFilter: "blur(20px)", WebkitBackdropFilter: "blur(20px)", border: "1px solid rgba(255,255,255,0.85)", boxShadow: "0 4px 20px rgba(15,23,42,0.04), inset 0 1px 0 rgba(255,255,255,0.9)" }}>
-              <div className="text-xs font-bold uppercase tracking-widest text-slate-400 mb-3">Ce qu&apos;on construit sur la durée</div>
+              <div className="text-xs font-bold uppercase tracking-widest text-slate-500 mb-3">Ce qu&apos;on construit sur la durée</div>
               <ul className="space-y-2.5 text-sm text-slate-600">
                 <li className="flex items-start gap-2.5">
                   <span className="mt-1 inline-block w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: ACCENT }} />
@@ -691,7 +691,7 @@ function Identite() {
 
           {/* Droite — Pour les opticiens */}
           <div>
-            <span className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400 mb-4 block">
+            <span className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500 mb-4 block">
               Pour les opticiens
             </span>
             <h3 className="text-3xl lg:text-4xl font-bold tracking-tight text-slate-900 mb-4 leading-[1.05] h-title">
@@ -817,7 +817,7 @@ function Securite() {
 
       <div className="relative mx-auto max-w-7xl px-6">
         <div className="text-center mb-16">
-          <span className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400 mb-4 block">
+          <span className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500 mb-4 block">
             Sécurité & conformité
           </span>
           <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-slate-900 mb-4 h-title">
@@ -852,7 +852,7 @@ function Securite() {
               }}
             >
               <div className="flex items-center gap-2 mb-4">
-                <span className="text-[10px] font-mono text-slate-300" style={{ letterSpacing: "0.1em" }}>
+                <span className="text-[10px] font-mono text-slate-500" style={{ letterSpacing: "0.1em" }}>
                   {String(i + 1).padStart(2, "0")}
                 </span>
                 <div
@@ -900,7 +900,7 @@ function CTAFinal() {
   return (
     <section className="py-24 relative">
       <div className="mx-auto max-w-3xl px-6 text-center">
-        <span className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400 mb-4 block">
+        <span className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500 mb-4 block">
           Commencer gratuitement
         </span>
         <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-slate-900 mb-4 h-title">
@@ -978,7 +978,7 @@ function Footer() {
             <Link href="/clair-vision/pro" className="hover:text-slate-700 transition-colors">Espace professionnel</Link>
           </div>
 
-          <div className="text-xs text-slate-400">
+          <div className="text-xs text-slate-500">
             © {new Date().getFullYear()} ClairVision · Propulsé par THOR
           </div>
         </div>

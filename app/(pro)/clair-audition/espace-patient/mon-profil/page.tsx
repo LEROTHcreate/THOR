@@ -44,7 +44,7 @@ export default function ProfilAuditionPage() {
       <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
         <div>
           <h1 className="text-3xl font-light tracking-tight text-slate-900">Mon <span className="font-bold">profil</span></h1>
-          <p className="mt-1 text-slate-400">Informations patient, préférences et centres</p>
+          <p className="mt-1 text-slate-500">Informations patient, préférences et centres</p>
         </div>
         <div className="flex items-center gap-2">
           <SmallBadge>Clair Audition</SmallBadge>
@@ -68,7 +68,7 @@ export default function ProfilAuditionPage() {
               { label: "Date de naissance",value: "12 mars 1955" },
             ].map((f) => (
               <div key={f.label} className="rounded-xl p-3" style={glassSubtle}>
-                <div className="text-xs text-slate-400">{f.label}</div>
+                <div className="text-xs text-slate-500">{f.label}</div>
                 <div className="mt-1 text-sm font-semibold text-slate-800">{f.value}</div>
               </div>
             ))}
@@ -76,16 +76,16 @@ export default function ProfilAuditionPage() {
 
           <div className="mt-3 space-y-2.5">
             <div className="rounded-xl p-3" style={glassSubtle}>
-              <div className="text-xs text-slate-400">Email</div>
+              <div className="text-xs text-slate-500">Email</div>
               <div className="mt-1 text-sm font-semibold text-slate-800">jean.dupont@email.com</div>
             </div>
             <div className="rounded-xl p-3" style={glassSubtle}>
-              <div className="text-xs text-slate-400 mb-1">Téléphone</div>
+              <div className="text-xs text-slate-500 mb-1">Téléphone</div>
               <input value={phone} onChange={(e) => setPhone(e.target.value)}
                 className="w-full bg-transparent text-sm font-semibold text-slate-800 outline-none" />
             </div>
             <div className="rounded-xl p-3" style={glassSubtle}>
-              <div className="text-xs text-slate-400 mb-1">Adresse</div>
+              <div className="text-xs text-slate-500 mb-1">Adresse</div>
               <input value={address} onChange={(e) => setAddress(e.target.value)}
                 className="w-full bg-transparent text-sm font-semibold text-slate-800 outline-none" />
             </div>
@@ -108,7 +108,7 @@ export default function ProfilAuditionPage() {
               <div key={x.k} className="flex items-center justify-between rounded-xl p-3" style={glassSubtle}>
                 <div>
                   <div className="text-sm font-semibold text-slate-800">{x.label}</div>
-                  <div className="text-xs text-slate-400">{x.sub}</div>
+                  <div className="text-xs text-slate-500">{x.sub}</div>
                 </div>
                 <button
                   type="button"
@@ -142,8 +142,8 @@ export default function ProfilAuditionPage() {
                 <div className="flex items-start justify-between gap-3">
                   <div>
                     <div className="text-sm font-semibold text-slate-800">{c.name}</div>
-                    <div className="text-xs text-slate-400 mt-0.5">{c.address}</div>
-                    <div className="text-xs text-slate-400">{c.practitioner}</div>
+                    <div className="text-xs text-slate-500 mt-0.5">{c.address}</div>
+                    <div className="text-xs text-slate-500">{c.practitioner}</div>
                   </div>
                   {c.default ? <SmallBadge green>Par défaut</SmallBadge> : <SmallBadge>Centre</SmallBadge>}
                 </div>
@@ -180,21 +180,21 @@ export default function ProfilAuditionPage() {
               { label: "Appareils actifs", value: "2 · OD + OG"  },
             ].map((f) => (
               <div key={f.label} className="rounded-xl p-3" style={glassSubtle}>
-                <div className="text-xs text-slate-400">{f.label}</div>
+                <div className="text-xs text-slate-500">{f.label}</div>
                 <div className="mt-1 text-sm font-semibold text-slate-800">{f.value}</div>
               </div>
             ))}
           </div>
 
           <div className="mt-3 rounded-xl p-3" style={glassSubtle}>
-            <div className="text-xs text-slate-400 mb-2">N° de sécurité sociale</div>
+            <div className="text-xs text-slate-500 mb-2">N° de sécurité sociale</div>
             <div className="text-sm font-semibold text-slate-800">1 55 03 75 XXX XXX</div>
           </div>
 
           <div className="mt-3 rounded-xl p-3" style={glassSubtle}>
-            <div className="text-xs text-slate-400 mb-2">Audioprothésiste référent</div>
+            <div className="text-xs text-slate-500 mb-2">Audioprothésiste référent</div>
             <div className="text-sm font-semibold text-slate-800">M. Rami Benali</div>
-            <div className="text-xs text-slate-400">Clair Audition — Marseille Prado</div>
+            <div className="text-xs text-slate-500">Clair Audition — Marseille Prado</div>
           </div>
         </div>
 

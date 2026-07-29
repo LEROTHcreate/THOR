@@ -83,7 +83,7 @@ function SidebarContent({
           </div>
           <div>
             <div className="text-sm font-semibold text-slate-800">Clair Vision</div>
-            <div className="text-xs text-slate-400">Espace patient</div>
+            <div className="text-xs text-slate-500">Espace patient</div>
           </div>
         </div>
 
@@ -95,7 +95,7 @@ function SidebarContent({
           </div>
           <div className="min-w-0">
             <div className="truncate text-sm font-semibold text-slate-800">Marie Dubois</div>
-            <div className="truncate text-xs text-slate-400">marie.dubois@email.com</div>
+            <div className="truncate text-xs text-slate-500">marie.dubois@email.com</div>
           </div>
         </div>
       </div>
@@ -123,7 +123,7 @@ function SidebarContent({
       </nav>
 
       <div className="px-4 pb-5 space-y-2" style={{ borderTop: "1px solid rgba(255,255,255,0.45)" }}>
-        <div className="mt-3 flex items-center gap-2 rounded-xl px-3 py-2 text-xs text-slate-400"
+        <div className="mt-3 flex items-center gap-2 rounded-xl px-3 py-2 text-xs text-slate-500"
              style={{ background: "rgba(255,255,255,0.40)" }}>
           <svg className="w-3.5 h-3.5 text-blue-400 flex-shrink-0" viewBox="0 0 24 24" fill="none">
             <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2Z" stroke="currentColor" strokeWidth="1.8"/>

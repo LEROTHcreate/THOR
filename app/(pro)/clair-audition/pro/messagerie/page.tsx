@@ -214,7 +214,7 @@ function Avatar({ initials, color, size = 36 }: { initials: string; color: strin
 
 function SectionLabel({ children }: { children: string }) {
   return (
-    <div className="px-3 pt-3 pb-1 text-[10px] font-bold uppercase tracking-widest text-slate-400 select-none">
+    <div className="px-3 pt-3 pb-1 text-[10px] font-bold uppercase tracking-widest text-slate-500 select-none">
       {children}
     </div>
   );
@@ -456,7 +456,7 @@ export default function MessageriePage() {
         <div className="flex-1 min-w-0">
           <div className="flex items-center justify-between gap-1">
             <span className="text-sm font-medium text-slate-800 truncate">{avatar.name}</span>
-            {conv.lastMessage && <span className="text-[10px] text-slate-400 flex-shrink-0">{formatLastTime(conv.lastMessage.timestamp)}</span>}
+            {conv.lastMessage && <span className="text-[10px] text-slate-500 flex-shrink-0">{formatLastTime(conv.lastMessage.timestamp)}</span>}
           </div>
           <div className="flex items-center gap-1 mt-0.5">
             <p className="text-xs text-slate-500 truncate flex-1">{truncated || "Aucun message"}</p>
@@ -497,7 +497,7 @@ export default function MessageriePage() {
               {attachmentLabel}
             </div>
           )}
-          <span className="text-[10px] text-slate-400 mt-1 px-1">{formatTime(timestamp)}</span>
+          <span className="text-[10px] text-slate-500 mt-1 px-1">{formatTime(timestamp)}</span>
         </div>
       </div>
     );
@@ -516,7 +516,7 @@ export default function MessageriePage() {
               {showDateSep && (
                 <div className="flex items-center gap-3 my-4">
                   <div className="flex-1 h-px bg-slate-200/60" />
-                  <span className="text-xs text-slate-400 px-2">{formatDateSep(item.timestamp)}</span>
+                  <span className="text-xs text-slate-500 px-2">{formatDateSep(item.timestamp)}</span>
                   <div className="flex-1 h-px bg-slate-200/60" />
                 </div>
               )}
@@ -590,7 +590,7 @@ export default function MessageriePage() {
             {/* Search */}
             <div className="px-3 pb-2 flex-shrink-0">
               <div className="relative">
-                <svg className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-slate-400 pointer-events-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <svg className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-slate-500 pointer-events-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <circle cx="11" cy="11" r="8" /><path d="m21 21-4.35-4.35" />
                 </svg>
                 <input
@@ -602,7 +602,7 @@ export default function MessageriePage() {
                   style={{ background: "var(--glass-subtle-bg)", border: "1px solid rgba(203,213,225,0.6)", focusRingColor: PRIMARY } as React.CSSProperties}
                 />
                 {patientSearch && (
-                  <button onClick={() => setPatientSearch("")} className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600">
+                  <button onClick={() => setPatientSearch("")} className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-600">
                     <svg className="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M18 6 6 18M6 6l12 12" strokeLinecap="round" /></svg>
                   </button>
                 )}
@@ -642,7 +642,7 @@ export default function MessageriePage() {
                         <span className={`text-sm truncate ${pc.unreadCount > 0 ? "font-semibold text-slate-800" : "font-medium text-slate-700"}`}>
                           {pc.patientName}
                         </span>
-                        {lastMsg && <span className="text-[10px] text-slate-400 flex-shrink-0">{formatLastTime(lastMsg.timestamp)}</span>}
+                        {lastMsg && <span className="text-[10px] text-slate-500 flex-shrink-0">{formatLastTime(lastMsg.timestamp)}</span>}
                       </div>
                       <div className="flex items-center gap-1 mt-0.5">
                         <p className={`text-xs truncate flex-1 ${pc.unreadCount > 0 ? "text-slate-700 font-medium" : "text-slate-500"}`}>
@@ -659,7 +659,7 @@ export default function MessageriePage() {
                 );
               })}
             {patientSearch && patientConvs.filter(pc => pc.patientName.toLowerCase().includes(patientSearch.toLowerCase())).length === 0 && (
-              <div className="text-center py-6 text-xs text-slate-400">Aucun patient trouvé pour &laquo;&nbsp;{patientSearch}&nbsp;&raquo;</div>
+              <div className="text-center py-6 text-xs text-slate-500">Aucun patient trouvé pour &laquo;&nbsp;{patientSearch}&nbsp;&raquo;</div>
             )}
             </div>
           </div>
@@ -684,7 +684,7 @@ export default function MessageriePage() {
 
             <div ref={threadRef} className="flex-1 overflow-y-auto px-5 py-4 space-y-1">
               {activeMessages.length === 0 && (
-                <div className="h-full flex flex-col items-center justify-center text-slate-400 text-sm gap-2">
+                <div className="h-full flex flex-col items-center justify-center text-slate-500 text-sm gap-2">
                   <svg className="w-10 h-10 opacity-30" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
                     <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
                   </svg>
@@ -717,7 +717,7 @@ export default function MessageriePage() {
                     </svg>
                     {pendingAttachment}
                   </span>
-                  <button onClick={() => setPendingAttachment(null)} className="text-xs text-slate-400 hover:text-slate-600">×</button>
+                  <button onClick={() => setPendingAttachment(null)} className="text-xs text-slate-500 hover:text-slate-600">×</button>
                 </div>
               )}
               <div className="flex items-end gap-2">
@@ -769,7 +769,7 @@ export default function MessageriePage() {
                         Dossiers récents
                       </div>
                       {dossierLabels.length === 0 ? (
-                        <div className="px-3 py-2 text-xs text-slate-400">Aucun dossier</div>
+                        <div className="px-3 py-2 text-xs text-slate-500">Aucun dossier</div>
                       ) : (
                         dossierLabels.map(label => (
                           <button key={label} onClick={() => { setPendingAttachment(label); setShowDossierPicker(false); }}
@@ -788,7 +788,7 @@ export default function MessageriePage() {
                   onKeyDown={handleKeyDown}
                   placeholder="Votre message… (Entrée pour envoyer)"
                   rows={1}
-                  className="flex-1 resize-none rounded-xl px-3.5 py-2.5 text-sm text-slate-800 placeholder:text-slate-400 outline-none focus:ring-2 focus:ring-emerald-300"
+                  className="flex-1 resize-none rounded-xl px-3.5 py-2.5 text-sm text-slate-800 placeholder:text-slate-500 outline-none focus:ring-2 focus:ring-emerald-300"
                   style={{ ...glassSubtle, minHeight: 40, maxHeight: 120 }}
                   onInput={e => { const el = e.currentTarget; el.style.height = "auto"; el.style.height = Math.min(el.scrollHeight, 120) + "px"; }}
                 />
@@ -878,7 +878,7 @@ export default function MessageriePage() {
                     onKeyDown={handlePatientKeyDown}
                     placeholder="Répondre au patient… (Entrée pour envoyer)"
                     rows={1}
-                    className="flex-1 resize-none rounded-xl px-3.5 py-2.5 text-sm text-slate-800 placeholder:text-slate-400 outline-none focus:ring-2 focus:ring-emerald-300"
+                    className="flex-1 resize-none rounded-xl px-3.5 py-2.5 text-sm text-slate-800 placeholder:text-slate-500 outline-none focus:ring-2 focus:ring-emerald-300"
                     style={{ ...glassSubtle, minHeight: 40, maxHeight: 120 }}
                     onInput={e => { const el = e.currentTarget; el.style.height = "auto"; el.style.height = Math.min(el.scrollHeight, 120) + "px"; }}
                   />
@@ -887,7 +887,7 @@ export default function MessageriePage() {
               </div>
             </>
           ) : (
-            <div className="flex-1 flex flex-col items-center justify-center text-slate-400 text-sm gap-2">
+            <div className="flex-1 flex flex-col items-center justify-center text-slate-500 text-sm gap-2">
               <svg className="w-10 h-10 opacity-30" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
                 <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
               </svg>
@@ -912,7 +912,7 @@ export default function MessageriePage() {
                 placeholder="Rechercher un collaborateur ou partenaire…"
                 value={userSearch}
                 onChange={e => setUserSearch(e.target.value)}
-                className="w-full rounded-xl px-3.5 py-2.5 text-sm text-slate-800 placeholder:text-slate-400 outline-none focus:ring-2 focus:ring-emerald-300"
+                className="w-full rounded-xl px-3.5 py-2.5 text-sm text-slate-800 placeholder:text-slate-500 outline-none focus:ring-2 focus:ring-emerald-300"
                 style={glassSubtle}
               />
             </div>
@@ -924,7 +924,7 @@ export default function MessageriePage() {
                   <span className="text-sm font-medium text-slate-700">{u.name}</span>
                 </button>
               ))}
-              {filteredUsers.length === 0 && <p className="text-sm text-slate-400 px-3 py-2">Aucun résultat</p>}
+              {filteredUsers.length === 0 && <p className="text-sm text-slate-500 px-3 py-2">Aucun résultat</p>}
             </div>
           </div>
         </DraggableWindow>

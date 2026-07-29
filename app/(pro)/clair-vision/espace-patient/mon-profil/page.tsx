@@ -206,7 +206,7 @@ function IconCheck() {
 function FieldRow({ label, value }: { label: string; value: string }) {
   return (
     <div className="rounded-xl px-4 py-3" style={glassSubtle}>
-      <div className="text-xs text-slate-400">{label}</div>
+      <div className="text-xs text-slate-500">{label}</div>
       <div className="mt-0.5 text-sm font-semibold text-slate-800">{value || "—"}</div>
     </div>
   );
@@ -367,7 +367,7 @@ export default function MonProfilPage() {
 
         {/* Identité */}
         <div className="rounded-3xl p-6" style={glass}>
-          <div className="text-xs font-semibold uppercase tracking-wide text-slate-400 mb-4">Identité</div>
+          <div className="text-xs font-semibold uppercase tracking-wide text-slate-500 mb-4">Identité</div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <FieldRow label="Prénom" value={storedPatient?.prenom ?? currentPatient.prenom} />
             <FieldRow label="Nom" value={storedPatient?.nom ?? currentPatient.nom} />
@@ -386,7 +386,7 @@ export default function MonProfilPage() {
         {/* Équipement actuel (dossiers) */}
         {dossiers.length > 0 && (
           <div className="rounded-3xl p-6" style={glass}>
-            <div className="text-xs font-semibold uppercase tracking-wide text-slate-400 mb-4">Équipement actuel</div>
+            <div className="text-xs font-semibold uppercase tracking-wide text-slate-500 mb-4">Équipement actuel</div>
             <div className="space-y-3">
               {dossiers.map((d) => {
                 const statusStyle = STATUS_CONFIG[d.status] ?? { bg: "rgba(148,163,184,0.15)", text: "#475569" };
@@ -424,7 +424,7 @@ export default function MonProfilPage() {
 
         {/* Hint when no pro record found */}
         {!storedPatient && (
-          <div className="rounded-2xl px-5 py-3 text-xs text-slate-400" style={glassSubtle}>
+          <div className="rounded-2xl px-5 py-3 text-xs text-slate-500" style={glassSubtle}>
             Vos informations complètes seront disponibles après votre première visite chez Clair Vision.
           </div>
         )}
@@ -443,7 +443,7 @@ export default function MonProfilPage() {
               <button
                 type="button"
                 onClick={() => setEditOpen(false)}
-                className="rounded-xl p-1.5 text-slate-400 hover:text-slate-700 transition-all"
+                className="rounded-xl p-1.5 text-slate-500 hover:text-slate-700 transition-all"
                 style={glassSubtle}
               >
                 <IconClose />

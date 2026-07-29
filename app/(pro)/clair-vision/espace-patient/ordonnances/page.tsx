@@ -180,7 +180,7 @@ function OrdonnanceModal({ ord, onClose }: { ord: Ordonnance; onClose: () => voi
           <button
             type="button"
             onClick={onClose}
-            className="rounded-xl p-1.5 text-slate-400 hover:text-slate-700 transition-all"
+            className="rounded-xl p-1.5 text-slate-500 hover:text-slate-700 transition-all"
             style={glassSubtle}
           >
             <IconClose />
@@ -196,13 +196,13 @@ function OrdonnanceModal({ ord, onClose }: { ord: Ordonnance; onClose: () => voi
             <div key={label} className="rounded-2xl p-4 space-y-2" style={glassSubtle}>
               <div className="text-xs font-bold uppercase tracking-wide" style={{ color: ACCENT }}>{label}</div>
               <div className="grid grid-cols-2 gap-1 text-xs text-slate-600">
-                <span className="text-slate-400">Sphère</span>
+                <span className="text-slate-500">Sphère</span>
                 <span className="font-semibold text-slate-800">{fmtVal(oeil.sphere)}</span>
-                <span className="text-slate-400">Cylindre</span>
+                <span className="text-slate-500">Cylindre</span>
                 <span className="font-semibold text-slate-800">{fmtVal(oeil.cylindre)}</span>
-                <span className="text-slate-400">Axe</span>
+                <span className="text-slate-500">Axe</span>
                 <span className="font-semibold text-slate-800">{fmtInt(oeil.axe)}°</span>
-                <span className="text-slate-400">Addition</span>
+                <span className="text-slate-500">Addition</span>
                 <span className="font-semibold text-slate-800">{fmtVal(oeil.addition)}</span>
               </div>
             </div>
@@ -219,7 +219,7 @@ function OrdonnanceModal({ ord, onClose }: { ord: Ordonnance; onClose: () => voi
 
         {/* Remarques */}
         <div className="rounded-xl p-4" style={glassSubtle}>
-          <div className="text-xs text-slate-400 mb-1">Remarques</div>
+          <div className="text-xs text-slate-500 mb-1">Remarques</div>
           <div className="text-sm text-slate-700">{ord.remarques || "—"}</div>
         </div>
 
@@ -321,7 +321,7 @@ export default function OrdonnancesPage() {
                         {formatDate(ord.dateOrdonnance)} · Prescrit par {ord.prescripteur}
                       </div>
 
-                      <div className="mt-1 text-xs text-slate-400">
+                      <div className="mt-1 text-xs text-slate-500">
                         {active ? `Valide jusqu'au ${formatDate(ord.dateExpiration)}` : `Expirée le ${formatDate(ord.dateExpiration)}`}
                       </div>
 

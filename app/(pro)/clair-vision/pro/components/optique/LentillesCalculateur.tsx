@@ -60,7 +60,7 @@ function RxField({ label, value, onChange, placeholder = "0.00", step = "0.25" }
     <div>
       <label className="block text-[11px] font-semibold uppercase tracking-wide text-slate-500 mb-1">{label}</label>
       <input type="number" step={step} value={value} onChange={e => onChange(e.target.value)} placeholder={placeholder}
-        className="w-full rounded-xl border border-slate-200/80 bg-white/70 px-3 py-2 text-sm text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#2D8CFF]/30 focus:border-[#2D8CFF]/60 transition-all" />
+        className="w-full rounded-xl border border-slate-200/80 bg-white/70 px-3 py-2 text-sm text-slate-800 placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-[#2D8CFF]/30 focus:border-[#2D8CFF]/60 transition-all" />
     </div>
   );
 }
@@ -86,7 +86,7 @@ function StepBar({ step }: { step: Step }) {
     <div className="flex items-center gap-0">
       {steps.map((s, i) => (
         <div key={s.n} className="flex items-center">
-          <div className={`flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-semibold transition-all ${step === s.n ? "text-white" : step > s.n ? "text-[#2D8CFF]" : "text-slate-400"}`}
+          <div className={`flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-semibold transition-all ${step === s.n ? "text-white" : step > s.n ? "text-[#2D8CFF]" : "text-slate-500"}`}
             style={step === s.n ? { background: "#2D8CFF", boxShadow: "0 2px 8px rgba(45,140,255,.28)" } : glassSubtle}>
             <span className={`grid h-5 w-5 place-items-center rounded-full text-[10px] font-bold ${step > s.n ? "bg-[#2D8CFF] text-white" : step === s.n ? "bg-white/25 text-white" : "bg-slate-200 text-slate-500"}`}>
               {step > s.n ? <IconCheck className="w-3 h-3" /> : s.n}
@@ -166,7 +166,7 @@ function LensCard({ lens, selected, onSelect }: { lens: Lens; selected: boolean;
       <div className="mt-2 grid grid-cols-3 gap-1 text-center">
         {[{ k: "Eau", v: lens.type === "rigide" ? "—" : `${lens.waterContent}%` }, { k: "Dk/t", v: lens.dkT }, { k: "RC", v: lens.baseCurves[0]?.toFixed(1) }].map(({ k, v }) => (
           <div key={k} className="rounded-lg bg-white/60 px-1 py-1.5">
-            <div className="text-[9px] text-slate-400">{k}</div>
+            <div className="text-[9px] text-slate-500">{k}</div>
             <div className="text-[11px] font-bold text-slate-700">{v}</div>
           </div>
         ))}
@@ -198,7 +198,7 @@ function Top3Card({ detail, rank, onSelect }: { detail: ScoreDetail; rank: 1 | 2
       <div className="grid grid-cols-4 gap-1.5 text-center">
         {[{ k: "Dk/t", v: String(lens.dkT) }, { k: "Eau", v: lens.type === "rigide" ? "—" : `${lens.waterContent}%` }, { k: "Type", v: lens.siliconeHydrogel ? "SiHy" : "Hydrogel" }, { k: "Port", v: REPLACEMENT_LABELS[lens.replacement].split(" ")[0] }].map(({ k, v }) => (
           <div key={k} className="rounded-lg bg-white/70 py-2">
-            <div className="text-[9px] text-slate-400">{k}</div>
+            <div className="text-[9px] text-slate-500">{k}</div>
             <div className="text-[11px] font-bold text-slate-700">{v}</div>
           </div>
         ))}
@@ -377,7 +377,7 @@ export default function LentillesCalculateur({
             placeholder="Rechercher un patient (nom, prénom)…"
             value={searchDossier}
             onChange={e => setSearchDossier(e.target.value)}
-            className="w-full rounded-xl border border-slate-200/80 bg-white/70 px-3 py-2 text-sm text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#2D8CFF]/30 focus:border-[#2D8CFF]/60 transition-all mb-3"
+            className="w-full rounded-xl border border-slate-200/80 bg-white/70 px-3 py-2 text-sm text-slate-800 placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-[#2D8CFF]/30 focus:border-[#2D8CFF]/60 transition-all mb-3"
           />
           {(() => {
             const filtered = searchDossier.trim() === ""
@@ -404,7 +404,7 @@ export default function LentillesCalculateur({
                       style={sel ? {} : glassSubtle}>
                       <div className="text-sm font-bold text-slate-800">{d.patientName}</div>
                       <div className="text-[11px] text-slate-500 mt-1">{lastEssai.lentille}</div>
-                      <div className="text-[11px] text-slate-400">{lastEssai.date}</div>
+                      <div className="text-[11px] text-slate-500">{lastEssai.date}</div>
                       {lastEssai.problemes.length > 0 && (
                         <div className="mt-2 flex flex-wrap gap-1">
                           {lastEssai.problemes.map(pid => {
@@ -785,27 +785,27 @@ export default function LentillesCalculateur({
                   <div className={`text-xs font-bold uppercase tracking-widest ${color}`}>Œil {side === "OD" ? "droit" : "gauche"} ({side})</div>
                   <div className="grid grid-cols-2 gap-2">
                     <div>
-                      <label className="block text-[10px] font-semibold uppercase tracking-wide text-slate-400 mb-1">Rayon de courbure (BC)</label>
+                      <label className="block text-[10px] font-semibold uppercase tracking-wide text-slate-500 mb-1">Rayon de courbure (BC)</label>
                       <select value={params[`bc${side}` as "bcOD" | "bcOG"]} onChange={e => setParams(p => ({ ...p, [`bc${side}`]: e.target.value }))}
                         className="w-full rounded-xl border border-slate-200/80 bg-white/80 px-2 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#2D8CFF]/30">
                         {selectedLens.baseCurves.map(bc => <option key={bc} value={bc.toFixed(2)}>{bc.toFixed(2)} mm</option>)}
                       </select>
                     </div>
                     <div>
-                      <label className="block text-[10px] font-semibold uppercase tracking-wide text-slate-400 mb-1">Diamètre (Ø)</label>
+                      <label className="block text-[10px] font-semibold uppercase tracking-wide text-slate-500 mb-1">Diamètre (Ø)</label>
                       <select value={params[`dia${side}` as "diaOD" | "diaOG"]} onChange={e => setParams(p => ({ ...p, [`dia${side}`]: e.target.value }))}
                         className="w-full rounded-xl border border-slate-200/80 bg-white/80 px-2 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#2D8CFF]/30">
                         {selectedLens.diameters.map(d => <option key={d} value={d.toFixed(1)}>{d.toFixed(1)} mm</option>)}
                       </select>
                     </div>
                     <div>
-                      <label className="block text-[10px] font-semibold uppercase tracking-wide text-slate-400 mb-1">Puissance (D)</label>
+                      <label className="block text-[10px] font-semibold uppercase tracking-wide text-slate-500 mb-1">Puissance (D)</label>
                       <input value={params[`puiss${side}` as "puissOD" | "puissOG"]} onChange={e => setParams(p => ({ ...p, [`puiss${side}`]: e.target.value }))}
                         className="w-full rounded-xl border border-slate-200/80 bg-white/80 px-2 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#2D8CFF]/30" />
                     </div>
                     {result.needsTorique && (
                       <div className="col-span-2 sm:col-span-1">
-                        <label className="block text-[10px] font-semibold uppercase tracking-wide text-slate-400 mb-1">Cyl / Axe</label>
+                        <label className="block text-[10px] font-semibold uppercase tracking-wide text-slate-500 mb-1">Cyl / Axe</label>
                         <div className="text-xs font-semibold text-amber-700 bg-amber-50 rounded-lg px-2 py-1.5">{result.cylConverti.toFixed(2)} D / {side === "OD" ? odRx.axe : ogRx.axe}°</div>
                         <div className="mt-1.5 rounded-lg bg-amber-50 border border-amber-200 px-2 py-1.5">
                           <div className="text-[10px] font-bold text-amber-800 mb-0.5">Règle LARS</div>
@@ -818,7 +818,7 @@ export default function LentillesCalculateur({
                     )}
                     {add > 0 && (
                       <div>
-                        <label className="block text-[10px] font-semibold uppercase tracking-wide text-slate-400 mb-1">Addition</label>
+                        <label className="block text-[10px] font-semibold uppercase tracking-wide text-slate-500 mb-1">Addition</label>
                         <div className="text-xs font-semibold text-purple-700 bg-purple-50 rounded-lg px-2 py-1.5">+{add.toFixed(2)} D</div>
                       </div>
                     )}
@@ -834,7 +834,7 @@ export default function LentillesCalculateur({
           <label className="block text-sm font-semibold text-slate-800 mb-2">Notes praticien</label>
           <textarea value={params.notes} onChange={e => setParams(p => ({ ...p, notes: e.target.value }))} rows={3}
             placeholder="Instructions de port, conseils hygiène, contrôle à prévoir..."
-            className="w-full rounded-xl border border-slate-200/80 bg-white/70 px-3 py-2 text-sm placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#2D8CFF]/30 transition-all resize-none" />
+            className="w-full rounded-xl border border-slate-200/80 bg-white/70 px-3 py-2 text-sm placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-[#2D8CFF]/30 transition-all resize-none" />
         </div>
 
         {/* Compte-rendu */}

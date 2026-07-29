@@ -173,7 +173,7 @@ export default function MessagesPage() {
                     </div>
                     <div className="mt-1 truncate text-xs text-slate-500">{t.subtitle}</div>
                   </div>
-                  <div className="text-[11px] text-slate-400 flex-shrink-0">{t.lastAtLabel}</div>
+                  <div className="text-[11px] text-slate-500 flex-shrink-0">{t.lastAtLabel}</div>
                 </div>
               </button>
             ))}
@@ -216,7 +216,7 @@ export default function MessagesPage() {
                     <div className="mr-auto max-w-[72%] rounded-2xl px-4 py-3 text-sm text-slate-800 shadow-sm"
                          style={glassSubtle}>
                       <div>{m.text}</div>
-                      <div className="mt-1 text-[11px] text-slate-400">{m.time}</div>
+                      <div className="mt-1 text-[11px] text-slate-500">{m.time}</div>
                     </div>
                   )}
                 </div>
@@ -242,7 +242,7 @@ export default function MessagesPage() {
                 Envoyer
               </button>
             </div>
-            <div className="mt-2 text-xs text-slate-400">UI uniquement : ces messages ne sont pas envoyés (pour l'instant).</div>
+            <div className="mt-2 text-xs text-slate-500">UI uniquement : ces messages ne sont pas envoyés (pour l'instant).</div>
           </div>
         </div>
       </div>

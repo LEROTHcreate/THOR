@@ -171,7 +171,7 @@ export default function ActualitesAuditionPage() {
                   <IconTag />
                   {item.category}
                 </span>
-                <span className="ml-auto text-xs text-slate-400">{item.date}</span>
+                <span className="ml-auto text-xs text-slate-500">{item.date}</span>
               </div>
               <h3 className="mb-2 text-sm font-bold text-slate-800">{item.title}</h3>
               <p className="flex-1 text-xs text-slate-500 leading-relaxed">{item.description}</p>
@@ -201,7 +201,7 @@ export default function ActualitesAuditionPage() {
             </div>
             <div className="text-right">
               <span className="text-2xl font-bold" style={{ color: ACCENT }}>{loyaltyPoints}</span>
-              <span className="text-sm text-slate-400"> / {loyaltyMax} pts</span>
+              <span className="text-sm text-slate-500"> / {loyaltyMax} pts</span>
             </div>
           </div>
 
@@ -215,7 +215,7 @@ export default function ActualitesAuditionPage() {
               }}
             />
           </div>
-          <div className="flex justify-between text-xs text-slate-400 mb-4">
+          <div className="flex justify-between text-xs text-slate-500 mb-4">
             <span>{loyaltyPoints} points</span>
             <span>{loyaltyMax - loyaltyPoints} points restants</span>
           </div>

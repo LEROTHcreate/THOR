@@ -348,7 +348,7 @@ function ModalDevis({ appareil, onClose, onAdded }: ModalDevisProps) {
     >
       <div style={{ background: "var(--glass-card-bg)", padding: "24px" }} className="space-y-4">
         <div>
-          <p className="text-xs font-medium text-slate-400 uppercase tracking-wide">
+          <p className="text-xs font-medium text-slate-500 uppercase tracking-wide">
             {appareil.marque} · {appareil.gamme}
           </p>
           <h3 className="text-base font-semibold text-slate-800 leading-snug mt-0.5">
@@ -463,7 +463,7 @@ function AppareilCard({
 
       {/* Identité */}
       <div>
-        <p className="text-xs font-medium text-slate-400 uppercase tracking-wide">
+        <p className="text-xs font-medium text-slate-500 uppercase tracking-wide">
           {appareil.marque} · {appareil.gamme}
         </p>
         <h3 className="text-base font-bold text-slate-800 leading-snug mt-0.5">
@@ -511,7 +511,7 @@ function AppareilCard({
       </div>
 
       {/* Pertes */}
-      <p className="text-[11px] text-slate-400">
+      <p className="text-[11px] text-slate-500">
         <span className="font-medium text-slate-500">Pertes : </span>
         {appareil.indicationsPertes.join(" · ")}
       </p>
@@ -523,7 +523,7 @@ function AppareilCard({
       <div className="space-y-0.5">
         <p className="text-base font-bold text-slate-800">
           {formatPrice(appareil.prixUnitaireTTC)}{" "}
-          <span className="text-xs font-normal text-slate-400">TTC / oreille</span>
+          <span className="text-xs font-normal text-slate-500">TTC / oreille</span>
         </p>
         <p className="text-xs text-slate-500">
           SS : {formatPrice(appareil.priseEnChargeSS)}/oreille
@@ -547,7 +547,7 @@ function AppareilCard({
 
       {/* Autonomie & garantie */}
       {(appareil.autonomie || appareil.garantie) && (
-        <div className="text-[11px] text-slate-400 space-y-0.5">
+        <div className="text-[11px] text-slate-500 space-y-0.5">
           {appareil.autonomie && (
             <p>
               <span className="font-medium text-slate-500">Autonomie : </span>
@@ -838,7 +838,7 @@ function Step2({
       <div>
         <p className="text-sm font-medium text-slate-700 mb-3">
           Quels problèmes avez-vous rencontrés ?{" "}
-          <span className="font-normal text-slate-400">(plusieurs choix possibles)</span>
+          <span className="font-normal text-slate-500">(plusieurs choix possibles)</span>
         </p>
         <div className="space-y-2">
           {PROBLEMES_OPTIONS.map((opt) => (
@@ -937,7 +937,7 @@ function Step3({
             >
               <span className="text-xl">{p.icon}</span>
               <span className="text-sm font-semibold text-slate-800">{p.label}</span>
-              <span className="text-xs font-medium text-slate-400">{p.sublabel}</span>
+              <span className="text-xs font-medium text-slate-500">{p.sublabel}</span>
               <span className="text-[11px] text-slate-500 leading-tight mt-0.5">
                 {p.description}
               </span>
@@ -1126,7 +1126,7 @@ function Step4({
       <div>
         <p className="text-sm font-medium text-slate-700 mb-3">
           Dans quels environnements avez-vous le plus de difficultés ?{" "}
-          <span className="font-normal text-slate-400">(plusieurs choix possibles)</span>
+          <span className="font-normal text-slate-500">(plusieurs choix possibles)</span>
         </p>
         <div className="space-y-2">
           {ENVIRONNEMENTS_OPTIONS.map((opt) => (
@@ -1380,7 +1380,7 @@ function ResultCard({
 
       {/* Identité */}
       <div>
-        <p className="text-xs font-medium text-slate-400 uppercase tracking-wide">
+        <p className="text-xs font-medium text-slate-500 uppercase tracking-wide">
           {appareil.marque} · {appareil.gamme}
         </p>
         <h3 className="text-lg font-bold text-slate-800 leading-snug mt-0.5">
@@ -1456,7 +1456,7 @@ function ResultCard({
           </span>
         </div>
         {nbOreilles === 2 && (
-          <div className="flex justify-between text-xs text-slate-400 pt-0.5">
+          <div className="flex justify-between text-xs text-slate-500 pt-0.5">
             <span>RAC paire</span>
             <span className="font-semibold">{formatPrice(racResult.rac)}</span>
           </div>
@@ -1642,12 +1642,12 @@ function CatalogueView({
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder="Rechercher un modèle, une marque, une technologie…"
-          className="flex-1 bg-transparent text-sm text-slate-700 placeholder:text-slate-400 outline-none"
+          className="flex-1 bg-transparent text-sm text-slate-700 placeholder:text-slate-500 outline-none"
         />
         {query && (
           <button
             onClick={() => setQuery("")}
-            className="shrink-0 rounded-lg p-1 text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-colors"
+            className="shrink-0 rounded-lg p-1 text-slate-500 hover:text-slate-600 hover:bg-slate-100 transition-colors"
           >
             <svg
               className="w-4 h-4"
@@ -1665,7 +1665,7 @@ function CatalogueView({
       {/* Filtres */}
       <div className="rounded-2xl px-5 py-4 space-y-3" style={glass}>
         <div className="flex flex-wrap gap-2 items-center">
-          <span className="text-[11px] font-semibold uppercase tracking-wide text-slate-400 w-14 shrink-0">
+          <span className="text-[11px] font-semibold uppercase tracking-wide text-slate-500 w-14 shrink-0">
             Marque
           </span>
           <Pill label="Tous" active={marque === "tous"} onClick={() => setMarque("tous")} />
@@ -1674,7 +1674,7 @@ function CatalogueView({
           ))}
         </div>
         <div className="flex flex-wrap gap-2 items-center">
-          <span className="text-[11px] font-semibold uppercase tracking-wide text-slate-400 w-14 shrink-0">
+          <span className="text-[11px] font-semibold uppercase tracking-wide text-slate-500 w-14 shrink-0">
             Type
           </span>
           {(
@@ -1695,7 +1695,7 @@ function CatalogueView({
           ))}
         </div>
         <div className="flex flex-wrap gap-2 items-center">
-          <span className="text-[11px] font-semibold uppercase tracking-wide text-slate-400 w-14 shrink-0">
+          <span className="text-[11px] font-semibold uppercase tracking-wide text-slate-500 w-14 shrink-0">
             Classe
           </span>
           <Pill
@@ -1711,7 +1711,7 @@ function CatalogueView({
           <Pill label="Classe 2" active={classe === 2} onClick={() => setClasse(2)} />
         </div>
         <div className="flex flex-wrap gap-2 items-center">
-          <span className="text-[11px] font-semibold uppercase tracking-wide text-slate-400 w-14 shrink-0">
+          <span className="text-[11px] font-semibold uppercase tracking-wide text-slate-500 w-14 shrink-0">
             Niveau
           </span>
           {(
@@ -1730,7 +1730,7 @@ function CatalogueView({
 
       {/* Compteur */}
       <div className="flex justify-end">
-        <span className="text-sm font-medium text-slate-400">
+        <span className="text-sm font-medium text-slate-500">
           {results.length} appareil{results.length !== 1 ? "s" : ""}
         </span>
       </div>

@@ -313,7 +313,7 @@ function Modal({ title, onClose, children }: { title: string; onClose: () => voi
         <div className="flex items-center justify-between mb-5">
           <h3 className="text-base font-semibold text-slate-800">{title}</h3>
           <button onClick={onClose}
-            className="grid h-7 w-7 place-items-center rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-colors">
+            className="grid h-7 w-7 place-items-center rounded-lg text-slate-500 hover:text-slate-600 hover:bg-slate-100 transition-colors">
             <IconX />
           </button>
         </div>
@@ -366,7 +366,7 @@ function AudiogrammeTable({ audiogramme }: { audiogramme: AudiogrammeFreq[] }) {
                 {f.hz >= 1000 ? `${f.hz / 1000} kHz` : `${f.hz} Hz`}
               </th>
             ))}
-            <th className="text-center py-1.5 px-2 font-medium text-slate-400">Moy.</th>
+            <th className="text-center py-1.5 px-2 font-medium text-slate-500">Moy.</th>
           </tr>
         </thead>
         <tbody>
@@ -382,7 +382,7 @@ function AudiogrammeTable({ audiogramme }: { audiogramme: AudiogrammeFreq[] }) {
                   return (
                     <td key={f.hz} className="text-center py-1.5 px-2">
                       <span className="font-semibold" style={{ color: c.color }}>{v}</span>
-                      <span className="text-slate-400 text-[10px] ml-0.5">dB</span>
+                      <span className="text-slate-500 text-[10px] ml-0.5">dB</span>
                     </td>
                   );
                 })}
@@ -571,7 +571,7 @@ export default function PatientAudFichePage({ params }: { params: Promise<{ id: 
 
   /* Patient introuvable */
   if (loadingP) {
-    return <div className="flex items-center justify-center min-h-[60vh]"><div className="text-slate-400 text-sm">Chargement…</div></div>;
+    return <div className="flex items-center justify-center min-h-[60vh]"><div className="text-slate-500 text-sm">Chargement…</div></div>;
   }
   if (!patient) {
     return (
@@ -754,7 +754,7 @@ export default function PatientAudFichePage({ params }: { params: Promise<{ id: 
                     const clsOD = classifyLoss(avgOD);
                     return (
                       <div className="rounded-2xl p-4 flex flex-col gap-1" style={glass}>
-                        <div className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Dernier bilan</div>
+                        <div className="text-[10px] font-bold uppercase tracking-widest text-slate-500">Dernier bilan</div>
                         {last ? (
                           <>
                             <div className="text-lg font-bold" style={{ color: clsOD.color }}>{avgOD} dB</div>
@@ -764,7 +764,7 @@ export default function PatientAudFichePage({ params }: { params: Promise<{ id: 
                               <span className="text-[10px] font-semibold rounded-full px-1.5 py-0.5" style={{ background: `${classifyLoss(avgOG).color}15`, color: classifyLoss(avgOG).color }}>OG</span>
                             </div>
                           </>
-                        ) : <div className="text-sm text-slate-400">Aucun bilan</div>}
+                        ) : <div className="text-sm text-slate-500">Aucun bilan</div>}
                       </div>
                     );
                   })()}
@@ -777,7 +777,7 @@ export default function PatientAudFichePage({ params }: { params: Promise<{ id: 
                     const urgent = diffDays !== null && diffDays <= 30;
                     return (
                       <div className="rounded-2xl p-4 flex flex-col gap-1" style={glass}>
-                        <div className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Prochain contrôle</div>
+                        <div className="text-[10px] font-bold uppercase tracking-widest text-slate-500">Prochain contrôle</div>
                         {next ? (
                           <>
                             <div className="text-sm font-bold text-slate-800 leading-tight">{next.label}</div>
@@ -798,7 +798,7 @@ export default function PatientAudFichePage({ params }: { params: Promise<{ id: 
                     const total = reglEnAttente.reduce((s, d) => s + d.montant, 0);
                     return (
                       <div className="rounded-2xl p-4 flex flex-col gap-1" style={glass}>
-                        <div className="text-[10px] font-bold uppercase tracking-widest text-slate-400">RAC en attente</div>
+                        <div className="text-[10px] font-bold uppercase tracking-widest text-slate-500">RAC en attente</div>
                         <div className="text-lg font-bold" style={{ color: total > 0 ? "#f59e0b" : "#10b981" }}>
                           {total > 0 ? formatEur(total) : "—"}
                         </div>
@@ -818,7 +818,7 @@ export default function PatientAudFichePage({ params }: { params: Promise<{ id: 
 
                   {/* CA total */}
                   <div className="rounded-2xl p-4 flex flex-col gap-1" style={glass}>
-                    <div className="text-[10px] font-bold uppercase tracking-widest text-slate-400">CA total</div>
+                    <div className="text-[10px] font-bold uppercase tracking-widest text-slate-500">CA total</div>
                     <div className="text-lg font-bold text-slate-800">{formatEur(totalCA)}</div>
                     <div className="text-xs text-slate-500">{devisFactures.filter(d => d.type === "facture").length} facture{devisFactures.filter(d => d.type === "facture").length > 1 ? "s" : ""}</div>
                     <Link href="/clair-audition/pro/facturation" className="mt-1 self-start text-[10px] font-semibold rounded-full px-2 py-0.5"
@@ -844,7 +844,7 @@ export default function PatientAudFichePage({ params }: { params: Promise<{ id: 
                           <div className="flex-1 pt-1">
                             <div className="flex items-baseline gap-2 flex-wrap">
                               <span className="text-sm font-medium text-slate-800">{ev.titre}</span>
-                              <span className="text-xs text-slate-400">{ev.date}</span>
+                              <span className="text-xs text-slate-500">{ev.date}</span>
                             </div>
                             <p className="text-xs text-slate-500 mt-0.5">{ev.sousTitre}</p>
                           </div>
@@ -882,7 +882,7 @@ export default function PatientAudFichePage({ params }: { params: Promise<{ id: 
                       <div className="flex items-start justify-between gap-2 flex-wrap mb-3">
                         <div>
                           <span className="text-sm font-semibold text-slate-800">{bilan.type}</span>
-                          <span className="ml-2 text-xs text-slate-400">{bilan.date} · {bilan.praticien}</span>
+                          <span className="ml-2 text-xs text-slate-500">{bilan.date} · {bilan.praticien}</span>
                         </div>
                         <div className="flex items-center gap-2">
                           <button onClick={() => toggleBilanVis(bilan.id)}
@@ -944,7 +944,7 @@ export default function PatientAudFichePage({ params }: { params: Promise<{ id: 
                 </div>
                 <table className="w-full text-sm">
                   <thead>
-                    <tr className="border-b border-slate-100 text-xs text-slate-400">
+                    <tr className="border-b border-slate-100 text-xs text-slate-500">
                       <th className="text-left px-4 py-2.5 font-medium">N°</th>
                       <th className="text-left px-4 py-2.5 font-medium hidden sm:table-cell">Date</th>
                       <th className="text-left px-4 py-2.5 font-medium">Description</th>
@@ -1006,7 +1006,7 @@ export default function PatientAudFichePage({ params }: { params: Promise<{ id: 
                     <div key={doc.id} className="rounded-2xl p-3 flex flex-col gap-2" style={glass}>
                       <div className="text-2xl">{DOC_ICONS[doc.type]}</div>
                       <p className="text-xs font-medium text-slate-700 leading-tight">{doc.nom}</p>
-                      <p className="text-[10px] text-slate-400">{doc.date}</p>
+                      <p className="text-[10px] text-slate-500">{doc.date}</p>
                       <div className="flex items-center justify-between mt-auto pt-1">
                         <button onClick={() => toggleDocVis(doc.id)}
                           className="flex items-center gap-0.5 text-[10px] font-medium rounded-md px-1.5 py-0.5 transition-colors"
@@ -1040,7 +1040,7 @@ export default function PatientAudFichePage({ params }: { params: Promise<{ id: 
                   <span className="text-3xl"></span>
                   <div className="text-center">
                     <p className="text-sm font-semibold" style={{ color: PRIMARY }}>Glissez un document ici</p>
-                    <p className="text-xs text-slate-400 mt-1">ou cliquez pour parcourir — le document sera scanné automatiquement</p>
+                    <p className="text-xs text-slate-500 mt-1">ou cliquez pour parcourir — le document sera scanné automatiquement</p>
                   </div>
                   <input id="aud-doc-input" type="file" className="hidden"
                     onChange={e => { const f = e.target.files?.[0]; if (f) handleDocFile(f); }} />
@@ -1066,7 +1066,7 @@ export default function PatientAudFichePage({ params }: { params: Promise<{ id: 
                   className="w-full rounded-xl border border-slate-200 bg-white/70 px-4 py-3 text-sm text-slate-700 leading-relaxed outline-none transition-all resize-none"
                 />
                 <div className="flex items-center justify-between">
-                  <p className="text-xs text-slate-400">Dernière modification : 12 jan. 2026 · M. Laurent Girard</p>
+                  <p className="text-xs text-slate-500">Dernière modification : 12 jan. 2026 · M. Laurent Girard</p>
                   <button onClick={() => setToast("Notes enregistrées.")}
                     className="rounded-xl px-4 py-2 text-sm font-semibold text-white"
                     style={{ background: PRIMARY, boxShadow: `0 2px 8px ${PRIMARY}25` }}>
@@ -1226,15 +1226,15 @@ export default function PatientAudFichePage({ params }: { params: Promise<{ id: 
                                 </span>
                               </div>
                               <div className="flex items-center gap-3">
-                                <span className="text-sm font-bold" style={{ color: badge.color }}>{total}<span className="text-xs font-normal text-slate-400">/35</span></span>
-                                <span className="text-slate-400 text-xs">{expanded ? "▲" : "▼"}</span>
+                                <span className="text-sm font-bold" style={{ color: badge.color }}>{total}<span className="text-xs font-normal text-slate-500">/35</span></span>
+                                <span className="text-slate-500 text-xs">{expanded ? "▲" : "▼"}</span>
                               </div>
                             </button>
                             {expanded && (
                               <div className="px-4 pb-4 space-y-2 border-t border-slate-100">
                                 {IOI_QUESTIONS.map((q, qi) => (
                                   <div key={qi} className="flex items-center gap-3 py-1.5">
-                                    <span className="text-[10px] font-bold text-slate-400 w-4 flex-shrink-0">Q{qi + 1}</span>
+                                    <span className="text-[10px] font-bold text-slate-500 w-4 flex-shrink-0">Q{qi + 1}</span>
                                     <p className="flex-1 text-xs text-slate-600 leading-snug">{q}</p>
                                     <div className="flex gap-0.5 flex-shrink-0">
                                       {[1, 2, 3, 4, 5].map(v => (
@@ -1263,7 +1263,7 @@ export default function PatientAudFichePage({ params }: { params: Promise<{ id: 
                         {IOI_QUESTIONS.map((q, qi) => (
                           <div key={qi} className="space-y-1.5">
                             <div className="flex items-start gap-2">
-                              <span className="text-[10px] font-bold text-slate-400 mt-0.5 flex-shrink-0">Q{qi + 1}</span>
+                              <span className="text-[10px] font-bold text-slate-500 mt-0.5 flex-shrink-0">Q{qi + 1}</span>
                               <p className="text-xs text-slate-700 leading-snug">{q}</p>
                             </div>
                             <div className="flex gap-1.5 pl-5">
@@ -1436,13 +1436,13 @@ export default function PatientAudFichePage({ params }: { params: Promise<{ id: 
             <div className="rounded-2xl p-4 space-y-3" style={glass}>
               <h3 className="text-[11px] font-semibold text-slate-500 uppercase tracking-wide">⏳ Règlements en attente</h3>
               {reglEnAttente.length === 0 ? (
-                <p className="text-xs text-slate-400 italic">Aucun règlement en attente</p>
+                <p className="text-xs text-slate-500 italic">Aucun règlement en attente</p>
               ) : reglEnAttente.map(d => (
                 <div key={d.id} className="space-y-2">
                   <div className="flex items-start justify-between gap-2">
                     <div>
                       <p className="text-xs font-medium text-slate-700">{d.id}</p>
-                      <p className="text-[11px] text-slate-400 mt-0.5 line-clamp-2">{d.description}</p>
+                      <p className="text-[11px] text-slate-500 mt-0.5 line-clamp-2">{d.description}</p>
                     </div>
                     <span className="flex-shrink-0 rounded-full px-2 py-0.5 text-xs font-bold text-white"
                       style={{ background: "#EF4444" }}>
@@ -1464,7 +1464,7 @@ export default function PatientAudFichePage({ params }: { params: Promise<{ id: 
               <div className="rounded-xl p-3 space-y-1" style={glassSubtle}>
                 <p className="text-sm font-semibold text-slate-800">Jeu. 26 mar. 2026 · 10h30</p>
                 <p className="text-xs text-slate-500">Contrôle semestriel</p>
-                <p className="text-xs text-slate-400">M. Laurent Girard</p>
+                <p className="text-xs text-slate-500">M. Laurent Girard</p>
               </div>
               <div className="flex gap-2">
                 <button onClick={() => setShowRdvModal(true)}
@@ -1492,7 +1492,7 @@ export default function PatientAudFichePage({ params }: { params: Promise<{ id: 
                   ["Renouvellement", "jan. 2029 (4 ans)"],
                 ] as [string, string][]).map(([label, val]) => (
                   <div key={label} className="flex justify-between">
-                    <span className="text-slate-400">{label}</span>
+                    <span className="text-slate-500">{label}</span>
                     <span className={label === "CA total" ? "font-semibold text-slate-800" : "font-medium"}>{val}</span>
                   </div>
                 ))}
@@ -1598,7 +1598,7 @@ export default function PatientAudFichePage({ params }: { params: Promise<{ id: 
             <div className="flex items-center justify-between mb-5">
               <h3 className="text-base font-semibold text-slate-800">Quel type de document ?</h3>
               <button onClick={() => setDocDropModal(null)}
-                className="grid h-7 w-7 place-items-center rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-colors">
+                className="grid h-7 w-7 place-items-center rounded-lg text-slate-500 hover:text-slate-600 hover:bg-slate-100 transition-colors">
                 <IconX />
               </button>
             </div>
@@ -1644,14 +1644,14 @@ export default function PatientAudFichePage({ params }: { params: Promise<{ id: 
                     <div className="rounded-xl p-3 space-y-2" style={glassSubtle}>
                       {Object.entries(docDropModal.extracted).map(([k, v]) => (
                         <div key={k}>
-                          <p className="text-[10px] font-semibold text-slate-400 uppercase tracking-wide">{k}</p>
+                          <p className="text-[10px] font-semibold text-slate-500 uppercase tracking-wide">{k}</p>
                           <p className="text-xs font-medium text-slate-700">{v}</p>
                         </div>
                       ))}
                     </div>
                   </>
                 ) : (
-                  <p className="text-xs text-slate-400 italic py-2">Aucune donnée extractible automatiquement.</p>
+                  <p className="text-xs text-slate-500 italic py-2">Aucune donnée extractible automatiquement.</p>
                 )}
                 <div className="flex gap-2 pt-2">
                   <button onClick={() => setDocDropModal(null)}

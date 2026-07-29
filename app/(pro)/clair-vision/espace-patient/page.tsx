@@ -329,7 +329,7 @@ export default function VisionDashboardPage() {
             {initials}
           </div>
           <div>
-            <p className="text-xs text-slate-400 font-medium tracking-wide">
+            <p className="text-xs text-slate-500 font-medium tracking-wide">
               {new Date().getHours() < 12 ? "Bonjour" : new Date().getHours() < 18 ? "Bon après-midi" : "Bonsoir"}
             </p>
             <h1 className="text-xl font-bold text-slate-900 tracking-tight mt-0.5">
@@ -343,7 +343,7 @@ export default function VisionDashboardPage() {
                   Ordonnance valide
                 </span>
               )}
-              <span className="text-[11px] text-slate-400">Données sécurisées HDS</span>
+              <span className="text-[11px] text-slate-500">Données sécurisées HDS</span>
             </div>
           </div>
         </div>
@@ -511,7 +511,7 @@ export default function VisionDashboardPage() {
         {/* Prochain RDV */}
         <div className="rounded-3xl p-6" style={glass}>
           <div className="flex items-center justify-between mb-4">
-            <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-slate-400">
+            <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-slate-500">
               <span style={{ color: ACCENT }}><SvgCalendar /></span>
               Votre prochain RDV
             </div>
@@ -526,7 +526,7 @@ export default function VisionDashboardPage() {
                   <div className="text-2xl font-bold text-slate-800">
                     {new Date(nextRdv.date).getDate()}
                   </div>
-                  <div className="text-xs text-slate-400">
+                  <div className="text-xs text-slate-500">
                     {new Date(nextRdv.date).toLocaleDateString("fr-FR", { month: "short" })}
                   </div>
                 </div>
@@ -536,7 +536,7 @@ export default function VisionDashboardPage() {
                     {TYPE_LABELS[nextRdv.type] ?? nextRdv.type}
                   </div>
                   {nextRdv.praticien && (
-                    <div className="text-xs text-slate-400 mt-0.5">{nextRdv.praticien}</div>
+                    <div className="text-xs text-slate-500 mt-0.5">{nextRdv.praticien}</div>
                   )}
                 </div>
               </div>
@@ -564,7 +564,7 @@ export default function VisionDashboardPage() {
 
         {/* Dernière ordonnance */}
         <div className="rounded-3xl p-6" style={glass}>
-          <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-slate-400 mb-4">
+          <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-slate-500 mb-4">
             <span style={{ color: ACCENT }}><SvgClipboard /></span>
             Votre dernière ordonnance
           </div>
@@ -602,7 +602,7 @@ export default function VisionDashboardPage() {
 
         {/* Dernier devis */}
         <div className="rounded-3xl p-6" style={glass}>
-          <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-slate-400 mb-4">
+          <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-slate-500 mb-4">
             <span style={{ color: ACCENT }}><SvgFile /></span>
             Votre dernier devis
           </div>
@@ -614,7 +614,7 @@ export default function VisionDashboardPage() {
                 <span className="text-sm font-bold text-slate-800">
                   {lastDevis.totalTTC.toLocaleString("fr-FR", { style: "currency", currency: "EUR" })} TTC
                 </span>
-                <span className="text-xs text-slate-400">
+                <span className="text-xs text-slate-500">
                   RAC : {lastDevis.resteACharge.toLocaleString("fr-FR", { style: "currency", currency: "EUR" })}
                 </span>
               </div>
@@ -682,11 +682,11 @@ export default function VisionDashboardPage() {
                     { label: "Addition",  val: lastOrd.od.addition  },
                   ].map(({ label, val, suffix }) => (
                     <div key={label} className="bg-white px-3 py-2.5">
-                      <div className="text-[10px] text-slate-400 mb-0.5">{label}</div>
+                      <div className="text-[10px] text-slate-500 mb-0.5">{label}</div>
                       <div className="text-sm font-bold text-slate-800">
                         {val !== null && val !== undefined
                           ? `${val > 0 ? "+" : ""}${val}${suffix ?? ""}`
-                          : <span className="text-slate-300">—</span>}
+                          : <span className="text-slate-500">—</span>}
                       </div>
                     </div>
                   ))}
@@ -708,11 +708,11 @@ export default function VisionDashboardPage() {
                     { label: "Addition",  val: lastOrd.og.addition  },
                   ].map(({ label, val, suffix }) => (
                     <div key={label} className="bg-white px-3 py-2.5">
-                      <div className="text-[10px] text-slate-400 mb-0.5">{label}</div>
+                      <div className="text-[10px] text-slate-500 mb-0.5">{label}</div>
                       <div className="text-sm font-bold text-slate-800">
                         {val !== null && val !== undefined
                           ? `${val > 0 ? "+" : ""}${val}${suffix ?? ""}`
-                          : <span className="text-slate-300">—</span>}
+                          : <span className="text-slate-500">—</span>}
                       </div>
                     </div>
                   ))}
@@ -720,7 +720,7 @@ export default function VisionDashboardPage() {
               </div>
             </div>
 
-            <div className="flex items-center justify-between text-xs text-slate-400">
+            <div className="flex items-center justify-between text-xs text-slate-500">
               <span>Prescrit par {lastOrd.prescripteur} · {formatDate(lastOrd.dateOrdonnance)}</span>
               <span>Validité : {formatDate(lastOrd.dateExpiration)}</span>
             </div>
@@ -734,7 +734,7 @@ export default function VisionDashboardPage() {
               </svg>
             </div>
             <p className="text-sm text-slate-500">Aucune ordonnance enregistrée.</p>
-            <p className="text-xs text-slate-400 mt-1">Votre opticien peut l&apos;ajouter lors de votre prochaine visite.</p>
+            <p className="text-xs text-slate-500 mt-1">Votre opticien peut l&apos;ajouter lors de votre prochaine visite.</p>
           </div>
         )}
       </div>
@@ -751,7 +751,7 @@ export default function VisionDashboardPage() {
         return (
           <div className="rounded-2xl border border-slate-200 bg-white p-5"
             style={{ boxShadow: "0 2px 12px rgba(0,0,0,0.05)" }}>
-            <div className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-4">Conseil du moment</div>
+            <div className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-4">Conseil du moment</div>
             <div className="flex gap-4">
               <div className="w-10 h-10 rounded-2xl flex items-center justify-center text-xl shrink-0"
                 style={{ background: ACCENT + "12" }}>{c.icon}</div>
@@ -775,7 +775,7 @@ export default function VisionDashboardPage() {
               </div>
               <div className="flex gap-2">
                 <button onClick={() => setConseilIndex((conseilIndex - 1 + conseils.length) % conseils.length)}
-                  className="w-7 h-7 rounded-full border border-slate-200 flex items-center justify-center text-slate-400 hover:text-slate-700 hover:border-slate-300 transition-all">
+                  className="w-7 h-7 rounded-full border border-slate-200 flex items-center justify-center text-slate-500 hover:text-slate-700 hover:border-slate-300 transition-all">
                   <svg className="w-3 h-3" viewBox="0 0 16 16" fill="none"><path d="M10 12L6 8l4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg>
                 </button>
                 <button onClick={() => setConseilIndex((conseilIndex + 1) % conseils.length)}
@@ -791,7 +791,7 @@ export default function VisionDashboardPage() {
 
       {/* ACTIONS RAPIDES */}
       <div>
-        <h2 className="text-sm font-semibold uppercase tracking-wide text-slate-400 mb-4">Actions rapides</h2>
+        <h2 className="text-sm font-semibold uppercase tracking-wide text-slate-500 mb-4">Actions rapides</h2>
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
           {[
             { label: "Prendre RDV",        href: "/clair-vision/espace-patient/rendez-vous", Icon: SvgCalendar },
@@ -818,7 +818,7 @@ export default function VisionDashboardPage() {
       </div>
 
       {/* FOOTER */}
-      <div className="rounded-2xl px-5 py-3 text-xs text-slate-400" style={glassSubtle}>
+      <div className="rounded-2xl px-5 py-3 text-xs text-slate-500" style={glassSubtle}>
         Ces informations sont fournies à titre informatif et ne remplacent pas un avis médical professionnel.
         En cas de doute, consultez votre professionnel de santé.
       </div>

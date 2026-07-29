@@ -196,7 +196,7 @@ function RdvCard({ rdv, past=false }: { rdv: RendezVous; past?: boolean }) {
           <div className="w-36 text-sm font-medium text-slate-500">{formatRdvDate(rdv.date)}</div>
           <div>
             <div className="text-sm font-medium text-slate-800">{TYPE_LABELS[rdv.type] ?? rdv.type}</div>
-            {rdv.praticien && <div className="text-xs text-slate-400">{rdv.praticien}</div>}
+            {rdv.praticien && <div className="text-xs text-slate-500">{rdv.praticien}</div>}
           </div>
         </div>
         <span className="rounded-full px-2.5 py-0.5 text-xs font-semibold" style={{ background:statut.bg, color:statut.text }}>{statut.label}</span>
@@ -226,7 +226,7 @@ function RdvCard({ rdv, past=false }: { rdv: RendezVous; past?: boolean }) {
           )}
         </div>
       </div>
-      <div className="mt-2 text-xs text-slate-400">
+      <div className="mt-2 text-xs text-slate-500">
         {FR_DAYS_LONG[new Date(rdv.date).getDay()]} {new Date(rdv.date).getDate()} {FR_MONTHS[new Date(rdv.date).getMonth()]} {new Date(rdv.date).getFullYear()}
       </div>
     </div>
@@ -302,12 +302,12 @@ function SlotPicker({
     return (
       <div className="rounded-3xl p-6 space-y-5" style={glass}>
         <div className="flex items-center gap-3">
-          <button onClick={() => setStep("pick-slot")} className="rounded-xl p-2 text-slate-400 hover:text-slate-600 transition" style={glassSubtle}>
+          <button onClick={() => setStep("pick-slot")} className="rounded-xl p-2 text-slate-500 hover:text-slate-600 transition" style={glassSubtle}>
             <IconChevronLeft />
           </button>
           <div>
             <h3 className="text-base font-bold text-slate-800">Confirmer le rendez-vous</h3>
-            <p className="text-xs text-slate-400">Vérifiez les informations avant d&apos;envoyer</p>
+            <p className="text-xs text-slate-500">Vérifiez les informations avant d&apos;envoyer</p>
           </div>
         </div>
 
@@ -334,7 +334,7 @@ function SlotPicker({
         <div className="grid grid-cols-2 gap-3">
           {[["Prénom", patient.prenom], ["Nom", patient.nom]].map(([label, val]) => (
             <div key={label}>
-              <label className="block text-xs font-semibold text-slate-400 mb-1">{label}</label>
+              <label className="block text-xs font-semibold text-slate-500 mb-1">{label}</label>
               <div className="rounded-xl px-3 py-2.5 text-sm text-slate-700" style={glassSubtle}>{val}</div>
             </div>
           ))}
@@ -379,17 +379,17 @@ function SlotPicker({
           <h3 className="text-base font-bold text-slate-800">
             {step === "pick-day" ? "Choisissez une date" : `${FR_DAYS_LONG[new Date(selectedDate!).getDay()]} ${new Date(selectedDate!).getDate()} ${FR_MONTHS[new Date(selectedDate!).getMonth()]}`}
           </h3>
-          <p className="text-xs text-slate-400 mt-0.5">
+          <p className="text-xs text-slate-500 mt-0.5">
             {step === "pick-day" ? "Les jours en vert ont des créneaux disponibles" : "Sélectionnez un horaire"}
           </p>
         </div>
         {step === "pick-slot" && (
-          <button onClick={() => { setStep("pick-day"); setSelectedDate(null); }} className="rounded-xl p-2 text-slate-400 hover:text-slate-600 transition" style={glassSubtle}>
+          <button onClick={() => { setStep("pick-day"); setSelectedDate(null); }} className="rounded-xl p-2 text-slate-500 hover:text-slate-600 transition" style={glassSubtle}>
             <IconChevronLeft />
           </button>
         )}
         {step === "pick-day" && (
-          <button onClick={onCancel} className="rounded-xl p-2 text-slate-400 hover:text-slate-600 transition" style={glassSubtle}>
+          <button onClick={onCancel} className="rounded-xl p-2 text-slate-500 hover:text-slate-600 transition" style={glassSubtle}>
             <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none"><path d="M6 6l12 12M6 18L18 6" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/></svg>
           </button>
         )}
@@ -463,7 +463,7 @@ function SlotPicker({
             })}
           </div>
 
-          <div className="flex items-center gap-4 text-xs text-slate-400">
+          <div className="flex items-center gap-4 text-xs text-slate-500">
             <span className="flex items-center gap-1.5">
               <span className="w-2.5 h-2.5 rounded-full inline-block" style={{ background:"#10b981" }} />
               Créneaux disponibles
@@ -480,14 +480,14 @@ function SlotPicker({
         <>
           {daySlots.length === 0 ? (
             <div className="text-center py-8">
-              <p className="text-sm text-slate-400">Aucun créneau disponible ce jour.</p>
+              <p className="text-sm text-slate-500">Aucun créneau disponible ce jour.</p>
               <button onClick={() => setStep("pick-day")} className="mt-3 text-sm font-medium" style={{ color:ACCENT }}>
                 ← Choisir une autre date
               </button>
             </div>
           ) : (
             <>
-              <p className="text-xs text-slate-400">{daySlots.length} créneau{daySlots.length>1?"x":""} disponible{daySlots.length>1?"s":""}</p>
+              <p className="text-xs text-slate-500">{daySlots.length} créneau{daySlots.length>1?"x":""} disponible{daySlots.length>1?"s":""}</p>
               <div className="grid grid-cols-4 sm:grid-cols-5 gap-2">
                 {daySlots.map(slot => {
                   const isSelected = selectedSlot?.heure === slot.heure;
@@ -596,9 +596,9 @@ export default function RendezVousAuditionPage() {
           <div className="flex items-center justify-between">
             <div>
               <h2 className="text-base font-bold text-slate-800">Quel type de rendez-vous ?</h2>
-              <p className="text-xs text-slate-400 mt-0.5">Choisissez le motif de votre visite</p>
+              <p className="text-xs text-slate-500 mt-0.5">Choisissez le motif de votre visite</p>
             </div>
-            <button onClick={() => setSelectingType(false)} className="rounded-xl p-2 text-slate-400 hover:text-slate-600 transition" style={glassSubtle}>
+            <button onClick={() => setSelectingType(false)} className="rounded-xl p-2 text-slate-500 hover:text-slate-600 transition" style={glassSubtle}>
               <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none"><path d="M6 6l12 12M6 18L18 6" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/></svg>
             </button>
           </div>

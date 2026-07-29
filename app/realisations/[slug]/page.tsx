@@ -146,6 +146,7 @@ export default async function RealisationPage({ params }: Params) {
               label={item.href ? windowLabel(item.href) : item.slug}
               accent={item.accent}
               priority
+              sizes="(min-width: 1140px) 1052px, 100vw"
             />
           </div>
         </Reveal>

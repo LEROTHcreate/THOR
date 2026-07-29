@@ -208,7 +208,7 @@ export default function OnboardingWizard({
                   <div className="space-y-5">
                     <div>
                       <h2 className="text-[22px] font-bold text-slate-900 leading-tight">Votre cabinet</h2>
-                      <p className="text-sm text-slate-400 mt-1.5">Ces infos apparaîtront sur vos devis et documents officiels.</p>
+                      <p className="text-sm text-slate-500 mt-1.5">Ces infos apparaîtront sur vos devis et documents officiels.</p>
                     </div>
                     <Field label="Nom du cabinet *" value={data.nom} onChange={set("nom")} placeholder="Ex : Optique Lumière" accent={cfg.accent} />
                     <Field label="Adresse" value={data.adresse} onChange={set("adresse")} placeholder="12 rue de la Paix" accent={cfg.accent} />
@@ -232,7 +232,7 @@ export default function OnboardingWizard({
                   <div className="space-y-5">
                     <div>
                       <h2 className="text-[22px] font-bold text-slate-900 leading-tight">Identifiants réglementaires</h2>
-                      <p className="text-sm text-slate-400 mt-1.5">Nécessaires pour la télétransmission SESAM-Vitale et les documents normalisés.</p>
+                      <p className="text-sm text-slate-500 mt-1.5">Nécessaires pour la télétransmission SESAM-Vitale et les documents normalisés.</p>
                     </div>
                     <Field label="SIRET" value={data.siret} onChange={set("siret")} placeholder="123 456 789 00012"
                       hint="Numéro d'identification de votre établissement (14 chiffres)" accent={cfg.accent} />
@@ -268,7 +268,7 @@ export default function OnboardingWizard({
                     </div>
                     <div>
                       <h2 className="text-2xl font-bold text-slate-900">Votre cabinet est prêt !</h2>
-                      <p className="text-sm text-slate-400 mt-2 leading-relaxed max-w-[260px]">
+                      <p className="text-sm text-slate-500 mt-2 leading-relaxed max-w-[260px]">
                         Bienvenue dans THOR. Tout est configuré — vous pouvez créer vos premiers dossiers patients.
                       </p>
                     </div>
@@ -288,7 +288,7 @@ export default function OnboardingWizard({
 
             {/* Footer actions */}
             <div className="px-8 pb-7 pt-4 flex items-center justify-between border-t border-slate-100">
-              <button onClick={skip} className="text-xs text-slate-300 hover:text-slate-500 transition-colors">
+              <button onClick={skip} className="text-xs text-slate-500 hover:text-slate-700 transition-colors">
                 {step < 2 ? "Configurer plus tard" : ""}
               </button>
               <div className="flex items-center gap-2.5">
@@ -333,12 +333,12 @@ function Field({
         {label}
       </label>
       <input type={type} value={value} onChange={onChange} placeholder={placeholder}
-        className="w-full rounded-xl border border-slate-200 bg-slate-50/60 px-3.5 py-2.5 text-sm text-slate-800 placeholder:text-slate-300 outline-none transition-all"
+        className="w-full rounded-xl border border-slate-200 bg-slate-50/60 px-3.5 py-2.5 text-sm text-slate-800 placeholder:text-slate-500 outline-none transition-all"
         style={{ boxShadow: "none" }}
         onFocus={e => { e.currentTarget.style.borderColor = accent; e.currentTarget.style.background = "#fff"; e.currentTarget.style.boxShadow = `0 0 0 3px ${accent}18`; }}
         onBlur={e  => { e.currentTarget.style.borderColor = ""; e.currentTarget.style.background = ""; e.currentTarget.style.boxShadow = ""; }}
       />
-      {hint && <p className="text-[11px] text-slate-400 mt-1">{hint}</p>}
+      {hint && <p className="text-[11px] text-slate-500 mt-1">{hint}</p>}
     </div>
   );
 }
@@ -346,7 +346,7 @@ function Field({
 function RecapRow({ label, value }: { label: string; value: string }) {
   return (
     <div className="flex items-center gap-2.5 text-sm">
-      <span className="text-slate-400 text-xs w-20 flex-shrink-0">{label}</span>
+      <span className="text-slate-500 text-xs w-20 flex-shrink-0">{label}</span>
       <span className="text-slate-700 font-medium truncate">{value}</span>
     </div>
   );

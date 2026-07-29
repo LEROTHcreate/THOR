@@ -226,7 +226,7 @@ function KpiCard({ label, value, sub, accent }: { label: string; value: string |
     <div className="rounded-2xl p-4" style={glass}>
       <div className="text-xs text-slate-500 font-medium mb-1">{label}</div>
       <div className="text-2xl font-bold" style={{ color: accent ?? PRIMARY }}>{value}</div>
-      {sub && <div className="text-xs text-slate-400 mt-0.5">{sub}</div>}
+      {sub && <div className="text-xs text-slate-500 mt-0.5">{sub}</div>}
     </div>
   );
 }
@@ -284,7 +284,7 @@ function NouveauTicketModal({ tickets, onSave, onClose }: { tickets: TicketSAV[]
     onSave(ticket);
   }
 
-  const inputCls = "w-full rounded-xl border-0 bg-white/70 px-3 py-2 text-sm text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-400/50";
+  const inputCls = "w-full rounded-xl border-0 bg-white/70 px-3 py-2 text-sm text-slate-800 placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-400/50";
   const selectCls = "w-full rounded-xl border-0 bg-white/70 px-3 py-2 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-emerald-400/50";
   const labelCls = "block text-xs font-semibold text-slate-500 mb-1";
 
@@ -438,7 +438,7 @@ function DetailModal({ ticket, onSave, onDelete, onClose }: { ticket: TicketSAV;
     }
   }
 
-  const inputCls = "w-full rounded-xl border-0 bg-white/70 px-3 py-2 text-sm text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-400/50";
+  const inputCls = "w-full rounded-xl border-0 bg-white/70 px-3 py-2 text-sm text-slate-800 placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-400/50";
   const selectCls = "w-full rounded-xl border-0 bg-white/70 px-3 py-2 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-emerald-400/50";
   const labelCls = "block text-xs font-semibold text-slate-500 mb-1";
 
@@ -615,7 +615,7 @@ function DetailModal({ ticket, onSave, onDelete, onClose }: { ticket: TicketSAV;
                 <div className="h-2 w-2 rounded-full flex-shrink-0 mt-1" style={{ background: PRIMARY }} />
                 <div className="flex-1">
                   <span className="font-medium text-slate-700">{h.action}</span>
-                  <span className="text-slate-400 ml-2">{fmtDate(h.date)} — {h.auteur}</span>
+                  <span className="text-slate-500 ml-2">{fmtDate(h.date)} — {h.auteur}</span>
                 </div>
               </div>
             ))}
@@ -682,7 +682,7 @@ function TicketCard({ ticket, onView, onResolve }: { ticket: TicketSAV; onView: 
       <div className="flex items-start justify-between gap-3">
         <div className="flex-1 min-w-0">
           <div className="flex flex-wrap items-center gap-1.5 mb-2">
-            <span className="text-[11px] font-bold text-slate-400">{ticket.numero}</span>
+            <span className="text-[11px] font-bold text-slate-500">{ticket.numero}</span>
             <Badge label={ticket.priorite} {...PRIORITE_COLORS[ticket.priorite]} />
             <Badge label={ticket.status} {...STATUS_COLORS[ticket.status]} />
             <Badge label={TYPE_LABELS[ticket.type]} color={PRIMARY} bg="rgba(0,201,138,0.10)" />
@@ -691,9 +691,9 @@ function TicketCard({ ticket, onView, onResolve }: { ticket: TicketSAV; onView: 
 
           <div className="font-semibold text-slate-800 text-sm">{ticket.patientPrenom} {ticket.patientNom}</div>
           <div className="text-sm text-slate-500 mt-0.5">{ticket.produit}</div>
-          <div className="text-xs text-slate-400 mt-1 line-clamp-1">{ticket.description}</div>
+          <div className="text-xs text-slate-500 mt-1 line-clamp-1">{ticket.description}</div>
 
-          <div className="flex flex-wrap items-center gap-x-4 gap-y-1 mt-2 text-xs text-slate-400">
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-1 mt-2 text-xs text-slate-500">
             <span>Ouvert le {fmtDate(ticket.dateOuverture)}</span>
             {ticket.dateEcheance && (
               <span className={isOverdue ? "text-red-500 font-semibold" : "text-amber-500"}>
@@ -836,11 +836,11 @@ export default function SAVAuditionPage() {
       {/* Filter bar */}
       <div className="rounded-2xl p-4 space-y-3" style={glass}>
         <div className="relative">
-          <svg className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+          <svg className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
             <circle cx="11" cy="11" r="8" /><path d="m21 21-4.3-4.3" />
           </svg>
           <input
-            className="w-full rounded-xl border-0 bg-white/70 pl-9 pr-4 py-2 text-sm text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-400/50"
+            className="w-full rounded-xl border-0 bg-white/70 pl-9 pr-4 py-2 text-sm text-slate-800 placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-400/50"
             placeholder="Rechercher par patient, appareil, numéro..."
             value={search}
             onChange={e => setSearch(e.target.value)}
@@ -892,7 +892,7 @@ export default function SAVAuditionPage() {
         <div className="rounded-2xl p-10 text-center" style={glass}>
           <IconWrench className="w-10 h-10 mx-auto mb-3" style={{ color: "#cbd5e1" }} />
           <div className="text-slate-500 font-medium">Aucun ticket trouvé</div>
-          <div className="text-xs text-slate-400 mt-1">Modifiez vos filtres ou créez un nouveau ticket</div>
+          <div className="text-xs text-slate-500 mt-1">Modifiez vos filtres ou créez un nouveau ticket</div>
         </div>
       ) : (
         <div className="space-y-3">

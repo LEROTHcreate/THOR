@@ -263,7 +263,7 @@ function DevisCard({
               <span className="text-sm font-bold text-slate-800">
                 {devis.totalTTC.toLocaleString("fr-FR", { style: "currency", currency: "EUR" })} TTC
               </span>
-              <span className="text-xs text-slate-400 self-center">
+              <span className="text-xs text-slate-500 self-center">
                 RAC : {devis.resteACharge.toLocaleString("fr-FR", { style: "currency", currency: "EUR" })}
               </span>
             </div>
@@ -361,7 +361,7 @@ export default function DocumentsPage() {
 
         {/* Search */}
         <div className="relative">
-          <IconSearch className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
+          <IconSearch className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-500" />
           <input
             value={q}
             onChange={(e) => setQ(e.target.value)}

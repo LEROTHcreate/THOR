@@ -373,7 +373,7 @@ function OeilRow({
   onChange: (v: OeilForm) => void;
 }) {
   const inputClass =
-    "w-full rounded-lg border border-slate-200 bg-white/80 px-3 py-2 text-sm text-slate-800 placeholder:text-slate-400 outline-none focus:border-[#6366f1] focus:ring-2 focus:ring-[#6366f1]/20 transition-all";
+    "w-full rounded-lg border border-slate-200 bg-white/80 px-3 py-2 text-sm text-slate-800 placeholder:text-slate-500 outline-none focus:border-[#6366f1] focus:ring-2 focus:ring-[#6366f1]/20 transition-all";
 
   return (
     <div className="grid grid-cols-[56px_1fr_1fr_1fr_1fr] gap-2 items-center">
@@ -431,7 +431,7 @@ function NewOrdonnanceModal({
 
   const labelClass = "block text-xs font-semibold text-slate-500 uppercase tracking-wide mb-1";
   const inputClass =
-    "w-full rounded-lg border border-slate-200 bg-white/80 px-3 py-2.5 text-sm text-slate-800 placeholder:text-slate-400 outline-none focus:border-[#6366f1] focus:ring-2 focus:ring-[#6366f1]/20 transition-all";
+    "w-full rounded-lg border border-slate-200 bg-white/80 px-3 py-2.5 text-sm text-slate-800 placeholder:text-slate-500 outline-none focus:border-[#6366f1] focus:ring-2 focus:ring-[#6366f1]/20 transition-all";
 
   function handleSubmit() {
     if (!form.patientNom.trim()) { setError("Le nom du patient est requis."); return; }
@@ -808,7 +808,7 @@ export default function OrdonnancesPage() {
         <div className="space-y-4">
           {ordonnances.length === 0 && (
             <div className="rounded-[var(--radius-large)] px-6 py-12 text-center" style={glass}>
-              <IconDocument className="w-10 h-10 text-slate-300 mx-auto mb-3" />
+              <IconDocument className="w-10 h-10 text-slate-500 mx-auto mb-3" />
               <p className="text-sm text-slate-500">Aucune ordonnance enregistrée.</p>
               <button
                 onClick={() => setShowModal(true)}
@@ -844,7 +844,7 @@ export default function OrdonnancesPage() {
                     <div>
                       <div className="text-sm font-semibold text-slate-800">{fullName}</div>
                       <div className="flex items-center gap-2 text-xs text-slate-500 mt-0.5">
-                        <span className="font-mono text-slate-400">{o.numero}</span>
+                        <span className="font-mono text-slate-500">{o.numero}</span>
                         <span>·</span>
                         <IconCalendar className="w-3 h-3" />
                         <span>Émise le {formatDate(o.dateOrdonnance)}</span>
@@ -874,7 +874,7 @@ export default function OrdonnancesPage() {
                           {o.og.addition !== null && `  Add ${fmtVal(o.og.addition)}`}
                         </div>
                         {o.ecartPupillaire && (
-                          <div className="text-slate-400 text-xs">EP : {o.ecartPupillaire} mm</div>
+                          <div className="text-slate-500 text-xs">EP : {o.ecartPupillaire} mm</div>
                         )}
                       </div>
                     </div>
@@ -936,7 +936,7 @@ export default function OrdonnancesPage() {
                       <IconUser className="w-3.5 h-3.5" />
                       <span>{o.prescripteur}</span>
                     </div>
-                    {o.rpps && <span className="font-mono text-slate-400">RPPS {o.rpps}</span>}
+                    {o.rpps && <span className="font-mono text-slate-500">RPPS {o.rpps}</span>}
                   </div>
                 </div>
 
