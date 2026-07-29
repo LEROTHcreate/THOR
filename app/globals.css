@@ -345,21 +345,40 @@ body {
   to   { transform: rotate(360deg); }
 }
 
-/* Satellite qui suit son orbite (via offset-path) */
-@keyframes orbitAlong {
-  from { offset-distance: 0%; }
-  to   { offset-distance: 100%; }
+/* ── Système solaire de la home (cf. thor-solar-system.tsx) ───────────────
+   Deux animations par satellite : la piste tourne, le satellite contre-tourne
+   à l'identique pour rester droit et lisible.
+
+   L'angle de départ n'est pas une transformation mais un `animation-delay`
+   négatif. C'est ce qui permet de tout figer — survol, focus clavier, hors
+   écran, mouvement réduit — d'un seul `animation-play-state` : chaque
+   satellite reste à sa place au lieu de s'empiler au point de départ. */
+.orbit-track,
+.orbit-upright {
+  animation: spin var(--orbit-duration) linear infinite;
 }
 
-/* Flux lumineux sur le tracé d'une orbite (les pointillés défilent) */
-@keyframes dashFlow {
-  from { stroke-dashoffset: 0; }
-  to   { stroke-dashoffset: -40; }
+.orbit-upright {
+  animation-direction: reverse;
 }
 
-/* Pause de l'orbite quand l'utilisateur survole le satellite (pour faciliter le clic) */
-.orbit-track:hover {
+/* La piste est un disque transparent large de plusieurs centaines de pixels :
+   sans ceci, la survoler n'importe où arrêterait l'orbite. Seul le satellite
+   est cliquable, mais le survol remonte quand même la chaîne parente. */
+.orbit-track:hover,
+.orbit-track:hover .orbit-upright,
+.orbit-track:focus-within,
+.orbit-track:focus-within .orbit-upright,
+[data-spin="paused"] .orbit-track,
+[data-spin="paused"] .orbit-upright {
   animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .orbit-track,
+  .orbit-upright {
+    animation-play-state: paused;
+  }
 }
 
 /* -----------------------------------------------------------
