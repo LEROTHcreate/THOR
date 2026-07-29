@@ -25,7 +25,7 @@ export default function ProduitsPage() {
             <p className="mt-6 text-lg text-slate-500 leading-[1.7] max-w-xl">
               Opticiens, audioprothésistes, pharmaciens : chaque plateforme est
               construite pour un métier précis, avec la conformité santé intégrée
-              dès le départ plutôt qu&apos;ajoutée après coup.
+              dès le départ plutôt qu’ajoutée après coup.
             </p>
             <div className="mt-9 flex flex-col sm:flex-row gap-3">
               <Link

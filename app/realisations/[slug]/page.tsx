@@ -204,7 +204,7 @@ export default async function RealisationPage({ params }: Params) {
               <p className="text-base text-slate-600 leading-[1.75]">{item.context}</p>
 
               <h2 className="text-2xl font-bold tracking-tight text-slate-900 h-title mt-12 mb-5">
-                Ce qu&apos;on a fait
+                Ce qu’on a fait
               </h2>
               <ul className="space-y-3">
                 {item.mission.map((m) => (

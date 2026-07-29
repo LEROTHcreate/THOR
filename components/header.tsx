@@ -74,7 +74,7 @@ export default function Header() {
 
           {/* ── Nav desktop (pilule) ── */}
           <nav
-            className="hidden md:flex items-center rounded-[var(--radius-pill)] bg-thor-surface-2/80 p-1 ring-1 ring-thor-border"
+            className="lg hidden md:flex items-center rounded-[var(--radius-pill)] p-1"
             aria-label="Navigation principale"
           >
             {navLinks.map((l) => {
@@ -86,11 +86,11 @@ export default function Header() {
                   href={l.href}
                   className={cn(
                     "px-4 py-2 text-sm font-medium rounded-[var(--radius-pill)]",
-                    "transition-all duration-200",
-                    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-vision-accent/40",
+                    "transition-all duration-300",
+                    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900/20",
                     active
-                      ? "bg-white shadow-[var(--shadow-soft)] text-thor-text"
-                      : "text-thor-muted hover:bg-white/60 hover:text-thor-text",
+                      ? "bg-white/90 shadow-[var(--shadow-soft)] text-thor-text"
+                      : "text-thor-muted hover:bg-white/50 hover:text-thor-text",
                   )}
                 >
                   {l.label}
@@ -114,20 +114,10 @@ export default function Header() {
 
             <Link
               href="/contact?sujet=demo"
-              className="
-                shine-sweep
-                relative inline-flex items-center justify-center
-                rounded-[var(--radius-pill)] px-5 py-2.5
-                text-sm font-semibold text-white
-                bg-vision-accent
-                shadow-[0_4px_16px_rgba(45,140,255,0.30)]
-                ring-1 ring-white/20
-                transition-all duration-200
-                hover:bg-[#1A72E8] hover:scale-[1.02] hover:shadow-[0_6px_24px_rgba(45,140,255,0.40)]
-                focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-vision-accent/50
-              "
+              className="lg lg-btn lg-btn-ink text-sm"
+              style={{ padding: "0.65rem 1.25rem" }}
             >
-              Réserver une démo
+              <span>Réserver une démo</span>
             </Link>
           </div>
 
@@ -196,18 +186,9 @@ export default function Header() {
                 <Link
                   href="/contact?sujet=demo"
                   onClick={() => setOpen(false)}
-                  className="
-                    shine-sweep
-                    relative min-h-[44px] flex items-center justify-center
-                    rounded-xl px-4 py-3 text-sm font-semibold text-white
-                    bg-vision-accent
-                    shadow-[0_4px_16px_rgba(45,140,255,0.28)]
-                    ring-1 ring-white/20
-                    transition-all duration-200
-                    hover:bg-[#1A72E8]
-                  "
+                  className="lg lg-btn lg-btn-ink min-h-[44px] w-full text-sm"
                 >
-                  Réserver une démo
+                  <span>Réserver une démo</span>
                 </Link>
               </div>
             </div>

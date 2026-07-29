@@ -282,9 +282,17 @@ export function getRealisationBySlug(slug: string): Realisation | undefined {
   return REALISATIONS.find((r) => r.slug === slug);
 }
 
-/** Secteurs présents dans le portfolio, dans l'ordre d'apparition. */
+/**
+ * Secteurs proposés comme filtres, dans l'ordre d'apparition.
+ *
+ * Seuls les projets livrés comptent : le secteur de la carte d'appel
+ * (« Tous secteurs ») produirait un filtre qui n'a pas de sens à côté
+ * de « Tous ».
+ */
 export function getSectors(): string[] {
-  return Array.from(new Set(REALISATIONS.map((r) => r.sector)));
+  return Array.from(
+    new Set(REALISATIONS.filter((r) => r.status === "live").map((r) => r.sector)),
+  );
 }
 
 export const CATEGORY_LABELS: Record<RealisationCategory, string> = {

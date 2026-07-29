@@ -28,8 +28,8 @@ export default function RealisationsPage() {
             </h1>
             <p className="mt-6 text-lg text-slate-500 leading-relaxed max-w-xl">
               {live} projets en production, du logiciel métier certifié à
-              l&apos;application grand public. Le point commun : on part du terrain,
-              pas d&apos;un cahier des charges théorique.
+              l’application grand public. Le point commun : on part du terrain,
+              pas d’un cahier des charges théorique.
             </p>
           </div>
         </Reveal>
@@ -39,11 +39,11 @@ export default function RealisationsPage() {
         <Reveal>
           <div className="mt-20 rounded-[var(--radius-large)] border border-slate-200 bg-white px-6 py-10 sm:px-12 sm:py-14 text-center">
             <h2 className="text-2xl sm:text-3xl font-light tracking-tight text-slate-900 h-title">
-              Le prochain projet de cette page, <span className="font-semibold">c&apos;est le vôtre ?</span>
+              Le prochain projet de cette page, <span className="font-semibold">c’est le vôtre ?</span>
             </h2>
             <p className="mt-4 text-slate-500 max-w-lg mx-auto text-[15px] leading-[1.7]">
               Décrivez votre activité en quelques lignes. On revient vers vous avec
-              une première lecture de votre marché et de ce qu&apos;il faudrait construire.
+              une première lecture de votre marché et de ce qu’il faudrait construire.
             </p>
             <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
               <Link

@@ -126,13 +126,13 @@ export default function StudioPage() {
                   animation: "textGradientSlide 8s linear infinite",
                 }}
               >
-                On s&apos;occupe du reste.
+                On s’occupe du reste.
               </span>
             </h1>
 
             <p className="mt-7 text-lg text-slate-500 leading-[1.7] max-w-xl">
-              Créer une entreprise, ce n&apos;est pas seulement faire un site. C&apos;est
-              savoir à qui l&apos;on parle, combien ils sont, et comment les atteindre.
+              Créer une entreprise, ce n’est pas seulement faire un site. C’est
+              savoir à qui l’on parle, combien ils sont, et comment les atteindre.
               THOR Studio prend le projet à son début et ne le lâche pas au lancement.
             </p>
 
@@ -173,7 +173,7 @@ export default function StudioPage() {
           <Reveal>
             <div className="max-w-2xl mb-14">
               <span className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400 mb-4 block">
-                L&apos;accompagnement
+                L’accompagnement
               </span>
               <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-slate-900 h-title">
                 Quatre volets, <span className="font-light text-slate-500">un seul interlocuteur.</span>
@@ -246,7 +246,7 @@ export default function StudioPage() {
                     Un outil en cours de construction : vous indiquez votre métier et
                     votre zone, il vous montre le nombre de clients potentiels, les
                     concurrents déjà installés et le profil de la population autour de vous.
-                    D&apos;ici là, cette étude est faite à la main pour chaque projet.
+                    D’ici là, cette étude est faite à la main pour chaque projet.
                   </p>
                   <Link
                     href="/contact?sujet=etude-marche"
@@ -289,8 +289,8 @@ export default function StudioPage() {
                     ))}
                   </div>
                   <p className="mt-5 text-[11px] text-slate-400 leading-relaxed">
-                    Chiffres d&apos;illustration. Les données réelles proviennent des
-                    bases publiques de l&apos;INSEE.
+                    Chiffres d’illustration. Les données réelles proviennent des
+                    bases publiques de l’INSEE.
                   </p>
                 </div>
               </div>
@@ -306,7 +306,7 @@ export default function StudioPage() {
                 Le déroulé
               </span>
               <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-slate-900 h-title">
-                De l&apos;idée au lancement, <span className="font-light text-slate-500">étape par étape.</span>
+                De l’idée au lancement, <span className="font-light text-slate-500">étape par étape.</span>
               </h2>
             </div>
           </Reveal>
@@ -348,7 +348,7 @@ export default function StudioPage() {
             </h2>
             <p className="mt-5 text-slate-500 max-w-lg mx-auto text-[15px] leading-[1.7]">
               Quarante-cinq minutes pour comprendre votre projet et vous dire
-              honnêtement s&apos;il tient debout. Même si la réponse est non.
+              honnêtement s’il tient debout. Même si la réponse est non.
             </p>
             <div className="mt-9 flex flex-col sm:flex-row gap-3 justify-center">
               <Link
@@ -361,7 +361,7 @@ export default function StudioPage() {
                 href="/realisations"
                 className="inline-flex items-center justify-center rounded-full px-7 py-3.5 text-sm font-semibold text-slate-700 border border-slate-200 transition-colors hover:bg-slate-50"
               >
-                Voir ce qu&apos;on a déjà fait →
+                Voir ce qu’on a déjà fait →
               </Link>
             </div>
           </div>

@@ -20,7 +20,7 @@ export function RealisationsGrid({ items, sectors }: { items: Realisation[]; sec
     <>
       <Reveal>
         <div
-          className="inline-flex flex-wrap gap-1 rounded-[var(--radius-pill)] p-1 mb-12"
+          className="lg inline-flex flex-wrap gap-1 rounded-[var(--radius-pill)] p-1 mb-12"
           role="tablist"
           aria-label="Filtrer par secteur"
         >
@@ -48,10 +48,10 @@ export function RealisationsGrid({ items, sectors }: { items: Realisation[]; sec
         </div>
       </Reveal>
 
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {visible.map((item, i) => (
+      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+        {visible.map((item) => (
           <Reveal key={item.slug}>
-            <RealisationCard item={item} index={i} />
+            <RealisationCard item={item} />
           </Reveal>
         ))}
       </div>

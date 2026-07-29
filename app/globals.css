@@ -268,42 +268,27 @@ body {
   50%       { background-position: 100% 50%; }
 }
 
-/* Morph organique pour les blobs du fond animé THOR (border-radius + translate + scale) */
+/* Morph organique pour les blobs du fond animé THOR.
+   IMPORTANT — perf : ces keyframes n'animent QUE `transform`, jamais
+   `border-radius` ni `filter`. Un blob mesure jusqu'à 850×850 px : animer une
+   propriété non composable obligerait le navigateur à re-rasteriser (et re-flouter)
+   ce calque à chaque frame, ce qui saturait le GPU. Les blobs étant des
+   radial-gradients qui tombent à `transparent`, le border-radius n'avait aucun
+   effet visible : sa suppression est neutre à l'œil et gratuite en rendu. */
 @keyframes morphBlob1 {
-  0%, 100% {
-    border-radius: 60% 40% 50% 50% / 50% 60% 40% 50%;
-    transform: translate(0, 0) rotate(0deg) scale(1);
-  }
-  33% {
-    border-radius: 40% 60% 70% 30% / 60% 40% 60% 40%;
-    transform: translate(50px, -40px) rotate(40deg) scale(1.08);
-  }
-  66% {
-    border-radius: 70% 30% 40% 60% / 40% 70% 30% 60%;
-    transform: translate(-40px, 30px) rotate(-30deg) scale(0.94);
-  }
+  0%, 100% { transform: translate3d(0, 0, 0) rotate(0deg) scale(1); }
+  33%      { transform: translate3d(50px, -40px, 0) rotate(40deg) scale(1.08); }
+  66%      { transform: translate3d(-40px, 30px, 0) rotate(-30deg) scale(0.94); }
 }
 
 @keyframes morphBlob2 {
-  0%, 100% {
-    border-radius: 50% 50% 40% 60% / 60% 40% 60% 40%;
-    transform: translate(0, 0) rotate(0deg) scale(1);
-  }
-  50% {
-    border-radius: 30% 70% 60% 40% / 50% 60% 40% 50%;
-    transform: translate(-60px, 50px) rotate(-50deg) scale(1.12);
-  }
+  0%, 100% { transform: translate3d(0, 0, 0) rotate(0deg) scale(1); }
+  50%      { transform: translate3d(-60px, 50px, 0) rotate(-50deg) scale(1.12); }
 }
 
 @keyframes morphBlob3 {
-  0%, 100% {
-    border-radius: 40% 60% 60% 40% / 50% 50% 50% 50%;
-    transform: translate(0, 0) rotate(0deg) scale(1);
-  }
-  50% {
-    border-radius: 70% 30% 50% 50% / 40% 60% 40% 60%;
-    transform: translate(40px, 60px) rotate(60deg) scale(0.9);
-  }
+  0%, 100% { transform: translate3d(0, 0, 0) rotate(0deg) scale(1); }
+  50%      { transform: translate3d(40px, 60px, 0) rotate(60deg) scale(0.9); }
 }
 
 /* Sweep aurora - barre lumineuse qui balaye en diagonale (rare et subtil) */
@@ -860,4 +845,259 @@ body {
     animation: none;
     background: var(--thor-surface-2);
   }
+  /* Décor de fond : on fige tout (coût GPU nul pour les utilisateurs sensibles) */
+  [data-decor="motion"],
+  [data-decor="motion"] * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* -----------------------------------------------------------
+   9. LIQUID GLASS — matériau translucide de la vitrine THOR
+
+   Un seul matériau, décliné en surfaces (bouton, pastille, carte,
+   goutte). Chaque déclinaison partage la même physique optique :
+
+     • une teinte laiteuse très peu opaque, pour que le fond traverse ;
+     • un backdrop-filter blur + saturate — c'est la saturation qui
+       fait « verre » plutôt que « calque blanc » : elle ravive les
+       couleurs du fond au lieu de les laver ;
+     • une arête haute lumineuse (inset top) qui simule la lumière
+       accrochée sur le bord biseauté ;
+     • un reflet spéculaire diffus en haut à gauche, source de lumière
+       unique et constante pour toute la page ;
+     • une ombre portée ambiante, courte et très diffuse.
+
+   Au survol la goutte se gonfle et le reflet s'élargit ; au clic elle
+   s'écrase. C'est là qu'est le « liquide » : dans la réponse au geste,
+   pas dans une animation permanente.
+   ----------------------------------------------------------- */
+:root {
+  --lg-tint:        rgba(255,255,255,0.55);
+  --lg-tint-hover:  rgba(255,255,255,0.72);
+  --lg-rim:         rgba(255,255,255,0.72);
+  --lg-blur:        20px;
+  --lg-sat:         180%;
+  --lg-shadow:      0 10px 30px -12px rgba(11,18,32,0.20);
+  --lg-shadow-hi:   0 16px 40px -14px rgba(11,18,32,0.26);
+  /* Easing Apple : départ franc, arrivée très amortie. */
+  --lg-ease:        cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+.lg {
+  position: relative;
+  background: var(--lg-tint);
+  backdrop-filter: blur(var(--lg-blur)) saturate(var(--lg-sat));
+  -webkit-backdrop-filter: blur(var(--lg-blur)) saturate(var(--lg-sat));
+  border: 1px solid var(--lg-rim);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.95),
+    inset 0 -1px 0 rgba(255,255,255,0.38),
+    var(--lg-shadow);
+}
+
+/* Reflet spéculaire. En ::before pour rester sous le contenu. */
+.lg::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: radial-gradient(
+    125% 95% at 22% -10%,
+    rgba(255,255,255,0.90) 0%,
+    rgba(255,255,255,0.28) 36%,
+    transparent 66%
+  );
+  opacity: 0.85;
+  transition: opacity 500ms var(--lg-ease), transform 500ms var(--lg-ease);
+}
+
+/* Le contenu repasse au-dessus du reflet. */
+.lg > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* ── Bouton ─────────────────────────────────────────────────── */
+.lg-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 9999px;
+  padding: 0.9rem 1.75rem;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  line-height: 1;
+  color: var(--thor-text);
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    transform 500ms var(--lg-ease),
+    background 500ms var(--lg-ease),
+    box-shadow 500ms var(--lg-ease);
+}
+
+.lg-btn:hover {
+  background: var(--lg-tint-hover);
+  transform: translateY(-1px) scale(1.02);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,1),
+    inset 0 -1px 0 rgba(255,255,255,0.50),
+    var(--lg-shadow-hi);
+}
+
+.lg-btn:hover::before {
+  opacity: 1;
+  transform: scale(1.08);
+}
+
+/* L'écrasement de la goutte sous le doigt. */
+.lg-btn:active {
+  transform: translateY(0) scale(0.975);
+  transition-duration: 140ms;
+}
+
+.lg-btn:focus-visible {
+  outline: none;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,1),
+    var(--lg-shadow-hi),
+    0 0 0 4px rgba(11,18,32,0.14);
+}
+
+/* Variante encre — le bouton principal. Même physique, verre teinté. */
+.lg-btn-ink {
+  background: rgba(11,18,32,0.90);
+  border-color: rgba(255,255,255,0.18);
+  color: #fff;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.30),
+    inset 0 -1px 0 rgba(255,255,255,0.07),
+    0 12px 32px -12px rgba(11,18,32,0.55);
+}
+
+.lg-btn-ink::before {
+  background: radial-gradient(
+    125% 95% at 25% -10%,
+    rgba(255,255,255,0.45) 0%,
+    rgba(255,255,255,0.10) 38%,
+    transparent 68%
+  );
+}
+
+.lg-btn-ink:hover {
+  background: rgba(11,18,32,0.96);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.38),
+    inset 0 -1px 0 rgba(255,255,255,0.10),
+    0 18px 42px -14px rgba(11,18,32,0.60);
+}
+
+.lg-btn-ink:focus-visible {
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.38),
+    0 18px 42px -14px rgba(11,18,32,0.60),
+    0 0 0 4px rgba(11,18,32,0.20);
+}
+
+/* ── Pastille ───────────────────────────────────────────────── */
+.lg-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 9999px;
+  padding: 0.5rem 1rem;
+  font-size: 0.8125rem;
+  line-height: 1;
+  color: var(--thor-muted);
+}
+
+/* ── Carte ──────────────────────────────────────────────────── */
+.lg-card {
+  border-radius: 28px;
+  background: rgba(255,255,255,0.52);
+  transition:
+    transform 500ms var(--lg-ease),
+    background 500ms var(--lg-ease),
+    box-shadow 500ms var(--lg-ease);
+}
+
+.lg-card:hover {
+  background: rgba(255,255,255,0.66);
+  transform: translateY(-3px);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,1),
+    inset 0 -1px 0 rgba(255,255,255,0.50),
+    var(--lg-shadow-hi);
+}
+
+/* ── Gouttes flottantes ─────────────────────────────────────────
+   Démonstration du matériau : de vraies lentilles qui réfractent le
+   fond. Coûteux (chaque goutte est une passe de backdrop-filter), donc
+   quatre au maximum, jamais sur mobile, et seul `transform` est animé. */
+.lg-drop {
+  position: absolute;
+  border-radius: 9999px;
+  pointer-events: none;
+  /* Teinte quasi nulle : c'est la réfraction qui doit se voir, pas le calque.
+     Un flou faible plutôt que fort — une goutte grossit ce qu'elle couvre,
+     elle ne le dépolit pas. La saturation fait le reste du travail « verre ». */
+  background: rgba(255,255,255,0.10);
+  backdrop-filter: blur(1.5px) saturate(215%) brightness(1.05);
+  -webkit-backdrop-filter: blur(1.5px) saturate(215%) brightness(1.05);
+  border: 1px solid rgba(255,255,255,0.85);
+  box-shadow:
+    inset 0 1px 1px rgba(255,255,255,0.90),
+    inset 0 -12px 26px -8px rgba(255,255,255,0.28),
+    0 22px 48px -28px rgba(11,18,32,0.22);
+  will-change: transform;
+}
+
+/* Le point de lumière qui trahit la courbure de la goutte. */
+.lg-drop::after {
+  content: "";
+  position: absolute;
+  top: 13%;
+  left: 17%;
+  width: 26%;
+  height: 18%;
+  border-radius: 9999px;
+  background: radial-gradient(circle, rgba(255,255,255,0.85) 0%, transparent 72%);
+}
+
+@keyframes lgDrift {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  33%      { transform: translate3d(18px, -26px, 0) scale(1.04); }
+  66%      { transform: translate3d(-14px, 16px, 0) scale(0.97); }
+}
+
+@media (max-width: 767px) {
+  .lg-drop { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lg-drop { animation: none !important; }
+  .lg-btn, .lg-card { transition: none; }
+  .lg-btn:hover, .lg-card:hover { transform: none; }
+}
+
+/* ── Entrée au chargement ───────────────────────────────────────
+   Pour le contenu au-dessus de la ligne de flottaison. Contrairement à
+   .reveal, qui attend un IntersectionObserver, celle-ci part du CSS : si
+   le JavaScript tarde ou ne s'exécute jamais, le texte est quand même là.
+   Le hero ne doit jamais dépendre d'un script pour être lisible. */
+@keyframes lgRise {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: none; }
+}
+
+.rise {
+  animation: lgRise 800ms var(--lg-ease) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rise { animation: none; }
 }
