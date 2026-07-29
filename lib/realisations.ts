@@ -247,8 +247,14 @@ const REALISATIONS: Realisation[] = [
     summary:
       "Suivi de patrimoine privé. Tous les comptes réunis et historisés dans une interface en lecture seule, accessible sur invitation.",
     audience: "Particuliers · Patrimoines diversifiés",
-    accent: "#B45309",
-    accentLight: "#FFFBEB",
+    /* Or relevé sur la landing Draupnir (#b07e2b pour le titre et le logo,
+       #e7c978 en or clair) — l'ancien #B45309 était un orange brûlé.
+       Assombri d'un cran : #b07e2b ne donne que 3,58:1 sous un texte blanc,
+       et l'accent porte le bouton « Découvrir » comme le sur-titre. À
+       #9A6C22 on est à 4,62:1, donc au-dessus du seuil AA, sans que l'or
+       change de famille. */
+    accent: "#9A6C22",
+    accentLight: "#FBF6E8",
     status: "live",
     href: "https://draupnir-smoky.vercel.app/",
     featured: true,
