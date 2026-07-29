@@ -71,6 +71,28 @@ export default async function RealisationPage({ params }: Params) {
             {item.summary}
           </p>
 
+          {item.ownership && (
+            <div className="mt-7 inline-flex items-center gap-2.5 rounded-full border border-slate-200 bg-white px-4 py-2">
+              <svg
+                width="15"
+                height="15"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.8"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="shrink-0"
+                style={{ color: item.accent }}
+                aria-hidden="true"
+              >
+                <path d="M2.586 17.414A2 2 0 0 0 2 18.828V21a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h1a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h.172a2 2 0 0 0 1.414-.586l.814-.814a6.5 6.5 0 1 0-4-4z" />
+                <circle cx="16.5" cy="7.5" r=".5" fill="currentColor" />
+              </svg>
+              <span className="text-sm font-medium text-slate-600">{item.ownership}</span>
+            </div>
+          )}
+
           {item.status === "live" && item.href && (
             <div className="mt-8 flex flex-wrap gap-3">
               {isExternal(item.href) ? (

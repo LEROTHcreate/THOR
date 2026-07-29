@@ -37,6 +37,12 @@ export type Realisation = {
   featured?: boolean;
   /** Branche THOR à laquelle le projet est rattaché */
   branch: "produits" | "studio";
+  /**
+   * Modèle de livraison, affiché tel quel sur la fiche quand il est renseigné.
+   * Sert à lever l'objection du prospect qui craint de rester locataire de son
+   * propre outil : à ne remplir que si le client est bien propriétaire.
+   */
+  ownership?: string;
 
   /* ── Contenu de la fiche détaillée ── */
   context: string;
@@ -63,6 +69,7 @@ const REALISATIONS: Realisation[] = [
     href: "https://monsoldereel.fr/",
     featured: true,
     branch: "studio",
+    ownership: "Projet livré — propriété du client, sans abonnement",
     context:
       "Le solde affiché par la banque ne dit rien de ce qu'on peut réellement dépenser : le loyer, les abonnements et les assurances n'ont pas encore été prélevés. MonSoldeRéel part de ce constat et affiche le montant qui reste une fois toutes les charges à venir déduites. Le tout sans jamais se connecter au compte bancaire.",
     mission: [
