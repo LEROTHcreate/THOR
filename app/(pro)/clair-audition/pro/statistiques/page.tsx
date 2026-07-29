@@ -2,11 +2,7 @@
 
 import { useState, useEffect } from "react";
 import type { CSSProperties } from "react";
-import {
-  LineChart, Line, BarChart, Bar, Cell,
-  XAxis, YAxis, CartesianGrid, Tooltip,
-  ResponsiveContainer,
-} from "recharts";
+import { Chart } from "@/components/charts/lazy-chart";
 
 /* ─── Style tokens ─────────────────────────────────────────────────── */
 const glass: CSSProperties = {
@@ -485,6 +481,7 @@ export default function StatistiquesAuditionPage() {
           Total annuel : {hasRealDataA ? fmtEurA(dynCaData.reduce((s,d)=>s+d.CA,0)) : formatEur(384000)}
           {!hasRealDataA && <span style={{fontSize:11,color:"#94a3b8",marginLeft:8}}>(indicatif)</span>}
         </div>
+        <Chart height={200} render={({ ResponsiveContainer, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip }) => (
         <ResponsiveContainer width="100%" height={200}>
           <LineChart data={dynCaData} margin={{ top: 4, right: 8, left: 0, bottom: 0 }}>
             <CartesianGrid strokeDasharray="3 3" stroke="rgba(0,0,0,0.06)" vertical={false} />
@@ -502,6 +499,7 @@ export default function StatistiquesAuditionPage() {
             <Line type="monotone" dataKey="CA" stroke="#00C98A" strokeWidth={2} dot={false} activeDot={{ r: 5 }} />
           </LineChart>
         </ResponsiveContainer>
+        )} />
       </div>
 
       {/* ── Section 3 : Répartition par marque + Bilans ── */}
@@ -511,6 +509,7 @@ export default function StatistiquesAuditionPage() {
           <div style={{ fontSize: 15, fontWeight: 700, color: "#0f172a", marginBottom: 18 }}>
             Répartition par marque
           </div>
+          <Chart height={210} render={({ ResponsiveContainer, BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip }) => (
           <ResponsiveContainer width="100%" height={210}>
             <BarChart
               data={MARQUES}
@@ -545,6 +544,7 @@ export default function StatistiquesAuditionPage() {
               </Bar>
             </BarChart>
           </ResponsiveContainer>
+          )} />
         </div>
 
         {/* Bilans & Primo-appareillages (6 derniers mois) */}
@@ -565,6 +565,7 @@ export default function StatistiquesAuditionPage() {
               </div>
             ))}
           </div>
+          <Chart height={175} render={({ ResponsiveContainer, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip }) => (
           <ResponsiveContainer width="100%" height={175}>
             <BarChart data={dynBilanData} margin={{ top: 4, right: 8, left: 0, bottom: 0 }} barCategoryGap="20%">
               <CartesianGrid strokeDasharray="3 3" stroke="rgba(0,0,0,0.06)" vertical={false} />
@@ -576,6 +577,7 @@ export default function StatistiquesAuditionPage() {
               <Bar dataKey="Renouvellements" fill="#00C98A" radius={[4, 4, 0, 0]} />
             </BarChart>
           </ResponsiveContainer>
+          )} />
         </div>
       </div>
 

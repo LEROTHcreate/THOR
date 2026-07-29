@@ -116,14 +116,16 @@ export default function StudioPage() {
             <h1 className="text-4xl sm:text-5xl md:text-6xl xl:text-7xl font-bold tracking-tight text-slate-900 h-title leading-[1.02]">
               Vous avez une idée.
               <br />
+              {/* Dégradé figé : animer `background-position` sur un titre en
+                  `background-clip: text` repeint le texte sur le thread
+                  principal à chaque frame, en boucle. À l'arrêt, le dégradé
+                  est le même à l'œil. */}
               <span
                 style={{
-                  background: "linear-gradient(90deg, #6366F1 0%, #2D8CFF 45%, #6366F1 100%)",
-                  backgroundSize: "200% auto",
+                  background: "linear-gradient(90deg, #6366F1 0%, #2D8CFF 55%, #7C7FF3 100%)",
                   WebkitBackgroundClip: "text",
                   WebkitTextFillColor: "transparent",
                   backgroundClip: "text",
-                  animation: "textGradientSlide 8s linear infinite",
                 }}
               >
                 On s’occupe du reste.

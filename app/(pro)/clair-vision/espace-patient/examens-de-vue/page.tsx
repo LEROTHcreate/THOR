@@ -3,16 +3,7 @@
 import { useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { proLabel, type ProRole } from "@/lib/utils";
-import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-  ResponsiveContainer,
-} from "recharts";
+import { Chart } from "@/components/charts/lazy-chart";
 
 const glass = {
   background: "var(--glass-bg)",
@@ -243,6 +234,7 @@ function VisionEvolutionChart() {
           Votre graphique apparaîtra après votre deuxième visite.
         </div>
       ) : (
+        <Chart height={220} render={({ ResponsiveContainer, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend }) => (
         <ResponsiveContainer width="100%" height={220}>
           <LineChart data={data} margin={{ top: 4, right: 16, left: 0, bottom: 0 }}>
             <CartesianGrid strokeDasharray="3 3" stroke="rgba(0,0,0,0.07)" />
@@ -298,6 +290,7 @@ function VisionEvolutionChart() {
             />
           </LineChart>
         </ResponsiveContainer>
+        )} />
       )}
     </div>
   );

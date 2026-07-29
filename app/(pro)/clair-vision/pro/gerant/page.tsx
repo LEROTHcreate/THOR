@@ -1,11 +1,7 @@
 "use client";
 
 import { useState, useEffect, type CSSProperties } from "react";
-import {
-  AreaChart, Area, BarChart, Bar,
-  XAxis, YAxis, CartesianGrid, Tooltip,
-  ResponsiveContainer, Cell, Legend, ReferenceLine,
-} from "recharts";
+import { Chart } from "@/components/charts/lazy-chart";
 import { loadUsers, loadCurrentUserId, type ProUser } from "@/lib/users";
 import { useRouter } from "next/navigation";
 
@@ -819,6 +815,7 @@ export default function GerantPage() {
                 </div>
               </div>
             </div>
+            <Chart height={240} render={({ ResponsiveContainer, AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ReferenceLine }) => (
             <ResponsiveContainer width="100%" height={240}>
               <AreaChart data={dynEvolution} margin={{ top: 8, right: 8, left: 0, bottom: 0 }}>
                 <defs>
@@ -847,6 +844,7 @@ export default function GerantPage() {
                 <Area type="monotone" dataKey="Benefice" stroke="#00C98A" strokeWidth={2} fill="url(#colorBen)" dot={false} />
               </AreaChart>
             </ResponsiveContainer>
+            )} />
           </div>
 
           {/* ── Funnel de conversion (feature 2) ── */}
@@ -1088,6 +1086,7 @@ export default function GerantPage() {
             <div style={{ fontSize: 13, color: "#64748b", marginBottom: 16 }}>
               Ligne pointillée = objectif moyen ({formatEur(objectifMoyen)})
             </div>
+            <Chart height={220} render={({ ResponsiveContainer, BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, ReferenceLine }) => (
             <ResponsiveContainer width="100%" height={220}>
               <BarChart data={equipeChartData} margin={{ top: 8, right: 24, left: 0, bottom: 0 }}>
                 <CartesianGrid strokeDasharray="3 3" stroke="rgba(0,0,0,0.06)" vertical={false} />
@@ -1108,6 +1107,7 @@ export default function GerantPage() {
                 </Bar>
               </BarChart>
             </ResponsiveContainer>
+            )} />
           </div>
 
           {/* Actes par type */}
@@ -1217,6 +1217,7 @@ export default function GerantPage() {
             <div style={{ fontSize: 15, fontWeight: 700, color: "#0f172a", marginBottom: 18 }}>
               Répartition CA par catégorie
             </div>
+            <Chart height={260} render={({ ResponsiveContainer, BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, ReferenceLine }) => (
             <ResponsiveContainer width="100%" height={260}>
               <BarChart
                 data={CA_CATEGORIE}
@@ -1241,6 +1242,7 @@ export default function GerantPage() {
                 </Bar>
               </BarChart>
             </ResponsiveContainer>
+            )} />
           </div>
 
           {/* Tableau des marges */}

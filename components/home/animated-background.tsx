@@ -15,11 +15,20 @@
  *   3. Grain   — casse la planéité du dégradé, empêche le banding
  *
  * BUDGET RENDU — à respecter pour toute évolution :
- *   • seuls `transform` et `opacity` sont animés ;
- *   • aucun `filter: blur()` sur un élément animé : les nappes sont des
- *     radial-gradients déjà lisses, un blur forcerait une re-rasterisation
- *     coûteuse d'un calque de ~900 px de côté ;
+ *   • ce calque est FIXE et IMMOBILE. C'est la règle la plus importante du
+ *     fichier. Il est posé sous une vingtaine de surfaces `backdrop-filter`
+ *     (header, pastilles, boutons, gouttes). Un `backdrop-filter` doit
+ *     ré-échantillonner et re-flouter son arrière-plan dès que celui-ci
+ *     change : une nappe qui dérive en boucle obligeait donc le compositeur
+ *     à refaire ~20 passes de flou à chaque frame, en permanence, page au
+ *     repos comprise. Une dérive de 50 px étalée sur 44 s est invisible ;
+ *     son coût, lui, était total ;
+ *   • aucun `filter: blur()` : les nappes sont des radial-gradients déjà
+ *     lisses, un blur forcerait une re-rasterisation d'un calque de ~900 px ;
  *   • `contain: strict` isole ce sous-arbre du reste de la page.
+ *
+ * Le mouvement de la vitrine vient du geste (parallaxe au pointeur, survols,
+ * entrées au scroll), jamais d'une boucle qui tourne dans le vide.
  */
 export default function AnimatedBackground() {
   return (
@@ -50,8 +59,6 @@ export default function AnimatedBackground() {
           left: "-10%",
           background:
             "radial-gradient(circle at 40% 40%, rgba(99,102,241,0.10) 0%, rgba(99,102,241,0) 62%)",
-          animation: "morphBlob1 44s ease-in-out infinite",
-          willChange: "transform",
         }}
       />
       <div
@@ -65,9 +72,6 @@ export default function AnimatedBackground() {
           right: "-12%",
           background:
             "radial-gradient(circle at 55% 45%, rgba(15,23,42,0.055) 0%, rgba(15,23,42,0) 62%)",
-          animation: "morphBlob2 52s ease-in-out infinite",
-          animationDelay: "-16s",
-          willChange: "transform",
         }}
       />
 

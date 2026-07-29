@@ -389,7 +389,12 @@ body {
     -webkit-backdrop-filter: blur(16px);
   }
 
-  /* ── Liquid Glass (header / footer) — inspiré d'Apple ── */
+  /* ── Liquid Glass (header / footer) — inspiré d'Apple ──
+     Le header garde un vrai flou : c'est le seul endroit où du contenu
+     défile réellement sous le verre, et il n'y en a qu'un par page.
+     Le footer, lui, ne surplombe que le bas du fond — quasi uni. Son flou
+     ne se voyait pas mais coûtait une passe plein-largeur à chaque frame de
+     scroll : teinte opaque à la place. */
   .glass-liquid-top {
     background: rgba(255, 255, 255, 0.58);
     backdrop-filter: saturate(180%) blur(28px);
@@ -400,9 +405,7 @@ body {
       0 12px 32px -16px rgba(11, 18, 32, 0.10);
   }
   .glass-liquid-bottom {
-    background: rgba(255, 255, 255, 0.58);
-    backdrop-filter: saturate(180%) blur(28px);
-    -webkit-backdrop-filter: saturate(180%) blur(28px);
+    background: rgba(255, 255, 255, 0.86);
     border-top: 1px solid rgba(255, 255, 255, 0.50);
     box-shadow:
       inset 0 -1px 0 rgba(255, 255, 255, 0.65),
@@ -637,7 +640,8 @@ body {
     0 12px 32px -16px rgba(0, 0, 0, 0.45);
 }
 [data-theme="dark"] .glass-liquid-bottom {
-  background: rgba(15, 23, 42, 0.55);
+  /* Opaque : le flou a été retiré côté clair comme sombre (cf. .glass-liquid-bottom) */
+  background: rgba(15, 23, 42, 0.92);
   border-top: 1px solid rgba(255, 255, 255, 0.08);
   box-shadow:
     inset 0 -1px 0 rgba(255, 255, 255, 0.08),
@@ -655,8 +659,23 @@ body {
 
 /* ── Solid backgrounds — converti en glass blanc translucide pour éviter
        les fonds bleus foncés en mode sombre. Le voile blanc faible laisse
-       passer la teinte du body sombre, créant un effet glass Apple. ── */
-[data-theme="dark"] .bg-white           { background-color: rgba(255,255,255,0.06) !important; backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); }
+       passer la teinte du body sombre, créant un effet glass Apple.
+
+       PERF — le `backdrop-filter` a été retiré de la règle générale. Il
+       s'appliquait aux 310 éléments `.bg-white` du projet, soit des dizaines
+       de passes de flou par frame sur une page pro. Or dans l'écrasante
+       majorité des cas la surface repose à plat sur le fond du body : flouter
+       un aplat ne produit rien, ça ne fait que payer. Le flou n'a de sens que
+       lorsque du contenu passe DERRIÈRE la surface — panneaux, modales,
+       menus déroulants — donc uniquement sur les éléments positionnés, sept
+       dans tout le projet. ── */
+[data-theme="dark"] .bg-white           { background-color: rgba(255,255,255,0.06) !important; }
+[data-theme="dark"] .fixed.bg-white,
+[data-theme="dark"] .sticky.bg-white,
+[data-theme="dark"] .absolute.bg-white {
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
 [data-theme="dark"] .bg-slate-50        { background-color: rgba(255,255,255,0.03) !important; }
 [data-theme="dark"] .bg-slate-100       { background-color: rgba(255,255,255,0.06) !important; }
 [data-theme="dark"] .bg-slate-200       { background-color: rgba(255,255,255,0.10) !important; }
@@ -1015,10 +1034,20 @@ body {
   color: var(--thor-muted);
 }
 
-/* ── Carte ──────────────────────────────────────────────────── */
+/* ── Carte ──────────────────────────────────────────────────────
+   Seule déclinaison du matériau à renoncer au backdrop-filter, et c'est
+   délibéré. Une carte est grande et elle défile : à chaque frame de scroll
+   elle survole une portion différente du fond fixe, donc son flou doit être
+   entièrement recalculé. Une page de portfolio en aligne une dizaine — dix
+   passes de blur(20px) par frame, pour un flou appliqué à un dégradé déjà
+   plat (#FCFCFE → #F6F7F9) où il ne se voit pas. La teinte est remontée de
+   0.52 à 0.68 : à l'œil c'est la même surface, au rendu c'est gratuit.
+   Les petites surfaces (pastille, bouton, goutte) gardent le vrai verre. */
 .lg-card {
   border-radius: 28px;
-  background: rgba(255,255,255,0.52);
+  background: rgba(255,255,255,0.68);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
   transition:
     transform 500ms var(--lg-ease),
     background 500ms var(--lg-ease),
@@ -1026,7 +1055,7 @@ body {
 }
 
 .lg-card:hover {
-  background: rgba(255,255,255,0.66);
+  background: rgba(255,255,255,0.82);
   transform: translateY(-3px);
   box-shadow:
     inset 0 1px 0 rgba(255,255,255,1),
@@ -1034,10 +1063,11 @@ body {
     var(--lg-shadow-hi);
 }
 
-/* ── Gouttes flottantes ─────────────────────────────────────────
+/* ── Gouttes de verre ───────────────────────────────────────────
    Démonstration du matériau : de vraies lentilles qui réfractent le
    fond. Coûteux (chaque goutte est une passe de backdrop-filter), donc
-   quatre au maximum, jamais sur mobile, et seul `transform` est animé. */
+   quatre au maximum, jamais sur mobile, et immobiles au repos — elles ne
+   bougent que sous le pointeur (cf. GlassDrops dans thor-hero.tsx). */
 .lg-drop {
   position: absolute;
   border-radius: 9999px;
@@ -1053,7 +1083,6 @@ body {
     inset 0 1px 1px rgba(255,255,255,0.90),
     inset 0 -12px 26px -8px rgba(255,255,255,0.28),
     0 22px 48px -28px rgba(11,18,32,0.22);
-  will-change: transform;
 }
 
 /* Le point de lumière qui trahit la courbure de la goutte. */
@@ -1068,18 +1097,12 @@ body {
   background: radial-gradient(circle, rgba(255,255,255,0.85) 0%, transparent 72%);
 }
 
-@keyframes lgDrift {
-  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
-  33%      { transform: translate3d(18px, -26px, 0) scale(1.04); }
-  66%      { transform: translate3d(-14px, 16px, 0) scale(0.97); }
-}
-
 @media (max-width: 767px) {
   .lg-drop { display: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .lg-drop { animation: none !important; }
+  .lg-drop { transition: none; transform: none !important; }
   .lg-btn, .lg-card { transition: none; }
   .lg-btn:hover, .lg-card:hover { transform: none; }
 }

@@ -1,11 +1,7 @@
 "use client";
 
 import { useState, useEffect, type CSSProperties } from "react";
-import {
-  AreaChart, Area, BarChart, Bar, Cell,
-  XAxis, YAxis, CartesianGrid, Tooltip,
-  ResponsiveContainer, Legend, ReferenceLine,
-} from "recharts";
+import { Chart } from "@/components/charts/lazy-chart";
 import { loadUsers, loadCurrentUserId, type ProUser } from "@/lib/users";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
@@ -674,6 +670,7 @@ export default function GerantAuditionPage() {
               Évolution CA &amp; Bénéfice — 12 mois
             </div>
             <div style={{ fontSize: 12, color: "#94a3b8", marginBottom: 14 }}>Objectif mensuel : 36 000 €</div>
+            <Chart height={230} render={({ ResponsiveContainer, AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ReferenceLine }) => (
             <ResponsiveContainer width="100%" height={230}>
               <AreaChart data={EVOLUTION_DATA} margin={{ top: 4, right: 8, left: 0, bottom: 0 }}>
                 <defs>
@@ -701,6 +698,7 @@ export default function GerantAuditionPage() {
                 <Area type="monotone" dataKey="Benefice" stroke="#6366f1" strokeWidth={2} fill="url(#gradBen)" dot={false} />
               </AreaChart>
             </ResponsiveContainer>
+            )} />
           </div>
 
           {/* ── Funnel de conversion ── */}
@@ -953,6 +951,7 @@ export default function GerantAuditionPage() {
           <div style={{ ...glass, borderRadius: 18, padding: "22px 24px 20px", marginBottom: 24 }}>
             <div style={{ fontSize: 15, fontWeight: 700, color: "#0f172a", marginBottom: 4 }}>Comparatif équipe — CA du mois</div>
             <div style={{ fontSize: 12, color: "#94a3b8", marginBottom: 14 }}>Objectif moyen : {formatEur(objMoyen)}</div>
+            <Chart height={160} render={({ ResponsiveContainer, BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, ReferenceLine }) => (
             <ResponsiveContainer width="100%" height={160}>
               <BarChart
                 data={EQUIPE.map(e => ({ name: e.initiales, CA: e.ca, color: e.color }))}
@@ -975,6 +974,7 @@ export default function GerantAuditionPage() {
                 </Bar>
               </BarChart>
             </ResponsiveContainer>
+            )} />
           </div>
 
           {/* Actes par type */}
@@ -1092,6 +1092,7 @@ export default function GerantAuditionPage() {
               Répartition CA par marque — {formatEur(totalCA)}/mois
             </div>
             <div style={{ fontSize: 12, color: "#94a3b8", marginBottom: 14 }}>Chiffre d&apos;affaires par fabricant</div>
+            <Chart height={240} render={({ ResponsiveContainer, BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip }) => (
             <ResponsiveContainer width="100%" height={240}>
               <BarChart
                 data={CA_MARQUE}
@@ -1112,6 +1113,7 @@ export default function GerantAuditionPage() {
                 </Bar>
               </BarChart>
             </ResponsiveContainer>
+            )} />
           </div>
 
           {/* Tableau des marges */}

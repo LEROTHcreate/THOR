@@ -18,14 +18,20 @@ const NB_SECTEURS = new Set(LIVRES.map((r) => r.sector)).size;
 
    Quatre au maximum — chaque goutte est une passe de composition plein
    calque. Elles disparaissent sous 768 px (règle .lg-drop dans globals.css).
-   `depth` module l'amplitude du parallaxe : les grosses gouttes, perçues plus
-   proches, bougent davantage.
+
+   PERF — elles ne dérivent plus. Une goutte est un `backdrop-filter` : la
+   déplacer en boucle interdit au compositeur de mettre son flou en cache et
+   le force à re-flouter à chaque frame, indéfiniment. Posées sur un fond
+   désormais immobile, les quatre gouttes sont floutées une fois puis ne
+   coûtent plus rien au repos. `depth` module ce qu'il reste de mouvement :
+   le parallaxe au pointeur, qui ne tourne que pendant le geste. Les grosses
+   gouttes, perçues plus proches, se déplacent davantage.
    ──────────────────────────────────────────────────────────────────────── */
 const DROPS = [
-  { size: 148, top: "10%", left: "6%",   duration: 26, delay: 0,   depth: 1.6 },
-  { size: 86,  top: "24%", right: "10%", duration: 32, delay: -8,  depth: 2.4 },
-  { size: 196, top: "64%", right: "4%",  duration: 38, delay: -16, depth: 1.1 },
-  { size: 62,  top: "76%", left: "13%",  duration: 22, delay: -4,  depth: 3.0 },
+  { size: 148, top: "10%", left: "6%",   depth: 1.6 },
+  { size: 86,  top: "24%", right: "10%", depth: 2.4 },
+  { size: 196, top: "64%", right: "4%",  depth: 1.1 },
+  { size: 62,  top: "76%", left: "13%",  depth: 3.0 },
 ];
 
 function GlassDrops() {
@@ -41,20 +47,10 @@ function GlassDrops() {
             top: d.top,
             left: d.left,
             right: d.right,
-            animation: `lgDrift ${d.duration}s ease-in-out infinite`,
-            animationDelay: `${d.delay}s`,
+            transform: `translate(calc(var(--px) * ${d.depth}), calc(var(--py) * ${d.depth}))`,
+            transition: "transform 700ms var(--lg-ease)",
           }}
-        >
-          {/* Le parallaxe vit sur un calque interne pour ne pas écraser la
-              transform de la dérive, qui tourne en continu. */}
-          <span
-            className="absolute inset-0 rounded-full"
-            style={{
-              transform: `translate(calc(var(--px) * ${d.depth}), calc(var(--py) * ${d.depth}))`,
-              transition: "transform 700ms var(--lg-ease)",
-            }}
-          />
-        </div>
+        />
       ))}
     </div>
   );

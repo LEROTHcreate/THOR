@@ -2,10 +2,7 @@
 
 import { useState, useEffect } from "react";
 import type { CSSProperties } from "react";
-import {
-  AreaChart, Area, BarChart, Bar, PieChart, Pie, Cell,
-  XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
-} from "recharts";
+import { Chart } from "@/components/charts/lazy-chart";
 
 const glass: CSSProperties = { background:"var(--glass-bg)", backdropFilter:"blur(20px)", WebkitBackdropFilter:"blur(20px)", border:"1px solid var(--glass-border)", boxShadow:"0 8px 32px rgba(0,0,0,0.06)" };
 const glassSubtle: CSSProperties = { background:"rgba(255,255,255,0.45)", border:"1px solid rgba(255,255,255,0.65)" };
@@ -320,6 +317,7 @@ export default function StatistiquesPage() {
         <div className="rounded-[var(--radius-large)] p-5" style={glass}>
           <div className="text-sm font-semibold text-slate-800 mb-1">Chiffre d'affaires</div>
           <div className="text-xs text-slate-500 mb-4">{periodLabels[period]} — en euros</div>
+          <Chart height={180} render={({ ResponsiveContainer, AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip }) => (
           <ResponsiveContainer width="100%" height={180}>
             <AreaChart data={data}>
               <defs>
@@ -335,12 +333,14 @@ export default function StatistiquesPage() {
               <Area type="monotone" dataKey="ca" name="CA" stroke="#2D8CFF" strokeWidth={2} fill="url(#gradCA)" dot={{ r:3, fill:"#2D8CFF", strokeWidth:0 }} activeDot={{ r:5 }}/>
             </AreaChart>
           </ResponsiveContainer>
+          )} />
         </div>
 
         {/* Actes par type */}
         <div className="rounded-[var(--radius-large)] p-5" style={glass}>
           <div className="text-sm font-semibold text-slate-800 mb-1">Actes par type</div>
           <div className="text-xs text-slate-500 mb-4">{periodLabels[period]} — {totalActes} actes</div>
+          <Chart height={180} render={({ ResponsiveContainer, BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip }) => (
           <ResponsiveContainer width="100%" height={180}>
             <BarChart data={dynActesData} layout="vertical" barCategoryGap="20%">
               <CartesianGrid horizontal={false} stroke="rgba(0,0,0,0.05)"/>
@@ -352,6 +352,7 @@ export default function StatistiquesPage() {
               </Bar>
             </BarChart>
           </ResponsiveContainer>
+          )} />
         </div>
       </div>
 
@@ -362,6 +363,7 @@ export default function StatistiquesPage() {
           <div className="text-sm font-semibold text-slate-800 mb-1">Répartition corrections</div>
           <div className="text-xs text-slate-500 mb-4">Dossiers actifs — {period === "mois" ? "ce mois" : period === "trimestre" ? "ce trimestre" : "cette année"}</div>
           <div className="flex items-center gap-4">
+            <Chart height={100} render={({ ResponsiveContainer, PieChart, Pie, Cell }) => (
             <ResponsiveContainer width={100} height={100}>
               <PieChart>
                 <Pie data={correctionsData} cx="50%" cy="50%" innerRadius={28} outerRadius={46} paddingAngle={3} dataKey="value" strokeWidth={0}>
@@ -369,6 +371,7 @@ export default function StatistiquesPage() {
                 </Pie>
               </PieChart>
             </ResponsiveContainer>
+            )} />
             <div className="flex flex-col gap-1.5 flex-1">
               {correctionsData.map(c => (
                 <div key={c.name} className="flex items-center justify-between gap-2">
