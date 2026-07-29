@@ -352,7 +352,20 @@ body {
    L'angle de départ n'est pas une transformation mais un `animation-delay`
    négatif. C'est ce qui permet de tout figer — survol, focus clavier, hors
    écran, mouvement réduit — d'un seul `animation-play-state` : chaque
-   satellite reste à sa place au lieu de s'empiler au point de départ. */
+   satellite reste à sa place au lieu de s'empiler au point de départ.
+
+   La scène est en 3D : chaque plan d'orbite est un cercle basculé sur X, donc
+   projeté à l'écran en ellipse, et pivoté sur Z d'un angle qui lui est propre.
+   C'est ce qui évite la cible concentrique — les ellipses se croisent au lieu
+   de s'emboîter. `preserve-3d` doit courir sur toute la chaîne, sinon le
+   navigateur aplatit le sous-arbre et la perspective disparaît. */
+.orbit-plane,
+.orbit-track,
+.orbit-anchor,
+.orbit-upright {
+  transform-style: preserve-3d;
+}
+
 .orbit-track,
 .orbit-upright {
   animation: spin var(--orbit-duration) linear infinite;
@@ -507,6 +520,26 @@ body {
   .h-title {
     font-family: var(--font-display);
     letter-spacing: -0.03em;
+  }
+
+  /* ── Micro-typo d'atelier ──
+     Les libellés techniques — sur-titres, hôtes, indices d'étape — passent en
+     chasse fixe. C'est la seule note « établi » de la vitrine : le discours,
+     lui, reste en Inter. Ne jamais l'appliquer à une phrase. */
+  .mono-label {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    line-height: 1;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+
+  /* ── Papier millimétré ──
+     Trame de repères sous les panneaux de travail. Statique et en dégradé
+     répété : aucune image, aucun calque supplémentaire à composer. */
+  .grid-paper {
+    background-image: radial-gradient(circle, rgba(11, 18, 32, 0.07) 1px, transparent 1px);
+    background-size: 22px 22px;
   }
 
   /* ── Shine sweep (CTA) ── */
@@ -808,6 +841,11 @@ body {
 [data-theme="dark"] .shadow-lg,
 [data-theme="dark"] .shadow-xl {
   --tw-shadow-color: rgba(0,0,0,0.5);
+}
+
+/* ── Papier millimétré dark ── */
+[data-theme="dark"] .grid-paper {
+  background-image: radial-gradient(circle, rgba(255, 255, 255, 0.07) 1px, transparent 1px);
 }
 
 /* ── Skeleton dark ── */

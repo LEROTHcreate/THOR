@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Reveal } from "@/components/ui/reveal";
+import { AppWindow, windowLabel } from "@/components/ui/app-window";
 import {
   CATEGORY_LABELS,
   getAllRealisations,
@@ -134,32 +135,18 @@ export default async function RealisationPage({ params }: Params) {
           )}
         </Reveal>
 
-        {/* ── Bandeau visuel ──────────────────────────────────────────── */}
+        {/* ── Bandeau visuel ──────────────────────────────────────────────
+            L'interface réelle quand elle existe ; à défaut, la plaque au nom
+            du projet que génère la fenêtre. */}
         <Reveal>
-          <div
-            className="relative mt-14 h-56 sm:h-72 rounded-[var(--radius-large)] overflow-hidden border border-white/80"
-            style={{
-              background: `linear-gradient(135deg, ${item.accent}1F 0%, ${item.accent}0A 50%, transparent 100%)`,
-            }}
-          >
-            <div
-              aria-hidden="true"
-              className="absolute -top-24 -right-16 w-96 h-96 rounded-full blur-3xl opacity-60"
-              style={{ background: `${item.accent}33` }}
+          <div className="mt-14">
+            <AppWindow
+              src={item.cover}
+              alt={item.name}
+              label={item.href ? windowLabel(item.href) : item.slug}
+              accent={item.accent}
+              priority
             />
-            <div
-              aria-hidden="true"
-              className="absolute -bottom-32 -left-20 w-80 h-80 rounded-full blur-3xl opacity-40"
-              style={{ background: `${item.accent}22` }}
-            />
-            <div className="relative h-full grid place-items-center">
-              <span
-                className="text-4xl sm:text-6xl font-bold tracking-tight h-title opacity-25"
-                style={{ color: item.accent }}
-              >
-                {item.name}
-              </span>
-            </div>
           </div>
         </Reveal>
 

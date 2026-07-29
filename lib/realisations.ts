@@ -32,8 +32,16 @@ export type Realisation = {
   href?: string;
   /** Lien vers l'espace professionnel, quand il en existe un */
   proHref?: string;
-  /** Visuel de couverture. À défaut, un dégradé signature est généré. */
+  /**
+   * Capture de l'interface réelle, prise sur le site en ligne.
+   * À défaut, la fenêtre affiche une plaque au nom du projet.
+   */
   cover?: string;
+  /**
+   * Marque du projet, carrée et sur fond transparent. Sert à identifier le
+   * produit là où la pastille de couleur seule reste anonyme.
+   */
+  logo?: string;
   featured?: boolean;
   /** Branche THOR à laquelle le projet est rattaché */
   branch: "produits" | "studio";
@@ -67,6 +75,8 @@ const REALISATIONS: Realisation[] = [
     accentLight: "#F5F3FF",
     status: "live",
     href: "https://monsoldereel.fr/",
+    cover: "/images/captures/monsoldereel.png",
+    logo: "/images/logos/monsoldereel.png",
     featured: true,
     branch: "studio",
     ownership: "Projet livré — propriété du client, sans abonnement",
@@ -106,6 +116,7 @@ const REALISATIONS: Realisation[] = [
     status: "live",
     href: "/clair-vision",
     proHref: "/connexion/praticien?module=vision",
+    cover: "/images/captures/clair-vision.png",
     featured: true,
     branch: "produits",
     context:
@@ -144,6 +155,7 @@ const REALISATIONS: Realisation[] = [
     status: "live",
     href: "/clair-audition",
     proHref: "/connexion/praticien?module=audition",
+    cover: "/images/captures/clair-audition.png",
     featured: true,
     branch: "produits",
     context:
@@ -181,6 +193,7 @@ const REALISATIONS: Realisation[] = [
     accentLight: "#D1FAE5",
     status: "live",
     href: "https://pharmapinvertagenda.vercel.app/",
+    cover: "/images/captures/pharmaplanning.png",
     featured: true,
     branch: "produits",
     context:
@@ -216,6 +229,7 @@ const REALISATIONS: Realisation[] = [
     accentLight: "#F0F9FF",
     status: "live",
     href: "https://jarvis-pi-pied.vercel.app/",
+    cover: "/images/captures/jarvis.png",
     featured: true,
     branch: "produits",
     context:
@@ -257,6 +271,8 @@ const REALISATIONS: Realisation[] = [
     accentLight: "#FBF6E8",
     status: "live",
     href: "https://draupnir-smoky.vercel.app/",
+    cover: "/images/captures/draupnir.png",
+    logo: "/images/logos/draupnir.png",
     featured: true,
     branch: "produits",
     context:

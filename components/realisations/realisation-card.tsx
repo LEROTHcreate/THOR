@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { CATEGORY_LABELS, type Realisation } from "@/lib/realisations";
 
@@ -13,12 +14,37 @@ import { CATEGORY_LABELS, type Realisation } from "@/lib/realisations";
 export function RealisationCard({ item }: { item: Realisation }) {
   return (
     <article className="lg lg-card group relative flex h-full flex-col p-7 sm:p-8">
+      {/* La capture du site en ligne, quand il y en a une : une carte de
+          portfolio sans image demande au lecteur d'imaginer le résultat. */}
+      {item.cover && (
+        <div className="relative -mx-7 -mt-7 mb-7 aspect-[16/10] overflow-hidden rounded-t-[28px] border-b border-slate-900/[0.06] bg-slate-50 sm:-mx-8 sm:-mt-8">
+          <Image
+            src={item.cover}
+            alt=""
+            fill
+            sizes="(min-width: 1024px) 350px, (min-width: 768px) 45vw, 100vw"
+            className="object-cover object-top transition-transform duration-700 group-hover:scale-[1.03]"
+            style={{ transitionTimingFunction: "var(--lg-ease)" }}
+          />
+        </div>
+      )}
+
       <div className="flex items-center justify-between mb-7">
         <span className="inline-flex items-center gap-2.5">
-          <span
-            className="w-2 h-2 rounded-full shrink-0"
-            style={{ background: item.accent, boxShadow: `0 0 0 3px ${item.accent}1A` }}
-          />
+          {item.logo ? (
+            <Image
+              src={item.logo}
+              alt=""
+              width={22}
+              height={22}
+              className="h-[22px] w-[22px] shrink-0 object-contain"
+            />
+          ) : (
+            <span
+              className="w-2 h-2 rounded-full shrink-0"
+              style={{ background: item.accent, boxShadow: `0 0 0 3px ${item.accent}1A` }}
+            />
+          )}
           <span className="text-[13px] font-medium text-slate-500">{item.tagline}</span>
         </span>
         <span className="text-[13px] text-slate-300 tabular-nums">{item.year}</span>
