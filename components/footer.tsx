@@ -1,5 +1,6 @@
-import Image from "next/image";
 import Link from "next/link";
+
+import { ThorMarkTile } from "@/components/thor-mark";
 
 const CONTACT_EMAIL = "contact.thor.pro@gmail.com";
 const CONTACT_PHONE_DISPLAY = "07 69 46 24 46";
@@ -16,17 +17,10 @@ export default function Footer() {
           {/* Brand */}
           <div className="md:col-span-4 space-y-4">
             <Link href="/" className="inline-flex items-center gap-3 group" aria-label="THOR — Accueil">
-              <div
-                className="relative h-9 w-9 rounded-xl overflow-hidden transition-transform duration-200 group-hover:scale-[1.04] border border-slate-200"
-              >
-                <Image
-                  src="/images/logos/thor.png"
-                  alt="THOR"
-                  fill
-                  sizes="36px"
-                  className="object-cover"
-                />
-              </div>
+              <ThorMarkTile
+                size={36}
+                className="transition-transform duration-200 group-hover:scale-[1.04]"
+              />
               <div className="leading-tight">
                 <div className="text-sm font-semibold text-slate-900 tracking-tight">THOR</div>
                 <div className="text-[11px] text-slate-500">L'écosystème logiciel des pros de santé</div>

@@ -1,9 +1,10 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useMemo, useState, useEffect } from "react";
+
+import { ThorMarkTile } from "@/components/thor-mark";
 
 function cn(...classes: Array<string | false | null | undefined>) {
   return classes.filter(Boolean).join(" ");
@@ -14,7 +15,6 @@ const navLinks = [
   { href: "/studio",       label: "Studio" },
   { href: "/produits",     label: "Produits" },
   { href: "/realisations", label: "Réalisations" },
-  { href: "/tarifs",       label: "Tarifs" },
 ];
 
 export default function Header() {
@@ -46,19 +46,10 @@ export default function Header() {
 
           {/* ── Logo THOR ── */}
           <Link href="/" className="flex items-center gap-3 group" aria-label="THOR — Accueil">
-            <div
-              className="relative h-11 w-11 rounded-xl overflow-hidden transition-transform duration-200 group-hover:scale-[1.05]"
-              style={{ boxShadow: "0 2px 8px rgba(11,18,32,0.18)" }}
-            >
-              <Image
-                src="/images/logos/thor.png"
-                alt="THOR"
-                fill
-                sizes="44px"
-                className="object-cover"
-                priority
-              />
-            </div>
+            <ThorMarkTile
+              size={44}
+              className="transition-transform duration-200 group-hover:scale-[1.05] shadow-[0_2px_8px_rgba(11,18,32,0.18)]"
+            />
 
             <div className="leading-tight">
               <div className="text-[16px] font-bold text-thor-text tracking-tight">
@@ -101,17 +92,6 @@ export default function Header() {
 
           {/* ── Actions desktop ── */}
           <div className="hidden md:flex items-center gap-3">
-            <Link
-              href="/connexion"
-              className="
-                text-sm font-medium text-thor-muted
-                hover:text-thor-text transition-colors duration-200
-                focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-vision-accent/40 rounded-lg px-1
-              "
-            >
-              Connexion
-            </Link>
-
             <Link
               href="/contact?sujet=demo"
               className="lg lg-btn lg-btn-ink text-sm"
@@ -170,19 +150,6 @@ export default function Header() {
               </div>
 
               <div className="mt-2 flex flex-col gap-2 p-2 border-t border-thor-border pt-4">
-                <Link
-                  href="/connexion"
-                  onClick={() => setOpen(false)}
-                  className="
-                    min-h-[44px] flex items-center
-                    rounded-xl px-4 py-3 text-sm font-medium
-                    text-thor-muted hover:bg-thor-surface-2 hover:text-thor-text
-                    transition-colors duration-200
-                  "
-                >
-                  Connexion
-                </Link>
-
                 <Link
                   href="/contact?sujet=demo"
                   onClick={() => setOpen(false)}
