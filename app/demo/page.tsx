@@ -1809,7 +1809,6 @@ export default function DemoPage() {
   const [space, setSpace] = useState<Space>("pharma");
   const [active, setActive] = useState(0);
   const [previewKey, setPreviewKey] = useState(0);
-  const [mouse, setMouse] = useState({ x: 0, y: 0 });
   const statsRef = useRef<HTMLDivElement>(null);
   const [statsVisible, setStatsVisible] = useState(false);
   const [portalPhase, setPortalPhase] = useState<"hidden" | "portal" | "form" | "sent">("hidden");
@@ -1835,14 +1834,6 @@ export default function DemoPage() {
     planning: 0, equipe: 1, gabarits: 2, absences: 3, avatars: 4,
   };
   const sideNavIdx = NAV_IDX[cur.id] ?? 1;
-
-  useEffect(() => {
-    function onMove(e: MouseEvent) {
-      setMouse({ x: (e.clientX / window.innerWidth - 0.5) * 30, y: (e.clientY / window.innerHeight - 0.5) * 20 });
-    }
-    window.addEventListener("mousemove", onMove, { passive: true });
-    return () => window.removeEventListener("mousemove", onMove);
-  }, []);
 
   useEffect(() => {
     const el = statsRef.current;
@@ -1955,10 +1946,13 @@ export default function DemoPage() {
       {/* BACKGROUND */}
       <div className="thor-grid" style={{ position: "fixed", inset: 0, pointerEvents: "none", zIndex: 0 }} />
 
-      {/* Animated orbs — mouse-parallax */}
-      <div style={{ position: "fixed", top: "-10%", right: "-10%", width: 900, height: 900, borderRadius: "50%", background: t.orb1, filter: "blur(120px)", animation: "orbDrift 20s ease-in-out infinite", pointerEvents: "none", zIndex: 0, transform: `translate(${mouse.x * 0.6}px, ${mouse.y * 0.4}px)`, transition: "transform 1.2s ease" }} />
-      <div style={{ position: "fixed", bottom: "-15%", left: "-10%", width: 700, height: 700, borderRadius: "50%", background: t.orb2, filter: "blur(100px)", animation: "orbDrift 28s 6s ease-in-out infinite", pointerEvents: "none", zIndex: 0, transform: `translate(${-mouse.x * 0.4}px, ${-mouse.y * 0.3}px)`, transition: "transform 1.5s ease" }} />
-      <div style={{ position: "fixed", top: "40%", left: "40%", width: 500, height: 500, borderRadius: "50%", background: t.orb1, filter: "blur(140px)", opacity: 0.4, animation: "orbDrift 35s 12s ease-in-out infinite", pointerEvents: "none", zIndex: 0, transform: `translate(${mouse.x * 0.2}px, ${mouse.y * 0.2}px)`, transition: "transform 2s ease" }} />
+      {/* Orbes de fond.
+          Le halo vient d'un radial-gradient et non d'un `filter: blur()` : flouter
+          un disque plein de 900 px animé obligeait le GPU à re-rasteriser un calque
+          géant en continu. Rendu équivalent à l'œil, coût sans commune mesure. */}
+      <div style={{ position: "fixed", top: "-10%", right: "-10%", width: 900, height: 900, background: `radial-gradient(circle, ${t.orb1} 0%, transparent 70%)`, animation: "orbDrift 20s ease-in-out infinite", pointerEvents: "none", zIndex: 0, willChange: "transform" }} />
+      <div style={{ position: "fixed", bottom: "-15%", left: "-10%", width: 700, height: 700, background: `radial-gradient(circle, ${t.orb2} 0%, transparent 70%)`, animation: "orbDrift 28s 6s ease-in-out infinite", pointerEvents: "none", zIndex: 0, willChange: "transform" }} />
+      <div style={{ position: "fixed", top: "40%", left: "40%", width: 500, height: 500, background: `radial-gradient(circle, ${t.orb1} 0%, transparent 70%)`, opacity: 0.4, animation: "orbDrift 35s 12s ease-in-out infinite", pointerEvents: "none", zIndex: 0, willChange: "transform" }} />
 
       {/* HERO */}
       <section style={{ position: "relative", zIndex: 1, padding: "80px 24px 60px", textAlign: "center", overflow: "hidden" }}>

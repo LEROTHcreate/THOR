@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { BrandIcon } from "@/components/brand-icon";
+import { usePointerParallax, PARALLAX_INITIAL } from "@/lib/usePointerParallax";
 
 const ACCENT = "#00C98A";
 const ACCENT_DEEP = "#00A876";
@@ -85,68 +86,54 @@ function Header({ scrolled }: { scrolled: boolean }) {
 
 /* ── Hero ────────────────────────────────────────────────────────────────── */
 function Hero() {
-  const [parallax, setParallax] = useState({ x: 0, y: 0 });
+  // Parallax via variables CSS — cf. lib/usePointerParallax : pas de re-render.
+  const parallaxRef = usePointerParallax<HTMLElement>();
   const [scale, setScale] = useState(1);
   useEffect(() => {
-    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
-    if (mq.matches) return;
-    let raf = 0;
-    let lastX = 0, lastY = 0;
-    function onMove(e: MouseEvent) {
-      lastX = e.clientX;
-      lastY = e.clientY;
-      if (raf) return;
-      raf = requestAnimationFrame(() => {
-        setParallax({
-          x: (lastX / window.innerWidth - 0.5) * 24,
-          y: (lastY / window.innerHeight - 0.5) * 16,
-        });
-        raf = 0;
-      });
-    }
     function onResize() {
       const w = window.innerWidth;
       setScale(w >= 1280 ? 1 : w >= 768 ? 0.72 : 0.55);
     }
     onResize();
-    window.addEventListener("mousemove", onMove, { passive: true });
     window.addEventListener("resize", onResize, { passive: true });
-    return () => {
-      if (raf) cancelAnimationFrame(raf);
-      window.removeEventListener("mousemove", onMove);
-      window.removeEventListener("resize", onResize);
-    };
+    return () => window.removeEventListener("resize", onResize);
   }, []);
 
   return (
     <section
+      ref={parallaxRef}
       className="relative min-h-screen flex items-center overflow-hidden pt-16"
-      style={{ background: "linear-gradient(180deg, #fbfffd 0%, #f3fbf7 50%, #f8fffe 100%)" }}
+      style={{
+        background: "linear-gradient(180deg, #fbfffd 0%, #f3fbf7 50%, #f8fffe 100%)",
+        ...PARALLAX_INITIAL,
+      }}
     >
-      {/* Fond animé — blobs morphants (palette Audition) */}
-      <div aria-hidden="true" className="absolute inset-0 overflow-hidden pointer-events-none" style={{ mixBlendMode: "multiply" }}>
+      {/* Fond animé — blobs (palette Audition).
+          Pas de `filter: blur()` ici : ces radial-gradients sont déjà diffus et
+          le blur forçait une re-rasterisation plein écran à chaque frame. */}
+      <div aria-hidden="true" data-decor="motion" className="absolute inset-0 overflow-hidden pointer-events-none" style={{ mixBlendMode: "multiply", contain: "strict" }}>
         <div className="absolute" style={{
           width: "55vw", height: "55vw", maxWidth: 850, maxHeight: 850,
           top: "-15%", left: "-12%",
           background: "radial-gradient(circle at 30% 30%, rgba(0,201,138,0.50) 0%, rgba(0,201,138,0) 65%)",
-          filter: "blur(60px)",
           animation: "morphBlob1 28s ease-in-out infinite",
+          willChange: "transform",
         }} />
         <div className="absolute" style={{
           width: "50vw", height: "50vw", maxWidth: 800, maxHeight: 800,
           top: "10%", right: "-15%",
           background: "radial-gradient(circle at 60% 40%, rgba(14,165,233,0.42) 0%, rgba(14,165,233,0) 65%)",
-          filter: "blur(70px)",
           animation: "morphBlob2 34s ease-in-out infinite",
           animationDelay: "-6s",
+          willChange: "transform",
         }} />
         <div className="absolute" style={{
           width: "48vw", height: "48vw", maxWidth: 750, maxHeight: 750,
           bottom: "-5%", left: "20%",
           background: "radial-gradient(circle at 50% 50%, rgba(20,184,166,0.30) 0%, rgba(20,184,166,0) 65%)",
-          filter: "blur(70px)",
           animation: "morphBlob3 30s ease-in-out infinite",
           animationDelay: "-12s",
+          willChange: "transform",
         }} />
       </div>
 
@@ -188,7 +175,7 @@ function Hero() {
             <div
               className="inline-flex items-center gap-2 rounded-full border border-white/60 bg-white/70 px-4 py-2 text-xs font-medium text-slate-500 backdrop-blur-xl shadow-[0_4px_20px_rgba(0,201,138,0.10),inset_0_1px_0_rgba(255,255,255,0.9)] mb-8"
               style={{
-                transform: `translate(${parallax.x * 0.3}px, ${parallax.y * 0.3}px)`,
+                transform: "translate(calc(var(--px) * 0.3), calc(var(--py) * 0.3))",
                 transition: "transform 0.4s cubic-bezier(0.22,1,0.36,1)",
               }}
             >
@@ -203,7 +190,7 @@ function Hero() {
 
             <h1 className="text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tight text-slate-900 leading-[0.98] mb-7 h-title"
                 style={{
-                  transform: `translate(${parallax.x * -0.5}px, ${parallax.y * -0.3}px)`,
+                  transform: "translate(calc(var(--px) * -0.5), calc(var(--py) * -0.3))",
                   transition: "transform 0.5s cubic-bezier(0.22,1,0.36,1)",
                 }}
             >
@@ -294,7 +281,7 @@ function Hero() {
               style={{
                 width: 580,
                 height: 580,
-                transform: `perspective(1400px) rotateX(${parallax.y * 0.4}deg) rotateY(${parallax.x * -0.5}deg) scale(${scale})`,
+                transform: `perspective(1400px) rotateX(var(--rot-x)) rotateY(var(--rot-y)) scale(${scale})`,
                 transition: "transform 0.6s cubic-bezier(0.22,1,0.36,1)",
                 transformStyle: "preserve-3d",
               }}
