@@ -397,21 +397,47 @@ body {
 /* Tracé d'orbite — anneau d'un seul pixel dont l'opacité varie sur le tour.
    Une ellipse d'épaisseur et d'opacité constantes se lit comme un dessin
    plat : rien n'y distingue l'arc qui passe devant l'astre de celui qui
-   passe derrière. Le dégradé conique fonce l'avant et efface l'arrière, le
-   masque radial ne garde que la bordure. */
+   passe derrière. Le dégradé conique appuie l'avant et efface l'arrière, le
+   masque radial ne garde que la bordure.
+
+   Les trois teintes viennent du projet qui parcourt l'orbite (posées en
+   variables sur le plan). Chaque trajectoire porte donc la couleur de son
+   site, comme dans Eyes on the Solar System : c'est ce qui distingue six
+   ellipses enchevêtrées les unes des autres. */
 .orbit-ring {
   border-radius: 9999px;
   background: conic-gradient(
     from 180deg,
-    rgba(11, 18, 32, 0.42) 0deg,
-    rgba(11, 18, 32, 0.26) 62deg,
-    rgba(11, 18, 32, 0.07) 150deg,
-    rgba(11, 18, 32, 0.05) 210deg,
-    rgba(11, 18, 32, 0.26) 298deg,
-    rgba(11, 18, 32, 0.42) 360deg
+    var(--ring-strong) 0deg,
+    var(--ring-mid) 62deg,
+    var(--ring-weak) 150deg,
+    var(--ring-weak) 210deg,
+    var(--ring-mid) 298deg,
+    var(--ring-strong) 360deg
   );
   -webkit-mask: radial-gradient(closest-side, transparent calc(100% - 1.6px), #000 calc(100% - 1.6px));
   mask: radial-gradient(closest-side, transparent calc(100% - 1.6px), #000 calc(100% - 1.6px));
+}
+
+/* La respiration de la couronne — la seule chose vivante dans l'astre.
+   `transform` et `opacity` uniquement, et le translate est repris dans les
+   images-clés : une animation l'emporte sur le style en ligne, sans quoi la
+   couronne se décentrerait dès la première frame. */
+@keyframes coronaBreath {
+  0%, 100% { opacity: 0.78; transform: translate(-50%, -50%) scale(1); }
+  50%      { opacity: 1;    transform: translate(-50%, -50%) scale(1.07); }
+}
+
+.star-corona {
+  animation: coronaBreath 9s ease-in-out infinite;
+}
+
+[data-spin="paused"] .star-corona {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .star-corona { animation-play-state: paused; }
 }
 
 /* Le fond qui s'approche à la descente.

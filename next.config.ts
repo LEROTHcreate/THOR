@@ -37,6 +37,10 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       { protocol: "https", hostname: "**" },
     ],
+    /* Next 16 refuse par une 400 toute qualité non déclarée ici — la valeur
+       par défaut se limite à 75. Les captures d'interface contiennent du
+       texte fin qui bave à 75 : elles sont servies en 90 (cf. AppWindow). */
+    qualities: [75, 90],
   },
 };
 
