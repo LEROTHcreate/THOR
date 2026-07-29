@@ -238,6 +238,43 @@ const REALISATIONS: Realisation[] = [
     ],
   },
   {
+    slug: "draupnir",
+    name: "Draupnir",
+    tagline: "Patrimoine",
+    category: "outil",
+    sector: "Finance personnelle",
+    year: 2026,
+    summary:
+      "Suivi de patrimoine privé. Tous les comptes réunis et historisés dans une interface en lecture seule, accessible sur invitation.",
+    audience: "Particuliers · Patrimoines diversifiés",
+    accent: "#B45309",
+    accentLight: "#FFFBEB",
+    status: "live",
+    href: "https://draupnir-smoky.vercel.app/",
+    featured: true,
+    branch: "produits",
+    context:
+      "Un patrimoine se disperse : comptes courants, épargne, placements, actifs divers. Chaque support a son interface, aucune ne donne la vue d'ensemble. Draupnir réunit ces lignes en un seul tableau et en conserve l'historique. Le parti pris est celui de la lecture seule : l'outil observe, il ne passe jamais d'ordre.",
+    mission: [
+      "Consolidation des comptes et des actifs dans une vue unique",
+      "Historisation du patrimoine pour lire son évolution dans le temps",
+      "Architecture en lecture seule, sans capacité de transaction",
+      "Chiffrement des données au repos et accès fermé sur invitation",
+    ],
+    outcomes: [
+      { value: "1 vue", label: "tout le patrimoine" },
+      { value: "Lecture seule", label: "aucun ordre possible" },
+      { value: "Chiffré", label: "données au repos" },
+    ],
+    stack: ["Next.js", "TypeScript", "Vercel"],
+    features: [
+      "Tous les comptes réunis en un seul endroit",
+      "Historique de l'évolution du patrimoine",
+      "Lecture seule — aucune opération possible",
+      "Accès privé sur invitation",
+    ],
+  },
+  {
     slug: "prochain-projet",
     name: "Votre projet",
     tagline: "Studio",

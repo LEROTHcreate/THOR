@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRef } from "react";
 import { Reveal } from "@/components/ui/reveal";
 import { BrandIcon } from "@/components/brand-icon";
+import { getAllRealisations } from "@/lib/realisations";
 
 type SaasCardProps = {
   name: string;
@@ -14,7 +15,7 @@ type SaasCardProps = {
   features: string[];
   primary: string;       // hex color
   light: string;         // light bg
-  href: string;          // vitrine SaaS (peut être externe)
+  href?: string;         // vitrine SaaS (peut être externe) — absent tant que non livré
   proHref?: string;      // espace pro (optionnel)
   status: "live" | "soon";
   logo?: React.ReactNode; // logo optionnel (SVG)
@@ -24,8 +25,26 @@ function isExternal(href: string): boolean {
   return /^https?:\/\//.test(href);
 }
 
+/**
+ * Ce que la page Produits présente : les plateformes et outils de l'écosystème,
+ * livrés et accessibles.
+ *
+ * La règle est volontairement lisible depuis `lib/realisations.ts` seul —
+ * `category: "site"` désigne une prestation Studio (un site construit pour un
+ * client), pas un produit de l'écosystème ; les projets `soon` n'ont rien à
+ * montrer. Tout le reste apparaît ici, dans l'ordre du tableau source.
+ *
+ * Ajouter un produit = ajouter une entrée dans lib/realisations.ts. Ce fichier
+ * n'a plus à être touché — c'est précisément ce que la règle du dépôt impose,
+ * et que la liste écrite en dur ici violait : MonSoldeRéel et Draupnir étaient
+ * dans la source de vérité sans jamais atteindre la page.
+ */
+const PRODUITS = getAllRealisations().filter(
+  (r) => r.status === "live" && r.category !== "site",
+);
+
 function SaasCard({ index, name, tagline, description, audience, features, primary, light, href, proHref, status, logo }: SaasCardProps & { index: number }) {
-  const external = isExternal(href);
+  const external = href ? isExternal(href) : false;
   const cardRef = useRef<HTMLDivElement>(null);
 
   /* Tilt 3D au passage de la souris (effet wow subtil, max 6°) */
@@ -165,7 +184,7 @@ function SaasCard({ index, name, tagline, description, audience, features, prima
         </ul>
 
         {/* CTAs */}
-        {status === "live" ? (
+        {status === "live" && href ? (
           <div className="flex flex-wrap gap-3">
             {external ? (
               <a
@@ -246,6 +265,18 @@ function JarvisLogo() {
   );
 }
 
+/**
+ * Logos, par slug. Un visuel n'est pas une donnée de contenu : il vit ici,
+ * pas dans lib/realisations.ts. Un produit sans entrée retombe sur la pastille
+ * colorée à son accent, ce qui reste lisible — inutile d'en inventer un.
+ */
+const LOGOS: Record<string, React.ReactNode> = {
+  pharmaplanning: <PharmaPlanningLogo />,
+  "clair-vision": <BrandIcon brand="vision" size={38} />,
+  "clair-audition": <BrandIcon brand="audition" size={38} />,
+  jarvis: <JarvisLogo />,
+};
+
 export function SaasPortfolio() {
   return (
     <section id="portfolio" className="relative py-16 sm:py-24 md:py-32">
@@ -257,7 +288,7 @@ export function SaasPortfolio() {
               Nos plateformes
             </span>
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-slate-900 h-title">
-              L'écosystème <span className="font-light text-slate-500">THOR</span>
+              L’écosystème <span className="font-light text-slate-500">THOR</span>
             </h2>
             <p className="mt-5 text-base text-slate-500 max-w-xl mx-auto leading-relaxed">
               Chaque plateforme est conçue pour un métier précis,
@@ -266,112 +297,25 @@ export function SaasPortfolio() {
           </div>
         </Reveal>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
-          <Reveal>
-            <SaasCard
-              index={0}
-              name="PharmaPlanning"
-              tagline="Officine"
-              description="Outil de planning et de gestion d'agenda pour pharmacies et officines. Coordination d'équipe et organisation simplifiée."
-              audience="Pharmaciens · Préparateurs"
-              features={[
-                "Agenda partagé multi-équipiers",
-                "Gestion des plannings et congés",
-                "Suivi des présences en temps réel",
-                "Interface épurée et rapide",
-              ]}
-              primary="#059669"
-              light="#D1FAE5"
-              href="https://pharmapinvertagenda.vercel.app/"
-              status="live"
-              logo={<PharmaPlanningLogo />}
-            />
-          </Reveal>
-
-          <Reveal>
-            <SaasCard
-              index={1}
-              name="Clair Vision"
-              tagline="Optique"
-              description="Plateforme métier pour opticiens et optométristes. Gestion complète du cabinet, du dossier patient à la facturation."
-              audience="Opticiens · Optométristes · Visagistes"
-              features={[
-                "Dossiers patients & ordonnances",
-                "Stock, devis, facturation, tiers payant",
-                "Calculateur lentilles intégré",
-                "IA THOR pour la navigation",
-              ]}
-              primary="#2D8CFF"
-              light="#EFF6FF"
-              href="/clair-vision"
-              proHref="/connexion/praticien?module=vision"
-              status="live"
-              logo={<BrandIcon brand="vision" size={38} />}
-            />
-          </Reveal>
-
-          <Reveal>
-            <SaasCard
-              index={2}
-              name="Clair Audition"
-              tagline="Audiologie"
-              description="Plateforme métier pour audioprothésistes. Bilans auditifs, suivi appareillage et essais en un seul outil."
-              audience="Audioprothésistes · Assistants"
-              features={[
-                "Audiogrammes & bilans auditifs",
-                "Suivi appareillage et essais",
-                "Agenda et messagerie patient",
-                "OCR audiogrammes par IA",
-              ]}
-              primary="#00C98A"
-              light="#ECFDF5"
-              href="/clair-audition"
-              proHref="/connexion/praticien?module=audition"
-              status="live"
-              logo={<BrandIcon brand="audition" size={38} />}
-            />
-          </Reveal>
-
-          <Reveal>
-            <SaasCard
-              index={3}
-              name="J.A.R.V.I.S"
-              tagline="Assistant IA"
-              description="Assistant intelligent multi-usage. Compagnon conversationnel, automatisation et productivité — pensé pour aller à l'essentiel."
-              audience="Tous publics · Pro & particulier"
-              features={[
-                "Conversations naturelles & contextuelles",
-                "Automatisation de tâches répétitives",
-                "Mémoire persistante de vos préférences",
-                "Intégration native dans THOR",
-              ]}
-              primary="#0EA5E9"
-              light="#F0F9FF"
-              href="https://jarvis-pi-pied.vercel.app/"
-              status="live"
-              logo={<JarvisLogo />}
-            />
-          </Reveal>
-
-          <Reveal>
-            <SaasCard
-              index={4}
-              name="En préparation"
-              tagline="Prochain SaaS"
-              description="Une nouvelle plateforme métier rejoindra l'écosystème prochainement."
-              audience="Restez informé"
-              features={[
-                "Architecture certifiée santé",
-                "Intégration native dans THOR",
-                "Conformité HDS dès le lancement",
-              ]}
-              primary="#6366F1"
-              light="#EEF2FF"
-              href="#"
-              proHref="#"
-              status="soon"
-            />
-          </Reveal>
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {PRODUITS.map((p, i) => (
+            <Reveal key={p.slug}>
+              <SaasCard
+                index={i}
+                name={p.name}
+                tagline={p.tagline}
+                description={p.summary}
+                audience={p.audience}
+                features={p.features}
+                primary={p.accent}
+                light={p.accentLight}
+                href={p.href}
+                proHref={p.proHref}
+                status={p.status}
+                logo={LOGOS[p.slug]}
+              />
+            </Reveal>
+          ))}
         </div>
       </div>
     </section>
