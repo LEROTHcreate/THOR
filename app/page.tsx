@@ -1,7 +1,7 @@
 import AnimatedBackground from "@/components/home/animated-background";
 import ThorHero from "@/components/home/thor-hero";
-import { SaasPortfolio } from "@/components/home/saas-portfolio";
-import { ThorValues } from "@/components/home/thor-values";
+import { ThorBranches } from "@/components/home/thor-branches";
+import { RealisationsPreview } from "@/components/home/realisations-preview";
 import { ThorProCTA } from "@/components/home/thor-pro-cta";
 
 export default function Page() {
@@ -9,8 +9,8 @@ export default function Page() {
     <>
       <AnimatedBackground />
       <ThorHero />
-      <SaasPortfolio />
-      <ThorValues />
+      <ThorBranches />
+      <RealisationsPreview />
       <ThorProCTA />
     </>
   );

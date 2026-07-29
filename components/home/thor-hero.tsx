@@ -31,6 +31,16 @@ const SATELLITES: Satellite[] = [
     rx: 290, ry: 200, offsetX:  10, offsetY:  30, duration: 48, delay: -22 },
 ];
 
+/* J.A.R.V.I.S — orbite spéciale ultra futuriste, plus proche du noyau THOR */
+const JARVIS = {
+  href: "https://jarvis-pi-pied.vercel.app/",
+  color: "#0EA5E9",
+  rx: 145,
+  ry: 115,
+  duration: 18,
+  delay: -4,
+};
+
 /* ──────────────────────────────────────────────────────────────────────── */
 
 function SatelliteOrbit({ s }: { s: Satellite }) {
@@ -40,11 +50,9 @@ function SatelliteOrbit({ s }: { s: Satellite }) {
 
   /* Contenu visible du satellite — dot + label.
      Le dot est centré EXACTEMENT sur (0,0) qui est le point du chemin.
-     Le label est positionné à droite, centré verticalement.
-     L'ensemble est cliquable et redirige vers la page de présentation. */
+     Le label est positionné à droite, centré verticalement. */
   const Content = (
     <>
-      {/* Dot — centre EXACT sur la trajectoire */}
       <span
         aria-hidden="true"
         className="block rounded-full transition-transform duration-200 group-hover:scale-125"
@@ -60,7 +68,6 @@ function SatelliteOrbit({ s }: { s: Satellite }) {
           animation: "glowPulse 2.4s ease-in-out infinite",
         }}
       />
-      {/* Label — à droite du dot, centré verticalement */}
       <span
         className="rounded-full px-3 py-1.5 text-xs font-semibold whitespace-nowrap transition-all duration-200 group-hover:-translate-y-0.5 group-hover:shadow-lg"
         style={{
@@ -151,27 +158,147 @@ function SatelliteOrbit({ s }: { s: Satellite }) {
 
 /* ──────────────────────────────────────────────────────────────────────── */
 
+/* Orbite J.A.R.V.I.S — même style que les autres satellites, mais le logo suit la piste */
+function JarvisOrbit() {
+  const { rx, ry, duration, delay, color, href } = JARVIS;
+  const ellipsePath = `M -${rx} 0 a ${rx} ${ry} 0 1 0 ${rx * 2} 0 a ${rx} ${ry} 0 1 0 -${rx * 2} 0`;
+
+  return (
+    <div className="absolute top-1/2 left-1/2" style={{ width: 0, height: 0 }}>
+      {/* Trace de l'orbite — pointillé identique aux autres */}
+      <svg
+        className="absolute pointer-events-none"
+        style={{
+          top: -ry,
+          left: -rx,
+          width: rx * 2,
+          height: ry * 2,
+          overflow: "visible",
+        }}
+        viewBox={`-${rx} -${ry} ${rx * 2} ${ry * 2}`}
+      >
+        <ellipse
+          cx="0" cy="0" rx={rx} ry={ry}
+          fill="none"
+          stroke={`${color}40`}
+          strokeWidth="1"
+          strokeDasharray="3 6"
+        />
+      </svg>
+
+      {/* Le satellite J.A.R.V.I.S — le logo lui-même suit la trajectoire */}
+      <a
+        href={href}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="J.A.R.V.I.S — Assistant IA"
+        className="orbit-track group/jarvis block cursor-pointer"
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          width: 0,
+          height: 0,
+          offsetPath: `path("${ellipsePath}")`,
+          offsetRotate: "0deg",
+          animation: `orbitAlong ${duration}s linear infinite`,
+          animationDelay: `${delay}s`,
+          willChange: "offset-distance",
+        }}
+      >
+        {/* Orbe Jarvis : disque bleu avec point blanc central — pur CSS, zéro coût GPU */}
+        <span
+          className="absolute block transition-transform duration-200 group-hover/jarvis:scale-125 cursor-pointer"
+          style={{
+            top: 0, left: 0,
+            width: 14, height: 14,
+            transform: "translate(-50%, -50%)",
+            borderRadius: "9999px",
+            background: color,
+            boxShadow: `0 0 0 4px ${color}1A, 0 0 14px ${color}AA`,
+            display: "grid",
+            placeItems: "center",
+            animation: "glowPulse 2.4s ease-in-out infinite",
+          }}
+        >
+          <span
+            aria-hidden="true"
+            className="block rounded-full"
+            style={{ width: 5, height: 5, background: "#fff", boxShadow: "0 0 4px #fff" }}
+          />
+        </span>
+
+        {/* Label J.A.R.V.I.S à droite — fond opaque (pas de backdrop-filter coûteux) */}
+        <span
+          className="absolute rounded-full px-3 py-1.5 text-xs font-semibold whitespace-nowrap transition-all duration-200 group-hover/jarvis:-translate-y-0.5 cursor-pointer"
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 12,
+            transform: "translateY(-50%)",
+            background: "#fff",
+            border: "1px solid rgba(226,232,240,0.9)",
+            color,
+            boxShadow: `0 2px 8px ${color}26`,
+            fontFamily: "var(--font-mono)",
+            letterSpacing: "0.1em",
+          }}
+        >
+          J.A.R.V.I.S
+        </span>
+      </a>
+    </div>
+  );
+}
+
+/* ──────────────────────────────────────────────────────────────────────── */
+
 export default function ThorHero() {
   const [parallax, setParallax] = useState({ x: 0, y: 0 });
+  const [scale, setScale] = useState(1);
+
   useEffect(() => {
+    // Respect prefers-reduced-motion : pas de parallax pour les utilisateurs sensibles
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    if (mq.matches) return;
+
+    // Throttle via requestAnimationFrame — 1 update / frame (~60Hz) au lieu d'un par pixel
+    let raf = 0;
+    let lastX = 0, lastY = 0;
     function onMove(e: MouseEvent) {
-      setParallax({
-        x: (e.clientX / window.innerWidth - 0.5) * 24,
-        y: (e.clientY / window.innerHeight - 0.5) * 16,
+      lastX = e.clientX;
+      lastY = e.clientY;
+      if (raf) return;
+      raf = requestAnimationFrame(() => {
+        setParallax({
+          x: (lastX / window.innerWidth - 0.5) * 24,
+          y: (lastY / window.innerHeight - 0.5) * 16,
+        });
+        raf = 0;
       });
     }
+    function onResize() {
+      const w = window.innerWidth;
+      setScale(w >= 1280 ? 1 : w >= 768 ? 0.72 : 0.55);
+    }
+    onResize();
     window.addEventListener("mousemove", onMove, { passive: true });
-    return () => window.removeEventListener("mousemove", onMove);
+    window.addEventListener("resize", onResize, { passive: true });
+    return () => {
+      if (raf) cancelAnimationFrame(raf);
+      window.removeEventListener("mousemove", onMove);
+      window.removeEventListener("resize", onResize);
+    };
   }, []);
 
   return (
     <section className="relative flex items-center" style={{ minHeight: "calc(100vh - 5rem)" }}>
       <div className="relative z-10 w-full">
-        <div className="mx-auto max-w-[1400px] px-6 py-16 lg:py-20">
-          <div className="grid lg:grid-cols-[1fr_1.05fr] gap-12 lg:gap-16 items-center">
+        <div className="mx-auto max-w-[1400px] px-5 sm:px-6 py-12 sm:py-16 lg:py-20">
+          <div className="grid md:grid-cols-[1fr_1.05fr] gap-10 md:gap-12 lg:gap-16 items-center">
 
             {/* ── COLONNE GAUCHE — Texte ─────────────────────────────────── */}
-            <div className="text-center lg:text-left">
+            <div className="text-center md:text-left">
 
               <Reveal>
                 <div
@@ -186,20 +313,20 @@ export default function ThorHero() {
                     style={{ animation: "glowPulse 2.4s ease-in-out infinite", boxShadow: "0 0 10px rgba(99,102,241,0.7)" }}
                   />
                   <span className="uppercase tracking-[0.12em] text-[11px]">
-                    Écosystème de logiciels santé certifiés
+                    Studio de création · Éditeur de logiciels métier
                   </span>
                 </div>
               </Reveal>
 
               <Reveal>
                 <h1
-                  className="text-5xl md:text-6xl lg:text-7xl xl:text-[5.5rem] font-bold leading-[0.98] tracking-tight text-slate-900 h-title"
+                  className="text-[2.5rem] sm:text-5xl md:text-5xl lg:text-7xl xl:text-[5.5rem] font-bold leading-[0.98] tracking-tight text-slate-900 h-title"
                   style={{
                     transform: `translate(${parallax.x * -0.5}px, ${parallax.y * -0.3}px)`,
                     transition: "transform 0.5s cubic-bezier(0.22,1,0.36,1)",
                   }}
                 >
-                  Le socle technique
+                  De l&apos;idée
                   <br />
                   <span
                     style={{
@@ -212,39 +339,39 @@ export default function ThorHero() {
                       animation: "textGradientSlide 8s linear infinite",
                     }}
                   >
-                    de la santé sensorielle
+                    au site en ligne
                   </span>
                 </h1>
               </Reveal>
 
               <Reveal>
-                <p className="mt-7 max-w-lg text-lg text-slate-500 leading-[1.7] mx-auto lg:mx-0">
-                  THOR conçoit des plateformes SaaS pour les professionnels de santé.
-                  Conformité <strong className="text-slate-700 font-semibold">HDS</strong>,{" "}
-                  <strong className="text-slate-700 font-semibold">SESAM-Vitale</strong>,{" "}
-                  <strong className="text-slate-700 font-semibold">ADRi e-CPS</strong>,
-                  et une IA propriétaire intégrée.
+                <p className="mt-6 sm:mt-7 max-w-lg text-base sm:text-lg text-slate-500 leading-[1.7] mx-auto md:mx-0">
+                  THOR accompagne la création d&apos;entreprise de A à Z —{" "}
+                  <strong className="text-slate-700 font-semibold">étude du marché</strong>,{" "}
+                  <strong className="text-slate-700 font-semibold">identité</strong>,{" "}
+                  <strong className="text-slate-700 font-semibold">site sur mesure</strong> —
+                  et édite ses propres plateformes métier pour les professionnels de santé.
                 </p>
               </Reveal>
 
               <Reveal>
-                <div className="mt-10 flex flex-col sm:flex-row gap-3 justify-center lg:justify-start">
+                <div className="mt-8 sm:mt-10 flex flex-col sm:flex-row gap-3 justify-center md:justify-start">
                   <Link
-                    href="#portfolio"
+                    href="#branches"
                     className="group relative inline-flex items-center justify-center rounded-full px-7 py-3.5 text-sm font-semibold text-white transition-all duration-300 hover:scale-[1.03] overflow-hidden"
                     style={{
                       background: "linear-gradient(135deg, #0B1220, #1E2A3A)",
                       boxShadow: "0 8px 30px rgba(11,18,32,0.25), 0 0 0 1px rgba(99,102,241,0.15) inset",
                     }}
                   >
-                    <span className="relative z-10">Découvrir l'écosystème</span>
+                    <span className="relative z-10">Par où commencer</span>
                     <span
                       className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
                       style={{ background: "linear-gradient(135deg, rgba(99,102,241,0.40) 0%, transparent 60%)" }}
                     />
                   </Link>
                   <Link
-                    href="/connexion/praticien"
+                    href="/realisations"
                     className="inline-flex items-center justify-center rounded-full px-7 py-3.5 text-sm font-semibold text-slate-700 ring-1 ring-white/60 transition-all duration-200 hover:ring-white/90 hover:shadow-[0_4px_20px_rgba(99,102,241,0.10)]"
                     style={{
                       background: "rgba(255,255,255,0.70)",
@@ -252,29 +379,29 @@ export default function ThorHero() {
                       boxShadow: "inset 0 1px 0 rgba(255,255,255,0.9)",
                     }}
                   >
-                    Espace praticien →
+                    Voir nos réalisations →
                   </Link>
                 </div>
               </Reveal>
 
               {/* Stats */}
               <Reveal>
-                <div className="mt-12 flex flex-wrap items-end gap-x-8 gap-y-5 justify-center lg:justify-start">
+                <div className="mt-10 sm:mt-12 flex flex-wrap items-end gap-x-6 sm:gap-x-8 gap-y-5 justify-center md:justify-start">
                   {[
-                    { value: String(SATELLITES.length), label: "SaaS en production" },
+                    { value: String(SATELLITES.length + 1), label: "Projets en production" },
+                    { value: "A → Z", label: "Accompagnement complet" },
                     { value: "HDS",   label: "Hébergement certifié" },
-                    { value: "1M+",   label: "Patients suivis" },
                     { value: "24/7",  label: "Support dédié" },
                   ].map((s, i) => (
-                    <div key={s.label} className="text-center lg:text-left">
-                      <div className="flex items-center justify-center lg:justify-start gap-1.5">
+                    <div key={s.label} className="text-center md:text-left">
+                      <div className="flex items-center justify-center md:justify-start gap-1.5">
                         <span
                           className="text-[10px] font-mono text-slate-300"
                           style={{ letterSpacing: "0.1em" }}
                         >
                           {String(i + 1).padStart(2, "0")}
                         </span>
-                        <div className="text-3xl font-bold text-slate-900 h-title">{s.value}</div>
+                        <div className="text-2xl sm:text-3xl font-bold text-slate-900 h-title">{s.value}</div>
                       </div>
                       <div className="mt-1 text-[10px] text-slate-500 uppercase tracking-[0.15em]">{s.label}</div>
                     </div>
@@ -284,31 +411,35 @@ export default function ThorHero() {
             </div>
 
             {/* ── COLONNE DROITE — Système orbital ──────────────────────── */}
-            <div className="relative hidden lg:flex items-center justify-center min-h-[640px]">
+            <div className="relative hidden md:flex items-center justify-center" style={{ minHeight: 640 * scale }}>
               <div
                 className="relative"
                 style={{
                   width: 640,
                   height: 640,
-                  transform: `perspective(1400px) rotateX(${parallax.y * 0.4}deg) rotateY(${parallax.x * -0.5}deg)`,
+                  transform: `perspective(1400px) rotateX(${parallax.y * 0.4}deg) rotateY(${parallax.x * -0.5}deg) scale(${scale})`,
                   transition: "transform 0.6s cubic-bezier(0.22,1,0.36,1)",
                   transformStyle: "preserve-3d",
                 }}
               >
-                {/* Halo gravitationnel central — pas de logo, juste un noyau lumineux subtil */}
+                {/* Noyau THOR — pur halo gravitationnel sans logo (neutre) */}
                 <div
+                  aria-hidden="true"
                   className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full pointer-events-none"
                   style={{
                     width: 120,
                     height: 120,
                     background:
-                      "radial-gradient(circle, rgba(99,102,241,0.25) 0%, rgba(45,140,255,0.10) 40%, transparent 70%)",
+                      "radial-gradient(circle, rgba(99,102,241,0.30) 0%, rgba(45,140,255,0.12) 40%, transparent 70%)",
                     filter: "blur(8px)",
                     animation: "glowPulse 4s ease-in-out infinite",
                   }}
                 />
 
-                {/* Satellites */}
+                {/* Orbite J.A.R.V.I.S — orbite intérieure ultra futuriste */}
+                <JarvisOrbit />
+
+                {/* Satellites — SaaS métier en orbites larges */}
                 {SATELLITES.map((s) => (
                   <SatelliteOrbit key={s.name} s={s} />
                 ))}

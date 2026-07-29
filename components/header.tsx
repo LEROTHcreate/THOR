@@ -10,28 +10,21 @@ function cn(...classes: Array<string | false | null | undefined>) {
 }
 
 const navLinks = [
-  { href: "/",            label: "Accueil" },
-  { href: "/demo",        label: "Démo" },
-  { href: "/tarifs",      label: "Tarifs" },
-  { href: "/nos-centres", label: "Nos Centres" },
+  { href: "/",             label: "Accueil" },
+  { href: "/studio",       label: "Studio" },
+  { href: "/produits",     label: "Produits" },
+  { href: "/realisations", label: "Réalisations" },
+  { href: "/tarifs",       label: "Tarifs" },
 ];
 
 export default function Header() {
   const pathname  = usePathname();
   const [open,    setOpen]    = useState(false);
-  const [scrolled,setScrolled]= useState(false);
 
   // Masquer sur les modules
   const hideThorHeader =
     pathname.startsWith("/clair-vision") ||
     pathname.startsWith("/clair-audition");
-
-  // Transition au scroll
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 12);
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
 
   // Fermer le menu mobile sur navigation
   useEffect(() => { setOpen(false); }, [pathname]);
@@ -47,15 +40,8 @@ export default function Header() {
   if (hideThorHeader) return null;
 
   return (
-    <header
-      className={cn(
-        "fixed inset-x-0 top-0 z-50 transition-all duration-300",
-        scrolled
-          ? "bg-white/85 backdrop-blur-xl border-b border-thor-border shadow-[var(--shadow-soft)]"
-          : "bg-white/60 backdrop-blur-md border-b border-transparent",
-      )}
-    >
-      <div className="w-full px-8 lg:px-16">
+    <header className="glass-liquid-top fixed inset-x-0 top-0 z-50">
+      <div className="w-full px-4 sm:px-6 md:px-8 lg:px-16">
         <div className="flex h-20 items-center justify-between">
 
           {/* ── Logo THOR ── */}
@@ -79,9 +65,9 @@ export default function Header() {
                 THOR
               </div>
               <div className="text-[10px] text-thor-muted tracking-wide">
-                <span className="text-vision-accent font-medium">Clair Vision</span>
+                <span className="text-indigo-500 font-medium">Studio</span>
                 {" · "}
-                <span className="text-audition-accent font-medium">Clair Audition</span>
+                <span className="text-vision-accent font-medium">Produits</span>
               </div>
             </div>
           </Link>

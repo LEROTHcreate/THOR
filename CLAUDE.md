@@ -17,6 +17,24 @@ Ce dépôt regroupe l'écosystème **Thor** : une vitrine globale et plusieurs p
 
 L'IA **Thor** est intégrée comme assistant conversationnel transverse à l'écosystème.
 
+### 1.1 Deux branches sous une marque ombrelle
+
+THOR se présente au public comme un carrefour vers deux offres distinctes. Elles ne doivent
+jamais être mélangées dans une même section : les publics n'ont rien en commun.
+
+| Branche | Page d'entrée | Promesse | Public | Accent |
+|---|---|---|---|---|
+| **THOR Studio** | `/studio` | Accompagnement de A à Z pour créer une activité : étude du marché adressable, identité, site sur mesure, suivi après lancement | Créateurs d'entreprise, TPE, indépendants | Indigo `#6366F1` |
+| **THOR Produits** | `/produits` | Plateformes métier prêtes à l'emploi, conformité santé intégrée | Professionnels de santé | Bleu `#2D8CFF` |
+
+Le **portfolio** (`/realisations`) est commun aux deux branches : il sert de preuve pour l'une
+comme pour l'autre. Sa source de vérité unique est [`lib/realisations.ts`](lib/realisations.ts) —
+ajouter un projet consiste à ajouter une entrée dans ce tableau, jamais à modifier un composant.
+
+Le module de **visualisation du marché adressable** est annoncé comme « en préparation » sur
+`/studio`. Tant qu'il n'existe pas, l'étude est produite à la main : ne pas le présenter comme
+disponible.
+
 ---
 
 ## 2. Direction artistique
@@ -74,7 +92,12 @@ Cette double exigence est le fil conducteur de toute décision visuelle :
 
 ## 3. Architecture du dépôt
 
-> ⚠️ Avant d'agir, Claude Code doit **explorer le dépôt** (`ls`, lecture du `package.json`, des configs) pour confirmer la structure réelle. Le schéma ci-dessous décrit l'intention, pas nécessairement l'état exact.
+> ⚠️ **État réel au 29/07/2026** : le dépôt n'est **pas** un monorepo. C'est une **application
+> Next.js unique** (App Router) à la racine — `app/`, `components/`, `lib/`, `public/`. Il n'existe
+> ni `apps/` ni `packages/`, et le gestionnaire de paquets est **npm**, pas pnpm. Les composants
+> partagés vivent dans `components/ui/`, les tokens dans `app/globals.css` (`@theme inline`,
+> Tailwind v4). Le schéma ci-dessous décrit une cible éventuelle, pas l'état actuel : ne pas
+> écrire de code qui suppose son existence.
 
 ```
 /
