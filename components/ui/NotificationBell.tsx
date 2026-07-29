@@ -289,6 +289,7 @@ export default function NotificationBell({
   lsRappels,
   lsPreConsult,
   accent = "#2D8CFF",
+  compact = false,
 }: {
   lsRdv: string;
   lsPatients: string;
@@ -296,6 +297,7 @@ export default function NotificationBell({
   lsRappels?: string;
   lsPreConsult?: string;
   accent?: string;
+  compact?: boolean;
 }) {
   const [notifs, setNotifs] = useState<Notif[]>([]);
   const [open, setOpen] = useState(false);
@@ -332,32 +334,54 @@ export default function NotificationBell({
   const renouvs       = notifs.filter(n => n.type === "renouvellement");
 
   return (
-    <div ref={ref} style={{ position: "relative", marginTop: 6 }}>
-      <button
-        onClick={() => setOpen(o => !o)}
-        title="Notifications"
-        style={{
-          display: "flex", alignItems: "center", gap: 8, width: "100%",
-          background: "var(--glass-subtle-bg)",
-          border: open ? `1px solid ${accent}55` : "1px solid rgba(255,255,255,0.65)",
-          borderRadius: 10, padding: "7px 12px",
-          fontSize: 12, fontWeight: 500, color: "#64748b", cursor: "pointer",
-        }}
-      >
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
-          <path d="M13.73 21a2 2 0 0 1-3.46 0" />
-        </svg>
-        Notifications
-        <span style={{
-          marginLeft: "auto", minWidth: 18, height: 18, borderRadius: 9,
-          background: badgeColor, color: "#fff", fontSize: 10, fontWeight: 700,
-          display: "flex", alignItems: "center", justifyContent: "center", padding: "0 4px",
-          transition: "background 0.2s",
-        }}>
-          {count > 0 ? (count > 99 ? "99+" : count) : "0"}
-        </span>
-      </button>
+    <div ref={ref} style={{ position: "relative", marginTop: compact ? 0 : 6 }}>
+      {compact ? (
+        <button
+          onClick={() => setOpen(o => !o)}
+          title={count > 0 ? `${count} notification${count > 1 ? "s" : ""}` : "Notifications"}
+          aria-label="Notifications"
+          className="relative grid place-items-center h-8 w-8 rounded-lg text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+        >
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
+            <path d="M13.73 21a2 2 0 0 1-3.46 0" />
+          </svg>
+          {count > 0 && (
+            <span
+              className="absolute top-0.5 right-0.5 min-w-[14px] h-[14px] rounded-full text-[9px] font-bold text-white grid place-items-center px-1 leading-none tabular-nums"
+              style={{ background: badgeColor }}
+            >
+              {count > 9 ? "9+" : count}
+            </span>
+          )}
+        </button>
+      ) : (
+        <button
+          onClick={() => setOpen(o => !o)}
+          title="Notifications"
+          style={{
+            display: "flex", alignItems: "center", gap: 8, width: "100%",
+            background: "var(--glass-subtle-bg)",
+            border: open ? `1px solid ${accent}55` : "1px solid rgba(255,255,255,0.65)",
+            borderRadius: 10, padding: "7px 12px",
+            fontSize: 12, fontWeight: 500, color: "#64748b", cursor: "pointer",
+          }}
+        >
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
+            <path d="M13.73 21a2 2 0 0 1-3.46 0" />
+          </svg>
+          Notifications
+          <span style={{
+            marginLeft: "auto", minWidth: 18, height: 18, borderRadius: 9,
+            background: badgeColor, color: "#fff", fontSize: 10, fontWeight: 700,
+            display: "flex", alignItems: "center", justifyContent: "center", padding: "0 4px",
+            transition: "background 0.2s",
+          }}>
+            {count > 0 ? (count > 99 ? "99+" : count) : "0"}
+          </span>
+        </button>
+      )}
 
       {/* Dropdown */}
       {open && (

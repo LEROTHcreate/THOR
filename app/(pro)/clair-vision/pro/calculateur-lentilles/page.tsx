@@ -1,26 +1,28 @@
 import { Suspense } from "react";
 import LentillesCalculateur from "@/app/(pro)/clair-vision/pro/components/optique/LentillesCalculateur";
 
-export default function CalculateurLentillesPage({
+export default async function CalculateurLentillesPage({
   searchParams,
 }: {
-  searchParams: {
+  searchParams: Promise<{
     od_sph?: string; od_cyl?: string; od_axe?: string;
     og_sph?: string; og_cyl?: string; og_axe?: string;
     add?: string; dossier?: string;
-  };
+  }>;
 }) {
+  const params = await searchParams;
+
   return (
     <Suspense fallback={<div className="p-8 text-sm text-slate-500">Chargement…</div>}>
       <LentillesCalculateur
-        prefillOdSph={searchParams.od_sph}
-        prefillOdCyl={searchParams.od_cyl}
-        prefillOdAxe={searchParams.od_axe}
-        prefillOgSph={searchParams.og_sph}
-        prefillOgCyl={searchParams.og_cyl}
-        prefillOgAxe={searchParams.og_axe}
-        prefillAdd={searchParams.add}
-        prefillDossier={searchParams.dossier}
+        prefillOdSph={params.od_sph}
+        prefillOdCyl={params.od_cyl}
+        prefillOdAxe={params.od_axe}
+        prefillOgSph={params.og_sph}
+        prefillOgCyl={params.og_cyl}
+        prefillOgAxe={params.og_axe}
+        prefillAdd={params.add}
+        prefillDossier={params.dossier}
       />
     </Suspense>
   );

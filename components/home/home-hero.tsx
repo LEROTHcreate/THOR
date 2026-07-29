@@ -282,7 +282,7 @@ export default function HomeHero() {
 
       {/* Content */}
       <div className="relative z-10 w-full">
-        <div className="w-full px-8 lg:px-16 xl:px-24 py-16">
+        <div className="w-full px-4 sm:px-6 md:px-8 lg:px-16 xl:px-24 py-16">
           <div className="flex flex-col lg:flex-row items-center gap-10 lg:gap-14 xl:gap-20">
 
             {/* LEFT — texte (40%) */}

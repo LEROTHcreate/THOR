@@ -34,6 +34,75 @@ function Chevron({ open }: { open: boolean }) {
   );
 }
 
+/* ─── Modules ────────────────────────────────────────────────────────────── */
+type ModuleId = "vision" | "audition" | "duo";
+
+interface ModuleInfo {
+  id: ModuleId;
+  name: string;
+  subtitle: string;
+  audience: string;
+  color: string;
+  colorDeep: string;
+  bg: string;
+  border: string;
+  savingsLabel?: string;
+  iconPath: React.ReactNode;
+}
+
+const MODULES: ModuleInfo[] = [
+  {
+    id: "vision",
+    name: "Optique",
+    subtitle: "Clair Vision",
+    audience: "Opticiens · Optométristes",
+    color: "#2D8CFF",
+    colorDeep: "#1A72E8",
+    bg: "rgba(45,140,255,0.08)",
+    border: "rgba(45,140,255,0.25)",
+    iconPath: (
+      <>
+        <path d="M2.5 12s3.5-7 9.5-7 9.5 7 9.5 7-3.5 7-9.5 7-9.5-7-9.5-7Z" />
+        <circle cx="12" cy="12" r="3" />
+      </>
+    ),
+  },
+  {
+    id: "audition",
+    name: "Audition",
+    subtitle: "Clair Audition",
+    audience: "Audioprothésistes",
+    color: "#00C98A",
+    colorDeep: "#00A872",
+    bg: "rgba(0,201,138,0.08)",
+    border: "rgba(0,201,138,0.25)",
+    iconPath: (
+      <>
+        <path d="M3 18v-6a9 9 0 0 1 18 0v6" />
+        <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3ZM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3Z" />
+      </>
+    ),
+  },
+  {
+    id: "duo",
+    name: "Optique + Audition",
+    subtitle: "Pack complet",
+    audience: "Cabinets multi-spécialités",
+    color: "#8B5CF6",
+    colorDeep: "#7C3AED",
+    bg: "rgba(139,92,246,0.08)",
+    border: "rgba(139,92,246,0.25)",
+    savingsLabel: "−20 % sur le pack",
+    iconPath: (
+      <>
+        <circle cx="8" cy="12" r="3" />
+        <circle cx="16" cy="12" r="3" />
+        <path d="M11 12h2" />
+      </>
+    ),
+  },
+];
+
 /* ─── Plans ─────────────────────────────────────────────────────────────── */
 interface Plan {
   id: "decouverte" | "pro" | "premium";
@@ -52,96 +121,114 @@ interface Plan {
   features: string[];
 }
 
-const PLANS: Plan[] = [
-  {
-    id: "decouverte",
-    name: "Découverte",
-    tagline: "Idéal pour évaluer THOR à moindre engagement.",
-    monthlyPrice: 9,
-    yearlyPrice: 7,
-    highlight: false,
-    accent: "#64748b",
-    accentBg: "rgba(100,116,139,0.08)",
-    cta: "Commencer",
-    ctaHref: "/connexion/praticien",
-    ctaStyle: "ghost",
-    features: [
-      "1 praticien",
-      "Jusqu'à 50 patients",
-      "Espace patient offert",
-      "Agenda & rendez-vous",
-      "Dossiers patients",
-      "Ordonnances",
-      "Support par e-mail",
-    ],
-  },
-  {
-    id: "pro",
-    name: "Pro",
-    tagline: "La solution complète pour un cabinet actif.",
-    monthlyPrice: 49,
-    yearlyPrice: 39,
-    highlight: true,
-    badgeText: "Le plus populaire",
-    accent: "#2D8CFF",
-    accentBg: "rgba(45,140,255,0.08)",
-    cta: "Démarrer — 2 mois offerts",
-    ctaHref: "/connexion/praticien",
-    ctaStyle: "primary",
-    trialLabel: "2 mois gratuits • Sans carte bancaire",
-    features: [
-      "Jusqu'à 4 praticiens",
-      "Patients illimités",
-      "Espace patient offert",
-      "Agenda & rendez-vous",
-      "Dossiers patients",
-      "Ordonnances",
-      "Messagerie patients",
-      "Devis & Facturation (tiers payant AMO/AMC)",
-      "100% Santé — codes LPPR automatiques",
-      "Statistiques & tableaux de bord",
-      "SAV & suivi garanties",
-      "Calculateur lentilles / appareillage",
-      "Rappels automatiques patients",
-      "Support prioritaire",
-    ],
-  },
-  {
-    id: "premium",
-    name: "Premium",
-    tagline: "Pour les réseaux et cabinets multi-sites.",
-    monthlyPrice: 99,
-    yearlyPrice: 79,
-    highlight: false,
-    accent: "#8B5CF6",
-    accentBg: "rgba(139,92,246,0.08)",
-    cta: "Contacter l'équipe",
-    ctaHref: "/contact",
-    ctaStyle: "outline",
-    features: [
-      "Praticiens illimités",
-      "Jusqu'à 5 centres",
-      "Patients illimités",
-      "Espace patient offert",
-      "Agenda & rendez-vous",
-      "Dossiers patients",
-      "Ordonnances",
-      "Messagerie patients",
-      "Devis & Facturation (tiers payant AMO/AMC)",
-      "100% Santé — codes LPPR automatiques",
-      "Statistiques & tableaux de bord",
-      "SAV & suivi garanties",
-      "Calculateur lentilles / appareillage",
-      "Rappels automatiques patients",
-      "Tableau de bord Gérant multi-centres",
-      "Export comptable (FEC)",
-      "Accès ADRi / e-CPS (vérif. droits en ligne)",
-      "Télétransmission SESAM-Vitale (certif. en cours)",
-      "Hébergement HDS certifié",
-      "Support dédié + onboarding",
-    ],
-  },
+const COMMON_FEATURES_DECOUVERTE = [
+  "1 praticien",
+  "Jusqu'à 50 patients",
+  "Espace patient offert",
+  "Agenda & rendez-vous",
+  "Dossiers patients",
+  "Ordonnances",
+  "Support par e-mail",
 ];
+
+const COMMON_FEATURES_PRO_BASE = [
+  "Jusqu'à 4 praticiens",
+  "Patients illimités",
+  "Espace patient offert",
+  "Agenda & rendez-vous",
+  "Dossiers patients",
+  "Ordonnances",
+  "Messagerie patients",
+  "Devis & Facturation (tiers payant AMO/AMC)",
+  "100% Santé — codes LPPR automatiques",
+  "Statistiques & tableaux de bord",
+  "Rappels automatiques patients",
+  "Support prioritaire",
+];
+
+const COMMON_FEATURES_PREMIUM_BASE = [
+  "Praticiens illimités",
+  "Jusqu'à 5 centres",
+  "Patients illimités",
+  "Espace patient offert",
+  "Messagerie patients",
+  "Devis & Facturation (tiers payant AMO/AMC)",
+  "100% Santé — codes LPPR automatiques",
+  "Statistiques & tableaux de bord",
+  "Tableau de bord Gérant multi-centres",
+  "Export comptable (FEC)",
+  "Accès ADRi / e-CPS (vérif. droits en ligne)",
+  "Télétransmission SESAM-Vitale (certif. en cours)",
+  "Hébergement HDS certifié",
+  "Support dédié + onboarding",
+];
+
+function buildPlans(module: ModuleId): Plan[] {
+  /* Tarifs par module — l'audition est plus complexe (LPPR audio, classes I/II, SCOR)
+     donc légèrement plus chère. Le duo offre ~20 % d'économies par rapport au cumul. */
+  const prices: Record<ModuleId, { d: [number, number]; p: [number, number]; pr: [number, number] }> = {
+    vision:   { d: [9,  7],  p: [49, 39], pr: [99,  79]  },
+    audition: { d: [12, 9],  p: [59, 47], pr: [119, 95]  },
+    duo:      { d: [17, 13], p: [86, 69], pr: [175, 139] },
+  };
+  const { d, p, pr } = prices[module];
+
+  /* Fonctionnalités spécifiques par module */
+  const visionExtras   = ["Calculateur lentilles intégré", "SAV & suivi garanties"];
+  const auditionExtras = ["Audiogramme intégré", "Suivi appareillage & essais", "Classes I / II côte à côte", "SAV appareils auditifs"];
+  const duoExtras      = ["Calculateur lentilles intégré", "Audiogramme intégré", "Suivi appareillage & essais", "Classes I / II côte à côte", "SAV unifié optique + audio"];
+
+  const extras = module === "vision" ? visionExtras : module === "audition" ? auditionExtras : duoExtras;
+
+  const accentByModule = { vision: "#2D8CFF", audition: "#00C98A", duo: "#8B5CF6" }[module];
+
+  return [
+    {
+      id: "decouverte",
+      name: "Découverte",
+      tagline: "Idéal pour évaluer THOR à moindre engagement.",
+      monthlyPrice: d[0],
+      yearlyPrice: d[1],
+      highlight: false,
+      accent: "#64748b",
+      accentBg: "rgba(100,116,139,0.08)",
+      cta: "Commencer",
+      ctaHref: "/contact?sujet=demo",
+      ctaStyle: "ghost",
+      features: COMMON_FEATURES_DECOUVERTE,
+    },
+    {
+      id: "pro",
+      name: "Pro",
+      tagline: "La solution complète pour un cabinet actif.",
+      monthlyPrice: p[0],
+      yearlyPrice: p[1],
+      highlight: true,
+      badgeText: "Le plus populaire",
+      accent: accentByModule,
+      accentBg: module === "vision" ? "rgba(45,140,255,0.08)" : module === "audition" ? "rgba(0,201,138,0.08)" : "rgba(139,92,246,0.08)",
+      cta: "Démarrer — 2 mois offerts",
+      ctaHref: "/contact?sujet=demo",
+      ctaStyle: "primary",
+      trialLabel: "2 mois gratuits • Sans carte bancaire",
+      features: [...COMMON_FEATURES_PRO_BASE, ...extras],
+    },
+    {
+      id: "premium",
+      name: "Premium",
+      tagline: "Pour les réseaux et cabinets multi-sites.",
+      monthlyPrice: pr[0],
+      yearlyPrice: pr[1],
+      highlight: false,
+      accent: "#8B5CF6",
+      accentBg: "rgba(139,92,246,0.08)",
+      cta: "Contacter l'équipe",
+      ctaHref: "/contact?sujet=demo",
+      ctaStyle: "outline",
+      features: [...COMMON_FEATURES_PREMIUM_BASE, ...extras],
+    },
+  ];
+}
 
 /* ─── Tableau de comparaison ─────────────────────────────────────────────── */
 interface CompRow {
@@ -189,8 +276,12 @@ const FAQ = [
     a: "Oui, sans exception. Vos patients accèdent gratuitement à leur espace personnel : ordonnances, historique de visites, messagerie avec votre cabinet. C'est inclus dans tous les plans, sans frais supplémentaires.",
   },
   {
-    q: "THOR couvre-t-il optique et audition ?",
-    a: "Oui. THOR propose deux espaces distincts : Clair Vision (opticiens & optométristes) et Clair Audition (audioprothésistes). Un seul abonnement Pro ou Premium couvre les deux spécialités.",
+    q: "Pourquoi des tarifs différents entre Optique et Audition ?",
+    a: "L'audioprothèse est un métier plus normé administrativement (LPPR audio, classes I/II, SCOR, RAC zéro, certifications spécifiques). Le module Clair Audition embarque ces spécificités, ce qui justifie l'écart de tarif. Si vous exercez les deux métiers, le pack Optique + Audition vous fait économiser 20 % par rapport à deux abonnements séparés.",
+  },
+  {
+    q: "Puis-je commencer par un module et ajouter l'autre plus tard ?",
+    a: "Oui. Vous pouvez démarrer par Clair Vision OU Clair Audition, puis basculer sur le pack à tout moment. Vos données patients, devis et historiques sont conservés. Le passage au pack se fait en un clic depuis votre tableau de bord.",
   },
   {
     q: "La certification SESAM-Vitale est-elle obtenue ?",
@@ -236,7 +327,11 @@ const TEMOIGNAGES = [
 ══════════════════════════════════════════════════════════════════════════ */
 export default function TarifsPage() {
   const [annual, setAnnual] = useState(false);
+  const [module, setModule] = useState<ModuleId>("vision");
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+
+  const currentModule = MODULES.find(m => m.id === module)!;
+  const plans = buildPlans(module);
 
   return (
     <main className="bg-[#f8fafc] min-h-screen">
@@ -270,13 +365,57 @@ export default function TarifsPage() {
             Choisissez votre <span className="font-bold bg-gradient-to-r from-[#2D8CFF] to-[#00C98A] bg-clip-text text-transparent">formule</span>
           </h1>
           <p className="mt-4 text-slate-500 text-base max-w-xl mx-auto leading-[1.7]">
-            Un abonnement mensuel pour les professionnels, un portail patient toujours gratuit. Résiliation à tout moment.
+            Tarification par métier — Optique, Audition, ou le pack des deux avec 20 % d'économies. Portail patient toujours gratuit. Résiliation à tout moment.
+          </p>
+        </Reveal>
+
+        {/* Sélecteur de module */}
+        <Reveal delay={60}>
+          <div className="mt-10 inline-flex flex-wrap items-stretch gap-2 rounded-2xl bg-white border border-slate-200 p-1.5 shadow-sm">
+            {MODULES.map(m => {
+              const isActive = m.id === module;
+              return (
+                <button
+                  key={m.id}
+                  onClick={() => setModule(m.id)}
+                  className="group flex items-center gap-2.5 rounded-xl px-4 py-2.5 transition-all duration-200"
+                  style={{
+                    background: isActive ? m.color : "transparent",
+                    color: isActive ? "white" : "#475569",
+                    boxShadow: isActive ? `0 4px 16px ${m.color}40` : "none",
+                  }}
+                >
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                    {m.iconPath}
+                  </svg>
+                  <span className="text-sm font-semibold">{m.name}</span>
+                  {m.savingsLabel && (
+                    <span
+                      className="rounded-full px-2 py-0.5 text-[10px] font-bold"
+                      style={{
+                        background: isActive ? "rgba(255,255,255,0.22)" : "rgba(139,92,246,0.12)",
+                        color: isActive ? "white" : "#7C3AED",
+                      }}
+                    >
+                      {m.savingsLabel}
+                    </span>
+                  )}
+                </button>
+              );
+            })}
+          </div>
+        </Reveal>
+
+        {/* Audience du module sélectionné */}
+        <Reveal delay={100}>
+          <p className="mt-4 text-xs font-semibold uppercase tracking-[0.15em]" style={{ color: currentModule.color }}>
+            {currentModule.subtitle} · {currentModule.audience}
           </p>
         </Reveal>
 
         {/* Toggle mensuel / annuel */}
-        <Reveal delay={80}>
-          <div className="mt-8 inline-flex items-center gap-3 rounded-full bg-white border border-slate-200 p-1 shadow-sm">
+        <Reveal delay={140}>
+          <div className="mt-6 inline-flex items-center gap-3 rounded-full bg-white border border-slate-200 p-1 shadow-sm">
             <button
               onClick={() => setAnnual(false)}
               className={cn(
@@ -308,12 +447,38 @@ export default function TarifsPage() {
       {/* ── Cards ───────────────────────────────────────────────────────── */}
       <section className="mx-auto max-w-[1240px] px-6 pb-20">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
-          {PLANS.map((plan, i) => (
-            <Reveal key={plan.id} delay={i * 80}>
+          {plans.map((plan, i) => (
+            <Reveal key={`${module}-${plan.id}`} delay={i * 80}>
               <PlanCard plan={plan} annual={annual} />
             </Reveal>
           ))}
         </div>
+
+        {/* Comparatif rapide vs achat séparé — uniquement pour le pack */}
+        {module === "duo" && (
+          <Reveal delay={260}>
+            <div
+              className="mt-8 mx-auto max-w-2xl rounded-2xl p-5 flex items-center gap-4"
+              style={{
+                background: "linear-gradient(135deg, rgba(139,92,246,0.08), rgba(45,140,255,0.06))",
+                border: "1px solid rgba(139,92,246,0.20)",
+              }}
+            >
+              <div className="w-10 h-10 rounded-xl grid place-items-center flex-shrink-0" style={{ background: "rgba(139,92,246,0.15)" }}>
+                <svg viewBox="0 0 20 20" className="w-5 h-5" fill="none" stroke="#7C3AED" strokeWidth="2" strokeLinecap="round">
+                  <path d="M3 6l3 3 5-5M3 14l3 3 5-5M14 10h4" />
+                </svg>
+              </div>
+              <div className="flex-1 text-sm">
+                <div className="font-semibold text-slate-800 mb-0.5">Le pack vous fait économiser 20 %</div>
+                <div className="text-xs text-slate-500">
+                  Plan Pro : Optique <strong className="text-slate-700">49 €</strong> + Audition <strong className="text-slate-700">59 €</strong> = 108 €/mois.
+                  Avec le pack : <strong className="text-[#7C3AED]">86 €/mois</strong> — soit <strong className="text-[#7C3AED]">22 € économisés chaque mois</strong>.
+                </div>
+              </div>
+            </div>
+          </Reveal>
+        )}
 
         {/* Espace patient gratuit */}
         <Reveal delay={200}>
@@ -465,7 +630,7 @@ export default function TarifsPage() {
                 <thead>
                   <tr>
                     <th className="text-left px-6 py-5 font-semibold text-slate-800 w-1/2 border-b border-slate-200/60">Fonctionnalité</th>
-                    {PLANS.map(p => (
+                    {plans.map(p => (
                       <th key={p.id} className="px-4 py-5 text-center border-b border-slate-200/60 w-[16.6%]">
                         <span className="text-xs font-bold uppercase tracking-wider" style={{ color: p.highlight ? p.accent : "#64748b" }}>
                           {p.name}
@@ -488,7 +653,7 @@ export default function TarifsPage() {
                         <td className="px-6 py-3.5 text-slate-700 border-b border-slate-100">{row.feature}</td>
                         {(["decouverte", "pro", "premium"] as const).map(k => {
                           const val = row[k];
-                          const plan = PLANS.find(p => p.id === k)!;
+                          const plan = plans.find(p => p.id === k)!;
                           return (
                             <td key={k} className="px-4 py-3.5 text-center border-b border-slate-100">
                               {typeof val === "boolean" ? (
@@ -575,13 +740,13 @@ export default function TarifsPage() {
 
                 <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
                   <Link
-                    href="/connexion/praticien"
+                    href="/contact?sujet=demo"
                     className="inline-flex items-center justify-center rounded-[var(--radius-pill)] px-7 py-3.5 text-sm font-semibold bg-white text-slate-800 shadow-[0_4px_20px_rgba(0,0,0,0.20)] transition-all duration-200 hover:shadow-[0_8px_32px_rgba(0,0,0,0.28)] hover:scale-[1.02]"
                   >
-                    Démarrer les 60 jours gratuits
+                    Réserver une démo
                   </Link>
                   <Link
-                    href="/contact"
+                    href="/contact?sujet=demo"
                     className="inline-flex items-center justify-center rounded-[var(--radius-pill)] px-7 py-3.5 text-sm font-semibold text-white/80 hover:text-white border border-white/20 hover:border-white/40 transition-all duration-200"
                   >
                     Parler à un expert →

@@ -1,68 +1,87 @@
 import Link from "next/link";
 import { Reveal } from "@/components/ui/reveal";
 
+const CONTACT_EMAIL = "contact.thor.pro@gmail.com";
+const CONTACT_PHONE_DISPLAY = "07 69 46 24 46";
+const CONTACT_PHONE_TEL     = "+33769462446";
+
 export function ThorProCTA() {
   return (
-    <section className="relative py-20 md:py-28">
-      <div className="mx-auto max-w-[1240px] px-6">
+    <section className="relative py-14 sm:py-20 md:py-28">
+      <div className="mx-auto max-w-[1100px] px-5 sm:px-6">
         <Reveal>
-          <div className="relative overflow-hidden rounded-[var(--radius-large)] bg-slate-900 px-8 py-16 md:px-16 text-center shadow-[0_24px_60px_rgba(11,18,32,0.22)]">
+          <div className="relative overflow-hidden rounded-[var(--radius-large)] bg-white px-6 py-10 sm:px-8 sm:py-14 md:px-14 md:py-16 border border-slate-200">
 
-            {/* Halos */}
-            <div className="absolute -top-20 -left-20 w-64 h-64 rounded-full blur-3xl pointer-events-none" style={{ background: "rgba(45,140,255,0.15)" }} />
-            <div className="absolute -bottom-20 -right-20 w-64 h-64 rounded-full blur-3xl pointer-events-none" style={{ background: "rgba(0,201,138,0.15)" }} />
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(255,255,255,0.06),transparent_60%)]" />
+            <div className="grid gap-10 md:grid-cols-[1.2fr_1fr] md:items-center">
+              {/* Texte */}
+              <div>
+                <span className="inline-flex items-center gap-2 rounded-[var(--radius-pill)] border border-slate-200 bg-slate-50 px-3 py-1 text-[11px] font-medium text-slate-500 mb-5">
+                  <span className="inline-block w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                  Écosystème en croissance
+                </span>
 
-            <div className="relative">
-              <span className="inline-flex items-center gap-2 rounded-[var(--radius-pill)] border border-white/15 bg-white/10 px-4 py-1.5 text-xs font-medium text-white/80 mb-5">
-                <span className="inline-block w-1.5 h-1.5 rounded-full bg-indigo-400 animate-pulse" />
-                Pour les professionnels de santé
-              </span>
+                <h2 className="text-[26px] sm:text-3xl md:text-[40px] font-light tracking-tight text-slate-900 h-title leading-[1.1]">
+                  Discutons de <span className="font-semibold">votre métier.</span>
+                </h2>
 
-              <h2 className="text-3xl md:text-4xl font-light tracking-tight text-white h-title">
-                Accédez à <span className="font-semibold">votre plateforme.</span>
-              </h2>
-
-              <p className="mt-4 text-white/70 max-w-lg mx-auto text-sm leading-[1.7]">
-                Rejoignez les opticiens et audioprothésistes qui utilisent THOR
-                au quotidien pour leur cabinet.
-              </p>
-
-              <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
-                <Link
-                  href="/connexion/praticien?module=vision"
-                  className="inline-flex items-center justify-center gap-2 rounded-[var(--radius-pill)] px-6 py-3 text-sm font-semibold transition-all duration-200 hover:scale-[1.02]"
-                  style={{
-                    background: "#2D8CFF",
-                    color: "white",
-                    boxShadow: "0 4px 20px rgba(45,140,255,0.40)",
-                  }}
-                >
-                  <span className="w-1.5 h-1.5 rounded-full bg-white/80" />
-                  Accès Clair Vision
-                </Link>
-
-                <Link
-                  href="/connexion/praticien?module=audition"
-                  className="inline-flex items-center justify-center gap-2 rounded-[var(--radius-pill)] px-6 py-3 text-sm font-semibold transition-all duration-200 hover:scale-[1.02]"
-                  style={{
-                    background: "#00C98A",
-                    color: "white",
-                    boxShadow: "0 4px 20px rgba(0,201,138,0.40)",
-                  }}
-                >
-                  <span className="w-1.5 h-1.5 rounded-full bg-white/80" />
-                  Accès Clair Audition
-                </Link>
+                <p className="mt-5 text-slate-500 max-w-md text-[15px] leading-[1.7]">
+                  Opticiens, audioprothésistes, pharmaciens — et bientôt d'autres
+                  professionnels de santé. Décrivez votre cabinet, on revient vers vous
+                  rapidement.
+                </p>
               </div>
 
-              <Link
-                href="/contact"
-                className="inline-block mt-6 text-xs text-white/60 hover:text-white/90 transition-colors"
-              >
-                Pas encore client ? Contacter l'équipe THOR →
-              </Link>
+              {/* Cartes de contact */}
+              <div className="space-y-3">
+                <a
+                  href={`mailto:${CONTACT_EMAIL}`}
+                  className="flex items-center gap-4 rounded-2xl border border-slate-200 bg-white px-5 py-4 hover:border-slate-300 hover:bg-slate-50 transition-colors group"
+                >
+                  <div className="grid place-items-center w-10 h-10 rounded-xl bg-slate-100 text-slate-600 flex-shrink-0">
+                    <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                      <rect x="2" y="4" width="20" height="16" rx="2" />
+                      <path d="m22 7-10 5L2 7" />
+                    </svg>
+                  </div>
+                  <div className="min-w-0">
+                    <p className="text-[11px] font-medium uppercase tracking-wider text-slate-400">Par e-mail</p>
+                    <p className="text-sm font-semibold text-slate-900 mt-0.5 truncate">{CONTACT_EMAIL}</p>
+                  </div>
+                  <svg className="w-4 h-4 text-slate-300 ml-auto group-hover:text-slate-500 transition-colors flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M5 12h14M13 5l7 7-7 7" />
+                  </svg>
+                </a>
+
+                <a
+                  href={`tel:${CONTACT_PHONE_TEL}`}
+                  className="flex items-center gap-4 rounded-2xl border border-slate-200 bg-white px-5 py-4 hover:border-slate-300 hover:bg-slate-50 transition-colors group"
+                >
+                  <div className="grid place-items-center w-10 h-10 rounded-xl bg-slate-100 text-slate-600 flex-shrink-0">
+                    <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92Z" />
+                    </svg>
+                  </div>
+                  <div className="min-w-0">
+                    <p className="text-[11px] font-medium uppercase tracking-wider text-slate-400">Par téléphone</p>
+                    <p className="text-sm font-semibold text-slate-900 mt-0.5 tabular-nums">{CONTACT_PHONE_DISPLAY}</p>
+                  </div>
+                  <svg className="w-4 h-4 text-slate-300 ml-auto group-hover:text-slate-500 transition-colors flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M5 12h14M13 5l7 7-7 7" />
+                  </svg>
+                </a>
+
+                <Link
+                  href="/contact"
+                  className="flex items-center justify-center gap-2 rounded-2xl bg-slate-900 text-white px-5 py-3.5 text-sm font-medium hover:bg-slate-800 transition-colors"
+                >
+                  Ou utiliser le formulaire
+                  <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+                    <path d="M5 12h14M13 5l7 7-7 7" />
+                  </svg>
+                </Link>
+              </div>
             </div>
+
           </div>
         </Reveal>
       </div>

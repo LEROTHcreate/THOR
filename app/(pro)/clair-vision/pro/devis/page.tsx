@@ -23,14 +23,16 @@ const glassSubtle: CSSProperties = {
 };
 const inputStyle: CSSProperties = {
   width: "100%",
-  padding: "9px 12px",
-  borderRadius: 12,
-  border: "1px solid #e2e8f0",
-  background: "#ffffff",
+  height: 36,
+  padding: "0 12px",
+  borderRadius: 10,
+  border: "1px solid var(--border)",
+  background: "var(--surface)",
   fontSize: 13,
-  color: "#1e293b",
+  color: "var(--text)",
   outline: "none",
   boxSizing: "border-box",
+  transition: "border-color 0.15s",
 };
 const selectStyle: CSSProperties = { ...inputStyle, cursor: "pointer" };
 
@@ -166,9 +168,9 @@ const MOCK_DEVIS: Devis[] = [
       ogSph: "-3.00", ogCyl: "-0.50", ogAxe: "175", ogAdd: "+2.00",
     },
     lignes: [
-      { id: "l1", type: "monture", designation: "Ray-Ban Clubmaster RB5154", lppr: "2203786", classe: 1, marque: "Ray-Ban", reference: "RB5154-2012", prixPublicHT: 160, prixVenteTTC: 150, tauxTVA: 5.5, priseEnChargeSS: 2, priseEnChargeMutuelle: 100, resteACharge: 48 },
-      { id: "l2", type: "verre-od", designation: "Varilux X Series 1.67 AR Photochromique OD Sph -2.75 Cyl -0.75 Axe 180", lppr: "2203799", classe: 2, marque: "Essilor", reference: "VX-167-PHOT-OD", prixPublicHT: 290, prixVenteTTC: 268.50, tauxTVA: 5.5, priseEnChargeSS: 0, priseEnChargeMutuelle: 80, resteACharge: 188.50 },
-      { id: "l3", type: "verre-og", designation: "Varilux X Series 1.67 AR Photochromique OG Sph -3.00 Cyl -0.50 Axe 175", lppr: "2203799", classe: 2, marque: "Essilor", reference: "VX-167-PHOT-OG", prixPublicHT: 290, prixVenteTTC: 268.50, tauxTVA: 5.5, priseEnChargeSS: 0, priseEnChargeMutuelle: 80, resteACharge: 188.50 },
+      { id: "l1", type: "monture", designation: "Ray-Ban Clubmaster RB5154", lppr: "2203786", classe: 1, marque: "Ray-Ban", reference: "RB5154-2012", prixPublicHT: 160, prixVenteTTC: 150, tauxTVA: 20, priseEnChargeSS: 2, priseEnChargeMutuelle: 100, resteACharge: 48 },
+      { id: "l2", type: "verre-od", designation: "Varilux X Series 1.67 AR Photochromique OD Sph -2.75 Cyl -0.75 Axe 180", lppr: "2203799", classe: 2, marque: "Essilor", reference: "VX-167-PHOT-OD", prixPublicHT: 290, prixVenteTTC: 268.50, tauxTVA: 20, priseEnChargeSS: 0, priseEnChargeMutuelle: 80, resteACharge: 188.50 },
+      { id: "l3", type: "verre-og", designation: "Varilux X Series 1.67 AR Photochromique OG Sph -3.00 Cyl -0.50 Axe 175", lppr: "2203799", classe: 2, marque: "Essilor", reference: "VX-167-PHOT-OG", prixPublicHT: 290, prixVenteTTC: 268.50, tauxTVA: 20, priseEnChargeSS: 0, priseEnChargeMutuelle: 80, resteACharge: 188.50 },
     ],
     totalTTC: 687, totalSS: 2, totalMutuelle: 260, resteACharge: 425,
     date: "2026-01-20", dateValidite: "2026-02-19",
@@ -188,8 +190,8 @@ const MOCK_DEVIS: Devis[] = [
       ogSph: "-1.75", ogCyl: "-0.25", ogAxe: "90", ogAdd: "",
     },
     lignes: [
-      { id: "l4", type: "lentille", designation: "CooperVision Biofinity Mensuelle OD Sph -1.50 x6", lppr: "2180083", classe: 1, marque: "CooperVision", reference: "BIOF-M-OD", prixPublicHT: 78, prixVenteTTC: 78, tauxTVA: 5.5, priseEnChargeSS: 0, priseEnChargeMutuelle: 39, resteACharge: 39 },
-      { id: "l5", type: "lentille", designation: "CooperVision Biofinity Mensuelle OG Sph -1.75 Cyl -0.25 Axe 90 x6", lppr: "2180083", classe: 1, marque: "CooperVision", reference: "BIOF-M-OG", prixPublicHT: 78, prixVenteTTC: 78, tauxTVA: 5.5, priseEnChargeSS: 0, priseEnChargeMutuelle: 39, resteACharge: 39 },
+      { id: "l4", type: "lentille", designation: "CooperVision Biofinity Mensuelle OD Sph -1.50 x6", lppr: "2180083", classe: 1, marque: "CooperVision", reference: "BIOF-M-OD", prixPublicHT: 78, prixVenteTTC: 78, tauxTVA: 20, priseEnChargeSS: 0, priseEnChargeMutuelle: 39, resteACharge: 39 },
+      { id: "l5", type: "lentille", designation: "CooperVision Biofinity Mensuelle OG Sph -1.75 Cyl -0.25 Axe 90 x6", lppr: "2180083", classe: 1, marque: "CooperVision", reference: "BIOF-M-OG", prixPublicHT: 78, prixVenteTTC: 78, tauxTVA: 20, priseEnChargeSS: 0, priseEnChargeMutuelle: 39, resteACharge: 39 },
     ],
     totalTTC: 156, totalSS: 0, totalMutuelle: 78, resteACharge: 78,
     date: "2026-02-05", dateValidite: "2026-03-07",
@@ -209,9 +211,9 @@ const MOCK_DEVIS: Devis[] = [
       ogSph: "+1.50", ogCyl: "-0.75", ogAxe: "85", ogAdd: "",
     },
     lignes: [
-      { id: "l6", type: "monture", designation: "Lindberg Strip 9700 — Titanium Ultra-Light", lppr: "2203786", classe: 1, marque: "Lindberg", reference: "STRIP-9700-10", prixPublicHT: 380, prixVenteTTC: 380, tauxTVA: 5.5, priseEnChargeSS: 2, priseEnChargeMutuelle: 150, resteACharge: 228 },
-      { id: "l7", type: "verre-od", designation: "Zeiss Single Vision ClearView 1.6 AR OD Sph +1.25 Cyl -1.00 Axe 95", lppr: "2203799", classe: 2, marque: "Zeiss", reference: "SV-16-AR-OD", prixPublicHT: 220, prixVenteTTC: 209, tauxTVA: 5.5, priseEnChargeSS: 0, priseEnChargeMutuelle: 80, resteACharge: 129 },
-      { id: "l8", type: "verre-og", designation: "Zeiss Single Vision ClearView 1.6 AR OG Sph +1.50 Cyl -0.75 Axe 85", lppr: "2203799", classe: 2, marque: "Zeiss", reference: "SV-16-AR-OG", prixPublicHT: 220, prixVenteTTC: 209, tauxTVA: 5.5, priseEnChargeSS: 0, priseEnChargeMutuelle: 80, resteACharge: 129 },
+      { id: "l6", type: "monture", designation: "Lindberg Strip 9700 — Titanium Ultra-Light", lppr: "2203786", classe: 1, marque: "Lindberg", reference: "STRIP-9700-10", prixPublicHT: 380, prixVenteTTC: 380, tauxTVA: 20, priseEnChargeSS: 2, priseEnChargeMutuelle: 150, resteACharge: 228 },
+      { id: "l7", type: "verre-od", designation: "Zeiss Single Vision ClearView 1.6 AR OD Sph +1.25 Cyl -1.00 Axe 95", lppr: "2203799", classe: 2, marque: "Zeiss", reference: "SV-16-AR-OD", prixPublicHT: 220, prixVenteTTC: 209, tauxTVA: 20, priseEnChargeSS: 0, priseEnChargeMutuelle: 80, resteACharge: 129 },
+      { id: "l8", type: "verre-og", designation: "Zeiss Single Vision ClearView 1.6 AR OG Sph +1.50 Cyl -0.75 Axe 85", lppr: "2203799", classe: 2, marque: "Zeiss", reference: "SV-16-AR-OG", prixPublicHT: 220, prixVenteTTC: 209, tauxTVA: 20, priseEnChargeSS: 0, priseEnChargeMutuelle: 80, resteACharge: 129 },
     ],
     totalTTC: 798, totalSS: 2, totalMutuelle: 310, resteACharge: 486,
     date: "2026-03-01", dateValidite: "2026-03-31",
@@ -232,8 +234,8 @@ const MOCK_DEVIS: Devis[] = [
     },
     lignes: [
       { id: "l9", type: "monture", designation: "Oakley Holbrook OO9102 — Matte Black", lppr: "", classe: undefined, marque: "Oakley", reference: "OO9102-01", prixPublicHT: 165, prixVenteTTC: 165, tauxTVA: 20, priseEnChargeSS: 0, priseEnChargeMutuelle: 80, resteACharge: 85 },
-      { id: "l10", type: "verre-od", designation: "Verre solaire teinté Prizm Road OD Sph -0.75 Indice 1.6", lppr: "2203799", classe: 2, marque: "Oakley", reference: "PRIZM-OD", prixPublicHT: 95, prixVenteTTC: 90, tauxTVA: 5.5, priseEnChargeSS: 0, priseEnChargeMutuelle: 45, resteACharge: 45 },
-      { id: "l11", type: "verre-og", designation: "Verre solaire teinté Prizm Road OG Sph -1.00 Indice 1.6", lppr: "2203799", classe: 2, marque: "Oakley", reference: "PRIZM-OG", prixPublicHT: 95, prixVenteTTC: 90, tauxTVA: 5.5, priseEnChargeSS: 0, priseEnChargeMutuelle: 45, resteACharge: 45 },
+      { id: "l10", type: "verre-od", designation: "Verre solaire teinté Prizm Road OD Sph -0.75 Indice 1.6", lppr: "2203799", classe: 2, marque: "Oakley", reference: "PRIZM-OD", prixPublicHT: 95, prixVenteTTC: 90, tauxTVA: 20, priseEnChargeSS: 0, priseEnChargeMutuelle: 45, resteACharge: 45 },
+      { id: "l11", type: "verre-og", designation: "Verre solaire teinté Prizm Road OG Sph -1.00 Indice 1.6", lppr: "2203799", classe: 2, marque: "Oakley", reference: "PRIZM-OG", prixPublicHT: 95, prixVenteTTC: 90, tauxTVA: 20, priseEnChargeSS: 0, priseEnChargeMutuelle: 45, resteACharge: 45 },
     ],
     totalTTC: 345, totalSS: 0, totalMutuelle: 170, resteACharge: 175,
     date: "2026-03-15", dateValidite: "2026-04-14",
@@ -378,25 +380,103 @@ function ActionBtn({ icon, label, color, bg, hoverBg, onClick }: { icon: ReactNo
   );
 }
 
-function FormRow({ label, children }: { label: string; children: ReactNode }) {
+function FormRow({ label, hint, children }: { label: string; hint?: string; children: ReactNode }) {
   return (
     <div>
-      <label style={{ display: "block", fontSize: 12, fontWeight: 600, color: "#475569", marginBottom: 5 }}>{label}</label>
+      <label className="block text-xs font-medium text-slate-600 dark:text-slate-400 mb-1.5">
+        {label}
+        {hint && <span className="ml-1.5 text-[11px] text-slate-400 font-normal">· {hint}</span>}
+      </label>
       {children}
     </div>
   );
 }
 
-function FormSection({ title, color, children }: { title: string; color: string; children: ReactNode }) {
+/** FormSection — version épurée (plus de couleur par section, juste hairline + titre sobre). */
+function FormSection({ title, hint, children, color }: { title: string; hint?: string; children: ReactNode; color?: string }) {
+  // `color` est gardé pour compat des appels existants mais ignoré (épuré)
+  void color;
   return (
-    <div style={{ marginBottom: 22 }}>
-      <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 12 }}>
-        <span style={{ width: 3, height: 16, borderRadius: 2, background: color, flexShrink: 0 }} />
-        <h3 style={{ margin: 0, fontSize: 12, fontWeight: 700, color: "#1e293b", textTransform: "uppercase", letterSpacing: 0.7 }}>{title}</h3>
+    <div className="mb-5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900">
+      <div className="flex items-baseline gap-2 px-4 pt-3 pb-2 border-b border-slate-100 dark:border-slate-800/60">
+        <h3 className="text-[11px] font-semibold uppercase tracking-[0.08em] text-slate-700 dark:text-slate-300 m-0">{title}</h3>
+        {hint && <span className="text-[11px] text-slate-400">{hint}</span>}
       </div>
-      <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>{children}</div>
+      <div className="flex flex-col gap-3 p-4">{children}</div>
     </div>
   );
+}
+
+/** Segmented — toggle compact unifié (remplace tous les anciens boutons colorés). */
+function Segmented<T extends string>({ value, onChange, options }: { value: T; onChange: (v: T) => void; options: Array<{ value: T; label: string }> }) {
+  return (
+    <div className="inline-flex items-center w-full p-0.5 rounded-[10px] border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/40">
+      {options.map(opt => {
+        const active = value === opt.value;
+        return (
+          <button
+            key={opt.value}
+            type="button"
+            onClick={() => onChange(opt.value)}
+            aria-pressed={active}
+            className="flex-1 h-9 px-3 text-[13px] font-medium rounded-lg transition-colors"
+            style={{
+              background: active ? "#2D8CFF" : "transparent",
+              color: active ? "#ffffff" : "var(--muted)",
+            }}
+          >
+            {opt.label}
+          </button>
+        );
+      })}
+    </div>
+  );
+}
+
+/** Calcule l'âge à partir d'une date ISO (yyyy-mm-dd). */
+function ageFromDob(dob: string): number | null {
+  if (!dob) return null;
+  const d = new Date(dob);
+  if (Number.isNaN(d.getTime())) return null;
+  const t = new Date();
+  let age = t.getFullYear() - d.getFullYear();
+  const m = t.getMonth() - d.getMonth();
+  if (m < 0 || (m === 0 && t.getDate() < d.getDate())) age--;
+  return age;
+}
+
+/** Renouvellement légal optique selon l'âge (Arr. 28/08/2018, R165-1 CSS). */
+function renouvellementLegal(age: number | null): string | null {
+  if (age === null) return null;
+  if (age < 6)  return "Renouvellement légal : 6 mois";
+  if (age < 16) return "Renouvellement légal : 1 an";
+  return "Renouvellement légal : 3 ans (adulte)";
+}
+
+/**
+ * Base de remboursement Sécu (€) pour une ligne 100% Santé (Classe A).
+ * Valeurs indicatives 2025 — Réforme 100% Santé / Arrêté 11 mars 2022.
+ * Pour Classe B (panier libre), la base SS est symbolique (~0.05€).
+ */
+function basePecSS(type: LigneType, classe: "1" | "2" | "", age: number | null): number {
+  if (classe === "1") {
+    // Panier A — 100% Santé (RAC 0)
+    const enfant = age !== null && age < 16;
+    if (type === "monture") return 30; // monture plafonnée à 30€
+    if (type === "verre-od" || type === "verre-og") {
+      // base verre — varie selon complexité ; on prend une moyenne raisonnable
+      return enfant ? 35 : 28;
+    }
+    if (type === "lentille") return 39.48; // forfait annuel adulte par œil
+    return 0;
+  }
+  if (classe === "2") {
+    // Panier B — base SS symbolique
+    if (type === "monture") return 0.05;
+    if (type === "verre-od" || type === "verre-og") return 0.05;
+    return 0;
+  }
+  return 0;
 }
 
 /* ═══════════════════════════════════════════════════════════════════════
@@ -1091,7 +1171,7 @@ function initNouveauDevisState(): NouveauDevisState {
     ordonnance: { ...EMPTY_ORDONNANCE },
     lignes: [],
     ligneType: "monture", ligneMarque: "", ligneReference: "", ligneDesignation: "", ligneDescription: "",
-    lignePrixTTC: "", ligneTVA: "5.5", ligneLPPR: "", ligneClasse: "", ligneSS: "", ligneMutuelle: "",
+    lignePrixTTC: "", ligneTVA: "20", ligneLPPR: "", ligneClasse: "", ligneSS: "", ligneMutuelle: "",
     signatureClient: false, notes: "",
     acompte: "", modePaiementDevis: "", pecSS: "", pecMutuelle: "",
   };
@@ -1214,7 +1294,7 @@ function ModalNouveauDevis({ onClose, onSave, allDevis, initialClient }: { onClo
       reference: item.reference,
       prixPublicHT: item.prixAchat,
       prixVenteTTC: prixTTC,
-      tauxTVA: 5.5,
+      tauxTVA: 20,
       priseEnChargeSS: 0,
       priseEnChargeMutuelle: 0,
     });
@@ -1266,62 +1346,109 @@ function ModalNouveauDevis({ onClose, onSave, allDevis, initialClient }: { onClo
       defaultWidth={760}
       defaultHeight={680}
     >
-      <div style={{ display: "flex", flexDirection: "column", height: "100%", background: "var(--glass-card-bg)" }}>
+      <div className="flex flex-col h-full bg-slate-50 dark:bg-slate-950">
 
-        {/* Stepper */}
-        <div style={{ padding: "12px 28px 0", display: "flex", gap: 8, flexShrink: 0 }}>
+        {/* ── Bandeau référence devis (numéro + validité légale) ── */}
+        <div className="flex flex-wrap items-center justify-between gap-3 px-6 pt-3 pb-2 border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 flex-shrink-0">
+          <div className="flex items-baseline gap-2">
+            <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">Devis n°</span>
+            <span className="text-sm font-semibold text-slate-900 dark:text-slate-100 tabular-nums">
+              {genDevisId(allDevis)}
+            </span>
+            <span className="text-slate-300 mx-1">·</span>
+            <span className="text-[11px] text-slate-500 dark:text-slate-400">Validité 90 jours (arrêté du 28/08/2018)</span>
+          </div>
+          <span className="text-[11px] font-medium text-slate-500 dark:text-slate-400 tabular-nums">
+            Étape {s.step} / 4
+          </span>
+        </div>
+
+        {/* ── Stepper sobre ── */}
+        <div className="flex gap-1 px-6 pt-3 flex-shrink-0">
           {STEPS.map((label, i) => {
             const active = s.step === i + 1;
             const done = s.step > i + 1;
             return (
-              <div key={label} style={{ flex: 1, display: "flex", flexDirection: "column", gap: 4, alignItems: "center" }}>
-                <div style={{ height: 3, borderRadius: 2, background: done ? "#2D8CFF" : active ? "#2D8CFF" : "rgba(148,163,184,0.3)", width: "100%", opacity: active ? 1 : done ? 0.7 : 0.4 }} />
-                <span style={{ fontSize: 10, fontWeight: 600, color: active ? "#2D8CFF" : done ? "#2D8CFF" : "#94a3b8", letterSpacing: 0.2 }}>{label}</span>
-              </div>
+              <button
+                key={label}
+                type="button"
+                onClick={() => upd({ step: (i + 1) as 1 | 2 | 3 | 4 })}
+                className="flex-1 flex flex-col gap-1.5 items-start text-left transition-colors"
+              >
+                <span className="block h-0.5 w-full rounded-full" style={{
+                  background: done || active ? "#2D8CFF" : "var(--border)",
+                  opacity: done ? 0.7 : 1,
+                }} />
+                <span className="text-[11px] font-semibold tabular-nums" style={{ color: active ? "#2D8CFF" : done ? "#2D8CFF" : "var(--muted)" }}>
+                  0{i + 1} · {label}
+                </span>
+              </button>
             );
           })}
         </div>
 
         {/* Body scroll */}
-        <div style={{ flex: 1, overflowY: "auto", padding: "20px 28px" }}>
+        <div className="flex-1 overflow-y-auto px-6 py-5">
 
           {/* ── ÉTAPE 1 — PATIENT ── */}
           {s.step === 1 && (
             <div>
-              <FormSection title="Mode de saisie" color="#2D8CFF">
-                <div style={{ display: "flex", gap: 8 }}>
-                  {(["nouveau", "existant"] as const).map(mode => (
-                    <button key={mode} onClick={() => upd({ clientMode: mode })}
-                      style={{ flex: 1, padding: "9px 0", borderRadius: 12, border: s.clientMode === mode ? "1.5px solid #2D8CFF" : "1px solid rgba(148,163,184,0.35)", background: s.clientMode === mode ? "rgba(45,140,255,0.09)" : "rgba(255,255,255,0.6)", color: s.clientMode === mode ? "#1D6FCC" : "#475569", fontWeight: 600, fontSize: 13, cursor: "pointer" }}>
-                      {mode === "nouveau" ? "Nouveau patient" : "Dossier existant"}
-                    </button>
-                  ))}
-                </div>
+              <FormSection title="Patient" hint="Identité et couverture">
+                <Segmented
+                  value={s.clientMode}
+                  onChange={(v) => upd({ clientMode: v })}
+                  options={[
+                    { value: "nouveau",  label: "Nouveau patient" },
+                    { value: "existant", label: "Dossier existant" },
+                  ]}
+                />
               </FormSection>
 
               {s.clientMode === "nouveau" && (
                 <>
-                  <FormSection title="Source des données" color="#8B5CF6">
-                    <div style={{ display: "flex", gap: 8, marginBottom: 12 }}>
-                      {(["manuel", "vitale"] as const).map(tab => (
-                        <button key={tab} onClick={() => upd({ vitaleTab: tab })}
-                          style={{ padding: "7px 18px", borderRadius: 999, border: s.vitaleTab === tab ? "1.5px solid #8B5CF6" : "1px solid rgba(148,163,184,0.3)", background: s.vitaleTab === tab ? "rgba(139,92,246,0.1)" : "transparent", color: s.vitaleTab === tab ? "#6D28D9" : "#64748b", fontWeight: 600, fontSize: 12, cursor: "pointer" }}>
-                          {tab === "manuel" ? "Saisie manuelle" : "Carte Vitale"}
-                        </button>
-                      ))}
-                    </div>
-                    {s.vitaleTab === "vitale" && <CarteVitaleReader onRead={(info) => updClient({ nom: info.nom, prenom: info.prenom, dateNaissance: info.dateNaissance, numeroSS: info.numeroSS, telephone: info.telephone, email: info.email })} />}
+                  <FormSection title="Source des données" hint="Saisie ou lecture Carte Vitale">
+                    <Segmented
+                      value={s.vitaleTab}
+                      onChange={(v) => upd({ vitaleTab: v })}
+                      options={[
+                        { value: "manuel", label: "Saisie manuelle" },
+                        { value: "vitale", label: "Carte Vitale" },
+                      ]}
+                    />
+                    {s.vitaleTab === "vitale" && (
+                      <div className="mt-2">
+                        <CarteVitaleReader onRead={(info) => updClient({ nom: info.nom, prenom: info.prenom, dateNaissance: info.dateNaissance, numeroSS: info.numeroSS, telephone: info.telephone, email: info.email })} />
+                      </div>
+                    )}
                   </FormSection>
-                  <FormSection title="Informations patient" color="#00C98A">
-                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
+
+                  <FormSection title="Identité">
+                    <div className="grid grid-cols-2 gap-3">
                       <FormRow label="Nom"><input style={inputStyle} value={s.client.nom} onChange={e => updClient({ nom: e.target.value })} placeholder="LEBLANC" /></FormRow>
                       <FormRow label="Prénom"><input style={inputStyle} value={s.client.prenom} onChange={e => updClient({ prenom: e.target.value })} placeholder="Marie" /></FormRow>
                     </div>
-                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
-                      <FormRow label="Date de naissance"><input style={inputStyle} type="date" value={s.client.dateNaissance} onChange={e => updClient({ dateNaissance: e.target.value })} /></FormRow>
-                      <FormRow label="N° Sécurité sociale"><input style={inputStyle} value={s.client.numeroSS} onChange={e => updClient({ numeroSS: e.target.value })} placeholder="1 85 06 75…" /></FormRow>
+                    <div className="grid grid-cols-2 gap-3">
+                      <FormRow
+                        label="Date de naissance"
+                        hint={(() => {
+                          const a = ageFromDob(s.client.dateNaissance);
+                          return a !== null ? `${a} ans` : undefined;
+                        })()}
+                      >
+                        <input style={inputStyle} type="date" value={s.client.dateNaissance} onChange={e => updClient({ dateNaissance: e.target.value })} />
+                      </FormRow>
+                      <FormRow label="N° Sécurité sociale"><input style={inputStyle} value={s.client.numeroSS} onChange={e => updClient({ numeroSS: e.target.value })} placeholder="1 85 06 75 123 456 78" /></FormRow>
                     </div>
-                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
+                    {(() => {
+                      const info = renouvellementLegal(ageFromDob(s.client.dateNaissance));
+                      if (!info) return null;
+                      return (
+                        <p className="text-[11px] text-slate-500 dark:text-slate-400 -mt-1 px-0.5">
+                          <span className="font-medium text-slate-600 dark:text-slate-300">·</span> {info}
+                        </p>
+                      );
+                    })()}
+                    <div className="grid grid-cols-2 gap-3">
                       <FormRow label="Téléphone"><input style={inputStyle} value={s.client.telephone} onChange={e => updClient({ telephone: e.target.value })} placeholder="06 11 22 33 44" /></FormRow>
                       <FormRow label="Email"><input style={inputStyle} value={s.client.email} onChange={e => updClient({ email: e.target.value })} placeholder="patient@email.fr" /></FormRow>
                     </div>
@@ -1329,25 +1456,30 @@ function ModalNouveauDevis({ onClose, onSave, allDevis, initialClient }: { onClo
                 </>
               )}
 
-              <FormSection title="Type de devis" color="#F59E0B">
-                <div style={{ display: "flex", gap: 8 }}>
-                  {([["lunettes", "Lunettes"], ["lentilles", "Lentilles"], ["solaire", "Solaires"]] as [DevisType, string][]).map(([val, lbl]) => (
-                    <button key={val} onClick={() => upd({ type: val })}
-                      style={{ flex: 1, padding: "9px 0", borderRadius: 12, border: s.type === val ? "1.5px solid #F59E0B" : "1px solid rgba(148,163,184,0.35)", background: s.type === val ? "rgba(245,158,11,0.1)" : "rgba(255,255,255,0.5)", color: s.type === val ? "#B45309" : "#475569", fontWeight: 600, fontSize: 13, cursor: "pointer" }}>
-                      {lbl}
-                    </button>
-                  ))}
-                </div>
+              <FormSection title="Type d'équipement">
+                <Segmented
+                  value={s.type}
+                  onChange={(v) => upd({ type: v })}
+                  options={[
+                    { value: "lunettes",  label: "Lunettes optiques" },
+                    { value: "lentilles", label: "Lentilles" },
+                    { value: "solaire",   label: "Solaires" },
+                  ]}
+                />
               </FormSection>
 
-              <FormSection title="Mutuelle" color="#EC4899">
-                <FormRow label="Nom de la mutuelle"><input style={inputStyle} value={s.mutuelleNom} onChange={e => upd({ mutuelleNom: e.target.value })} placeholder="MGEN, AXA Santé…" /></FormRow>
-                <FormRow label={`Taux de remboursement : ${s.mutuelleTaux}%`}>
-                  <input type="range" min={0} max={100} value={s.mutuelleTaux} onChange={e => upd({ mutuelleTaux: parseInt(e.target.value, 10) })} style={{ width: "100%", accentColor: "#EC4899" }} />
-                </FormRow>
-                <FormRow label="Plafond de remboursement (€, 0 = illimité)">
-                  <input style={inputStyle} type="number" min={0} value={s.mutuellePlafond} onChange={e => upd({ mutuellePlafond: e.target.value })} placeholder="0" />
-                </FormRow>
+              <FormSection title="Couverture mutuelle" hint="Optionnel — si tiers payant">
+                <FormRow label="Nom de la mutuelle"><input style={inputStyle} value={s.mutuelleNom} onChange={e => upd({ mutuelleNom: e.target.value })} placeholder="MGEN, AXA Santé, Harmonie…" /></FormRow>
+                <div className="grid grid-cols-[1fr_auto] gap-3 items-end">
+                  <FormRow label={`Taux de remboursement : ${s.mutuelleTaux}%`}>
+                    <input type="range" min={0} max={100} value={s.mutuelleTaux} onChange={e => upd({ mutuelleTaux: parseInt(e.target.value, 10) })}
+                      className="w-full h-2 rounded-full appearance-none cursor-pointer bg-slate-200 dark:bg-slate-700"
+                      style={{ accentColor: "#2D8CFF" }} />
+                  </FormRow>
+                  <FormRow label="Plafond (€)" hint="0 = illimité">
+                    <input style={{ ...inputStyle, width: 100 }} type="number" min={0} value={s.mutuellePlafond} onChange={e => upd({ mutuellePlafond: e.target.value })} placeholder="0" />
+                  </FormRow>
+                </div>
               </FormSection>
             </div>
           )}
@@ -1454,27 +1586,76 @@ function ModalNouveauDevis({ onClose, onSave, allDevis, initialClient }: { onClo
                     </select>
                   </FormRow>
                 </div>
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
-                  <FormRow label="Code LPPR (optionnel)"><input style={inputStyle} value={s.ligneLPPR} onChange={e => upd({ ligneLPPR: e.target.value })} placeholder="2203799" /></FormRow>
-                  <FormRow label="Classe optique">
-                    <select style={selectStyle} value={s.ligneClasse} onChange={e => upd({ ligneClasse: e.target.value as "1" | "2" | "" })}>
-                      <option value="">—</option>
-                      <option value="1">Classe I</option>
-                      <option value="2">Classe II</option>
-                    </select>
+                {/* Classe 100% Santé — bloc visuel mis en avant (Réforme 2020) */}
+                <FormRow label="Classe (Réforme 100% Santé)" hint="Classe A = panier 100% Santé · Classe B = panier libre">
+                  <div className="grid grid-cols-3 gap-2">
+                    {([
+                      { value: "1", label: "Classe A", sub: "100% Santé — RAC 0 €" },
+                      { value: "2", label: "Classe B", sub: "Panier libre — RAC libre" },
+                      { value: "",  label: "Non applicable", sub: "Lentilles, accessoires…" },
+                    ] as { value: "1" | "2" | ""; label: string; sub: string }[]).map(opt => {
+                      const active = s.ligneClasse === opt.value;
+                      const isA = opt.value === "1";
+                      return (
+                        <button
+                          key={opt.label}
+                          type="button"
+                          onClick={() => {
+                            const age = ageFromDob(s.client.dateNaissance);
+                            const autoSS = basePecSS(s.ligneType, opt.value, age);
+                            upd({
+                              ligneClasse: opt.value,
+                              // Auto-fill la PEC Sécu seulement si elle est vide
+                              ligneSS: s.ligneSS === "" && autoSS > 0 ? autoSS.toFixed(2) : s.ligneSS,
+                            });
+                          }}
+                          aria-pressed={active}
+                          className="flex flex-col gap-0.5 items-start text-left rounded-[10px] px-3 py-2 transition-colors"
+                          style={{
+                            border: active
+                              ? `1.5px solid ${isA ? "#10B981" : opt.value === "2" ? "#2D8CFF" : "var(--muted)"}`
+                              : "1px solid var(--border)",
+                            background: active
+                              ? (isA ? "rgba(16,185,129,0.08)" : opt.value === "2" ? "rgba(45,140,255,0.08)" : "var(--glass-subtle-bg)")
+                              : "var(--surface)",
+                          }}
+                        >
+                          <span className="text-[12px] font-semibold" style={{
+                            color: active
+                              ? (isA ? "#047857" : opt.value === "2" ? "#1A72E8" : "var(--text)")
+                              : "var(--text)",
+                          }}>{opt.label}</span>
+                          <span className="text-[10px] text-slate-500 dark:text-slate-400">{opt.sub}</span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </FormRow>
+
+                <div className="grid grid-cols-2 gap-3">
+                  <FormRow label="Code LPPR" hint="Liste des Produits & Prestations">
+                    <input style={inputStyle} value={s.ligneLPPR} onChange={e => upd({ ligneLPPR: e.target.value })} placeholder="2203799" />
                   </FormRow>
+                  <div />
                 </div>
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
-                  <FormRow label="PC Sécu (€)"><input style={inputStyle} type="number" min={0} step={0.01} value={s.ligneSS} onChange={e => upd({ ligneSS: e.target.value })} placeholder="0.00" /></FormRow>
-                  <FormRow label="PC Mutuelle (€)">
+
+                <div className="grid grid-cols-2 gap-3">
+                  <FormRow label="PEC Sécurité sociale (€)"><input style={inputStyle} type="number" min={0} step={0.01} value={s.ligneSS} onChange={e => upd({ ligneSS: e.target.value })} placeholder="0.00" /></FormRow>
+                  <FormRow label="PEC Mutuelle (€)">
                     <input style={inputStyle} type="number" min={0} step={0.01} value={s.ligneMutuelle} onChange={e => upd({ ligneMutuelle: e.target.value })} placeholder="0.00" />
                   </FormRow>
                 </div>
-                <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginTop: 4 }}>
-                  <button onClick={addLigne} style={{ display: "inline-flex", alignItems: "center", gap: 6, padding: "9px 18px", borderRadius: 12, background: "linear-gradient(135deg,#F59E0B,#D97706)", color: "#fff", fontWeight: 700, fontSize: 13, border: "none", cursor: "pointer" }}>
+                <div className="flex gap-2 flex-wrap pt-1">
+                  <button
+                    onClick={addLigne}
+                    className="inline-flex items-center gap-1.5 h-9 px-4 rounded-[10px] text-sm font-medium text-white bg-vision-accent hover:bg-[#1A72E8] transition-colors"
+                  >
                     <IconPlus /> Ajouter la ligne
                   </button>
-                  <button onClick={() => setStockModalOpen(true)} style={{ display: "inline-flex", alignItems: "center", gap: 6, padding: "9px 18px", borderRadius: 12, background: "rgba(99,102,241,0.1)", color: "#6366f1", fontWeight: 700, fontSize: 13, border: "1px solid rgba(99,102,241,0.35)", cursor: "pointer" }}>
+                  <button
+                    onClick={() => setStockModalOpen(true)}
+                    className="inline-flex items-center gap-1.5 h-9 px-4 rounded-[10px] text-sm font-medium text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
+                  >
                     <IconBox /> Depuis le stock
                   </button>
                 </div>
@@ -1564,34 +1745,79 @@ function ModalNouveauDevis({ onClose, onSave, allDevis, initialClient }: { onClo
                 </div>
               </FormSection>
 
-              <FormSection title="Lignes du devis" color="#F59E0B">
-                {s.lignes.length === 0 ? <div style={{ fontSize: 13, color: "#94a3b8" }}>Aucune ligne ajoutée.</div> : (
-                  <div style={{ ...glassSubtle, borderRadius: 12, overflow: "hidden" }}>
-                    <table style={{ width: "100%", borderCollapse: "collapse" }}>
-                      <tbody>
-                        {s.lignes.map((l, i) => (
-                          <tr key={l.id} style={{ borderTop: i > 0 ? "1px solid rgba(148,163,184,0.12)" : undefined }}>
-                            <td style={{ padding: "8px 12px", fontSize: 12, color: "#1e293b" }}>{l.designation}</td>
-                            <td style={{ padding: "8px 12px", fontSize: 12, textAlign: "right", fontWeight: 700, whiteSpace: "nowrap" }}>{formatEur(l.prixVenteTTC)}</td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
-                )}
-              </FormSection>
+              {(() => {
+                // Séparation Panier A (100% Santé) vs Panier B vs Hors classification
+                const lignesA = s.lignes.filter(l => l.classe === 1);
+                const lignesB = s.lignes.filter(l => l.classe === 2);
+                const lignesAutres = s.lignes.filter(l => !l.classe);
+                const sumTTC = (arr: typeof s.lignes) => arr.reduce((a, l) => a + l.prixVenteTTC, 0);
+                const sumSS  = (arr: typeof s.lignes) => arr.reduce((a, l) => a + l.priseEnChargeSS, 0);
+                const sumMut = (arr: typeof s.lignes) => arr.reduce((a, l) => a + l.priseEnChargeMutuelle, 0);
 
-              {/* Bloc financier */}
-              <div style={{ background: "linear-gradient(135deg,rgba(45,140,255,0.12),rgba(139,92,246,0.1))", borderRadius: 14, padding: "16px 18px", border: "1px solid rgba(45,140,255,0.2)", marginBottom: 16 }}>
+                function LinesBlock({ title, hint, lignes, accent }: { title: string; hint?: string; lignes: typeof s.lignes; accent?: string }) {
+                  if (lignes.length === 0) return null;
+                  const ttc = sumTTC(lignes), ss = sumSS(lignes), mut = sumMut(lignes);
+                  const rac = Math.max(0, ttc - ss - mut);
+                  return (
+                    <div className="mb-3 rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden">
+                      <div className="flex items-center justify-between px-4 py-2 bg-slate-50 dark:bg-slate-800/40">
+                        <div className="flex items-baseline gap-2">
+                          {accent && <span className="w-1.5 h-1.5 rounded-full" style={{ background: accent }} />}
+                          <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-700 dark:text-slate-300">{title}</span>
+                          {hint && <span className="text-[11px] text-slate-400">{hint}</span>}
+                        </div>
+                        <span className="text-[11px] tabular-nums text-slate-500 dark:text-slate-400">
+                          {lignes.length} ligne{lignes.length > 1 ? "s" : ""}
+                        </span>
+                      </div>
+                      <table className="w-full">
+                        <tbody>
+                          {lignes.map((l, i) => (
+                            <tr key={l.id} className={i > 0 ? "border-t border-slate-100 dark:border-slate-800/60" : ""}>
+                              <td className="px-4 py-2 text-xs text-slate-800 dark:text-slate-200">{l.designation || `${l.type} ${l.marque}`}</td>
+                              <td className="px-4 py-2 text-xs text-right font-semibold tabular-nums text-slate-900 dark:text-slate-100 whitespace-nowrap">{formatEur(l.prixVenteTTC)}</td>
+                            </tr>
+                          ))}
+                          <tr className="border-t border-slate-200 dark:border-slate-700 bg-slate-50/60 dark:bg-slate-800/30">
+                            <td className="px-4 py-2 text-[11px] font-medium text-slate-500 dark:text-slate-400">Sous-total · SS −{formatEur(ss)} · Mut. −{formatEur(mut)}</td>
+                            <td className="px-4 py-2 text-xs text-right font-bold tabular-nums whitespace-nowrap" style={{ color: accent ?? "#0f172a" }}>
+                              RAC {formatEur(rac)}
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  );
+                }
+
+                if (s.lignes.length === 0) {
+                  return (
+                    <FormSection title="Lignes du devis">
+                      <div className="text-sm text-slate-400">Aucune ligne ajoutée.</div>
+                    </FormSection>
+                  );
+                }
+
+                return (
+                  <FormSection title="Détail équipement" hint="Séparé par classe — Réforme 100% Santé">
+                    <LinesBlock title="Panier A · 100% Santé" hint="RAC 0 €" lignes={lignesA} accent="#10B981" />
+                    <LinesBlock title="Panier B · libre"      hint="RAC libre" lignes={lignesB} accent="#2D8CFF" />
+                    <LinesBlock title="Hors classification"   hint="Lentilles, accessoires" lignes={lignesAutres} accent="#94a3b8" />
+                  </FormSection>
+                );
+              })()}
+
+              {/* Bloc financier — sobre */}
+              <div className="mb-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-4 py-3">
                 {([
-                  { lbl: "Total TTC", val: formatEur(totalTTC), color: "#1e293b", bold: false },
-                  { lbl: "Prise en charge Sécu", val: `−${formatEur(totalSS)}`, color: "#1976D2", bold: false },
-                  { lbl: `Mutuelle ${s.mutuelleNom}`, val: `−${formatEur(totalMutuelle)}`, color: "#059669", bold: false },
-                  { lbl: "Reste à charge patient", val: formatEur(resteACharge), color: "#2D8CFF", bold: true },
-                ] as { lbl: string; val: string; color: string; bold: boolean }[]).map(({ lbl, val, color, bold }) => (
-                  <div key={lbl} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", paddingBlock: 4, borderBottom: bold ? undefined : "1px solid rgba(148,163,184,0.1)" }}>
-                    <span style={{ fontSize: bold ? 14 : 13, fontWeight: bold ? 700 : 500, color: "#475569" }}>{lbl}</span>
-                    <span style={{ fontSize: bold ? 16 : 13, fontWeight: bold ? 800 : 600, color }}>{val}</span>
+                  { lbl: "Total TTC", val: formatEur(totalTTC), bold: false },
+                  { lbl: "Prise en charge Sécurité sociale", val: `−${formatEur(totalSS)}`, bold: false, neg: true },
+                  { lbl: `Prise en charge mutuelle${s.mutuelleNom ? " (" + s.mutuelleNom + ")" : ""}`, val: `−${formatEur(totalMutuelle)}`, bold: false, neg: true },
+                  { lbl: "Reste à charge patient", val: formatEur(resteACharge), bold: true },
+                ] as { lbl: string; val: string; bold: boolean; neg?: boolean }[]).map(({ lbl, val, bold, neg }, i) => (
+                  <div key={lbl} className={`flex items-center justify-between py-1.5 ${i > 0 && !bold ? "border-t border-slate-100 dark:border-slate-800/60" : ""} ${bold ? "border-t-2 border-slate-300 dark:border-slate-700 mt-2 pt-2.5" : ""}`}>
+                    <span className={`${bold ? "text-sm font-semibold" : "text-[13px]"} text-slate-600 dark:text-slate-300`}>{lbl}</span>
+                    <span className={`tabular-nums ${bold ? "text-base font-bold text-vision-accent" : neg ? "text-[13px] font-medium text-slate-500" : "text-[13px] font-semibold text-slate-800 dark:text-slate-200"}`}>{val}</span>
                   </div>
                 ))}
               </div>
@@ -1663,20 +1889,39 @@ function ModalNouveauDevis({ onClose, onSave, allDevis, initialClient }: { onClo
         </div>
 
         {/* Footer navigation */}
-        <div style={{ padding: "14px 28px 20px", borderTop: "1px solid rgba(148,163,184,0.15)", display: "flex", gap: 10, justifyContent: "space-between", alignItems: "center", flexShrink: 0 }}>
-          <button onClick={() => s.step > 1 ? upd({ step: (s.step - 1) as 1 | 2 | 3 | 4 }) : onClose()}
-            style={{ padding: "9px 20px", borderRadius: 12, border: "1px solid rgba(148,163,184,0.3)", background: "transparent", color: "#475569", fontWeight: 600, fontSize: 13, cursor: "pointer" }}>
-            {s.step === 1 ? "Annuler" : "← Précédent"}
+        <div className="flex items-center justify-between gap-3 px-6 py-3 border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 flex-shrink-0">
+          <button
+            onClick={() => s.step > 1 ? upd({ step: (s.step - 1) as 1 | 2 | 3 | 4 }) : onClose()}
+            className="inline-flex items-center gap-1.5 h-9 px-4 rounded-[10px] text-sm font-medium text-slate-700 dark:text-slate-300 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
+          >
+            {s.step === 1 ? "Annuler" : (
+              <>
+                <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 18l-6-6 6-6" /></svg>
+                Précédent
+              </>
+            )}
           </button>
+
+          <div className="flex items-center gap-3 text-[11px] text-slate-500 dark:text-slate-400 tabular-nums">
+            <span>TTC <strong className="text-slate-800 dark:text-slate-200">{formatEur(totalTTC)}</strong></span>
+            <span className="text-slate-300">·</span>
+            <span>RAC <strong className="text-vision-accent">{formatEur(resteACharge)}</strong></span>
+          </div>
+
           {s.step < 4 ? (
-            <button onClick={() => upd({ step: (s.step + 1) as 1 | 2 | 3 | 4 })}
-              style={{ padding: "9px 24px", borderRadius: 12, border: "none", background: "#2D8CFF", color: "#fff", fontWeight: 700, fontSize: 13, cursor: "pointer" }}>
-              Suivant →
+            <button
+              onClick={() => upd({ step: (s.step + 1) as 1 | 2 | 3 | 4 })}
+              className="inline-flex items-center gap-1.5 h-9 px-4 rounded-[10px] text-sm font-medium text-white bg-vision-accent hover:bg-[#1A72E8] transition-colors"
+            >
+              Suivant
+              <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 18l6-6-6-6" /></svg>
             </button>
           ) : (
-            <button onClick={save}
-              style={{ padding: "9px 24px", borderRadius: 12, border: "none", background: s.signatureClient ? "#00C98A" : "linear-gradient(135deg,#64748b,#475569)", color: "#fff", fontWeight: 700, fontSize: 13, cursor: "pointer" }}>
-              {s.signatureClient ? "Enregistrer (Signé)" : "Enregistrer (Brouillon)"}
+            <button
+              onClick={save}
+              className={`inline-flex items-center gap-1.5 h-9 px-4 rounded-[10px] text-sm font-medium text-white transition-colors ${s.signatureClient ? "bg-emerald-600 hover:bg-emerald-700" : "bg-slate-700 hover:bg-slate-800"}`}
+            >
+              {s.signatureClient ? "Enregistrer (signé)" : "Enregistrer (brouillon)"}
             </button>
           )}
         </div>
@@ -2450,10 +2695,10 @@ export default function DevisPage() {
         const parsed = JSON.parse(raw) as Devis[];
         setDevis(parsed);
       } else {
-        setDevis(MOCK_DEVIS);
+        setDevis([]);
       }
     } catch {
-      setDevis(MOCK_DEVIS);
+      setDevis([]);
     }
     setRelances(loadRelances());
   }, []);

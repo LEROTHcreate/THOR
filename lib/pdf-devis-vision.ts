@@ -404,8 +404,9 @@ export function generateDevisVisionHtml(devis: DevisPdf, config: StoreConfig): s
       <strong>Droit de rétractation :</strong> Conformément à la loi Hamon (loi n° 2014-344 du 17 mars 2014, article 16), le patient
       bénéficie d'un délai de <strong>14 jours calendaires</strong> à compter de la date de signature pour exercer son droit de rétractation,
       sauf si l'équipement a été entamé à sa demande expresse (adaptation de lentilles, verres taillés à sa mesure).<br/>
-      Les prix indiqués incluent la TVA au taux applicable (5,5 % pour les verres correcteurs et lentilles ; 20 % pour les montures de ville
-      sauf Classe A). Prise en charge Sécurité sociale selon barème LPPR en vigueur.
+      Les prix indiqués incluent la TVA au taux applicable : <strong>20 %</strong> sur les équipements d'optique-lunetterie
+      (verres correcteurs, montures, lentilles correctrices et accessoires), conformément au régime de droit commun.
+      Prise en charge Sécurité sociale selon barème LPPR en vigueur.
       La prise en charge mutuelle est donnée à titre indicatif et peut varier selon les garanties du contrat.<br/>
       ${config.mentionsDevis ? config.mentionsDevis : ""}
     </div>

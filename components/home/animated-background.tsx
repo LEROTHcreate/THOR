@@ -37,7 +37,7 @@ export default function AnimatedBackground() {
             top: "-15%", left: "-12%",
             background:
               "radial-gradient(circle at 30% 30%, rgba(99,102,241,0.55) 0%, rgba(99,102,241,0) 65%)",
-            filter: "blur(60px)",
+            filter: "blur(40px)",
             animation: "morphBlob1 28s ease-in-out infinite",
             willChange: "transform, border-radius",
           }}
@@ -49,7 +49,7 @@ export default function AnimatedBackground() {
             top: "10%", right: "-15%",
             background:
               "radial-gradient(circle at 60% 40%, rgba(45,140,255,0.50) 0%, rgba(45,140,255,0) 65%)",
-            filter: "blur(70px)",
+            filter: "blur(50px)",
             animation: "morphBlob2 34s ease-in-out infinite",
             animationDelay: "-6s",
             willChange: "transform, border-radius",
@@ -62,7 +62,7 @@ export default function AnimatedBackground() {
             top: "45%", left: "25%",
             background:
               "radial-gradient(circle at 50% 50%, rgba(0,201,138,0.40) 0%, rgba(0,201,138,0) 65%)",
-            filter: "blur(70px)",
+            filter: "blur(50px)",
             animation: "morphBlob3 30s ease-in-out infinite",
             animationDelay: "-12s",
             willChange: "transform, border-radius",
@@ -75,7 +75,7 @@ export default function AnimatedBackground() {
             bottom: "5%", right: "0%",
             background:
               "radial-gradient(circle at 50% 50%, rgba(244,114,182,0.25) 0%, rgba(244,114,182,0) 65%)",
-            filter: "blur(80px)",
+            filter: "blur(50px)",
             animation: "morphBlob1 38s ease-in-out infinite reverse",
             animationDelay: "-18s",
             willChange: "transform, border-radius",
@@ -88,7 +88,7 @@ export default function AnimatedBackground() {
             bottom: "-5%", left: "5%",
             background:
               "radial-gradient(circle at 50% 50%, rgba(34,211,238,0.30) 0%, rgba(34,211,238,0) 65%)",
-            filter: "blur(70px)",
+            filter: "blur(50px)",
             animation: "morphBlob2 32s ease-in-out infinite reverse",
             animationDelay: "-22s",
             willChange: "transform, border-radius",
@@ -115,16 +115,12 @@ export default function AnimatedBackground() {
       {/* 4. Particules flottantes (plus subtiles sur fond clair) */}
       <div className="absolute inset-0 overflow-hidden">
         {[
-          { left: "8%",  delay: 0,    size: 3, color: "99,102,241", duration: 18 },
-          { left: "18%", delay: 4,    size: 4, color: "45,140,255", duration: 22 },
-          { left: "27%", delay: 8,    size: 3, color: "0,201,138",  duration: 20 },
-          { left: "38%", delay: 2,    size: 3, color: "99,102,241", duration: 24 },
-          { left: "48%", delay: 12,   size: 4, color: "34,211,238", duration: 19 },
-          { left: "58%", delay: 6,    size: 3, color: "45,140,255", duration: 21 },
-          { left: "68%", delay: 10,   size: 3, color: "0,201,138",  duration: 23 },
-          { left: "78%", delay: 1,    size: 4, color: "99,102,241", duration: 20 },
-          { left: "88%", delay: 14,   size: 3, color: "244,114,182",duration: 26 },
-          { left: "94%", delay: 7,    size: 3, color: "45,140,255", duration: 22 },
+          { left: "12%", delay: 0,  size: 3, color: "99,102,241", duration: 22 },
+          { left: "27%", delay: 6,  size: 4, color: "45,140,255", duration: 24 },
+          { left: "42%", delay: 12, size: 3, color: "0,201,138",  duration: 21 },
+          { left: "58%", delay: 3,  size: 4, color: "34,211,238", duration: 23 },
+          { left: "74%", delay: 9,  size: 3, color: "45,140,255", duration: 25 },
+          { left: "89%", delay: 15, size: 3, color: "99,102,241", duration: 22 },
         ].map((p, i) => (
           <div
             key={i}

@@ -77,16 +77,6 @@ function IconUsers({ className }: { className?: string }) {
   );
 }
 
-function IconDevis({ className }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z" />
-      <path d="M14 2v6h6M9 13h6M9 17h4" />
-      <circle cx="17" cy="17" r="3" fill="none"/>
-      <path d="M17 15.5v1.5l1 1" strokeWidth="1.5"/>
-    </svg>
-  );
-}
 function IconBarChart({ className }: { className?: string }) {
   return (
     <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
@@ -176,13 +166,6 @@ function IconX({ className }: { className?: string }) {
   );
 }
 
-function IconAtelier({ className }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
-    </svg>
-  );
-}
 function IconWrench({ className }: { className?: string }) {
   return (
     <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
@@ -207,41 +190,67 @@ function IconNewspaper({ className }: { className?: string }) {
     </svg>
   );
 }
+function IconFolder({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7Z" />
+    </svg>
+  );
+}
+function IconOrdo({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z" />
+      <path d="M14 2v6h6M9 13h6M9 17h4" />
+    </svg>
+  );
+}
+function IconRefresh({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M3 12a9 9 0 0 1 15-6.7L21 8M21 3v5h-5M21 12a9 9 0 0 1-15 6.7L3 16M3 21v-5h5" />
+    </svg>
+  );
+}
 
-const NAV_PRINCIPAL = [
-  { href: "/clair-vision/pro/optique",        label: "Tableau de bord", Icon: IconDashboard, exact: true  },
-  { href: "/clair-vision/pro/agenda",         label: "Agenda",          Icon: IconCalendar,  exact: false },
-  { href: "/clair-vision/pro/patients",       label: "Patients",        Icon: IconUsers,     exact: false },
-  { href: "/clair-vision/pro/consultation",   label: "Consultation",    Icon: IconClipboard, exact: false },
-  { href: "/clair-vision/pro/messagerie",     label: "Messagerie",      Icon: IconChat,      exact: false },
-  { href: "/clair-vision/pro/rappels",        label: "Rappels",         Icon: IconBell,      exact: false },
+const NAV_QUOTIDIEN = [
+  { href: "/clair-vision/pro/optique",      label: "Tableau de bord", Icon: IconDashboard, exact: true  },
+  { href: "/clair-vision/pro/agenda",       label: "Agenda",          Icon: IconCalendar,  exact: false },
+  { href: "/clair-vision/pro/patients",     label: "Patients",        Icon: IconUsers,     exact: false },
+  { href: "/clair-vision/pro/messagerie",   label: "Messagerie",      Icon: IconChat,      exact: false },
 ];
 
-const NAV_GESTION = [
-  { href: "/clair-vision/pro/devis",       label: "Devis & Commandes", Icon: IconDevis,     exact: false },
-  { href: "/clair-vision/pro/atelier",     label: "Atelier & Labo",    Icon: IconAtelier,   exact: false },
-  { href: "/clair-vision/pro/tiers-payant",  label: "Tiers payant",      Icon: IconTP,        exact: false },
-  { href: "/clair-vision/pro/facturation",  label: "Facturation",       Icon: IconFacture,   exact: false },
-  { href: "/clair-vision/pro/sav",          label: "SAV",               Icon: IconWrench,    exact: false },
-  { href: "/clair-vision/pro/statistiques",label: "Statistiques",      Icon: IconBarChart,  exact: false },
+const NAV_DOSSIERS = [
+  { href: "/clair-vision/pro/consultation",       label: "Consultation",   Icon: IconClipboard, exact: false },
+  { href: "/clair-vision/pro/optique/dossiers",   label: "Dossiers",       Icon: IconFolder,    exact: false },
+  { href: "/clair-vision/pro/ordonnances",        label: "Ordonnances",    Icon: IconOrdo,      exact: false },
 ];
 
-const NAV_RESSOURCES = [
-  { href: "/clair-vision/pro/calculateur-lentilles", label: "Calculateur lentilles", Icon: IconLens,        exact: false },
-  { href: "/clair-vision/pro/actus",                 label: "Actus secteur",         Icon: IconNewspaper,   exact: false },
+const NAV_VENTE = [
+  { href: "/clair-vision/pro/facturation",   label: "Facturation",       Icon: IconFacture, exact: false },
+  { href: "/clair-vision/pro/tiers-payant",  label: "Tiers payant",      Icon: IconTP,      exact: false },
+];
+
+const NAV_SUIVI = [
+  { href: "/clair-vision/pro/rappels",         label: "Rappels",         Icon: IconBell,     exact: false },
+  { href: "/clair-vision/pro/renouvellements", label: "Renouvellements", Icon: IconRefresh,  exact: false },
+  { href: "/clair-vision/pro/sav",             label: "SAV",             Icon: IconWrench,   exact: false },
+  { href: "/clair-vision/pro/statistiques",    label: "Statistiques",    Icon: IconBarChart, exact: false },
+];
+
+const NAV_OUTILS = [
+  { href: "/clair-vision/pro/calculateur-lentilles", label: "Calculateur lentilles", Icon: IconLens,      exact: false },
+  { href: "/clair-vision/pro/actus",                 label: "Actus secteur",         Icon: IconNewspaper, exact: false },
 ];
 
 const NAV_GERANT = [
-  { href: "/clair-vision/pro/gerant", label: "Espace Gérant", Icon: IconGerant, exact: true },
-];
-
-const NAV_STOCK = [
-  { href: "/clair-vision/pro/gerant/stock", label: "Stock", Icon: IconStock, exact: false },
+  { href: "/clair-vision/pro/gerant",       label: "Espace gérant", Icon: IconGerant, exact: true  },
+  { href: "/clair-vision/pro/gerant/stock", label: "Stock",         Icon: IconStock,  exact: false },
 ];
 
 function SectionLabel({ children }: { children: string }) {
   return (
-    <div className="px-3 pt-5 pb-1.5 text-[10px] font-bold uppercase tracking-[0.12em] text-slate-400 select-none">
+    <div className="px-2.5 mb-1 text-[10px] font-semibold uppercase tracking-[0.10em] text-slate-400 dark:text-slate-500 select-none">
       {children}
     </div>
   );
@@ -254,8 +263,7 @@ const sidebarStyle: CSSProperties = {
 };
 
 const wrapperStyle: CSSProperties = {
-  background: "var(--thor-bg)",
-  zoom: 0.95,
+  background: "var(--thor-surface-2)",
 };
 
 /* ── NavLink ─────────────────────────────────────────────────────────────────── */
@@ -270,28 +278,26 @@ function NavLink({
   badge?: number;
   accentColor: string;
 }) {
-  const activeStyle = mkAccentStyle(accentColor);
-
   return (
     <Link
       href={href}
       onClick={onClick}
-      className={`flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all duration-200 ${
-        active ? "text-white" : "text-slate-500 hover:bg-white/50 dark-nav-hover"
-      }`}
-      style={active ? activeStyle : undefined}
+      aria-current={active ? "page" : undefined}
+      className="flex items-center gap-2.5 rounded-lg px-2.5 py-1.5 text-[13px] font-medium transition-colors dark-nav-hover"
+      style={active
+        ? { background: `${accentColor}14`, color: accentColor }
+        : { color: "var(--muted)" }
+      }
     >
-      <span
-        className={`grid h-8 w-8 place-items-center rounded-xl flex-shrink-0 ${active ? "" : "nav-icon-inactive"}`}
-        style={active ? { background: "rgba(255,255,255,0.20)" } : undefined}
-      >
-        <Icon className="w-4 h-4" />
-      </span>
-      <span className="flex-1">{label}</span>
+      <Icon className={`w-4 h-4 flex-shrink-0 ${active ? "" : "opacity-80"}`} />
+      <span className="flex-1 truncate">{label}</span>
       {badge != null && badge > 0 && (
         <span
-          className="text-[10px] font-bold text-white rounded-full px-1.5 py-0.5 min-w-[18px] text-center leading-none"
-          style={{ background: active ? "rgba(255,255,255,0.30)" : accentColor }}
+          className="text-[10px] font-bold rounded-full px-1.5 py-0.5 min-w-[18px] text-center leading-none tabular-nums"
+          style={active
+            ? { background: accentColor, color: "#fff" }
+            : { background: `${accentColor}1A`, color: accentColor }
+          }
         >
           {badge}
         </span>
@@ -310,23 +316,18 @@ function SettingsNavButton({
   onClick: () => void;
   accentColor: string;
 }) {
-  const activeStyle = mkAccentStyle(accentColor);
-
   return (
     <button
       onClick={onClick}
-      className={`flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all duration-200 ${
-        active ? "text-white" : "text-slate-500 hover:bg-white/50 dark-nav-hover"
-      }`}
-      style={active ? activeStyle : undefined}
+      aria-pressed={active}
+      className="flex w-full items-center gap-2.5 rounded-lg px-2.5 py-1.5 text-[13px] font-medium transition-colors dark-nav-hover"
+      style={active
+        ? { background: `${accentColor}14`, color: accentColor }
+        : { color: "var(--muted)" }
+      }
     >
-      <span
-        className={`grid h-8 w-8 place-items-center rounded-xl flex-shrink-0 ${active ? "" : "nav-icon-inactive"}`}
-        style={active ? { background: "rgba(255,255,255,0.20)" } : undefined}
-      >
-        <Icon className="w-4 h-4" />
-      </span>
-      <span className="flex-1 text-left">{label}</span>
+      <Icon className={`w-4 h-4 flex-shrink-0 ${active ? "" : "opacity-80"}`} />
+      <span className="flex-1 text-left truncate">{label}</span>
     </button>
   );
 }
@@ -409,26 +410,25 @@ function SidebarContent({
 
   return (
     <>
-      <div className="px-5 py-6">
+      <div className="px-3 pt-4 pb-2 space-y-2">
         {/* Brand */}
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2.5 px-1">
           <div
-            className="grid h-10 w-10 place-items-center rounded-[var(--radius-soft)] flex-shrink-0 overflow-hidden"
+            className="grid h-8 w-8 place-items-center rounded-lg flex-shrink-0 overflow-hidden"
             style={logoStyle}
           >
             {storeConfig.logo ? (
               // eslint-disable-next-line @next/next/no-img-element
               <img src={storeConfig.logo} alt={storeConfig.nom} className="w-full h-full object-cover" />
             ) : (
-              <svg className="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none">
+              <svg className="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none">
                 <path d="M2.5 12s3.5-7 9.5-7 9.5 7 9.5 7-3.5 7-9.5 7-9.5-7-9.5-7Z" stroke="currentColor" strokeWidth="1.8" />
                 <circle cx="12" cy="12" r="3" stroke="currentColor" strokeWidth="1.8" />
               </svg>
             )}
           </div>
-          <div className="leading-tight min-w-0">
-            <div className="text-sm font-semibold text-slate-800 truncate">{storeConfig.nom}</div>
-            <div className="text-xs text-slate-500">Espace praticien</div>
+          <div className="text-sm font-semibold text-slate-800 dark:text-slate-100 truncate min-w-0">
+            {storeConfig.nom}
           </div>
         </div>
 
@@ -441,61 +441,69 @@ function SidebarContent({
           storeConfig={storeConfig}
           onStoreConfigChange={onStoreConfigChange}
         />
-        <NotificationBell
-          lsRdv="thor_pro_rdv"
-          lsPatients="thor_pro_lentilles_patients"
-          lsPreConsult="thor_pro_pre_consult_notifications"
-          accent={accentColor}
-        />
-        <DarkModeToggle accent={accentColor} />
       </div>
 
       {/* Nav */}
-      <nav className="flex flex-1 flex-col gap-0.5 px-4 overflow-y-auto">
-        <SectionLabel>Principal</SectionLabel>
-        {NAV_PRINCIPAL.map(item => (
-          <NavLink key={item.href} href={item.href} label={item.label} Icon={item.Icon}
-            active={item.exact ? pathname === item.href : pathname === item.href || pathname.startsWith(item.href + "/")}
-            onClick={onNavClick}
-            badge={item.href === "/clair-vision/pro/messagerie" ? msgUnread : undefined}
-            accentColor={accentColor}
-          />
-        ))}
+      <nav className="flex flex-1 flex-col gap-3 px-3 overflow-y-auto pb-2">
+        <div className="flex flex-col gap-0.5">
+          <SectionLabel>Quotidien</SectionLabel>
+          {NAV_QUOTIDIEN.map(item => (
+            <NavLink key={item.href} href={item.href} label={item.label} Icon={item.Icon}
+              active={item.exact ? pathname === item.href : pathname === item.href || pathname.startsWith(item.href + "/")}
+              onClick={onNavClick}
+              badge={item.href === "/clair-vision/pro/messagerie" ? msgUnread : undefined}
+              accentColor={accentColor}
+            />
+          ))}
+        </div>
 
-        <SectionLabel>Gestion</SectionLabel>
-        {NAV_GESTION.map(item => (
-          <NavLink key={item.href} href={item.href} label={item.label} Icon={item.Icon}
-            active={pathname === item.href || pathname.startsWith(item.href + "/")}
-            onClick={onNavClick}
-            badge={item.href === "/clair-vision/pro/sav" ? (savOuverts || undefined) : undefined}
-            accentColor={accentColor}
-          />
-        ))}
+        <div className="flex flex-col gap-0.5">
+          <SectionLabel>Dossiers</SectionLabel>
+          {NAV_DOSSIERS.map(item => (
+            <NavLink key={item.href} href={item.href} label={item.label} Icon={item.Icon}
+              active={pathname === item.href || pathname.startsWith(item.href + "/")}
+              onClick={onNavClick}
+              accentColor={accentColor}
+            />
+          ))}
+        </div>
 
-        <SectionLabel>Ressources</SectionLabel>
-        {NAV_RESSOURCES.map(item => (
-          <NavLink key={item.href} href={item.href} label={item.label} Icon={item.Icon}
-            active={pathname === item.href || pathname.startsWith(item.href + "/")}
-            onClick={onNavClick}
-            accentColor={accentColor}
-          />
-        ))}
+        <div className="flex flex-col gap-0.5">
+          <SectionLabel>Vente</SectionLabel>
+          {NAV_VENTE.map(item => (
+            <NavLink key={item.href} href={item.href} label={item.label} Icon={item.Icon}
+              active={pathname === item.href || pathname.startsWith(item.href + "/")}
+              onClick={onNavClick}
+              badge={item.href === "/clair-vision/pro/sav" ? (savOuverts || undefined) : undefined}
+              accentColor={accentColor}
+            />
+          ))}
+        </div>
 
-        {currentUser.role !== "Assistant(e)" && (
-          <>
-            <SectionLabel>Stock</SectionLabel>
-            {NAV_STOCK.map(item => (
-              <NavLink key={item.href} href={item.href} label={item.label} Icon={item.Icon}
-                active={pathname === item.href || pathname.startsWith(item.href + "/")}
-                onClick={onNavClick}
-                accentColor={accentColor}
-              />
-            ))}
-          </>
-        )}
+        <div className="flex flex-col gap-0.5">
+          <SectionLabel>Suivi</SectionLabel>
+          {NAV_SUIVI.map(item => (
+            <NavLink key={item.href} href={item.href} label={item.label} Icon={item.Icon}
+              active={pathname === item.href || pathname.startsWith(item.href + "/")}
+              onClick={onNavClick}
+              accentColor={accentColor}
+            />
+          ))}
+        </div>
+
+        <div className="flex flex-col gap-0.5">
+          <SectionLabel>Outils</SectionLabel>
+          {NAV_OUTILS.map(item => (
+            <NavLink key={item.href} href={item.href} label={item.label} Icon={item.Icon}
+              active={pathname === item.href || pathname.startsWith(item.href + "/")}
+              onClick={onNavClick}
+              accentColor={accentColor}
+            />
+          ))}
+        </div>
 
         {currentUser.role === "Gérant" && (
-          <>
+          <div className="flex flex-col gap-0.5">
             <SectionLabel>Gérant</SectionLabel>
             {NAV_GERANT.map(item => (
               <NavLink key={item.href} href={item.href} label={item.label} Icon={item.Icon}
@@ -504,7 +512,7 @@ function SidebarContent({
                 accentColor={accentColor}
               />
             ))}
-          </>
+          </div>
         )}
 
         <div className="my-1.5 mt-4 border-t border-slate-200/60" />
@@ -518,53 +526,47 @@ function SidebarContent({
       </nav>
 
       {/* Footer */}
-      <div className="px-4 pb-5">
+      <div className="px-3 pb-3 border-t border-slate-200/60 dark:border-slate-800 pt-3">
         {/* Bulle configuration incomplète */}
         {showSetupBubble && (
           <button
             onClick={onSetupBubbleClick}
-            className="w-full mb-3 text-left rounded-[var(--radius-soft)] px-3.5 py-3 transition-all hover:scale-[1.01]"
-            style={{
-              background: "linear-gradient(135deg,rgba(245,158,11,0.12),rgba(245,158,11,0.06))",
-              border: "1px solid rgba(245,158,11,0.35)",
-            }}
+            className="w-full text-left rounded-lg px-3 py-2 mb-2 transition-colors hover:bg-amber-50 dark:hover:bg-amber-500/5"
+            style={{ border: "1px solid rgba(245,158,11,0.30)" }}
           >
-            <div className="flex items-center gap-2.5">
+            <div className="flex items-center gap-2">
               <span className="relative flex-shrink-0">
-                <span className="block w-2.5 h-2.5 rounded-full bg-amber-400" />
-                <span className="absolute inset-0 rounded-full bg-amber-400 animate-ping opacity-60" />
+                <span className="block w-1.5 h-1.5 rounded-full bg-amber-500" />
+                <span className="absolute inset-0 rounded-full bg-amber-500 animate-ping opacity-60" />
               </span>
               <div className="min-w-0">
-                <div className="text-xs font-semibold text-amber-700 leading-tight">Configuration incomplète</div>
-                <div className="text-[11px] text-amber-600/70 mt-0.5">Terminer la configuration →</div>
+                <div className="text-[11px] font-semibold text-amber-700 leading-tight">Configuration incomplète</div>
               </div>
             </div>
           </button>
         )}
 
-        <div
-          className="mt-4 rounded-[var(--radius-soft)] p-3 text-xs text-slate-500 flex items-center gap-2"
-          style={{
-            background: "var(--glass-subtle-bg)",
-            border: "1px solid var(--glass-subtle-border)",
-          }}
-        >
-          <svg className="w-3.5 h-3.5 flex-shrink-0" viewBox="0 0 24 24" fill="none" style={{ color: accentColor }}>
-            <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2Z" stroke="currentColor" strokeWidth="1.8" />
-            <path d="M12 8v4M12 16h.01" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
-          </svg>
-          Espace sécurisé THOR Pro
+        {/* Row compacte : Notif / Thème / Déconnexion */}
+        <div className="flex items-center justify-around gap-1">
+          <NotificationBell
+            lsRdv="thor_pro_rdv"
+            lsPatients="thor_pro_lentilles_patients"
+            lsPreConsult="thor_pro_pre_consult_notifications"
+            accent={accentColor}
+            compact
+          />
+          <DarkModeToggle accent={accentColor} compact />
+          <button
+            onClick={onLogout}
+            title="Déconnexion"
+            aria-label="Déconnexion"
+            className="grid place-items-center h-8 w-8 rounded-lg text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+          >
+            <svg className="w-[15px] h-[15px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9" />
+            </svg>
+          </button>
         </div>
-        <button
-          onClick={onLogout}
-          className="mt-3 w-full rounded-[var(--radius-soft)] px-4 py-2 text-sm font-medium text-slate-500 transition-colors hover:text-slate-700"
-          style={{
-            background: "var(--glass-subtle-bg)",
-            border: "1px solid var(--glass-border)",
-          }}
-        >
-          Déconnexion
-        </button>
       </div>
     </>
   );
@@ -634,7 +636,7 @@ export default function ProVisionLayout({ children }: { children: ReactNode }) {
       <div className="flex h-screen w-full overflow-hidden">
         {/* ── Desktop sidebar ── */}
         <aside
-          className="hidden lg:flex w-[260px] flex-col flex-shrink-0 sticky top-0 h-screen z-20"
+          className="hidden lg:flex w-[232px] flex-col flex-shrink-0 sticky top-0 h-screen z-20"
           style={sidebarStyle}
         >
           <SidebarContent
@@ -727,8 +729,8 @@ export default function ProVisionLayout({ children }: { children: ReactNode }) {
         </aside>
 
         {/* ── Main content ── */}
-        <main className="relative flex-1 flex flex-col overflow-y-auto pt-20 lg:pt-0">
-          <div className="relative flex-1 px-4 py-6 sm:px-8 sm:py-8">{children}</div>
+        <main className="relative flex-1 min-w-0 flex flex-col overflow-y-auto overflow-x-hidden pt-14 lg:pt-0">
+          <div className="relative flex-1 px-4 py-5 sm:px-6 sm:py-6 lg:px-8 lg:py-8 max-w-full">{children}</div>
         </main>
       </div>
 
@@ -746,7 +748,6 @@ export default function ProVisionLayout({ children }: { children: ReactNode }) {
 
       {/* ── Assistant IA ── */}
       <ChatWidget context="pro-vision" />
-
 
       {/* ── Onboarding wizard ── */}
       {showOnboarding && (

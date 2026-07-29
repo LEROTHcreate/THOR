@@ -29,15 +29,15 @@ const values = [
 
 export function ThorValues() {
   return (
-    <section className="relative py-24 md:py-32">
-      <div className="mx-auto max-w-[1240px] px-6">
+    <section className="relative py-16 sm:py-24 md:py-32">
+      <div className="mx-auto max-w-[1240px] px-5 sm:px-6">
 
         <Reveal>
           <div className="max-w-2xl mb-16">
             <span className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400 mb-4 block">
               Pourquoi THOR
             </span>
-            <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-slate-900 h-title">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-slate-900 h-title">
               Un socle commun, <span className="font-light text-slate-500">conforme et évolutif.</span>
             </h2>
             <p className="mt-5 text-base text-slate-500 leading-relaxed">

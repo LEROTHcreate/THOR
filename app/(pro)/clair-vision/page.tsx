@@ -2,8 +2,10 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
+import { BrandIcon } from "@/components/brand-icon";
 
 const ACCENT = "#2D8CFF";
+const ACCENT_DEEP = "#1A72E8";
 
 /* ── Scroll helper ──────────────────────────────────────────────────────── */
 function scrollTo(id: string) {
@@ -52,16 +54,8 @@ function Header({ scrolled }: { scrolled: boolean }) {
             THOR
           </Link>
           <span className="hidden sm:block w-px h-4 bg-slate-200" />
-          <div className="flex items-center gap-2.5">
-            <div
-              className="grid h-8 w-8 place-items-center rounded-xl"
-              style={{ background: ACCENT, boxShadow: `0 2px 8px ${ACCENT}44` }}
-            >
-              <svg className="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-                <path d="M2.5 12s3.5-7 9.5-7 9.5 7 9.5 7-3.5 7-9.5 7-9.5-7-9.5-7Z" />
-                <circle cx="12" cy="12" r="3" />
-              </svg>
-            </div>
+          <div className="flex items-center gap-2">
+            <BrandIcon brand="vision" size={32} />
             <span className="text-base font-bold tracking-tight" style={{ color: "#0F172A" }}>
               Clair<span style={{ color: ACCENT }}>Vision</span>
             </span>
@@ -99,80 +93,180 @@ function Header({ scrolled }: { scrolled: boolean }) {
 
 /* ── Hero ────────────────────────────────────────────────────────────────── */
 function Hero() {
+  const [parallax, setParallax] = useState({ x: 0, y: 0 });
+  const [scale, setScale] = useState(1);
+  useEffect(() => {
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    if (mq.matches) return;
+    let raf = 0;
+    let lastX = 0, lastY = 0;
+    function onMove(e: MouseEvent) {
+      lastX = e.clientX;
+      lastY = e.clientY;
+      if (raf) return;
+      raf = requestAnimationFrame(() => {
+        setParallax({
+          x: (lastX / window.innerWidth - 0.5) * 24,
+          y: (lastY / window.innerHeight - 0.5) * 16,
+        });
+        raf = 0;
+      });
+    }
+    function onResize() {
+      const w = window.innerWidth;
+      setScale(w >= 1280 ? 1 : w >= 768 ? 0.72 : 0.55);
+    }
+    onResize();
+    window.addEventListener("mousemove", onMove, { passive: true });
+    window.addEventListener("resize", onResize, { passive: true });
+    return () => {
+      if (raf) cancelAnimationFrame(raf);
+      window.removeEventListener("mousemove", onMove);
+      window.removeEventListener("resize", onResize);
+    };
+  }, []);
+
   return (
     <section
       className="relative min-h-screen flex items-center overflow-hidden pt-16"
-      style={{ background: "linear-gradient(145deg, #f8fafc 0%, #eff6ff 35%, #e8f4ff 65%, #f8fafc 100%)" }}
+      style={{ background: "linear-gradient(180deg, #fbfcff 0%, #f4f6fc 50%, #f8faff 100%)" }}
     >
-      {/* Dot grid texture */}
-      <div className="pointer-events-none absolute inset-0"
-           style={{ backgroundImage: `radial-gradient(rgba(45,140,255,0.09) 1px, transparent 1px)`, backgroundSize: "28px 28px" }} />
+      {/* Fond animé — blobs morphants (palette Vision) */}
+      <div aria-hidden="true" className="absolute inset-0 overflow-hidden pointer-events-none" style={{ mixBlendMode: "multiply" }}>
+        <div className="absolute" style={{
+          width: "55vw", height: "55vw", maxWidth: 850, maxHeight: 850,
+          top: "-15%", left: "-12%",
+          background: "radial-gradient(circle at 30% 30%, rgba(45,140,255,0.50) 0%, rgba(45,140,255,0) 65%)",
+          filter: "blur(60px)",
+          animation: "morphBlob1 28s ease-in-out infinite",
+        }} />
+        <div className="absolute" style={{
+          width: "50vw", height: "50vw", maxWidth: 800, maxHeight: 800,
+          top: "10%", right: "-15%",
+          background: "radial-gradient(circle at 60% 40%, rgba(6,182,212,0.42) 0%, rgba(6,182,212,0) 65%)",
+          filter: "blur(70px)",
+          animation: "morphBlob2 34s ease-in-out infinite",
+          animationDelay: "-6s",
+        }} />
+        <div className="absolute" style={{
+          width: "48vw", height: "48vw", maxWidth: 750, maxHeight: 750,
+          bottom: "-5%", left: "20%",
+          background: "radial-gradient(circle at 50% 50%, rgba(99,102,241,0.30) 0%, rgba(99,102,241,0) 65%)",
+          filter: "blur(70px)",
+          animation: "morphBlob3 30s ease-in-out infinite",
+          animationDelay: "-12s",
+        }} />
+      </div>
 
-      {/* Orbes pleine largeur */}
-      <div className="pointer-events-none absolute -top-20 right-0 h-[1100px] w-[1100px] rounded-full blur-3xl"
-           style={{ background: `rgba(45,140,255,0.12)`, animation: "orbDrift 18s ease-in-out infinite" }} />
-      <div className="pointer-events-none absolute -bottom-40 -left-20 h-[800px] w-[800px] rounded-full blur-3xl"
-           style={{ background: `rgba(45,140,255,0.07)`, animation: "orbDrift 22s 4s ease-in-out infinite" }} />
-      <div className="pointer-events-none absolute top-1/3 left-1/3 h-[500px] w-[500px] rounded-full blur-3xl"
-           style={{ background: "rgba(99,102,241,0.04)", animation: "orbDrift 28s 9s ease-in-out infinite" }} />
+      {/* Dot grid subtil */}
+      <div className="pointer-events-none absolute inset-0 opacity-[0.35]"
+           style={{
+             backgroundImage: `radial-gradient(circle, rgba(45,140,255,0.16) 1px, transparent 1px)`,
+             backgroundSize: "32px 32px",
+             maskImage: "radial-gradient(ellipse 80% 60% at center, black 0%, transparent 75%)",
+             WebkitMaskImage: "radial-gradient(ellipse 80% 60% at center, black 0%, transparent 75%)",
+           }} />
 
-      {/* Corner decorations */}
-      <svg className="pointer-events-none absolute top-0 left-0 opacity-[0.06]" width="240" height="240" viewBox="0 0 240 240">
-        {[0,40,80,120,160,200,240].map(x => <line key={`v${x}`} x1={x} y1="0" x2={x} y2="240" stroke="#2D8CFF" strokeWidth="0.5"/>)}
-        {[0,40,80,120,160,200,240].map(y => <line key={`h${y}`} x1="0" y1={y} x2="240" y2={y} stroke="#2D8CFF" strokeWidth="0.5"/>)}
-      </svg>
-      <svg className="pointer-events-none absolute bottom-0 right-0 opacity-[0.06]" width="240" height="240" viewBox="0 0 240 240">
-        {[0,40,80,120,160,200,240].map(x => <line key={`v${x}`} x1={x} y1="0" x2={x} y2="240" stroke="#2D8CFF" strokeWidth="0.5"/>)}
-        {[0,40,80,120,160,200,240].map(y => <line key={`h${y}`} x1="0" y1={y} x2="240" y2={y} stroke="#2D8CFF" strokeWidth="0.5"/>)}
-      </svg>
+      {/* Particules flottantes */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {[
+          { left: "12%", delay: 0,  size: 3, duration: 20 },
+          { left: "24%", delay: 4,  size: 4, duration: 24 },
+          { left: "38%", delay: 8,  size: 3, duration: 22 },
+          { left: "52%", delay: 2,  size: 3, duration: 25 },
+          { left: "66%", delay: 12, size: 4, duration: 19 },
+          { left: "78%", delay: 6,  size: 3, duration: 23 },
+          { left: "90%", delay: 10, size: 3, duration: 21 },
+        ].map((p, i) => (
+          <div key={i} className="absolute rounded-full" style={{
+            left: p.left, bottom: "-10px",
+            width: p.size, height: p.size,
+            background: "rgba(45,140,255,0.65)",
+            boxShadow: "0 0 8px rgba(45,140,255,0.55)",
+            animation: `floatParticle ${p.duration}s linear infinite`,
+            animationDelay: `${p.delay}s`,
+          }} />
+        ))}
+      </div>
 
       <div className="relative z-10 w-full px-8 sm:px-14 lg:px-20 2xl:px-28 py-20">
-        <div className="grid lg:grid-cols-[1fr_1.15fr] gap-12 xl:gap-20 items-center">
+        <div className="grid md:grid-cols-[1fr_1.1fr] gap-10 md:gap-12 xl:gap-20 items-center">
 
           {/* Gauche */}
           <div>
             <div
-              className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-xs font-semibold mb-7 border"
-              style={{ background: "var(--glass-nav-bg)", backdropFilter: "blur(12px)", borderColor: `rgba(45,140,255,0.25)`, color: "#1E40AF", animation: "fadeInUp 0.7s ease both" }}
+              className="inline-flex items-center gap-2 rounded-full border border-white/60 bg-white/70 px-4 py-2 text-xs font-medium text-slate-500 backdrop-blur-xl shadow-[0_4px_20px_rgba(45,140,255,0.10),inset_0_1px_0_rgba(255,255,255,0.9)] mb-8"
+              style={{
+                transform: `translate(${parallax.x * 0.3}px, ${parallax.y * 0.3}px)`,
+                transition: "transform 0.4s cubic-bezier(0.22,1,0.36,1)",
+              }}
             >
-              <span className="h-2 w-2 rounded-full bg-[#2D8CFF] animate-pulse" />
-              Votre espace santé visuelle
+              <span
+                className="inline-block w-1.5 h-1.5 rounded-full bg-[#2D8CFF]"
+                style={{ animation: "glowPulse 2.4s ease-in-out infinite", boxShadow: "0 0 10px rgba(45,140,255,0.7)" }}
+              />
+              <span className="uppercase tracking-[0.12em] text-[11px]">
+                Espace santé visuelle · Patient
+              </span>
             </div>
 
-            <h1 className="text-5xl lg:text-6xl xl:text-7xl font-light tracking-tight text-slate-900 leading-[1.08] mb-6"
-                style={{ animation: "fadeInUp 0.7s 0.12s ease both" }}>
-              Prenez soin<br />
+            <h1 className="text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tight text-slate-900 leading-[0.98] mb-7 h-title"
+                style={{
+                  transform: `translate(${parallax.x * -0.5}px, ${parallax.y * -0.3}px)`,
+                  transition: "transform 0.5s cubic-bezier(0.22,1,0.36,1)",
+                }}
+            >
+              Prenez soin
+              <br />
               <span
-                className="font-black"
-                style={{ background: `linear-gradient(135deg, ${ACCENT}, #06B6D4)`, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}
+                style={{
+                  background: "linear-gradient(90deg, #1A72E8 0%, #2D8CFF 30%, #06B6D4 60%, #2D8CFF 80%, #1A72E8 100%)",
+                  backgroundSize: "200% auto",
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                  backgroundClip: "text",
+                  animation: "textGradientSlide 8s linear infinite",
+                }}
               >
                 de votre vue
               </span>
               <br />
-              <span className="font-semibold text-slate-800">en toute clarté</span>
+              <span className="font-light text-slate-700">en toute clarté</span>
             </h1>
 
-            <p className="text-lg xl:text-xl text-slate-500 leading-relaxed mb-8 max-w-lg"
-               style={{ animation: "fadeInUp 0.7s 0.22s ease both" }}>
-              Accédez à vos ordonnances, bilans visuels, lentilles et messagerie directe avec votre opticien — depuis un seul espace sécurisé.
+            <p className="text-lg text-slate-500 leading-[1.7] mb-9 max-w-lg">
+              Accédez à vos <strong className="text-slate-700 font-semibold">ordonnances</strong>,
+              {" "}<strong className="text-slate-700 font-semibold">bilans visuels</strong>,
+              {" "}<strong className="text-slate-700 font-semibold">lentilles</strong> et messagerie
+              directe avec votre opticien — depuis un seul espace sécurisé.
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-3"
-                 style={{ animation: "fadeInUp 0.7s 0.32s ease both" }}>
+            <div className="flex flex-col sm:flex-row gap-3">
               <Link
                 href="/connexion/patient?space=vision"
-                className="inline-flex items-center justify-center gap-2 rounded-2xl px-7 py-4 text-sm font-semibold text-white transition-all hover:scale-[1.02]"
-                style={{ background: ACCENT, boxShadow: `0 4px 24px ${ACCENT}44` }}
+                className="group relative inline-flex items-center justify-center gap-2 rounded-full px-7 py-3.5 text-sm font-semibold text-white transition-all duration-300 hover:scale-[1.03] overflow-hidden"
+                style={{
+                  background: `linear-gradient(135deg, ${ACCENT}, ${ACCENT_DEEP})`,
+                  boxShadow: `0 8px 30px ${ACCENT}66, 0 0 0 1px rgba(255,255,255,0.15) inset`,
+                }}
               >
-                Accéder à mon espace
-                <svg className="w-4 h-4" viewBox="0 0 16 16" fill="none">
+                <span className="relative z-10">Accéder à mon espace</span>
+                <svg className="w-4 h-4 relative z-10" viewBox="0 0 16 16" fill="none">
                   <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
+                <span
+                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                  style={{ background: "linear-gradient(135deg, rgba(255,255,255,0.30) 0%, transparent 60%)" }}
+                />
               </Link>
               <button
                 onClick={() => scrollTo("services")}
-                className="inline-flex items-center justify-center gap-2 rounded-2xl border px-7 py-4 text-sm font-semibold text-slate-700 transition-all hover:shadow-md hover:bg-white"
-                style={{ background: "rgba(255,255,255,0.65)", backdropFilter: "blur(12px)", borderColor: "rgba(45,140,255,0.18)" }}
+                className="inline-flex items-center justify-center gap-2 rounded-full px-7 py-3.5 text-sm font-semibold text-slate-700 ring-1 ring-white/60 transition-all duration-200 hover:ring-white/90 hover:shadow-[0_4px_20px_rgba(45,140,255,0.10)]"
+                style={{
+                  background: "rgba(255,255,255,0.70)",
+                  backdropFilter: "blur(16px)",
+                  boxShadow: "inset 0 1px 0 rgba(255,255,255,0.9)",
+                }}
               >
                 Découvrir
                 <svg className="w-4 h-4" viewBox="0 0 16 16" fill="none">
@@ -181,175 +275,191 @@ function Hero() {
               </button>
             </div>
 
-            {/* Stats */}
-            <div className="mt-12 flex flex-wrap items-center gap-0 text-sm"
-                 style={{ animation: "fadeInUp 0.7s 0.44s ease both" }}>
+            {/* Engagements */}
+            <div className="mt-14 flex flex-wrap items-end gap-x-10 gap-y-5">
               {[
-                { n: "8 000+", label: "patients suivis" },
-                { n: "98%",    label: "satisfaction" },
-                { n: "48h",    label: "délai de réponse" },
+                { value: "HDS", label: "Hébergement santé certifié" },
+                { value: "FR",  label: "Données souveraines" },
+                { value: "0 €", label: "Pour le patient" },
               ].map((s, i) => (
-                <div key={s.n} style={{ paddingLeft: i > 0 ? 28 : 0, marginLeft: i > 0 ? 28 : 0, borderLeft: i > 0 ? "1px solid rgba(0,0,0,0.10)" : "none" }}>
-                  <div className="font-black text-slate-900 text-xl">{s.n}</div>
-                  <div className="text-slate-500 text-xs mt-0.5">{s.label}</div>
+                <div key={s.value} className="text-left">
+                  <div className="flex items-center gap-1.5">
+                    <span
+                      className="text-[10px] font-mono text-slate-300"
+                      style={{ letterSpacing: "0.1em" }}
+                    >
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                    <div className="text-3xl font-bold text-slate-900 h-title">{s.value}</div>
+                  </div>
+                  <div className="mt-1 text-[10px] text-slate-500 uppercase tracking-[0.15em]">{s.label}</div>
                 </div>
               ))}
             </div>
           </div>
 
-          {/* Droite — mock UI élargi */}
-          <div className="hidden lg:block relative" style={{ animation: "fadeInUp 0.9s 0.3s ease both, floatY 7s 1.2s ease-in-out infinite" }}>
-
-            {/* Glow derrière la carte */}
-            <div className="absolute inset-4 rounded-3xl blur-2xl"
-                 style={{ background: `linear-gradient(135deg, ${ACCENT}22, #6366f118)`, transform: "translateY(8px) scale(1.02)" }} />
-
+          {/* Droite — gros logo œil avec anneaux et badges glass */}
+          <div className="hidden md:flex relative items-center justify-center" style={{ minHeight: 580 * scale }}>
             <div
-              className="relative rounded-3xl p-7 shadow-[0_40px_100px_rgba(45,140,255,0.16)]"
-              style={{ background: "var(--glass-strong-bg)", backdropFilter: "blur(28px)", border: "1px solid rgba(255,255,255,0.88)" }}
+              className="relative"
+              style={{
+                width: 580,
+                height: 580,
+                transform: `perspective(1400px) rotateX(${parallax.y * 0.4}deg) rotateY(${parallax.x * -0.5}deg) scale(${scale})`,
+                transition: "transform 0.6s cubic-bezier(0.22,1,0.36,1)",
+                transformStyle: "preserve-3d",
+              }}
             >
-              {/* En-tête profil */}
-              <div className="flex items-center justify-between mb-6">
-                <div>
-                  <div className="font-bold text-slate-800 text-base">Bonjour, Marie</div>
-                  <div className="text-xs text-slate-400 mt-0.5">Dernier bilan il y a 2 mois</div>
-                </div>
-                <div
-                  className="h-10 w-10 rounded-full flex items-center justify-center text-xs font-bold text-white"
-                  style={{ background: ACCENT, boxShadow: `0 4px 14px ${ACCENT}44` }}
-                >
-                  MD
-                </div>
-              </div>
-
-              {/* KPI mini-grid */}
-              <div className="grid grid-cols-2 gap-3 mb-4">
-                {[
-                  { label: "Prochain RDV",  value: "15 jan.", icon: "M3 4a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v16H3V4Zm0 6h18M8 2v4M16 2v4" },
-                  { label: "Ordonnances",   value: "2 actives", icon: "M14 2H6a2 2 0 0 0-2 2v16h12V2ZM14 2v6h6M9 13h6M9 17h4" },
-                  { label: "Documents",     value: "5 fichiers", icon: "M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9Z" },
-                  { label: "Messages",      value: "1 nouveau",  icon: "M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" },
-                ].map((s) => (
-                  <div
-                    key={s.label}
-                    className="rounded-2xl p-3.5"
-                    style={{ background: `rgba(45,140,255,0.05)`, border: `1px solid rgba(45,140,255,0.09)` }}
-                  >
-                    <svg className="w-4 h-4 mb-2" viewBox="0 0 24 24" fill="none" stroke={ACCENT} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                      <path d={s.icon} />
-                    </svg>
-                    <div className="text-[11px] text-slate-400 mb-0.5">{s.label}</div>
-                    <div className="text-sm font-bold text-slate-800">{s.value}</div>
-                  </div>
-                ))}
-              </div>
-
-              {/* Dernier bilan */}
+              {/* Halo lumineux derrière le logo */}
               <div
-                className="rounded-2xl p-4 mb-3"
-                style={{ background: `rgba(45,140,255,0.06)`, border: `1px solid rgba(45,140,255,0.14)` }}
+                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full pointer-events-none"
+                style={{
+                  width: 380,
+                  height: 380,
+                  background: "radial-gradient(circle, rgba(45,140,255,0.25) 0%, rgba(6,182,212,0.10) 40%, transparent 70%)",
+                  filter: "blur(8px)",
+                  animation: "glowPulse 4s ease-in-out infinite",
+                }}
+              />
+
+              {/* Anneaux concentriques */}
+              <div
+                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full pointer-events-none"
+                style={{
+                  width: 520, height: 520,
+                  border: `1px dashed rgba(45,140,255,0.25)`,
+                  animation: "spin 60s linear infinite",
+                }}
               >
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-xs font-semibold text-slate-600">Dernier examen de vue</span>
-                  <span
-                    className="text-xs px-2.5 py-0.5 rounded-full font-semibold"
-                    style={{ background: `rgba(45,140,255,0.12)`, color: "#1D4ED8" }}
-                  >
-                    À jour
-                  </span>
-                </div>
-                <div className="text-sm font-semibold text-slate-800">15 novembre 2024</div>
-                <div className="text-xs text-slate-500 mt-0.5">Dr. Sophie Martin · Paris 8</div>
+                <div className="absolute -top-1.5 left-1/2 w-3 h-3 rounded-full -translate-x-1/2"
+                     style={{ background: ACCENT, boxShadow: `0 0 20px ${ACCENT}E0` }} />
+              </div>
+              <div
+                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full pointer-events-none"
+                style={{
+                  width: 440, height: 440,
+                  border: `1px solid rgba(45,140,255,0.20)`,
+                  animation: "spin 45s linear infinite reverse",
+                }}
+              >
+                <div className="absolute top-1/2 -right-1.5 w-3 h-3 rounded-full -translate-y-1/2"
+                     style={{ background: "#06B6D4", boxShadow: `0 0 20px rgba(6,182,212,0.9)` }} />
               </div>
 
-              {/* Acuité visuelle */}
-              <div className="rounded-2xl p-4"
-                   style={{ background: "var(--glass-subtle-bg)", border: "1px solid rgba(0,0,0,0.05)" }}>
-                <div className="flex justify-between items-center mb-2.5">
-                  <span className="text-xs font-semibold text-slate-600">Acuité visuelle</span>
-                  <span className="text-xs font-bold" style={{ color: ACCENT }}>OD 10/10 · OG 9/10</span>
+              {/* Badge — Ordonnance valide */}
+              <div
+                className="absolute rounded-2xl px-4 py-3 flex items-center gap-3"
+                style={{
+                  top: "10%", left: "-8%",
+                  background: "rgba(255,255,255,0.85)",
+                  backdropFilter: "blur(20px)",
+                  border: "1px solid rgba(255,255,255,0.95)",
+                  boxShadow: `0 12px 32px rgba(45,140,255,0.18), inset 0 1px 0 rgba(255,255,255,0.95)`,
+                  animation: "floatY 8s ease-in-out infinite",
+                }}
+              >
+                <div className="h-9 w-9 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: `${ACCENT}15` }}>
+                  <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke={ACCENT} strokeWidth="1.8" strokeLinecap="round">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16h12V2ZM14 2v6h6M9 13h6M9 17h4" />
+                  </svg>
                 </div>
-                <div className="space-y-1.5">
-                  <div className="flex items-center gap-2">
-                    <span className="text-[10px] text-slate-400 w-4">OD</span>
-                    <div className="flex-1 h-1.5 rounded-full bg-slate-100 overflow-hidden">
-                      <div className="h-full rounded-full" style={{ width: "100%", background: `linear-gradient(90deg, ${ACCENT}, #06B6D4)` }} />
-                    </div>
+                <div>
+                  <div className="text-xs font-bold text-slate-800">Ordonnance valide</div>
+                  <div className="flex items-center gap-1.5 mt-0.5">
+                    <span className="h-1.5 w-1.5 rounded-full" style={{ background: ACCENT, animation: "glowPulse 2.4s ease-in-out infinite" }} />
+                    <span className="text-[11px] text-slate-500">Jusqu&apos;en 2027</span>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <span className="text-[10px] text-slate-400 w-4">OG</span>
-                    <div className="flex-1 h-1.5 rounded-full bg-slate-100 overflow-hidden">
-                      <div className="h-full rounded-full" style={{ width: "90%", background: `linear-gradient(90deg, ${ACCENT}, #06B6D4)` }} />
-                    </div>
-                  </div>
                 </div>
               </div>
-            </div>
 
-            {/* Badge flottant bas-gauche */}
-            <div
-              className="absolute -bottom-5 -left-10 rounded-2xl px-4 py-3 shadow-[0_12px_40px_rgba(0,0,0,0.10)] flex items-center gap-3"
-              style={{ background: "var(--glass-card-bg)", backdropFilter: "blur(20px)", border: "1px solid rgba(255,255,255,0.95)", animation: "fadeInUp 0.7s 0.6s ease both, floatY 8s 1.8s ease-in-out infinite" }}
-            >
-              <div className="h-9 w-9 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: `rgba(45,140,255,0.10)` }}>
-                <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke={ACCENT} strokeWidth="1.8" strokeLinecap="round">
-                  <path d="M2.5 12s3.5-7 9.5-7 9.5 7 9.5 7-3.5 7-9.5 7-9.5-7-9.5-7Z" />
-                  <circle cx="12" cy="12" r="3" />
-                </svg>
-              </div>
-              <div>
-                <div className="text-xs font-bold text-slate-700">Ordonnance valide</div>
-                <div className="flex items-center gap-1.5 mt-0.5">
-                  <span className="h-1.5 w-1.5 rounded-full" style={{ background: ACCENT }} />
-                  <span className="text-xs text-slate-500">Jusqu&apos;en 2027</span>
+              {/* Badge — RDV confirmé */}
+              <div
+                className="absolute rounded-2xl px-4 py-3 flex items-center gap-3"
+                style={{
+                  top: "8%", right: "-6%",
+                  background: "rgba(255,255,255,0.85)",
+                  backdropFilter: "blur(20px)",
+                  border: "1px solid rgba(255,255,255,0.95)",
+                  boxShadow: "0 12px 32px rgba(16,185,129,0.18), inset 0 1px 0 rgba(255,255,255,0.95)",
+                  animation: "floatY 9s ease-in-out infinite 1s",
+                }}
+              >
+                <div className="h-9 w-9 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: "rgba(16,185,129,0.12)" }}>
+                  <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="#10b981" strokeWidth="1.8" strokeLinecap="round">
+                    <rect x="3" y="4" width="18" height="18" rx="2" />
+                    <path d="M16 2v4M8 2v4M3 10h18" />
+                  </svg>
+                </div>
+                <div>
+                  <div className="text-xs font-bold text-slate-800">RDV confirmé</div>
+                  <div className="text-[11px] text-slate-500 mt-0.5">15 jan. · 10h30</div>
                 </div>
               </div>
-            </div>
 
-            {/* Badge RGPD top-right */}
-            <div
-              className="absolute -top-4 right-4 rounded-full px-3 py-1.5 text-xs font-medium text-slate-600 shadow-sm flex items-center gap-1.5"
-              style={{ background: "var(--glass-card-bg)", backdropFilter: "blur(12px)", border: "1px solid rgba(255,255,255,0.98)", animation: "fadeInUp 0.7s 0.5s ease both" }}
-            >
-              <svg className="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="#10b981" strokeWidth="2" strokeLinecap="round">
-                <rect x="5" y="11" width="14" height="10" rx="2" />
-                <path d="M8 11V7a4 4 0 0 1 8 0v4" />
-              </svg>
-              Données chiffrées · RGPD
-            </div>
+              {/* Badge — Verres éligibles */}
+              <div
+                className="absolute rounded-2xl px-4 py-3 flex items-center gap-3"
+                style={{
+                  bottom: "12%", left: "-10%",
+                  background: "rgba(255,255,255,0.85)",
+                  backdropFilter: "blur(20px)",
+                  border: "1px solid rgba(255,255,255,0.95)",
+                  boxShadow: "0 12px 32px rgba(99,102,241,0.18), inset 0 1px 0 rgba(255,255,255,0.95)",
+                  animation: "floatY 7s ease-in-out infinite 0.5s",
+                }}
+              >
+                <div className="h-9 w-9 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: "rgba(99,102,241,0.12)" }}>
+                  <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="#6366f1" strokeWidth="1.8" strokeLinecap="round">
+                    <polyline points="23 4 23 10 17 10" />
+                    <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10" />
+                  </svg>
+                </div>
+                <div>
+                  <div className="text-xs font-bold text-slate-800">Verres éligibles SS</div>
+                  <div className="text-[11px] text-slate-500 mt-0.5">Renouvellement dispo.</div>
+                </div>
+              </div>
 
-            {/* Badge RDV confirmé — top-left */}
-            <div
-              className="absolute -top-8 -left-8 rounded-2xl px-4 py-3 shadow-[0_8px_30px_rgba(0,0,0,0.09)] flex items-center gap-3"
-              style={{ background: "var(--glass-card-bg)", backdropFilter: "blur(20px)", border: "1px solid rgba(255,255,255,0.95)", animation: "fadeInUp 0.7s 0.72s ease both, floatY 9s 2.4s ease-in-out infinite" }}
-            >
-              <div className="h-8 w-8 rounded-xl flex items-center justify-center flex-shrink-0"
-                   style={{ background: "rgba(16,185,129,0.10)" }}>
-                <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="#10b981" strokeWidth="1.8" strokeLinecap="round">
-                  <path d="M3 4a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v16H3V4Zm0 6h18M8 2v4M16 2v4" />
+              {/* Badge — Acuité 10/10 */}
+              <div
+                className="absolute rounded-2xl px-4 py-3 flex items-center gap-3"
+                style={{
+                  bottom: "10%", right: "-8%",
+                  background: "rgba(255,255,255,0.85)",
+                  backdropFilter: "blur(20px)",
+                  border: "1px solid rgba(255,255,255,0.95)",
+                  boxShadow: `0 12px 32px ${ACCENT}26, inset 0 1px 0 rgba(255,255,255,0.95)`,
+                  animation: "floatY 8.5s ease-in-out infinite 1.5s",
+                }}
+              >
+                <div className="h-9 w-9 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: `${ACCENT}15` }}>
+                  <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke={ACCENT} strokeWidth="1.8" strokeLinecap="round">
+                    <path d="M2.5 12s3.5-7 9.5-7 9.5 7 9.5 7-3.5 7-9.5 7-9.5-7-9.5-7Z" />
+                    <circle cx="12" cy="12" r="3" />
+                  </svg>
+                </div>
+                <div>
+                  <div className="text-xs font-bold text-slate-800">Acuité 10/10</div>
+                  <div className="text-[11px] text-slate-500 mt-0.5">Dernier bilan · Nov. 2024</div>
+                </div>
+              </div>
+
+              {/* Badge RGPD — top-right haut */}
+              <div
+                className="absolute rounded-full px-3 py-1.5 text-xs font-medium text-slate-600 flex items-center gap-1.5"
+                style={{
+                  top: "-2%", right: "30%",
+                  background: "rgba(255,255,255,0.92)",
+                  backdropFilter: "blur(20px)",
+                  border: "1px solid rgba(255,255,255,0.98)",
+                  boxShadow: "0 4px 16px rgba(0,0,0,0.06), inset 0 1px 0 rgba(255,255,255,0.95)",
+                }}
+              >
+                <svg className="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="#10b981" strokeWidth="2" strokeLinecap="round">
+                  <rect x="5" y="11" width="14" height="10" rx="2" />
+                  <path d="M8 11V7a4 4 0 0 1 8 0v4" />
                 </svg>
-              </div>
-              <div>
-                <div className="text-xs font-bold text-slate-700">RDV confirmé</div>
-                <div className="text-xs text-slate-500 mt-0.5">15 jan. · 10h30</div>
-              </div>
-            </div>
-
-            {/* Badge renouvellement — bottom-right */}
-            <div
-              className="absolute -bottom-10 -right-6 rounded-2xl px-4 py-3 shadow-[0_8px_30px_rgba(0,0,0,0.09)] flex items-center gap-3"
-              style={{ background: "var(--glass-card-bg)", backdropFilter: "blur(20px)", border: "1px solid rgba(255,255,255,0.95)", animation: "fadeInUp 0.7s 0.84s ease both, floatY 10s 3s ease-in-out infinite" }}
-            >
-              <div className="h-8 w-8 rounded-xl flex items-center justify-center flex-shrink-0"
-                   style={{ background: "rgba(99,102,241,0.10)" }}>
-                <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="#6366f1" strokeWidth="1.8" strokeLinecap="round">
-                  <polyline points="23 4 23 10 17 10" />
-                  <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10" />
-                </svg>
-              </div>
-              <div>
-                <div className="text-xs font-bold text-slate-700">Verres éligibles SS</div>
-                <div className="text-xs text-slate-500 mt-0.5">Renouvellement dispo.</div>
+                <span className="text-[11px]">Données chiffrées · RGPD</span>
               </div>
             </div>
           </div>
@@ -415,20 +525,26 @@ const SERVICES = [
 function Services() {
   const { ref, visible } = useReveal();
   return (
-    <section id="services" className="py-24 bg-white">
+    <section id="services" className="py-24 relative">
       <div className="mx-auto max-w-7xl px-6">
         <div className="text-center mb-16">
-          <div
-            className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-xs font-semibold mb-4"
-            style={{ background: `rgba(45,140,255,0.08)`, color: ACCENT }}
-          >
+          <span className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400 mb-4 block">
             Fonctionnalités
-          </div>
-          <h2 className="text-3xl lg:text-4xl font-bold text-slate-900 mb-4">
+          </span>
+          <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-slate-900 mb-4 h-title">
             Tout ce dont vous avez besoin,<br />
-            <span style={{ color: ACCENT }}>en un seul endroit</span>
+            <span style={{
+              background: "linear-gradient(90deg, #1A72E8 0%, #2D8CFF 30%, #06B6D4 60%, #2D8CFF 80%, #1A72E8 100%)",
+              backgroundSize: "200% auto",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              backgroundClip: "text",
+              animation: "textGradientSlide 8s linear infinite",
+            }}>
+              en un seul endroit
+            </span>
           </h2>
-          <p className="text-lg text-slate-500 max-w-xl mx-auto">
+          <p className="text-lg text-slate-500 max-w-xl mx-auto leading-relaxed">
             Clair Vision centralise votre suivi optique pour vous offrir une expérience simple, claire et sécurisée.
           </p>
         </div>
@@ -441,7 +557,7 @@ function Services() {
             <div
               key={s.title}
               className="service-card rounded-2xl p-6 transition-all hover:shadow-md hover:-translate-y-0.5"
-              style={{ background: "rgba(248,250,252,0.80)", border: "1px solid rgba(226,232,240,0.70)" }}
+              style={{ background: "rgba(255,255,255,0.65)", backdropFilter: "blur(20px)", WebkitBackdropFilter: "blur(20px)", border: "1px solid rgba(255,255,255,0.85)", boxShadow: "0 4px 20px rgba(15,23,42,0.04), inset 0 1px 0 rgba(255,255,255,0.9)" }}
             >
               <div
                 className="mb-4 grid h-11 w-11 place-items-center rounded-2xl"
@@ -483,19 +599,16 @@ const STEPS = [
 function Comment() {
   const { ref, visible } = useReveal();
   return (
-    <section id="comment" style={{ background: "linear-gradient(145deg, #f8fafc 0%, #eff6ff 60%, #f8fafc 100%)" }} className="py-24">
+    <section id="comment" className="py-24 relative">
       <div className="mx-auto max-w-7xl px-6">
         <div className="text-center mb-16">
-          <div
-            className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-xs font-semibold mb-4"
-            style={{ background: `rgba(45,140,255,0.08)`, color: ACCENT }}
-          >
+          <span className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400 mb-4 block">
             Simple & rapide
-          </div>
-          <h2 className="text-3xl lg:text-4xl font-bold text-slate-900 mb-4">
-            Comment ça marche ?
+          </span>
+          <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-slate-900 mb-4 h-title">
+            Comment ça marche <span className="font-light text-slate-500">?</span>
           </h2>
-          <p className="text-lg text-slate-500 max-w-lg mx-auto">
+          <p className="text-lg text-slate-500 max-w-lg mx-auto leading-relaxed">
             Aucune installation, aucune complexité. Votre espace visuel prêt en quelques minutes.
           </p>
         </div>
@@ -506,17 +619,23 @@ function Comment() {
         >
           {/* Ligne connectrice */}
           <div className="hidden md:block absolute top-10 left-[calc(16.66%+1rem)] right-[calc(16.66%+1rem)] h-px"
-               style={{ background: `linear-gradient(90deg, transparent, ${ACCENT}40, transparent)` }} />
+               style={{ background: `linear-gradient(90deg, transparent, ${ACCENT}60, transparent)` }} />
 
           {STEPS.map((step, i) => (
             <div key={step.n} className="step-card relative flex flex-col items-center text-center">
+              <div className="mb-2 text-xs font-mono text-slate-300" style={{ letterSpacing: "0.1em" }}>
+                {String(i + 1).padStart(2, "0")}
+              </div>
               <div
-                className="mb-6 flex h-20 w-20 items-center justify-center rounded-3xl text-2xl font-bold text-white shadow-lg"
-                style={{ background: ACCENT, boxShadow: `0 8px 24px ${ACCENT}38` }}
+                className="mb-6 flex h-20 w-20 items-center justify-center rounded-3xl text-2xl font-bold text-white"
+                style={{
+                  background: `linear-gradient(135deg, ${ACCENT}, ${ACCENT_DEEP})`,
+                  boxShadow: `0 8px 30px ${ACCENT}55, inset 0 1px 0 rgba(255,255,255,0.25)`,
+                }}
               >
                 {i + 1}
               </div>
-              <h3 className="mb-3 text-lg font-semibold text-slate-800">{step.title}</h3>
+              <h3 className="mb-3 text-lg font-semibold text-slate-900 h-title">{step.title}</h3>
               <p className="text-sm text-slate-500 leading-relaxed max-w-xs">{step.desc}</p>
             </div>
           ))}
@@ -526,105 +645,132 @@ function Comment() {
   );
 }
 
-/* ── DA / Identité ───────────────────────────────────────────────────────── */
+/* ── Identité & Pour les pros ────────────────────────────────────────────── */
 function Identite() {
   return (
-    <section className="py-24 bg-white">
+    <section className="py-24 relative">
       <div className="mx-auto max-w-7xl px-6">
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
-          <div>
-            <div
-              className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-xs font-semibold mb-6"
-              style={{ background: `rgba(45,140,255,0.08)`, color: ACCENT }}
-            >
-              Notre philosophie
-            </div>
-            <h2 className="text-3xl lg:text-4xl font-bold text-slate-900 mb-6">
-              Conçu pour<br />
-              <span style={{ color: ACCENT }}>rapprocher</span> patients<br />
-              et professionnels
+        <div className="grid lg:grid-cols-2 gap-16 items-start">
+          {/* Gauche — Notre vision */}
+          <div className="lg:sticky lg:top-28">
+            <span className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400 mb-4 block">
+              Notre vision
+            </span>
+            <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-slate-900 mb-6 leading-[1.05] h-title">
+              La santé visuelle,<br />
+              <span style={{
+                background: "linear-gradient(90deg, #1A72E8, #2D8CFF, #06B6D4)",
+                backgroundSize: "200% auto",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                backgroundClip: "text",
+                animation: "textGradientSlide 8s linear infinite",
+              }}>fluide</span>
+              <span className="font-light text-slate-600"> entre patient</span><br />
+              <span className="font-light text-slate-600">et opticien.</span>
             </h2>
-            <p className="text-slate-500 leading-relaxed mb-6">
-              Clair Vision est né d&apos;un constat simple : le suivi visuel se perd entre les consultations, les ordonnances papier s&apos;égarent, et la communication avec son opticien reste compliquée.
+            <p className="text-slate-500 leading-relaxed mb-5">
+              Le suivi visuel se perd souvent entre les consultations : ordonnances papier
+              égarées, RDV oubliés, communication compliquée avec son opticien.
             </p>
             <p className="text-slate-500 leading-relaxed mb-8">
-              Nous avons conçu un espace patient pensé pour la transparence — où chaque patient comprend son suivi, retrouve ses documents, et reste en contact direct avec le professionnel qui prend soin de lui.
+              Clair Vision relie les deux côtés sur la même plateforme. Chaque patient
+              retrouve son dossier en clair, chaque opticien voit son cabinet plus simple
+              à piloter. Pas de fioritures, pas de pub, pas de revente de données.
             </p>
-            <div className="flex flex-col gap-3">
-              {[
-                { icon: "M20 6 9 17l-5-5", text: "Interface claire, accessible à tous les âges", color: "#10B981" },
-                { icon: "M20 6 9 17l-5-5", text: "Données de santé strictement confidentielles", color: "#10B981" },
-                { icon: "M20 6 9 17l-5-5", text: "Synchronisation en temps réel avec votre cabinet", color: "#10B981" },
-                { icon: "M20 6 9 17l-5-5", text: "Aucune publicité, aucune revente de données", color: "#10B981" },
-              ].map((item) => (
-                <div key={item.text} className="flex items-center gap-3">
-                  <div className="grid h-5 w-5 place-items-center rounded-full flex-shrink-0" style={{ background: `${item.color}18` }}>
-                    <svg className="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke={item.color} strokeWidth="2.5" strokeLinecap="round">
-                      <path d={item.icon} />
-                    </svg>
-                  </div>
-                  <span className="text-sm text-slate-700">{item.text}</span>
-                </div>
-              ))}
+
+            <div className="rounded-2xl p-5 mb-6" style={{ background: "rgba(255,255,255,0.65)", backdropFilter: "blur(20px)", WebkitBackdropFilter: "blur(20px)", border: "1px solid rgba(255,255,255,0.85)", boxShadow: "0 4px 20px rgba(15,23,42,0.04), inset 0 1px 0 rgba(255,255,255,0.9)" }}>
+              <div className="text-xs font-bold uppercase tracking-widest text-slate-400 mb-3">Ce qu&apos;on construit sur la durée</div>
+              <ul className="space-y-2.5 text-sm text-slate-600">
+                <li className="flex items-start gap-2.5">
+                  <span className="mt-1 inline-block w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: ACCENT }} />
+                  <span>Un suivi optique complet : ordonnances, bilans, lentilles, équipements, renouvellements.</span>
+                </li>
+                <li className="flex items-start gap-2.5">
+                  <span className="mt-1 inline-block w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: ACCENT }} />
+                  <span>Une plateforme commune (THOR) qui s&apos;étend à l&apos;audition, l&apos;officine, et d&apos;autres métiers de santé.</span>
+                </li>
+                <li className="flex items-start gap-2.5">
+                  <span className="mt-1 inline-block w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: ACCENT }} />
+                  <span>Une roadmap construite avec les opticiens — pas pensée hors-sol.</span>
+                </li>
+                <li className="flex items-start gap-2.5">
+                  <span className="mt-1 inline-block w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: ACCENT }} />
+                  <span>Des données qui restent vôtres : hébergement HDS en France, jamais revendues.</span>
+                </li>
+              </ul>
             </div>
           </div>
 
-          {/* Palette DA */}
-          <div className="flex flex-col gap-4">
-            <div className="text-xs font-bold uppercase tracking-widest text-slate-400 mb-2">Direction artistique</div>
+          {/* Droite — Pour les opticiens */}
+          <div>
+            <span className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400 mb-4 block">
+              Pour les opticiens
+            </span>
+            <h3 className="text-3xl lg:text-4xl font-bold tracking-tight text-slate-900 mb-4 leading-[1.05] h-title">
+              Un outil pour votre cabinet,<br />
+              <span style={{ color: ACCENT }}>un service</span><span className="font-light text-slate-600"> pour vos patients.</span>
+            </h3>
+            <p className="text-slate-500 leading-relaxed mb-8">
+              Clair Vision n&apos;est pas juste un espace patient : c&apos;est un logiciel métier
+              complet (agenda, dossiers, devis, facturation, stock) qui ouvre, en miroir,
+              un accès digital aux patients que vous suivez.
+            </p>
 
-            {/* Couleurs */}
-            <div
-              className="rounded-2xl p-5"
-              style={{ background: "rgba(248,250,252,0.80)", border: "1px solid rgba(226,232,240,0.70)" }}
-            >
-              <div className="text-xs font-semibold text-slate-500 mb-3">Palette de couleurs</div>
-              <div className="flex gap-3">
-                {[
-                  { hex: "#2D8CFF", label: "Primaire"   },
-                  { hex: "#06B6D4", label: "Secondaire" },
-                  { hex: "#1E293B", label: "Texte"      },
-                  { hex: "#F8FAFC", label: "Fond"       },
-                  { hex: "#10B981", label: "Succès"     },
-                ].map((c) => (
-                  <div key={c.hex} className="flex flex-col items-center gap-1.5">
-                    <div className="h-10 w-10 rounded-xl border border-white shadow-sm" style={{ background: c.hex }} />
-                    <span className="text-[9px] font-mono text-slate-400">{c.hex}</span>
-                    <span className="text-[9px] text-slate-500">{c.label}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Typographie */}
-            <div
-              className="rounded-2xl p-5"
-              style={{ background: "rgba(248,250,252,0.80)", border: "1px solid rgba(226,232,240,0.70)" }}
-            >
-              <div className="text-xs font-semibold text-slate-500 mb-3">Typographie</div>
-              <div className="text-3xl font-light text-slate-800 leading-tight">Aa</div>
-              <div className="text-sm font-semibold text-slate-700 mt-1">Geist Sans</div>
-              <div className="text-xs text-slate-400 mt-0.5">Light · Regular · Semibold · Bold</div>
-            </div>
-
-            {/* Style */}
-            <div
-              className="rounded-2xl p-5"
-              style={{ background: "rgba(248,250,252,0.80)", border: "1px solid rgba(226,232,240,0.70)" }}
-            >
-              <div className="text-xs font-semibold text-slate-500 mb-3">Style d&apos;interface</div>
-              <div className="flex flex-wrap gap-2">
-                {["Glassmorphisme", "Coins arrondis", "Ombres douces", "Gradients froids", "Micro-animations"].map(t => (
-                  <span
-                    key={t}
-                    className="rounded-full px-3 py-1 text-xs font-medium"
-                    style={{ background: `rgba(45,140,255,0.08)`, color: ACCENT }}
+            <div className="grid gap-4">
+              {[
+                {
+                  icon: "M3 4a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v16H3V4Zm0 6h18M8 2v4M16 2v4",
+                  title: "Conformité incluse",
+                  desc: "Hébergement HDS, RGPD, chiffrement, partenariat GIE SESAM-Vitale — vous bénéficiez d'un socle réglementaire prêt à l'emploi.",
+                },
+                {
+                  icon: "M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 0 0 1.946-.806 3.42 3.42 0 0 1 4.438 0 3.42 3.42 0 0 0 1.946.806 3.42 3.42 0 0 1 3.138 3.138 3.42 3.42 0 0 0 .806 1.946 3.42 3.42 0 0 1 0 4.438 3.42 3.42 0 0 0-.806 1.946 3.42 3.42 0 0 1-3.138 3.138 3.42 3.42 0 0 0-1.946.806 3.42 3.42 0 0 1-4.438 0 3.42 3.42 0 0 0-1.946-.806 3.42 3.42 0 0 1-3.138-3.138 3.42 3.42 0 0 0-.806-1.946 3.42 3.42 0 0 1 0-4.438 3.42 3.42 0 0 0 .806-1.946 3.42 3.42 0 0 1 3.138-3.138Z",
+                  title: "Tout-en-un, métier",
+                  desc: "Agenda, dossiers patients, ordonnances, devis normalisés, tiers-payant, stock, calculateur lentilles, statistiques — sans empiler des outils.",
+                },
+                {
+                  icon: "M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z",
+                  title: "Lien direct avec le patient",
+                  desc: "Vos patients consultent leurs documents, prennent RDV, posent leurs questions — sans appel, sans papier perdu, sans relance pénible.",
+                },
+                {
+                  icon: "M4 4v5h.582m15.356 2A8.001 8.001 0 0 0 4.582 9m0 0H9m11 11v-5h-.582m0 0a8.001 8.001 0 0 1-15.356-2m15.356 2H15",
+                  title: "Un écosystème qui s'étend",
+                  desc: "Clair Vision est un module de THOR. Clair Audition, PharmaPlanning et de nouveaux modules métier rejoignent la plateforme — vos données circulent dans un cadre unique.",
+                },
+              ].map((b) => (
+                <div
+                  key={b.title}
+                  className="rounded-2xl p-5 flex gap-4 transition-all hover:-translate-y-0.5 hover:shadow-md"
+                  style={{ background: "rgba(255,255,255,0.65)", backdropFilter: "blur(20px)", WebkitBackdropFilter: "blur(20px)", border: "1px solid rgba(255,255,255,0.85)", boxShadow: "0 4px 20px rgba(15,23,42,0.04), inset 0 1px 0 rgba(255,255,255,0.9)" }}
+                >
+                  <div
+                    className="grid h-11 w-11 place-items-center rounded-2xl flex-shrink-0"
+                    style={{ background: `${ACCENT}14` }}
                   >
-                    {t}
-                  </span>
-                ))}
-              </div>
+                    <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke={ACCENT} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                      <path d={b.icon} />
+                    </svg>
+                  </div>
+                  <div>
+                    <h4 className="text-base font-semibold text-slate-800 mb-1.5">{b.title}</h4>
+                    <p className="text-sm text-slate-500 leading-relaxed">{b.desc}</p>
+                  </div>
+                </div>
+              ))}
             </div>
+
+            <Link
+              href="/clair-vision/pro"
+              className="mt-8 inline-flex items-center gap-2 text-sm font-semibold transition-colors hover:underline"
+              style={{ color: ACCENT }}
+            >
+              Découvrir l&apos;espace professionnel
+              <svg className="w-4 h-4" viewBox="0 0 16 16" fill="none">
+                <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </Link>
           </div>
         </div>
       </div>
@@ -662,55 +808,93 @@ const SECU_ITEMS = [
 
 function Securite() {
   return (
-    <section id="securite" style={{ background: "linear-gradient(145deg, #0F172A 0%, #1E293B 100%)" }} className="py-24">
-      <div className="mx-auto max-w-7xl px-6">
+    <section id="securite" className="py-24 relative" style={{ background: "linear-gradient(180deg, #f8fafc 0%, #eff6ff 50%, #f8fafc 100%)" }}>
+      {/* Particules subtiles */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {[
+          { left: "10%", delay: 0,  size: 3, duration: 22 },
+          { left: "30%", delay: 7,  size: 4, duration: 26 },
+          { left: "60%", delay: 3,  size: 3, duration: 24 },
+          { left: "85%", delay: 11, size: 3, duration: 20 },
+        ].map((p, i) => (
+          <div key={i} className="absolute rounded-full" style={{
+            left: p.left, bottom: "-10px",
+            width: p.size, height: p.size,
+            background: "rgba(45,140,255,0.45)",
+            boxShadow: "0 0 8px rgba(45,140,255,0.35)",
+            animation: `floatParticle ${p.duration}s linear infinite`,
+            animationDelay: `${p.delay}s`,
+          }} />
+        ))}
+      </div>
+
+      <div className="relative mx-auto max-w-7xl px-6">
         <div className="text-center mb-16">
-          <div
-            className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-xs font-semibold mb-4"
-            style={{ background: "rgba(45,140,255,0.15)", color: "#93C5FD" }}
-          >
-            <svg className="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-            </svg>
+          <span className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400 mb-4 block">
             Sécurité & conformité
-          </div>
-          <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4">
+          </span>
+          <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-slate-900 mb-4 h-title">
             Vos données de santé,<br />
-            <span style={{ color: ACCENT }}>protégées sans compromis</span>
+            <span style={{
+              background: "linear-gradient(90deg, #1A72E8 0%, #2D8CFF 30%, #06B6D4 60%, #2D8CFF 80%, #1A72E8 100%)",
+              backgroundSize: "200% auto",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              backgroundClip: "text",
+              animation: "textGradientSlide 8s linear infinite",
+            }}>
+              protégées sans compromis
+            </span>
           </h2>
-          <p className="text-lg text-slate-400 max-w-xl mx-auto">
+          <p className="text-lg text-slate-500 max-w-xl mx-auto leading-relaxed">
             La santé visuelle est une donnée sensible. Nous appliquons les standards les plus exigeants pour la protéger.
           </p>
         </div>
 
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {SECU_ITEMS.map((s) => (
+          {SECU_ITEMS.map((s, i) => (
             <div
               key={s.title}
-              className="rounded-2xl p-6 transition-all hover:-translate-y-0.5"
-              style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.08)" }}
+              className="rounded-2xl p-6 transition-all hover:-translate-y-1"
+              style={{
+                background: "rgba(255,255,255,0.65)",
+                backdropFilter: "blur(20px)",
+                WebkitBackdropFilter: "blur(20px)",
+                border: "1px solid rgba(255,255,255,0.85)",
+                boxShadow: "0 4px 20px rgba(15,23,42,0.04), inset 0 1px 0 rgba(255,255,255,0.9)",
+              }}
             >
-              <div
-                className="mb-4 grid h-11 w-11 place-items-center rounded-2xl"
-                style={{ background: `${s.color}20` }}
-              >
-                <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke={s.color} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                  <path d={s.icon} />
-                </svg>
+              <div className="flex items-center gap-2 mb-4">
+                <span className="text-[10px] font-mono text-slate-300" style={{ letterSpacing: "0.1em" }}>
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <div
+                  className="grid h-11 w-11 place-items-center rounded-2xl"
+                  style={{ background: `${s.color}14`, boxShadow: `inset 0 0 0 1px ${s.color}22` }}
+                >
+                  <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke={s.color} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                    <path d={s.icon} />
+                  </svg>
+                </div>
               </div>
-              <h3 className="mb-2 text-sm font-semibold text-white">{s.title}</h3>
-              <p className="text-xs text-slate-400 leading-relaxed">{s.desc}</p>
+              <h3 className="mb-2 text-base font-semibold text-slate-900 h-title">{s.title}</h3>
+              <p className="text-sm text-slate-500 leading-relaxed">{s.desc}</p>
             </div>
           ))}
         </div>
 
         {/* Badges */}
-        <div className="mt-12 flex flex-wrap justify-center gap-4">
+        <div className="mt-12 flex flex-wrap justify-center gap-3">
           {["HDS France", "RGPD conforme", "ISO 27001", "Chiffrement AES-256", "TLS 1.3"].map((b) => (
             <div
               key={b}
-              className="flex items-center gap-2 rounded-full px-4 py-2 text-xs font-semibold text-slate-300"
-              style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.10)" }}
+              className="flex items-center gap-2 rounded-full px-4 py-2 text-xs font-semibold text-slate-600"
+              style={{
+                background: "rgba(255,255,255,0.7)",
+                backdropFilter: "blur(12px)",
+                border: "1px solid rgba(255,255,255,0.85)",
+                boxShadow: "0 2px 8px rgba(15,23,42,0.04)",
+              }}
             >
               <svg className="w-3 h-3 text-[#10B981]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
                 <path d="M20 6 9 17l-5-5" />
@@ -727,36 +911,48 @@ function Securite() {
 /* ── CTA Final ───────────────────────────────────────────────────────────── */
 function CTAFinal() {
   return (
-    <section className="py-24 bg-white">
+    <section className="py-24 relative">
       <div className="mx-auto max-w-3xl px-6 text-center">
-        <div
-          className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-xs font-semibold mb-6"
-          style={{ background: `rgba(45,140,255,0.08)`, color: ACCENT }}
-        >
+        <span className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400 mb-4 block">
           Commencer gratuitement
-        </div>
-        <h2 className="text-3xl lg:text-4xl font-bold text-slate-900 mb-4">
+        </span>
+        <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-slate-900 mb-4 h-title">
           Prêt à rejoindre<br />
-          <span style={{ color: ACCENT }}>Clair Vision</span> ?
+          <span style={{
+            background: "linear-gradient(90deg, #1A72E8, #2D8CFF, #06B6D4, #2D8CFF, #1A72E8)",
+            backgroundSize: "200% auto",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+            backgroundClip: "text",
+            animation: "textGradientSlide 8s linear infinite",
+          }}>Clair Vision</span>
+          <span className="font-light text-slate-500"> ?</span>
         </h2>
-        <p className="text-lg text-slate-500 mb-10 max-w-md mx-auto">
+        <p className="text-lg text-slate-500 mb-10 max-w-md mx-auto leading-relaxed">
           Votre opticien vous a transmis un lien ? Créez votre compte en 2 minutes et accédez à votre suivi visuel complet.
         </p>
         <div className="flex flex-col sm:flex-row gap-3 justify-center">
           <Link
             href="/connexion/patient?space=vision&mode=signup"
-            className="inline-flex items-center justify-center gap-2 rounded-2xl px-7 py-3.5 text-sm font-semibold text-white transition-all hover:scale-[1.02]"
-            style={{ background: ACCENT, boxShadow: `0 4px 20px ${ACCENT}38` }}
+            className="group relative inline-flex items-center justify-center gap-2 rounded-full px-7 py-3.5 text-sm font-semibold text-white transition-all duration-300 hover:scale-[1.03] overflow-hidden"
+            style={{
+              background: `linear-gradient(135deg, ${ACCENT}, ${ACCENT_DEEP})`,
+              boxShadow: `0 8px 30px ${ACCENT}66, 0 0 0 1px rgba(255,255,255,0.15) inset`,
+            }}
           >
-            Créer mon espace patient
+            <span className="relative z-10">Créer mon espace patient</span>
             <svg className="w-4 h-4" viewBox="0 0 16 16" fill="none">
               <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           </Link>
           <Link
             href="/connexion/patient?space=vision"
-            className="inline-flex items-center justify-center rounded-2xl border px-7 py-3.5 text-sm font-medium text-slate-700 transition-all hover:shadow-md"
-            style={{ borderColor: "rgba(45,140,255,0.20)", background: "rgba(45,140,255,0.04)" }}
+            className="inline-flex items-center justify-center rounded-full px-7 py-3.5 text-sm font-semibold text-slate-700 ring-1 ring-white/60 transition-all duration-200 hover:ring-white/90 hover:shadow-[0_4px_20px_rgba(45,140,255,0.10)]"
+            style={{
+              background: "rgba(255,255,255,0.70)",
+              backdropFilter: "blur(16px)",
+              boxShadow: "inset 0 1px 0 rgba(255,255,255,0.9)",
+            }}
           >
             J&apos;ai déjà un compte
           </Link>
@@ -817,19 +1013,7 @@ export default function ClairVisionLanding() {
   return (
     <>
       <style>{`
-        @keyframes floatY {
-          0%,100% { transform: translateY(0); }
-          50%      { transform: translateY(-10px); }
-        }
-        @keyframes fadeInUp {
-          from { opacity: 0; transform: translateY(24px); }
-          to   { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes orbDrift {
-          0%,100% { transform: translate(0, 0) scale(1); }
-          33%     { transform: translate(30px, -20px) scale(1.04); }
-          66%     { transform: translate(-20px, 15px) scale(0.97); }
-        }
+        /* Animations partagées dans globals.css : floatY, fadeInUp, orbDrift */
         .service-card {
           opacity: 0;
           transform: translateY(20px);

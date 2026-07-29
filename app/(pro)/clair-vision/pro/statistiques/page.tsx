@@ -13,45 +13,19 @@ const glassSubtle: CSSProperties = { background:"rgba(255,255,255,0.45)", border
 type Period = "mois" | "trimestre" | "annee";
 
 const caData: Record<Period, { label: string; ca: number; actes: number }[]> = {
-  mois: [
-    { label: "S1", ca: 1840, actes: 21 },
-    { label: "S2", ca: 2210, actes: 24 },
-    { label: "S3", ca: 1980, actes: 22 },
-    { label: "S4", ca: 2390, actes: 27 },
-  ],
-  trimestre: [
-    { label: "Jan", ca: 6200, actes: 68 },
-    { label: "Fév", ca: 7100, actes: 80 },
-    { label: "Mar", ca: 8420, actes: 94 },
-  ],
-  annee: [
-    { label: "Avr", ca: 5200, actes: 58 }, { label: "Mai", ca: 6100, actes: 70 },
-    { label: "Jun", ca: 5800, actes: 64 }, { label: "Jul", ca: 4900, actes: 55 },
-    { label: "Aoû", ca: 4200, actes: 48 }, { label: "Sep", ca: 6800, actes: 76 },
-    { label: "Oct", ca: 7200, actes: 82 }, { label: "Nov", ca: 7800, actes: 88 },
-    { label: "Déc", ca: 6900, actes: 78 }, { label: "Jan", ca: 6200, actes: 68 },
-    { label: "Fév", ca: 7100, actes: 80 }, { label: "Mar", ca: 8420, actes: 94 },
-  ],
+  mois:      [],
+  trimestre: [],
+  annee:     [],
 };
 
-const actesData = [
-  { type: "Examens de vue", count: 38, color: "#2D8CFF" },
-  { type: "Adaptations lentilles", count: 22, color: "#00C98A" },
-  { type: "Contrôles annuels", count: 20, color: "#8B5CF6" },
-  { type: "Renouvellements", count: 14, color: "#F59E0B" },
-];
+const actesData: { type: string; count: number; color: string }[] = [];
 
-const correctionsData = [
-  { name: "Myopie", value: 52, color: "#2D8CFF" },
-  { name: "Presbytie", value: 24, color: "#8B5CF6" },
-  { name: "Astigmatisme", value: 18, color: "#00C98A" },
-  { name: "Hypermétropie", value: 6, color: "#F59E0B" },
-];
+const correctionsData: { name: string; value: number; color: string }[] = [];
 
 const kpis: Record<Period, { ca: string; actes: number; renouvellement: string; nps: string }> = {
-  mois:      { ca: "8 420 €",  actes: 94,  renouvellement: "78%", nps: "4.7/5" },
-  trimestre: { ca: "21 720 €", actes: 242, renouvellement: "81%", nps: "4.7/5" },
-  annee:     { ca: "82 500 €", actes: 921, renouvellement: "76%", nps: "4.6/5" },
+  mois:      { ca: "—", actes: 0, renouvellement: "—", nps: "—" },
+  trimestre: { ca: "—", actes: 0, renouvellement: "—", nps: "—" },
+  annee:     { ca: "—", actes: 0, renouvellement: "—", nps: "—" },
 };
 
 // ── LocalStorage computation helpers ─────────────────────────────────
@@ -299,7 +273,7 @@ export default function StatistiquesPage() {
         </div>
         {!hasRealData && (
           <div style={{ marginTop: 12, fontSize: 12, color: "#94a3b8", fontStyle: "italic" }}>
-            Les graphiques illustrent une projection indicative. Créez des devis pour voir le CA réel.
+            Aucune donnée pour l'instant. Créez des devis et planifiez des RDV pour voir les statistiques se peupler.
           </div>
         )}
       </div>

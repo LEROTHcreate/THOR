@@ -66,7 +66,7 @@ export default function ConnexionPage() {
         style={{ background: "rgba(0,200,154,0.06)", animation: "orbDrift 25s ease-in-out infinite reverse" }}
       />
 
-      <div className="relative w-full px-8 lg:px-16 xl:px-24 py-12">
+      <div className="relative w-full px-4 sm:px-6 md:px-8 lg:px-16 xl:px-24 py-12">
 
         {/* Header */}
         <div className="text-center mb-10">

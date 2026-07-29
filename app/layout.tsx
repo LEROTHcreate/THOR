@@ -24,7 +24,7 @@ export const metadata = {
   manifest: "/manifest.json",
   appleWebApp: {
     capable: true,
-    statusBarStyle: "default",
+    statusBarStyle: "default" as const,
     title: "THOR",
   },
   other: {
@@ -32,6 +32,17 @@ export const metadata = {
     "msapplication-TileColor": "#2D8CFF",
     "msapplication-config": "none",
   },
+};
+
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+  viewportFit: "cover" as const,
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#2D8CFF" },
+    { media: "(prefers-color-scheme: dark)",  color: "#0f172a" },
+  ],
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -44,10 +55,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             __html: `(function(){try{var t=localStorage.getItem('thor_dark_mode');if(t==='1')document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();`,
           }}
         />
-        <meta name="theme-color" content="#2D8CFF" media="(prefers-color-scheme: light)" />
-        <meta name="theme-color" content="#0f172a" media="(prefers-color-scheme: dark)" />
       </head>
-      <body className="min-h-screen bg-white text-slate-900">
+      <body className="min-h-screen bg-white text-slate-900 overflow-x-hidden">
         <AppShell>
           <main className="min-h-screen">{children}</main>
         </AppShell>

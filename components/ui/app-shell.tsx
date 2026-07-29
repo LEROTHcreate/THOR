@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import { usePathname } from "next/navigation";
 import Header from "@/components/header";
 import FooterGate from "@/components/footer-gate";
@@ -14,6 +15,16 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
 
   // Fond animé partagé sur toutes les pages publiques THOR (sauf modules pro et auth)
   const showAnimatedBg = !isModuleSite && !isAuthPage;
+  // Désactiver la sélection de texte sur les pages vitrines THOR (pas dans les modules ni l'auth)
+  const noSelect = !isModuleSite && !isAuthPage;
+
+  useEffect(() => {
+    const body = document.body;
+    if (!body) return;
+    if (noSelect) body.classList.add("thor-no-select");
+    else          body.classList.remove("thor-no-select");
+    return () => { body.classList.remove("thor-no-select"); };
+  }, [noSelect]);
 
   return (
     <>

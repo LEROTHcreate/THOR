@@ -33,8 +33,121 @@ const THEMES = {
     orb1: "rgba(5,150,105,0.14)", orb2: "rgba(16,185,129,0.10)",
     name: "PharmaPlanning",
   },
+  jarvis: {
+    accent: "#1D4ED8", accent2: "#2563EB",
+    glow: "rgba(29,78,216,0.25)", glowStrong: "rgba(29,78,216,0.45)",
+    bg: "rgba(29,78,216,0.08)", bgMid: "rgba(29,78,216,0.16)",
+    border: "rgba(29,78,216,0.32)", gradient: "linear-gradient(135deg,#1D4ED8,#1E3A8A)",
+    orb1: "rgba(29,78,216,0.20)", orb2: "rgba(37,99,235,0.14)",
+    name: "JARVIS",
+  },
 } as const;
 type Space = keyof typeof THEMES;
+
+/* ─── Contenu narratif par module ────────────────────────────────────────── */
+interface ModuleNarrative {
+  audienceLong: string;
+  intro: string;
+  quote: string;
+  cardBody: string;
+  bullets: string[];
+  statValue: string;
+  statLabel: string;
+  ctaDesc: string;
+  trustVal: string;
+  trustLabel: string;
+  trustDesc: string;
+  cardGradient: string;
+  cardBg: string;
+  cardBorder: string;
+}
+
+const MODULE_NARRATIVE: Record<Space, ModuleNarrative> = {
+  vision: {
+    audienceLong: "Pour les opticiens-lunetiers",
+    intro: "Un métier de santé parmi les plus réglementés de France. Des opticiens débordés par l'administratif. Des logiciels vieillissants qui n'ont pas suivi les réformes. Voilà ce qui nous a poussés à reconstruire Clair Vision.",
+    quote: "En discutant avec des opticiens, on a réalisé que la plupart passaient plus d'une heure par jour à remplir des formulaires, à chercher des ordonnances dans des classeurs ou à recopier des données d'un logiciel à l'autre. Ce temps-là, ce n'est pas du temps de soin — c'est du temps perdu. On a voulu le leur rendre.",
+    cardBody: "Depuis 2014, les opticiens ont l'obligation légale de remettre un devis normalisé à chaque patient. Depuis 2020, la réforme 100% Santé a reconfiguré toute la prise en charge. Et malgré ça, la plupart des logiciels du marché n'ont pas suivi.",
+    bullets: [
+      "Devis normalisés générés automatiquement depuis l'ordonnance",
+      "Alertes de renouvellement proactives — plus aucun patient oublié",
+      "Calculateur de lentilles avec compatibilité stock en temps réel",
+      "Facturation TVA 20 % automatisée sur l'ensemble de l'équipement optique (verres, montures, lentilles)",
+    ],
+    statValue: "1 400+",
+    statLabel: "Opticiens actifs",
+    ctaDesc: "Rejoignez les opticiens qui font confiance à Clair Vision pour gérer leur cabinet.",
+    trustVal: "HDS",
+    trustLabel: "Hébergeur certifié santé",
+    trustDesc: "Vos données patients sont hébergées en France, dans un datacenter certifié HDS.",
+    cardGradient: "linear-gradient(135deg,#2D8CFF,#06B6D4)",
+    cardBg: "rgba(45,140,255,0.08)",
+    cardBorder: "rgba(45,140,255,0.25)",
+  },
+  audition: {
+    audienceLong: "Pour les audioprothésistes",
+    intro: "Un métier de santé parmi les plus réglementés de France. Des audioprothésistes débordés par l'administratif post-réforme 2021. Des logiciels qui n'ont pas suivi la révolution 100 % Santé. Voilà ce qui nous a poussés à reconstruire Clair Audition.",
+    quote: "En discutant avec des audioprothésistes, on a réalisé qu'ils passaient plus d'une heure par jour à jongler entre dossiers Classe I / Classe II, codes LPPR, formulaires SCOR et téléchargements ADRi. Ce temps-là, ce n'est pas du temps de soin — c'est du temps perdu. On a voulu le leur rendre.",
+    cardBody: "La réforme 100 % Santé de 2021 a bouleversé le marché de l'appareillage auditif. Classe I, Classe II, LPPR, SCOR, ADRi — la complexité administrative a explosé au moment même où les patients affluaient. Les logiciels existants n'étaient tout simplement pas prêts.",
+    bullets: [
+      "Dossiers d'appareillage complets — du bilan à la livraison",
+      "Audiogrammes intégrés avec interprétation automatique (PTA, grade SS)",
+      "Présentation Classe I / Classe II côte à côte dans chaque devis",
+      "Conforme GIE SESAM-Vitale, HDS et ADRi/e-CPS dès le premier jour",
+    ],
+    statValue: "1 000+",
+    statLabel: "Audioprothésistes actifs",
+    ctaDesc: "Rejoignez les audioprothésistes qui font confiance à Clair Audition pour gérer leur cabinet.",
+    trustVal: "HDS",
+    trustLabel: "Hébergeur certifié santé",
+    trustDesc: "Vos données patients sont hébergées en France, dans un datacenter certifié HDS.",
+    cardGradient: "linear-gradient(135deg,#00C98A,#10B981)",
+    cardBg: "rgba(0,201,138,0.08)",
+    cardBorder: "rgba(0,201,138,0.25)",
+  },
+  pharma: {
+    audienceLong: "Pour les officines pharmaceutiques",
+    intro: "Faire le planning d'une officine, c'est jongler entre pharmaciens titulaires, adjoints, préparateurs, étudiants, livreurs et secrétariat — avec une contrainte légale stricte : un pharmacien présent à chaque heure d'ouverture. Les outils du marché n'étaient pas conçus pour cette réalité métier.",
+    quote: "En discutant avec des titulaires de pharmacie et leurs équipes, on a réalisé que faire un planning d'officine prenait 3 à 4 heures chaque semaine — entre congés, vacances scolaires, remplacements de dernière minute et couverture pharmacien obligatoire. PharmaPlanning ramène ça à 15 minutes.",
+    cardBody: "Une officine, c'est 10 à 20 personnes à coordonner sur 6 jours, avec des contraintes légales (présence pharmacien, repos hebdo, gardes), des contrats variés (35h, 14h étudiant, alternance, CDD remplacement) et des aléas constants. Les tableurs Excel et les logiciels génériques ne tiennent pas la route.",
+    bullets: [
+      "Couverture pharmacien garantie — alertes en temps réel si absent",
+      "Gabarits réutilisables (semaine type, vacances scolaires, garde de nuit)",
+      "Suivi heures contractuelles, supplémentaires, absences, RTT, formation DPC",
+      "Export CSV pour la paie — compatible logiciels comptables",
+    ],
+    statValue: "150+",
+    statLabel: "Officines équipées",
+    ctaDesc: "Rejoignez les officines qui ont simplifié la gestion de leur planning d'équipe.",
+    trustVal: "RGPD",
+    trustLabel: "Conformité européenne",
+    trustDesc: "Vos plannings et données d'équipe sont hébergés en France, chiffrés et conformes RGPD.",
+    cardGradient: "linear-gradient(135deg,#059669,#10B981)",
+    cardBg: "rgba(5,150,105,0.08)",
+    cardBorder: "rgba(5,150,105,0.25)",
+  },
+  jarvis: {
+    audienceLong: "Assistant IA — déployé via THOR",
+    intro: "Une interface unique pour parler à un assistant IA, retrouver une adresse, suivre l'actualité ou explorer le ciel astronomique du jour. JARVIS est une IA indépendante, déployée et orchestrée par THOR — pensée pour répondre vite, en français, sans publicité ni collecte cachée.",
+    quote: "On ne fabrique pas l'IA, on l'orchestre. JARVIS est une intelligence externe que THOR rend accessible dans une interface souveraine, sans intermédiaire publicitaire ni captation de données. L'utilisateur reste maître de ses conversations.",
+    cardBody: "JARVIS combine conversation textuelle, voix, géolocalisation, cartographie et flux d'actualités dans une interface inspirée des HUD de science-fiction. THOR assure le déploiement, l'hébergement souverain et l'intégration — l'IA elle-même est indépendante. Demandez-lui une boulangerie, l'image astronomique du jour, la dernière dépêche : il répond en quelques secondes.",
+    bullets: [
+      "Conversation en français — texte instantané, voix à venir",
+      "Recherche locale géolocalisée (commerces, services, transports)",
+      "Live feed actualités français (Le Monde, sources publiques)",
+      "Image astronomique du jour (NASA APOD) avec traduction",
+    ],
+    statValue: "BÊTA",
+    statLabel: "Phase de test fermée",
+    ctaDesc: "Demandez l'accès à JARVIS pour tester l'assistant THOR avant tout le monde.",
+    trustVal: "0 €",
+    trustLabel: "Sans publicité, sans revente",
+    trustDesc: "JARVIS ne stocke aucune conversation, ne revend aucune donnée, et n'affiche aucune publicité.",
+    cardGradient: "linear-gradient(135deg,#1D4ED8,#1E3A8A)",
+    cardBg: "rgba(29,78,216,0.08)",
+    cardBorder: "rgba(29,78,216,0.28)",
+  },
+};
 
 /* ─── Types ──────────────────────────────────────────────────────────────── */
 interface Feature {
@@ -787,8 +900,8 @@ const FEATURES_AUDITION: Feature[] = [
 /* ─── Mocks PharmaPlanning ───────────────────────────────────────────────── */
 function MockPharmaPlanning({ accent }: { accent: string }) {
   const team = [
-    { name: "Camille", role: "Pharm.",   color: "#a78bfa", blocks: [{ y: 14, h: 38, label: "Cptoir", bg: "rgba(167,139,250,0.18)", border: "#a78bfa" }, { y: 60, h: 28, label: "M/A/P",  bg: "rgba(167,139,250,0.18)", border: "#a78bfa" }] },
-    { name: "Hugo",    role: "Pharm.",   color: "#a78bfa", blocks: [{ y: 8,  h: 22, label: "Cptoir", bg: "rgba(167,139,250,0.18)", border: "#a78bfa" }, { y: 52, h: 36, label: "Cptoir", bg: "rgba(167,139,250,0.18)", border: "#a78bfa" }] },
+    { name: "Camille", role: "Pharm.",   color: "#a78bfa", blocks: [{ y: 14, h: 38, label: "Cptoir", bg: "rgba(6,182,212,0.18)", border: "#a78bfa" }, { y: 60, h: 28, label: "M/A/P",  bg: "rgba(6,182,212,0.18)", border: "#a78bfa" }] },
+    { name: "Hugo",    role: "Pharm.",   color: "#a78bfa", blocks: [{ y: 8,  h: 22, label: "Cptoir", bg: "rgba(6,182,212,0.18)", border: "#a78bfa" }, { y: 52, h: 36, label: "Cptoir", bg: "rgba(6,182,212,0.18)", border: "#a78bfa" }] },
     { name: "Manon",   role: "Prép.",    color: "#10b981", blocks: [{ y: 14, h: 26, label: "Para",   bg: "rgba(16,185,129,0.18)",  border: "#10b981" }, { y: 56, h: 24, label: "Para",   bg: "rgba(16,185,129,0.18)",  border: "#10b981" }] },
     { name: "Inès",    role: "Prép.",    color: "#10b981", blocks: [{ y: 6,  h: 28, label: "Cptoir", bg: "rgba(16,185,129,0.18)",  border: "#10b981" }, { y: 50, h: 32, label: "M/A/P",  bg: "rgba(16,185,129,0.18)",  border: "#10b981" }] },
     { name: "Lucie",   role: "Prép.",    color: "#10b981", blocks: [{ y: 12, h: 56, label: "Cptoir", bg: "rgba(16,185,129,0.18)",  border: "#10b981" }] },
@@ -838,7 +951,7 @@ function MockPharmaPlanning({ accent }: { accent: string }) {
         </div>
       </div>
       <div className="flex items-center gap-3 mt-3 text-[11px] text-slate-500">
-        <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-sm" style={{ background: "rgba(167,139,250,0.4)" }}/>Pharmacien</span>
+        <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-sm" style={{ background: "rgba(6,182,212,0.4)" }}/>Pharmacien</span>
         <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-sm" style={{ background: "rgba(16,185,129,0.4)" }}/>Préparateur</span>
         <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-sm" style={{ background: "rgba(245,158,11,0.4)" }}/>Étudiant / Livreur</span>
         <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-sm" style={{ background: "rgba(244,114,182,0.4)" }}/>Secrétariat</span>
@@ -905,7 +1018,7 @@ function MockPharmaStatistiques({ accent }: { accent: string }) {
       <AppHeader title="Statistiques — S1 2026" sub="Vue semestrielle · 16 collaborateurs" accent={accent} action="Export CSV" />
       <div className="grid grid-cols-4 gap-2">
         {[
-          { label: "Heures planifiées", value: "2555h", color: "#a78bfa", bg: "rgba(167,139,250,0.10)", sub: "cumul équipe" },
+          { label: "Heures planifiées", value: "2555h", color: "#a78bfa", bg: "rgba(6,182,212,0.10)", sub: "cumul équipe" },
           { label: "Heures supp.",      value: "290h",  color: "#ef4444", bg: "rgba(239,68,68,0.08)",   sub: "au-delà du contrat" },
           { label: "Heures d'absence",  value: "37h",   color: "#f59e0b", bg: "rgba(245,158,11,0.10)",  sub: "congés, maladie" },
           { label: "Charge équipe",     value: "5 / 8", color: "#10b981", bg: "rgba(16,185,129,0.10)",  sub: "sous le contrat" },
@@ -1099,6 +1212,568 @@ const FEATURES_PHARMA: Feature[] = [
   },
 ];
 
+/* ─── Mocks JARVIS — interface HUD sombre inspirée des screenshots ─────── */
+function JarvisShell({ children }: { children: React.ReactNode }) {
+  return (
+    <div
+      className="relative overflow-hidden rounded-xl"
+      style={{
+        background: "linear-gradient(180deg, #0a1220 0%, #0d1a2e 100%)",
+        border: "1px solid rgba(29,78,216,0.30)",
+        boxShadow: "inset 0 1px 0 rgba(29,78,216,0.10), 0 0 32px rgba(29,78,216,0.10)",
+        color: "#BFDBFE",
+        fontFamily: "ui-monospace, 'SF Mono', 'Fira Code', monospace",
+      }}
+    >
+      {/* Live feed bandeau */}
+      <div className="flex items-center gap-4 px-3 py-1.5 border-b" style={{ borderColor: "rgba(29,78,216,0.18)", background: "rgba(29,78,216,0.04)" }}>
+        <span style={{ color: "#1D4ED8", fontSize: 9, fontWeight: 700, letterSpacing: 0.5 }}>● LIVE FEED</span>
+        <span style={{ color: "#5d8aa8", fontSize: 9, letterSpacing: 0.4 }}>LE_MONDE</span>
+        <span style={{ color: "#9bd5ef", fontSize: 9, opacity: 0.7 }}>En Suède, des juristes alertent sur la fragilisation de l&apos;État de droit</span>
+        <span className="ml-auto" style={{ color: "#1D4ED8", fontSize: 9, fontWeight: 700 }}>12:42:06</span>
+      </div>
+      {children}
+      {/* Footer status */}
+      <div className="flex items-center justify-between px-3 py-1.5 border-t" style={{ borderColor: "rgba(29,78,216,0.18)" }}>
+        <div className="flex items-center gap-3" style={{ fontSize: 8, color: "#5d8aa8", letterSpacing: 0.4 }}>
+          <span><span style={{ color: "#1D4ED8" }}>● API</span> STANDBY</span>
+          <span>MODEL <span style={{ color: "#BFDBFE" }}>mistral-small</span></span>
+          <span>LATENCY <span style={{ color: "#BFDBFE" }}>16ms</span></span>
+        </div>
+        <span style={{ fontSize: 8, color: "#1D4ED8", letterSpacing: 0.4 }}>T+004 · ONLINE</span>
+      </div>
+    </div>
+  );
+}
+
+function JarvisOrb({ size = 120 }: { size?: number }) {
+  // Génère N tick marks autour du cercle extérieur
+  const tickCount = 60;
+  const cx = size / 2;
+  const cy = size / 2;
+  const outerR = size * 0.5 - 2;
+  const innerTickR = outerR - 4;
+  const longTickR = outerR - 9;
+  const satellitePositions = [25, 70, 135, 215, 305, 340]; // degrés
+  // Particules du noyau (grille pseudo-aléatoire stable)
+  const coreParticles = Array.from({ length: 80 }, (_, i) => {
+    const angle = (i / 80) * Math.PI * 8;
+    const r = (i / 80) * (size * 0.16);
+    return {
+      x: cx + Math.cos(angle) * r,
+      y: cy + Math.sin(angle) * r,
+      opacity: 0.3 + (i % 7) * 0.1,
+      size: 0.8 + (i % 3) * 0.4,
+    };
+  });
+
+  return (
+    <div className="relative" style={{ width: size, height: size }}>
+      <svg viewBox={`0 0 ${size} ${size}`} style={{ width: size, height: size, overflow: "visible" }}>
+        {/* Halo extérieur diffus */}
+        <defs>
+          <radialGradient id={`orb-glow-${size}`} cx="50%" cy="50%">
+            <stop offset="0%"  stopColor="#1D4ED8" stopOpacity="0.8" />
+            <stop offset="30%" stopColor="#1D4ED8" stopOpacity="0.30" />
+            <stop offset="65%" stopColor="#1D4ED8" stopOpacity="0.06" />
+            <stop offset="100%" stopColor="#1D4ED8" stopOpacity="0" />
+          </radialGradient>
+          <radialGradient id={`orb-core-${size}`} cx="50%" cy="50%">
+            <stop offset="0%"  stopColor="#ffffff" stopOpacity="0.95" />
+            <stop offset="35%" stopColor="#1D4ED8" stopOpacity="0.75" />
+            <stop offset="100%" stopColor="#1D4ED8" stopOpacity="0" />
+          </radialGradient>
+        </defs>
+
+        {/* Anneau extérieur — pointillé fin */}
+        <circle cx={cx} cy={cy} r={outerR} fill="none" stroke="rgba(29,78,216,0.35)" strokeWidth="0.8" strokeDasharray="2 3" />
+
+        {/* Tick marks autour de l'anneau extérieur (longs tous les 5) */}
+        {Array.from({ length: tickCount }).map((_, i) => {
+          const angle = (i / tickCount) * Math.PI * 2 - Math.PI / 2;
+          const isLong = i % 5 === 0;
+          const r1 = isLong ? longTickR : innerTickR;
+          const r2 = outerR;
+          return (
+            <line
+              key={i}
+              x1={cx + Math.cos(angle) * r1}
+              y1={cy + Math.sin(angle) * r1}
+              x2={cx + Math.cos(angle) * r2}
+              y2={cy + Math.sin(angle) * r2}
+              stroke="rgba(29,78,216,0.55)"
+              strokeWidth={isLong ? 1.4 : 0.7}
+            />
+          );
+        })}
+
+        {/* Anneau moyen */}
+        <circle cx={cx} cy={cy} r={size * 0.36} fill="none" stroke="rgba(29,78,216,0.45)" strokeWidth="0.9" />
+
+        {/* Anneau intérieur */}
+        <circle cx={cx} cy={cy} r={size * 0.24} fill="none" stroke="rgba(29,78,216,0.30)" strokeWidth="0.6" strokeDasharray="1 2" />
+
+        {/* Glow diffus arrière */}
+        <circle cx={cx} cy={cy} r={size * 0.45} fill={`url(#orb-glow-${size})`} />
+
+        {/* Particules du noyau */}
+        {coreParticles.map((p, i) => (
+          <circle key={i} cx={p.x} cy={p.y} r={p.size} fill="#BFDBFE" opacity={p.opacity} />
+        ))}
+
+        {/* Core lumineux central */}
+        <circle cx={cx} cy={cy} r={size * 0.10} fill={`url(#orb-core-${size})`}>
+          <animate attributeName="r" values={`${size * 0.08};${size * 0.12};${size * 0.08}`} dur="3s" repeatCount="indefinite" />
+        </circle>
+
+        {/* Satellites lumineux sur l'anneau extérieur */}
+        {satellitePositions.map((deg, i) => {
+          const angle = (deg / 360) * Math.PI * 2 - Math.PI / 2;
+          const x = cx + Math.cos(angle) * outerR;
+          const y = cy + Math.sin(angle) * outerR;
+          return (
+            <g key={i}>
+              <circle cx={x} cy={y} r="5" fill="rgba(29,78,216,0.15)" />
+              <circle cx={x} cy={y} r="2.5" fill="#ffffff">
+                <animate attributeName="opacity" values="0.5;1;0.5" dur={`${2 + i * 0.4}s`} repeatCount="indefinite" />
+              </circle>
+            </g>
+          );
+        })}
+      </svg>
+    </div>
+  );
+}
+
+function MockJarvisChat() {
+  const msgs = [
+    { from: "JARVIS", text: "À votre service, Boss." },
+    { from: "YOU",    text: "trouve moi une boulangerie" },
+    { from: "JARVIS", text: "Voilà, Boss. Trois adresses à moins de 800 mètres :\n• Le Moulin de Cantini — 432 m\n• Marrou — 489 m\n• Boulangerie (nom non précisé) — 597 m" },
+    { from: "YOU",    text: "parle moi de Nikola Tesla" },
+  ];
+  return (
+    <JarvisShell>
+      <div className="relative grid grid-cols-[1fr_auto_1fr] gap-3 px-4 py-5 min-h-[320px]">
+        {/* Colonne gauche — vide ou status */}
+        <div style={{ fontSize: 9, color: "#5d8aa8", letterSpacing: 0.4 }}>
+          <div style={{ color: "#1D4ED8", marginBottom: 4 }}>● J.A.R.V.I.S</div>
+          <div>SYS://0xJARVIS</div>
+          <div className="mt-6">SIGNAL <div style={{ color: "#1D4ED8" }}>91%</div></div>
+          <div className="mt-3">LAT <div style={{ color: "#BFDBFE" }}>16ms</div></div>
+          <div className="mt-3">FREQ <div style={{ color: "#BFDBFE" }}>3.94GHz</div></div>
+        </div>
+
+        {/* Centre — orbe */}
+        <div className="grid place-items-center">
+          <JarvisOrb size={140} />
+          <div className="mt-2 text-center" style={{ fontSize: 10, color: "#1D4ED8", letterSpacing: 1, opacity: 0.7 }}>EN ATTENTE</div>
+        </div>
+
+        {/* Colonne droite — chat */}
+        <div className="space-y-3 overflow-hidden">
+          {msgs.map((m, i) => (
+            <div key={i} className={m.from === "YOU" ? "text-right" : ""}>
+              <div style={{ fontSize: 9, color: "#1D4ED8", letterSpacing: 1, marginBottom: 2 }}>
+                <span style={{ borderLeft: "2px solid #1D4ED8", paddingLeft: 4 }}>{m.from}</span>
+              </div>
+              <div style={{ fontSize: 11, color: m.from === "YOU" ? "#1D4ED8" : "#DBEAFE", whiteSpace: "pre-line", lineHeight: 1.5 }}>
+                {m.text}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </JarvisShell>
+  );
+}
+
+function MockJarvisMap() {
+  return (
+    <JarvisShell>
+      <div className="relative min-h-[320px] overflow-hidden">
+        {/* Carte stylisée avec lignes vectorielles */}
+        <svg viewBox="0 0 400 280" className="absolute inset-0 w-full h-full" preserveAspectRatio="xMidYMid slice">
+          <rect width="400" height="280" fill="#0a1220" />
+          {/* Routes principales */}
+          {[
+            "M 0 80 Q 100 70, 200 90 T 400 100",
+            "M 0 140 L 150 130 L 250 145 L 400 150",
+            "M 80 0 L 100 100 L 90 200 L 110 280",
+            "M 220 0 L 230 90 L 215 180 L 240 280",
+            "M 320 0 L 310 110 L 330 280",
+          ].map((d, i) => (
+            <path key={i} d={d} stroke="rgba(180,210,230,0.18)" strokeWidth="1.4" fill="none" />
+          ))}
+          {/* Mer (gauche) */}
+          <path d="M 0 0 L 60 0 L 50 120 L 30 220 L 0 280 Z" fill="rgba(15,23,42,0.7)" />
+          {/* Label MARSEILLE */}
+          <text x="150" y="55" fill="#BFDBFE" fontSize="13" fontWeight="700" letterSpacing="2">MARSEILLE</text>
+          {/* Pin position user */}
+          <g transform="translate(190 120)">
+            <circle r="14" fill="rgba(29,78,216,0.30)" />
+            <circle r="6"  fill="#1D4ED8" />
+            <circle r="22" fill="none" stroke="#1D4ED8" strokeWidth="1" opacity="0.5">
+              <animate attributeName="r" from="14" to="28" dur="2s" repeatCount="indefinite" />
+              <animate attributeName="opacity" from="0.6" to="0" dur="2s" repeatCount="indefinite" />
+            </circle>
+          </g>
+          {/* Pins boulangeries */}
+          {[{ x: 215, y: 95, n: "1" }, { x: 235, y: 145, n: "2" }, { x: 175, y: 170, n: "3" }].map(p => (
+            <g key={p.n} transform={`translate(${p.x} ${p.y})`}>
+              <circle r="9" fill="rgba(29,78,216,0.10)" stroke="#1D4ED8" strokeWidth="1" />
+              <text y="3" textAnchor="middle" fontSize="9" fontWeight="700" fill="#1D4ED8">{p.n}</text>
+            </g>
+          ))}
+        </svg>
+
+        {/* Overlay chat à droite */}
+        <div className="absolute top-3 right-3 max-w-[44%] space-y-2">
+          <div>
+            <div style={{ fontSize: 9, color: "#1D4ED8", letterSpacing: 1 }}>
+              <span style={{ borderLeft: "2px solid #1D4ED8", paddingLeft: 4 }}>JARVIS</span>
+            </div>
+            <div style={{ fontSize: 10, color: "#DBEAFE", marginTop: 3, lineHeight: 1.5 }}>
+              Voilà, Boss. Trois adresses à moins de 800 mètres :
+            </div>
+            <div className="mt-2 space-y-1" style={{ fontSize: 10, color: "#BFDBFE" }}>
+              <div><strong style={{ color: "#fff" }}>Le Moulin de Cantini</strong> — 432 m</div>
+              <div><strong style={{ color: "#fff" }}>Marrou</strong> — 489 m</div>
+              <div><strong style={{ color: "#fff" }}>Boulangerie</strong> — 597 m</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </JarvisShell>
+  );
+}
+
+function MockJarvisNews() {
+  const items = [
+    { src: "LE_MONDE",  title: "En Suède, des juristes alertent sur la fragilisation de l'État de droit",  age: "il y a 12 min" },
+    { src: "LE_MONDE",  title: "La complexité du rachat de SFR oblige Patrick Drahi à prolonger les négociations",  age: "il y a 34 min" },
+    { src: "AFP",       title: "Retraites : légère augmentation du taux d'erreur entre 2024 et 2025",  age: "il y a 1h" },
+    { src: "LE_MONDE",  title: "Face à la flambée des prix de l'énergie, les Français adaptent leurs déplacements",  age: "il y a 2h" },
+    { src: "REUTERS",   title: "Métamorphose de la guerre : toutes les dépendances, des minerais aux semi-conducteurs",  age: "il y a 3h" },
+  ];
+  return (
+    <JarvisShell>
+      <div className="px-4 py-4 space-y-2 min-h-[320px]">
+        <div className="flex items-center gap-2 mb-2">
+          <span style={{ fontSize: 9, color: "#1D4ED8", letterSpacing: 1, fontWeight: 700 }}>● LIVE FEED</span>
+          <span style={{ fontSize: 9, color: "#5d8aa8" }}>actualisé toutes les 5 min</span>
+        </div>
+        {items.map((it, i) => (
+          <div
+            key={i}
+            className="flex items-center gap-3 px-3 py-2 rounded-md"
+            style={{
+              background: i === 0 ? "rgba(29,78,216,0.06)" : "transparent",
+              border: i === 0 ? "1px solid rgba(29,78,216,0.20)" : "1px solid transparent",
+            }}
+          >
+            <span style={{ fontSize: 9, color: "#1D4ED8", letterSpacing: 0.5, fontWeight: 700, minWidth: 70 }}>{it.src}</span>
+            <span style={{ fontSize: 11, color: "#DBEAFE", flex: 1 }}>{it.title}</span>
+            <span style={{ fontSize: 9, color: "#5d8aa8", whiteSpace: "nowrap" }}>{it.age}</span>
+          </div>
+        ))}
+      </div>
+    </JarvisShell>
+  );
+}
+
+function MockJarvisOrbital() {
+  // Vraie image NASA Blue Marble (Apollo 17, 1972) — domaine public via Wikimedia.
+  const EARTH_IMG = "https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/The_Earth_seen_from_Apollo_17.jpg/640px-The_Earth_seen_from_Apollo_17.jpg";
+  return (
+    <JarvisShell>
+      <div className="relative min-h-[320px] px-4 py-4 flex flex-col items-center">
+        {/* Header ORBITAL_LOCK */}
+        <div className="flex items-center gap-2" style={{ fontSize: 9, color: "#1D4ED8", letterSpacing: 2 }}>
+          <span>›</span>
+          <span style={{ fontWeight: 700 }}>ORBITAL_LOCK</span>
+          <span style={{ opacity: 0.5 }}>·</span>
+          <span style={{ fontWeight: 700 }}>DESCENDING</span>
+        </div>
+
+        {/* Mini orbe en haut */}
+        <div className="mt-2">
+          <JarvisOrb size={50} />
+        </div>
+        <div style={{ fontSize: 7, color: "#5d8aa8", letterSpacing: 1, marginTop: 2 }}>EN ATTENTE</div>
+
+        {/* Globe terrestre — vraie image NASA */}
+        <div className="relative my-3" style={{ width: 200, height: 200 }}>
+          {/* Réticules d'acquisition (4 coins) */}
+          {([
+            { top: 0,   left: 0,    rot: 0   },
+            { top: 0,   right: 0,   rot: 90  },
+            { bottom: 0, right: 0,  rot: 180 },
+            { bottom: 0, left: 0,   rot: 270 },
+          ] as Array<{ top?: number; left?: number; right?: number; bottom?: number; rot: number }>).map((pos, i) => {
+            const { rot, ...placement } = pos;
+            return (
+              <span
+                key={i}
+                className="absolute"
+                style={{
+                  ...placement,
+                  width: 14, height: 14,
+                  borderTop: "1.5px solid #1D4ED8",
+                  borderLeft: "1.5px solid #1D4ED8",
+                  transform: `rotate(${rot}deg)`,
+                }}
+              />
+            );
+          })}
+
+          {/* Image Earth clipée + filtre tech-look */}
+          <div
+            className="absolute"
+            style={{
+              top: 8, left: 8, right: 8, bottom: 8,
+              borderRadius: "50%",
+              overflow: "hidden",
+              boxShadow: "0 0 30px rgba(29,78,216,0.30), inset 0 0 40px rgba(29,78,216,0.18)",
+              border: "1px solid rgba(29,78,216,0.40)",
+            }}
+          >
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={EARTH_IMG}
+              alt="Terre — Apollo 17 Blue Marble"
+              className="w-full h-full object-cover"
+              style={{
+                filter: "saturate(0.35) brightness(0.55) contrast(1.30) hue-rotate(195deg)",
+              }}
+              loading="lazy"
+              referrerPolicy="no-referrer"
+            />
+            {/* Voile tech bleu + vignette */}
+            <div
+              className="absolute inset-0 pointer-events-none"
+              style={{
+                background: "radial-gradient(circle at 38% 32%, rgba(29,78,216,0.10) 0%, transparent 55%), radial-gradient(circle, transparent 48%, rgba(10,18,32,0.55) 100%)",
+              }}
+            />
+            {/* Méridiens fins */}
+            <svg viewBox="0 0 100 100" className="absolute inset-0 w-full h-full" preserveAspectRatio="none">
+              <ellipse cx="50" cy="50" rx="50" ry="14" fill="none" stroke="rgba(29,78,216,0.28)" strokeWidth="0.3" />
+              <ellipse cx="50" cy="50" rx="50" ry="28" fill="none" stroke="rgba(29,78,216,0.18)" strokeWidth="0.3" />
+              <ellipse cx="50" cy="50" rx="32" ry="50" fill="none" stroke="rgba(29,78,216,0.22)" strokeWidth="0.3" />
+              <ellipse cx="50" cy="50" rx="14" ry="50" fill="none" stroke="rgba(29,78,216,0.14)" strokeWidth="0.3" />
+            </svg>
+            {/* Pin Europe — cible animée */}
+            <div
+              className="absolute"
+              style={{
+                top: "36%", left: "56%",
+                width: 8, height: 8, borderRadius: "50%",
+                background: "#1D4ED8",
+                boxShadow: "0 0 14px #1D4ED8, 0 0 0 2px rgba(29,78,216,0.35)",
+                animation: "glowPulse 2s ease-in-out infinite",
+              }}
+            />
+            <div
+              className="absolute"
+              style={{
+                top: "32%", left: "60%",
+                fontSize: 8, color: "#1D4ED8", fontWeight: 700, letterSpacing: 1,
+                textShadow: "0 0 6px rgba(29,78,216,0.6)",
+              }}
+            >
+              EUROPE
+            </div>
+          </div>
+        </div>
+
+        {/* Footer coords */}
+        <div className="mt-2 text-center">
+          <div style={{ fontSize: 10, color: "#1D4ED8", letterSpacing: 2, fontWeight: 700 }}>ACQUISITION DE CIBLE</div>
+          <div style={{ fontSize: 9, color: "#BFDBFE", letterSpacing: 1.5, marginTop: 4, fontVariantNumeric: "tabular-nums" }}>
+            LAT 44.570812 · LNG 7.059650
+          </div>
+          <div style={{ fontSize: 7, color: "#5d8aa8", letterSpacing: 0.8, marginTop: 2 }}>
+            Source : NASA · Apollo 17 (1972) · domaine public
+          </div>
+        </div>
+      </div>
+    </JarvisShell>
+  );
+}
+
+function MockJarvisNasa() {
+  // Vraie image NASA — JWST "Pillars of Creation" — APOD 19 octobre 2022
+  // URL Wikimedia (CORS-friendly, public domain)
+  const NASA_IMG = "https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/Pillars_of_Creation_NIRCam_-_JWST.jpg/640px-Pillars_of_Creation_NIRCam_-_JWST.jpg";
+  return (
+    <JarvisShell>
+      <div className="px-4 py-4 grid grid-cols-2 gap-4 min-h-[320px]">
+        {/* Image card */}
+        <div
+          className="rounded-lg overflow-hidden flex flex-col"
+          style={{
+            background: "linear-gradient(180deg, #0d1a2e 0%, #0a1220 100%)",
+            border: "1px solid rgba(29,78,216,0.30)",
+          }}
+        >
+          <div className="flex items-center justify-between px-2.5 py-1.5" style={{ borderBottom: "1px solid rgba(29,78,216,0.18)" }}>
+            <span style={{ fontSize: 9, color: "#1D4ED8", letterSpacing: 0.8, fontWeight: 700 }}>[01] apod.nasa.gov</span>
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#1D4ED8" strokeWidth="2"><path d="M7 17L17 7M7 7h10v10" /></svg>
+          </div>
+          {/* Vraie image APOD */}
+          <div className="relative flex-1 overflow-hidden" style={{ minHeight: 160 }}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={NASA_IMG}
+              alt="Pillars of Creation — JWST NIRCam"
+              className="absolute inset-0 w-full h-full object-cover"
+              loading="lazy"
+              referrerPolicy="no-referrer"
+            />
+            <span
+              className="absolute bottom-1.5 right-1.5 px-1.5 py-0.5 rounded text-[8px] font-bold"
+              style={{ background: "rgba(29,78,216,0.20)", color: "#BFDBFE", border: "1px solid rgba(29,78,216,0.4)", letterSpacing: 1 }}
+            >
+              JWST · NIRCam
+            </span>
+          </div>
+          <div className="px-2.5 py-2" style={{ borderTop: "1px solid rgba(29,78,216,0.18)" }}>
+            <div style={{ fontSize: 10, color: "#fff", fontWeight: 600 }}>Pillars of Creation</div>
+            <div style={{ fontSize: 8, color: "#5d8aa8", marginTop: 2 }}>2022-10-19 · NASA APOD · Webb / NIRCam</div>
+          </div>
+        </div>
+
+        {/* Description traduite */}
+        <div className="space-y-2">
+          <div>
+            <div style={{ fontSize: 9, color: "#1D4ED8", letterSpacing: 1 }}>
+              <span style={{ borderLeft: "2px solid #1D4ED8", paddingLeft: 4 }}>JARVIS</span>
+            </div>
+            <div style={{ fontSize: 10, color: "#DBEAFE", marginTop: 4 }}>
+              Voici l&apos;image astronomique du jour, Boss :
+            </div>
+          </div>
+          <div>
+            <div style={{ fontSize: 10, color: "#fff", fontWeight: 700 }}>Les Piliers de la Création</div>
+            <div style={{ fontSize: 9, color: "#5d8aa8", fontStyle: "italic", marginTop: 2 }}>19 octobre 2022 · JWST</div>
+            <p style={{ fontSize: 9, color: "#BFDBFE", lineHeight: 1.55, marginTop: 6 }}>
+              Le télescope spatial James Webb capture l&apos;une des images les plus emblématiques de l&apos;astronomie : trois colonnes de gaz et de poussière interstellaires dans la nébuleuse de l&apos;Aigle, à 6 500 années-lumière, où naissent de nouvelles étoiles.
+            </p>
+            <p style={{ fontSize: 9, color: "#5d8aa8", lineHeight: 1.55, marginTop: 6 }}>
+              Crédit : NASA, ESA, CSA, STScI · Image originale 1280 × 1300 px.
+            </p>
+          </div>
+        </div>
+      </div>
+    </JarvisShell>
+  );
+}
+
+function MockJarvisBoot() {
+  const modules = [
+    "STARTUP_CORE",
+    "NEURAL_LINK",
+    "VOICE_MODULE",
+    "GEOSPATIAL_INDEX",
+    "ANTHROPIC_BRIDGE",
+    "PARTICLE_RENDERER",
+  ];
+  return (
+    <JarvisShell>
+      <div className="relative min-h-[320px] grid place-items-center px-4 py-6 overflow-hidden">
+        {/* Orbe en arrière-plan */}
+        <div className="absolute inset-0 grid place-items-center opacity-70">
+          <JarvisOrb size={300} />
+        </div>
+
+        {/* Carte INITIALISATION par-dessus */}
+        <div
+          className="relative w-full max-w-md rounded-md"
+          style={{
+            background: "rgba(10,18,32,0.78)",
+            backdropFilter: "blur(8px)",
+            border: "1px solid rgba(29,78,216,0.40)",
+            boxShadow: "0 0 24px rgba(29,78,216,0.15), inset 0 1px 0 rgba(29,78,216,0.10)",
+          }}
+        >
+          {/* Header */}
+          <div className="flex items-center justify-between px-4 py-2.5" style={{ borderBottom: "1px solid rgba(29,78,216,0.25)" }}>
+            <div className="flex items-center gap-2">
+              <span className="block w-1.5 h-1.5 rounded-full" style={{ background: "#1D4ED8", boxShadow: "0 0 6px #1D4ED8" }} />
+              <span style={{ fontSize: 11, color: "#1D4ED8", fontWeight: 700, letterSpacing: 2 }}>INITIALISATION</span>
+            </div>
+            <span style={{ fontSize: 9, color: "#5d8aa8", letterSpacing: 1.5 }}>SYSTEM BOOT</span>
+          </div>
+          {/* Module list */}
+          <div className="px-4 py-3 space-y-1.5">
+            {modules.map((m, i) => (
+              <div key={m} className="flex items-center gap-2" style={{ fontSize: 10, color: "#DBEAFE", letterSpacing: 1, fontFamily: "ui-monospace, monospace" }}>
+                <span style={{ color: "#1D4ED8" }}>›</span>
+                <span style={{ flex: 1 }}>{m}</span>
+                <span style={{ color: "#5d8aa8" }}>[</span>
+                <span style={{ color: i === modules.length - 1 ? "#BFDBFE" : "#1D4ED8", fontWeight: 700 }}>
+                  {i === modules.length - 1 ? "OK" : "OK"}
+                </span>
+                <span style={{ color: "#5d8aa8" }}>]</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="mt-3 text-center" style={{ fontSize: 9, color: "#1D4ED8", letterSpacing: 2, opacity: 0.7 }}>
+          EN ATTENTE
+        </div>
+      </div>
+    </JarvisShell>
+  );
+}
+
+const FEATURES_JARVIS: Feature[] = [
+  {
+    id: "boot",
+    label: "Démarrage système",
+    desc: "À chaque session, JARVIS initialise ses modules : noyau, lien neuronal, voix, index géospatial, pont Anthropic, moteur de particules. Une seconde et l'assistant est prêt.",
+    icon: <IconChart />,
+    preview: <MockJarvisBoot />,
+  },
+  {
+    id: "conversation",
+    label: "Conversation",
+    desc: "Texte ou voix, JARVIS répond en français en quelques secondes. Pas de modération arbitraire — il parle clairement et fait ce qu'on lui demande. Aucune conversation n'est stockée.",
+    icon: <IconMessage />,
+    preview: <MockJarvisChat />,
+  },
+  {
+    id: "recherche-locale",
+    label: "Recherche locale",
+    desc: "Géolocalisation activée à la demande. JARVIS trouve commerces, services et transports à proximité avec distance précise. Demandez-lui « trouve-moi une boulangerie » et il vous répond.",
+    icon: <IconFolder />,
+    preview: <MockJarvisMap />,
+  },
+  {
+    id: "live-feed",
+    label: "Live feed",
+    desc: "Le bandeau d'actualités en haut de l'écran reste alimenté en continu (Le Monde, AFP, Reuters). JARVIS peut résumer, traduire ou approfondir n'importe quel titre sur demande.",
+    icon: <IconFile />,
+    preview: <MockJarvisNews />,
+  },
+  {
+    id: "orbital",
+    label: "Acquisition orbitale",
+    desc: "Mode HUD inspiré des interfaces de défense : globe terrestre stylisé avec réticules d'acquisition, coordonnées GPS en temps réel et lock visuel sur la position détectée. Pure démo visuelle — JARVIS reste un assistant, pas un satellite.",
+    icon: <IconCalendar />,
+    preview: <MockJarvisOrbital />,
+  },
+  {
+    id: "apod",
+    label: "Image du jour NASA",
+    desc: "Affiche et traduit en français l'image astronomique du jour (APOD) de la NASA. Une fonction de curiosité scientifique intégrée, sans clic et sans pub.",
+    icon: <IconChart />,
+    preview: <MockJarvisNasa />,
+  },
+];
+
 /* ─── Portal animation words (stable, no Math.random) ───────────────────── */
 const PORTAL_WORDS = [
   { text: "Ordonnances",      x: 8,  y: 16, angle: -8,  size: 26, delay: 0.05 },
@@ -1107,7 +1782,7 @@ const PORTAL_WORDS = [
   { text: "LPPR / SCOR",      x: 16, y: 50, angle:  3,  size: 18, delay: 0.35 },
   { text: "Factures",         x: 63, y: 55, angle: -6,  size: 30, delay: 0.08 },
   { text: "Mutuelles",        x: 30, y: 67, angle:  9,  size: 22, delay: 0.28 },
-  { text: "TVA 5,5 % / 20 %", x: 5,  y: 73, angle: -4,  size: 16, delay: 0.18 },
+  { text: "TVA 20 %",         x: 5,  y: 73, angle: -4,  size: 16, delay: 0.18 },
   { text: "Renouvellements",  x: 46, y: 77, angle:  7,  size: 20, delay: 0.42 },
   { text: "Paperasses",       x: 80, y: 70, angle: -10, size: 28, delay: 0.03 },
   { text: "ADRi / e-CPS",     x: 40, y: 38, angle:  4,  size: 18, delay: 0.50 },
@@ -1138,7 +1813,7 @@ export default function DemoPage() {
   const statsRef = useRef<HTMLDivElement>(null);
   const [statsVisible, setStatsVisible] = useState(false);
   const [portalPhase, setPortalPhase] = useState<"hidden" | "portal" | "form" | "sent">("hidden");
-  const [specialite, setSpecialite] = useState<"optique" | "audio" | "both" | "">("");
+  const [specialite, setSpecialite] = useState<"optique" | "audio" | "pharma" | "both" | "">("");
 
   function handleDemoClick(e: React.MouseEvent) {
     e.preventDefault();
@@ -1147,7 +1822,8 @@ export default function DemoPage() {
   }
 
   const t = THEMES[space];
-  const features = space === "vision" ? FEATURES_VISION : space === "audition" ? FEATURES_AUDITION : FEATURES_PHARMA;
+  const narr = MODULE_NARRATIVE[space];
+  const features = space === "vision" ? FEATURES_VISION : space === "audition" ? FEATURES_AUDITION : space === "pharma" ? FEATURES_PHARMA : FEATURES_JARVIS;
   const cur = features[Math.min(active, features.length - 1)];
 
   /* Sidebar icon active index par feature */
@@ -1182,39 +1858,7 @@ export default function DemoPage() {
   return (
     <div style={{ background: "transparent", minHeight: "100vh", color: "#0f172a", fontFamily: "var(--font-sans)", position: "relative", overflow: "hidden" }}>
       <style>{`
-        @keyframes fadeInUp {
-          from { opacity: 0; transform: translateY(28px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes floatParticle {
-          0%   { transform: translateY(0) translateX(0); opacity: 0; }
-          8%   { opacity: 0.5; }
-          92%  { opacity: 0.2; }
-          100% { transform: translateY(-110vh) translateX(30px); opacity: 0; }
-        }
-        @keyframes orbDrift {
-          0%, 100% { transform: translate(0,0) scale(1); }
-          33%  { transform: translate(40px,-30px) scale(1.08); }
-          66%  { transform: translate(-30px,20px) scale(0.95); }
-        }
-        @keyframes scanLine {
-          0%   { transform: translateY(-100%); opacity: 0; }
-          10%  { opacity: 1; }
-          90%  { opacity: 0.6; }
-          100% { transform: translateY(2000px); opacity: 0; }
-        }
-        @keyframes textGradientSlide {
-          0%   { background-position: 0% center; }
-          100% { background-position: 200% center; }
-        }
-        @keyframes glowPulse {
-          0%, 100% { opacity: 0.6; transform: scale(1); }
-          50%  { opacity: 1; transform: scale(1.15); }
-        }
-        @keyframes shimmerIn {
-          from { opacity: 0; transform: scale(0.97) translateY(10px); }
-          to   { opacity: 1; transform: scale(1) translateY(0); }
-        }
+        /* Keyframes locaux uniquement (les communs sont dans globals.css) */
         @keyframes borderRotate {
           from { --angle: 0deg; }
           to   { --angle: 360deg; }
@@ -1250,6 +1894,14 @@ export default function DemoPage() {
         }
         .gradient-action-pharma {
           background-image: linear-gradient(90deg, #059669, #10B981, #14B8A6, #059669);
+          background-size: 250% auto;
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+          animation: textGradientSlide 4s linear infinite;
+        }
+        .gradient-action-jarvis {
+          background-image: linear-gradient(90deg, #1D4ED8, #2563EB, #60A5FA, #1D4ED8);
           background-size: 250% auto;
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
@@ -1327,19 +1979,19 @@ export default function DemoPage() {
           </h1>
           <div style={{ fontSize: "clamp(20px, 3.2vw, 36px)", fontWeight: 300, color: "#64748b", letterSpacing: "-0.02em", marginTop: 12 }}>
             en{" "}
-            <span className={space === "vision" ? "gradient-action-vision" : space === "audition" ? "gradient-action-audition" : "gradient-action-pharma"} style={{ fontWeight: 800 }}>
+            <span className={space === "vision" ? "gradient-action-vision" : space === "audition" ? "gradient-action-audition" : space === "pharma" ? "gradient-action-pharma" : "gradient-action-jarvis"} style={{ fontWeight: 800 }}>
               action
             </span>
           </div>
         </div>
 
         <p style={{ fontSize: 17, color: "#475569", maxWidth: 520, margin: "0 auto 36px", lineHeight: 1.7, animation: "fadeInUp 0.6s 0.2s ease both" }}>
-          Explorez les fonctionnalités de Clair Vision et Clair Audition en temps réel. Chaque aperçu reflète l&apos;interface exacte du produit.
+          Explorez les fonctionnalités de <strong style={{ color: t.accent, fontWeight: 700 }}>{t.name}</strong> en temps réel. Chaque aperçu reflète l&apos;interface exacte du produit.
         </p>
 
         {/* Space selector */}
         <div style={{ display: "inline-flex", gap: 4, padding: 4, borderRadius: 16, border: "1px solid rgba(15,23,42,0.08)", background: "rgba(255,255,255,0.6)", backdropFilter: "blur(20px)", WebkitBackdropFilter: "blur(20px)", animation: "fadeInUp 0.6s 0.3s ease both" }}>
-          {(["pharma", "vision", "audition"] as Space[]).map((s) => {
+          {(["pharma", "vision", "audition", "jarvis"] as Space[]).map((s) => {
             const th = THEMES[s];
             const isActive = space === s;
             return (
@@ -1365,13 +2017,19 @@ export default function DemoPage() {
                     <path d="M3 18v-6a9 9 0 0 1 18 0v6"/>
                     <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3ZM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3Z"/>
                   </svg>
-                ) : (
+                ) : s === "pharma" ? (
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                     <rect x="9" y="2" width="6" height="6" rx="1.4"/>
                     <rect x="2" y="9" width="6" height="6" rx="1.4"/>
                     <rect x="9" y="9" width="6" height="6" rx="1.4"/>
                     <rect x="16" y="9" width="6" height="6" rx="1.4"/>
                     <rect x="9" y="16" width="6" height="6" rx="1.4"/>
+                  </svg>
+                ) : (
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <circle cx="12" cy="12" r="9" />
+                    <circle cx="12" cy="12" r="3" fill="currentColor" />
+                    <path d="M12 3v2M12 19v2M3 12h2M19 12h2" />
                   </svg>
                 )}
                 {th.name}
@@ -1517,7 +2175,7 @@ export default function DemoPage() {
       <section style={{ position: "relative", zIndex: 1, borderTop: "1px solid rgba(15,23,42,0.06)", borderBottom: "1px solid rgba(15,23,42,0.06)", padding: "60px 24px" }}>
         <div ref={statsRef} style={{ maxWidth: 960, margin: "0 auto", display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 40, textAlign: "center" }}>
           {[
-            { value: "2 400+", label: "Praticiens actifs",      color: t.accent,   delay: "0s"    },
+            { value: narr.statValue, label: narr.statLabel,    color: t.accent,   delay: "0s"    },
             { value: "99,9 %", label: "Disponibilité SLA",      color: "#a78bfa",  delay: "0.12s" },
             { value: "< 2 s",  label: "Temps de chargement",    color: "#38bdf8",  delay: "0.24s" },
             { value: "HDS",    label: "Hébergement certifié",   color: "#34d399",  delay: "0.36s" },
@@ -1543,10 +2201,10 @@ export default function DemoPage() {
             </div>
             <h2 style={{ fontSize: "clamp(32px,5vw,56px)", fontWeight: 900, color: "#0f172a", fontFamily: "var(--font-display)", letterSpacing: "-0.04em", lineHeight: 1.05, marginBottom: 20 }}>
               Pourquoi nous avons<br />
-              <span style={{ color: "#94a3b8" }}>construit THOR</span>
+              <span style={{ color: "#94a3b8" }}>construit {t.name}</span>
             </h2>
             <p style={{ fontSize: 18, color: "#475569", maxWidth: 640, margin: "0 auto", lineHeight: 1.75 }}>
-              Deux métiers de santé parmi les plus réglementés de France. Des milliers de praticiens débordés par l&apos;administratif. Des logiciels vieillissants qui n&apos;ont pas suivi les réformes. Voilà ce qui nous a poussés à tout reconstruire.
+              {narr.intro}
             </p>
           </div>
 
@@ -1554,7 +2212,7 @@ export default function DemoPage() {
           <div style={{ borderRadius: 20, border: "1px solid rgba(15,23,42,0.08)", background: "rgba(255,255,255,0.55)", backdropFilter: "blur(20px)", WebkitBackdropFilter: "blur(20px)", padding: "36px 48px", marginBottom: 48, position: "relative", overflow: "hidden" }}>
             <div style={{ position: "absolute", top: 20, left: 32, fontSize: 80, color: "rgba(45,140,255,0.10)", fontFamily: "Georgia, serif", lineHeight: 1 }}>&ldquo;</div>
             <p style={{ fontSize: 20, color: "#475569", lineHeight: 1.7, fontStyle: "italic", margin: "0 0 20px", paddingLeft: 16, position: "relative", zIndex: 1 }}>
-              En discutant avec des opticiens et des audioprothésistes, on a réalisé que la plupart passaient plus d&apos;une heure par jour à remplir des formulaires, à chercher des ordonnances dans des classeurs ou à recopier des données d&apos;un logiciel à l&apos;autre. Ce temps-là, ce n&apos;est pas du temps de soin — c&apos;est du temps perdu. On a voulu le leur rendre.
+              {narr.quote}
             </p>
             <div style={{ display: "flex", alignItems: "center", gap: 12, paddingLeft: 16, position: "relative", zIndex: 1 }}>
               <div style={{ width: 36, height: 36, borderRadius: "50%", background: "linear-gradient(135deg,#2D8CFF,#8B5CF6)", display: "grid", placeItems: "center", color: "white", fontWeight: 900, fontSize: 14 }}>N</div>
@@ -1565,69 +2223,51 @@ export default function DemoPage() {
             </div>
           </div>
 
-          {/* Deux colonnes Vision / Audition */}
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 24, marginBottom: 48 }}>
-
-            {/* Clair Vision */}
-            <div style={{ borderRadius: 20, border: "1px solid rgba(45,140,255,0.25)", background: "rgba(45,140,255,0.08)", backdropFilter: "blur(20px)", WebkitBackdropFilter: "blur(20px)", padding: "36px 32px" }}>
-              <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 24 }}>
-                <div style={{ width: 44, height: 44, borderRadius: 12, background: "linear-gradient(135deg,#2D8CFF,#06B6D4)", display: "grid", placeItems: "center", boxShadow: "0 4px 20px rgba(45,140,255,0.35)" }}>
-                  <svg viewBox="0 0 24 24" style={{ width: 20, height: 20 }} fill="none" stroke="white" strokeWidth="2.2" strokeLinecap="round">
+          {/* Carte module — pourquoi ce SaaS spécifique */}
+          <div style={{ borderRadius: 20, border: `1px solid ${narr.cardBorder}`, background: narr.cardBg, backdropFilter: "blur(20px)", WebkitBackdropFilter: "blur(20px)", padding: "40px 36px", marginBottom: 48 }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 28 }}>
+              <div style={{ width: 52, height: 52, borderRadius: 14, background: narr.cardGradient, display: "grid", placeItems: "center", boxShadow: `0 4px 20px ${t.glowStrong}` }}>
+                {space === "vision" ? (
+                  <svg viewBox="0 0 24 24" style={{ width: 24, height: 24 }} fill="none" stroke="white" strokeWidth="2.2" strokeLinecap="round">
                     <path d="M2.5 12s3.5-7 9.5-7 9.5 7 9.5 7-3.5 7-9.5 7-9.5-7-9.5-7Z"/>
                     <circle cx="12" cy="12" r="3"/>
                   </svg>
-                </div>
-                <div>
-                  <h3 style={{ color: "#0f172a", fontWeight: 800, fontSize: 20, margin: 0, letterSpacing: "-0.02em" }}>Clair Vision</h3>
-                  <p style={{ color: "#2D8CFF", fontSize: 12, fontWeight: 600, margin: 0 }}>Pour les opticiens-lunetiers</p>
-                </div>
-              </div>
-              <p style={{ color: "#475569", fontSize: 14, lineHeight: 1.75, marginBottom: 24 }}>
-                Depuis 2014, les opticiens ont l&apos;obligation légale de remettre un devis normalisé à chaque patient. Depuis 2020, la réforme 100% Santé a reconfiguré toute la prise en charge. Et malgré ça, la plupart des logiciels du marché n&apos;ont pas suivi.
-              </p>
-              <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-                {[
-                  { text: "Devis normalisés générés automatiquement depuis l'ordonnance" },
-                  { text: "Alertes de renouvellement proactives — plus aucun patient oublié" },
-                  { text: "Calculateur de lentilles avec compatibilité stock en temps réel" },
-                  { text: "Facturation intégrée avec TVA correcte (5,5% verres / 20% montures)" },
-                ].map(({ text }) => (
-                  <div key={text} style={{ display: "flex", alignItems: "flex-start", gap: 10 }}>
-                    <p style={{ color: "#475569", fontSize: 13, lineHeight: 1.6, margin: 0 }}>{text}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Clair Audition */}
-            <div style={{ borderRadius: 20, border: "1px solid rgba(0,201,138,0.25)", background: "rgba(0,201,138,0.08)", backdropFilter: "blur(20px)", WebkitBackdropFilter: "blur(20px)", padding: "36px 32px" }}>
-              <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 24 }}>
-                <div style={{ width: 44, height: 44, borderRadius: 12, background: "#00C98A", display: "grid", placeItems: "center", boxShadow: "0 4px 20px rgba(0,201,138,0.35)" }}>
-                  <svg viewBox="0 0 24 24" style={{ width: 20, height: 20 }} fill="none" stroke="white" strokeWidth="2.2" strokeLinecap="round">
+                ) : space === "audition" ? (
+                  <svg viewBox="0 0 24 24" style={{ width: 24, height: 24 }} fill="none" stroke="white" strokeWidth="2.2" strokeLinecap="round">
                     <path d="M3 18v-6a9 9 0 0 1 18 0v6"/>
                     <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3ZM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3Z"/>
                   </svg>
-                </div>
-                <div>
-                  <h3 style={{ color: "#0f172a", fontWeight: 800, fontSize: 20, margin: 0, letterSpacing: "-0.02em" }}>Clair Audition</h3>
-                  <p style={{ color: "#00C98A", fontSize: 12, fontWeight: 600, margin: 0 }}>Pour les audioprothésistes</p>
-                </div>
+                ) : space === "pharma" ? (
+                  <svg viewBox="0 0 24 24" style={{ width: 24, height: 24 }} fill="white" aria-hidden>
+                    <rect x="9" y="2" width="6" height="6" rx="1.4"/>
+                    <rect x="2" y="9" width="6" height="6" rx="1.4"/>
+                    <rect x="9" y="9" width="6" height="6" rx="1.4"/>
+                    <rect x="16" y="9" width="6" height="6" rx="1.4"/>
+                    <rect x="9" y="16" width="6" height="6" rx="1.4"/>
+                  </svg>
+                ) : (
+                  <svg viewBox="0 0 24 24" style={{ width: 24, height: 24 }} fill="none" stroke="white" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                    <circle cx="12" cy="12" r="9" />
+                    <circle cx="12" cy="12" r="3" fill="white" />
+                    <path d="M12 3v2M12 19v2M3 12h2M19 12h2" />
+                  </svg>
+                )}
               </div>
-              <p style={{ color: "#475569", fontSize: 14, lineHeight: 1.75, marginBottom: 24 }}>
-                La réforme 100% Santé de 2021 a bouleversé le marché de l&apos;appareillage auditif. Classe I, Classe II, LPPR, SCOR, ADRi — la complexité administrative a explosé au moment même où les patients affluaient. Les logiciels existants n&apos;étaient tout simplement pas prêts.
-              </p>
-              <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-                {[
-                  { text: "Dossiers d'appareillage complets — du bilan à la livraison" },
-                  { text: "Audiogrammes intégrés avec interprétation automatique (PTA, grade SS)" },
-                  { text: "Présentation Classe I / Classe II côte à côte dans chaque devis" },
-                  { text: "Conforme GIE SESAM-Vitale, HDS et ADRi/e-CPS dès le premier jour" },
-                ].map(({ text }) => (
-                  <div key={text} style={{ display: "flex", alignItems: "flex-start", gap: 10 }}>
-                    <p style={{ color: "#475569", fontSize: 13, lineHeight: 1.6, margin: 0 }}>{text}</p>
-                  </div>
-                ))}
+              <div>
+                <h3 style={{ color: "#0f172a", fontWeight: 800, fontSize: 24, margin: 0, letterSpacing: "-0.02em" }}>{t.name}</h3>
+                <p style={{ color: t.accent, fontSize: 13, fontWeight: 600, margin: 0 }}>{narr.audienceLong}</p>
               </div>
+            </div>
+            <p style={{ color: "#475569", fontSize: 15, lineHeight: 1.75, marginBottom: 28 }}>
+              {narr.cardBody}
+            </p>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
+              {narr.bullets.map((text) => (
+                <div key={text} style={{ display: "flex", alignItems: "flex-start", gap: 10 }}>
+                  <span style={{ width: 6, height: 6, borderRadius: "50%", background: t.accent, marginTop: 7, flexShrink: 0 }} />
+                  <p style={{ color: "#475569", fontSize: 13.5, lineHeight: 1.6, margin: 0 }}>{text}</p>
+                </div>
+              ))}
             </div>
           </div>
 
@@ -1635,7 +2275,7 @@ export default function DemoPage() {
           <div style={{ borderRadius: 16, border: "1px solid rgba(15,23,42,0.06)", background: "rgba(255,255,255,0.55)", backdropFilter: "blur(20px)", WebkitBackdropFilter: "blur(20px)", padding: "28px 36px", display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 32 }}>
             {[
               { val: "100%", label: "Cloud natif", desc: "Aucune installation, mises à jour automatiques, données toujours sauvegardées." },
-              { val: "HDS", label: "Hébergeur certifié santé", desc: "Vos données patients sont hébergées en France, dans un datacenter certifié HDS." },
+              { val: narr.trustVal, label: narr.trustLabel, desc: narr.trustDesc },
               { val: "7j/7", label: "Support humain", desc: "Une équipe dédiée, joignable 7 jours sur 7, qui connaît votre métier." },
             ].map(({ val, label, desc }) => (
               <div key={label}>
@@ -1677,7 +2317,7 @@ export default function DemoPage() {
       <section style={{ position: "relative", zIndex: 1, padding: "40px 24px 80px", textAlign: "center" }}>
         <div style={{ maxWidth: 600, margin: "0 auto", borderRadius: 24, border: `1px solid ${t.border}`, background: t.bg, padding: "48px 40px", boxShadow: `0 0 60px ${t.glow}` }}>
           <h2 style={{ fontSize: 32, fontWeight: 800, color: "#0f172a", fontFamily: "var(--font-display)", letterSpacing: "-0.03em", marginBottom: 12 }}>Prêt à démarrer ?</h2>
-          <p style={{ color: "#475569", marginBottom: 28, fontSize: 15 }}>Rejoignez 2 400+ praticiens qui font confiance à THOR pour gérer leur cabinet.</p>
+          <p style={{ color: "#475569", marginBottom: 28, fontSize: 15 }}>{narr.ctaDesc}</p>
           <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
             <button onClick={handleDemoClick} style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "13px 28px", borderRadius: 14, background: t.gradient, color: "white", fontWeight: 700, fontSize: 14, border: "none", cursor: "pointer", boxShadow: `0 8px 32px ${t.glowStrong}`, transition: "all 0.2s" }}>
               Demander une démo →
@@ -1807,7 +2447,7 @@ export default function DemoPage() {
 
                     {/* Specialite pills */}
                     <div style={{ display: "flex", gap: 8, justifyContent: "center", marginTop: 4 }}>
-                      {([["optique", "Opticien"], ["audio", "Audioprothésiste"], ["both", "Les deux"]] as const).map(([val, label]) => (
+                      {([["optique", "Opticien"], ["audio", "Audio"], ["pharma", "Pharmacie"], ["both", "Plusieurs"]] as const).map(([val, label]) => (
                         <button
                           key={val}
                           type="button"

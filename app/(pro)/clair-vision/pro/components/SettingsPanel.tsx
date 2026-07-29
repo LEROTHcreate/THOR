@@ -756,7 +756,7 @@ function SectionTarification({
       <SectionCard>
         <h2 className="mb-4 text-base font-semibold text-slate-800">Taux de TVA</h2>
         <div className="flex gap-4">
-          {([5.5, 20] as const).map((v) => (
+          {([20, 5.5] as const).map((v) => (
             <label key={v} className="flex items-center gap-2 cursor-pointer">
               <input
                 type="radio"
@@ -766,7 +766,8 @@ function SectionTarification({
                 className="accent-[#6366f1]"
               />
               <span className="text-sm font-medium text-slate-700">{v}%</span>
-              {v === 20 && <span className="text-xs text-slate-400">(optique standard)</span>}
+              {v === 20  && <span className="text-xs text-slate-400">(optique standard)</span>}
+              {v === 5.5 && <span className="text-xs text-slate-400">(taux réduit — usage exceptionnel)</span>}
             </label>
           ))}
         </div>

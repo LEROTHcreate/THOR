@@ -361,7 +361,7 @@ export function EspacesDedies() {
 
   return (
     <section id="espaces" className="py-20 md:py-28" style={{ background: "linear-gradient(180deg, #f8fafc 0%, #f1f5fb 100%)" }}>
-      <div className="w-full px-8 lg:px-16 xl:px-24">
+      <div className="w-full px-4 sm:px-6 md:px-8 lg:px-16 xl:px-24">
 
         {/* Header */}
         <Reveal>

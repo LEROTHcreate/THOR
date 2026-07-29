@@ -203,50 +203,6 @@ function StatusBadge({ status }: { status: "Active" | "Expirée" }) {
   );
 }
 
-/* ── Empty state sample data (seed once) ─────────────────────────────────── */
-const SEED: Ordonnance[] = [
-  {
-    id: "seed-1",
-    numero: "ORD-2024-001",
-    patientNom: "Leblanc",
-    patientPrenom: "Marie",
-    dateOrdonnance: "2024-11-18",
-    dateExpiration: "2026-11-18",
-    prescripteur: "Dr. Martin",
-    od: { sphere: -4.5, cylindre: -1.25, axe: 15, addition: null },
-    og: { sphere: -4.0, cylindre: -1.0, axe: 170, addition: null },
-    ecartPupillaire: 63,
-    createdAt: "2024-11-18T09:00:00.000Z",
-  },
-  {
-    id: "seed-2",
-    numero: "ORD-2024-002",
-    patientNom: "Renaud",
-    patientPrenom: "Paul",
-    dateOrdonnance: "2024-11-18",
-    dateExpiration: "2025-11-18",
-    prescripteur: "Dr. Martin",
-    od: { sphere: -3.0, cylindre: null, axe: null, addition: null },
-    og: { sphere: -2.75, cylindre: null, axe: null, addition: null },
-    ecartPupillaire: 61,
-    remarques: "Lentilles mensuelles — Bc 8.6, Diam 14.2",
-    createdAt: "2024-11-18T10:30:00.000Z",
-  },
-  {
-    id: "seed-3",
-    numero: "ORD-2024-003",
-    patientNom: "Morel",
-    patientPrenom: "Isabelle",
-    dateOrdonnance: "2024-04-12",
-    dateExpiration: "2026-04-12",
-    prescripteur: "Dr. Martin",
-    od: { sphere: 1.25, cylindre: -0.5, axe: 90, addition: 2.0 },
-    og: { sphere: 1.0, cylindre: -0.75, axe: 85, addition: 2.0 },
-    ecartPupillaire: 64,
-    createdAt: "2024-04-12T14:00:00.000Z",
-  },
-];
-
 /* ── Form state type ─────────────────────────────────────────────────────── */
 interface OeilForm {
   sphere: string;
@@ -700,13 +656,7 @@ export default function OrdonnancesPage() {
 
   useEffect(() => {
     setStoreConfig(loadStoreConfig());
-    const stored = loadOrdonnances();
-    if (stored.length === 0) {
-      saveOrdonnances(SEED);
-      setOrdonnances(SEED);
-    } else {
-      setOrdonnances(stored);
-    }
+    setOrdonnances(loadOrdonnances());
   }, []);
 
   // Trigger print after state update renders print zone

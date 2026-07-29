@@ -1,8 +1,10 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useRef } from "react";
 import { Reveal } from "@/components/ui/reveal";
+import { BrandIcon } from "@/components/brand-icon";
 
 type SaasCardProps = {
   name: string;
@@ -48,7 +50,7 @@ function SaasCard({ index, name, tagline, description, audience, features, prima
       ref={cardRef}
       onMouseMove={onMouseMove}
       onMouseLeave={onMouseLeave}
-      className="group relative overflow-hidden rounded-3xl p-8 lg:p-10 transition-transform duration-300 will-change-transform"
+      className="group relative overflow-hidden rounded-3xl p-6 sm:p-8 lg:p-10 transition-transform duration-300 will-change-transform"
       style={{
         background: "rgba(255,255,255,0.65)",
         backdropFilter: "blur(24px)",
@@ -100,12 +102,8 @@ function SaasCard({ index, name, tagline, description, audience, features, prima
             </span>
             {logo ? (
               <div
-                className="w-8 h-8 rounded-lg grid place-items-center shrink-0"
-                style={{
-                  background: light,
-                  color: primary,
-                  border: `1px solid ${primary}33`,
-                }}
+                className="w-12 h-12 grid place-items-center shrink-0"
+                style={{ color: primary }}
               >
                 {logo}
               </div>
@@ -224,7 +222,7 @@ function SaasCard({ index, name, tagline, description, audience, features, prima
 /* ── Logo PharmaPlanning : croix de pharmacie en 5 carrés arrondis ── */
 function PharmaPlanningLogo() {
   return (
-    <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true">
+    <svg viewBox="0 0 24 24" width="26" height="26" fill="currentColor" aria-hidden="true">
       <rect x="9" y="2" width="6" height="6" rx="1.4"/>
       <rect x="2" y="9" width="6" height="6" rx="1.4"/>
       <rect x="9" y="9" width="6" height="6" rx="1.4"/>
@@ -234,17 +232,31 @@ function PharmaPlanningLogo() {
   );
 }
 
+/* ── Logo J.A.R.V.I.S : arc reactor cyan sur fond clair ── */
+function JarvisLogo() {
+  return (
+    <Image
+      src="/images/logos/jarvis-v2.png"
+      alt="J.A.R.V.I.S"
+      width={48}
+      height={48}
+      className="shrink-0 object-contain"
+      style={{ filter: "contrast(1.15) saturate(1.25)" }}
+    />
+  );
+}
+
 export function SaasPortfolio() {
   return (
-    <section id="portfolio" className="relative py-24 md:py-32">
-      <div className="mx-auto max-w-[1400px] px-6">
+    <section id="portfolio" className="relative py-16 sm:py-24 md:py-32">
+      <div className="mx-auto max-w-[1400px] px-5 sm:px-6">
 
         <Reveal>
           <div className="text-center mb-16">
             <span className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400 mb-4 block">
               Nos plateformes
             </span>
-            <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-slate-900 h-title">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-slate-900 h-title">
               L'écosystème <span className="font-light text-slate-500">THOR</span>
             </h2>
             <p className="mt-5 text-base text-slate-500 max-w-xl mx-auto leading-relaxed">
@@ -254,7 +266,7 @@ export function SaasPortfolio() {
           </div>
         </Reveal>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-6">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
           <Reveal>
             <SaasCard
               index={0}
@@ -294,6 +306,7 @@ export function SaasPortfolio() {
               href="/clair-vision"
               proHref="/connexion/praticien?module=vision"
               status="live"
+              logo={<BrandIcon brand="vision" size={38} />}
             />
           </Reveal>
 
@@ -315,12 +328,34 @@ export function SaasPortfolio() {
               href="/clair-audition"
               proHref="/connexion/praticien?module=audition"
               status="live"
+              logo={<BrandIcon brand="audition" size={38} />}
             />
           </Reveal>
 
           <Reveal>
             <SaasCard
               index={3}
+              name="J.A.R.V.I.S"
+              tagline="Assistant IA"
+              description="Assistant intelligent multi-usage. Compagnon conversationnel, automatisation et productivité — pensé pour aller à l'essentiel."
+              audience="Tous publics · Pro & particulier"
+              features={[
+                "Conversations naturelles & contextuelles",
+                "Automatisation de tâches répétitives",
+                "Mémoire persistante de vos préférences",
+                "Intégration native dans THOR",
+              ]}
+              primary="#0EA5E9"
+              light="#F0F9FF"
+              href="https://jarvis-pi-pied.vercel.app/"
+              status="live"
+              logo={<JarvisLogo />}
+            />
+          </Reveal>
+
+          <Reveal>
+            <SaasCard
+              index={4}
               name="En préparation"
               tagline="Prochain SaaS"
               description="Une nouvelle plateforme métier rejoindra l'écosystème prochainement."

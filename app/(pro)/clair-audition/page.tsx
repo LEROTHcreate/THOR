@@ -2,8 +2,10 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
+import { BrandIcon } from "@/components/brand-icon";
 
 const ACCENT = "#00C98A";
+const ACCENT_DEEP = "#00A876";
 const ACCENT2 = "#0EA5E9";
 
 function scrollTo(id: string) {
@@ -49,17 +51,8 @@ function Header({ scrolled }: { scrolled: boolean }) {
             THOR
           </Link>
           <span className="hidden sm:block w-px h-4 bg-slate-200" />
-          <div className="flex items-center gap-2.5">
-            <div
-              className="grid h-8 w-8 place-items-center rounded-xl"
-              style={{ background: ACCENT, boxShadow: `0 2px 8px ${ACCENT}44` }}
-            >
-              <svg className="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M6 8a6 6 0 0 1 12 0c0 7-3 8-3 8H9a3 3 0 0 1-3-3" />
-                <path d="M10 13c0-1.5 1-2 1-3a2 2 0 0 0-4 0" />
-                <circle cx="12" cy="20" r="1" />
-              </svg>
-            </div>
+          <div className="flex items-center gap-2">
+            <BrandIcon brand="audition" size={32} />
             <span className="text-base font-bold tracking-tight text-slate-900">
               Clair<span style={{ color: ACCENT }}>Audition</span>
             </span>
@@ -92,79 +85,178 @@ function Header({ scrolled }: { scrolled: boolean }) {
 
 /* ── Hero ────────────────────────────────────────────────────────────────── */
 function Hero() {
+  const [parallax, setParallax] = useState({ x: 0, y: 0 });
+  const [scale, setScale] = useState(1);
+  useEffect(() => {
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    if (mq.matches) return;
+    let raf = 0;
+    let lastX = 0, lastY = 0;
+    function onMove(e: MouseEvent) {
+      lastX = e.clientX;
+      lastY = e.clientY;
+      if (raf) return;
+      raf = requestAnimationFrame(() => {
+        setParallax({
+          x: (lastX / window.innerWidth - 0.5) * 24,
+          y: (lastY / window.innerHeight - 0.5) * 16,
+        });
+        raf = 0;
+      });
+    }
+    function onResize() {
+      const w = window.innerWidth;
+      setScale(w >= 1280 ? 1 : w >= 768 ? 0.72 : 0.55);
+    }
+    onResize();
+    window.addEventListener("mousemove", onMove, { passive: true });
+    window.addEventListener("resize", onResize, { passive: true });
+    return () => {
+      if (raf) cancelAnimationFrame(raf);
+      window.removeEventListener("mousemove", onMove);
+      window.removeEventListener("resize", onResize);
+    };
+  }, []);
+
   return (
     <section
       className="relative min-h-screen flex items-center overflow-hidden pt-16"
-      style={{ background: "linear-gradient(145deg, #f8fafc 0%, #f0fdf9 35%, #e6fff7 65%, #f8fafc 100%)" }}
+      style={{ background: "linear-gradient(180deg, #fbfffd 0%, #f3fbf7 50%, #f8fffe 100%)" }}
     >
-      {/* Dot grid texture */}
-      <div className="pointer-events-none absolute inset-0"
-           style={{ backgroundImage: `radial-gradient(rgba(0,201,138,0.09) 1px, transparent 1px)`, backgroundSize: "28px 28px" }} />
+      {/* Fond animé — blobs morphants (palette Audition) */}
+      <div aria-hidden="true" className="absolute inset-0 overflow-hidden pointer-events-none" style={{ mixBlendMode: "multiply" }}>
+        <div className="absolute" style={{
+          width: "55vw", height: "55vw", maxWidth: 850, maxHeight: 850,
+          top: "-15%", left: "-12%",
+          background: "radial-gradient(circle at 30% 30%, rgba(0,201,138,0.50) 0%, rgba(0,201,138,0) 65%)",
+          filter: "blur(60px)",
+          animation: "morphBlob1 28s ease-in-out infinite",
+        }} />
+        <div className="absolute" style={{
+          width: "50vw", height: "50vw", maxWidth: 800, maxHeight: 800,
+          top: "10%", right: "-15%",
+          background: "radial-gradient(circle at 60% 40%, rgba(14,165,233,0.42) 0%, rgba(14,165,233,0) 65%)",
+          filter: "blur(70px)",
+          animation: "morphBlob2 34s ease-in-out infinite",
+          animationDelay: "-6s",
+        }} />
+        <div className="absolute" style={{
+          width: "48vw", height: "48vw", maxWidth: 750, maxHeight: 750,
+          bottom: "-5%", left: "20%",
+          background: "radial-gradient(circle at 50% 50%, rgba(20,184,166,0.30) 0%, rgba(20,184,166,0) 65%)",
+          filter: "blur(70px)",
+          animation: "morphBlob3 30s ease-in-out infinite",
+          animationDelay: "-12s",
+        }} />
+      </div>
 
-      {/* Orbes pleine largeur */}
-      <div className="pointer-events-none absolute -top-20 right-0 h-[1100px] w-[1100px] rounded-full blur-3xl"
-           style={{ background: "rgba(0,201,138,0.11)", animation: "orbDrift 18s ease-in-out infinite" }} />
-      <div className="pointer-events-none absolute -bottom-40 -left-20 h-[800px] w-[800px] rounded-full blur-3xl"
-           style={{ background: "rgba(0,201,138,0.07)", animation: "orbDrift 22s 4s ease-in-out infinite" }} />
-      <div className="pointer-events-none absolute top-1/3 left-1/3 h-[500px] w-[500px] rounded-full blur-3xl"
-           style={{ background: "rgba(14,165,233,0.04)", animation: "orbDrift 28s 9s ease-in-out infinite" }} />
+      {/* Dot grid subtil */}
+      <div className="pointer-events-none absolute inset-0 opacity-[0.35]"
+           style={{
+             backgroundImage: `radial-gradient(circle, rgba(0,201,138,0.16) 1px, transparent 1px)`,
+             backgroundSize: "32px 32px",
+             maskImage: "radial-gradient(ellipse 80% 60% at center, black 0%, transparent 75%)",
+             WebkitMaskImage: "radial-gradient(ellipse 80% 60% at center, black 0%, transparent 75%)",
+           }} />
 
-      {/* Corner decorations */}
-      <svg className="pointer-events-none absolute top-0 left-0 opacity-[0.06]" width="240" height="240" viewBox="0 0 240 240">
-        {[0,40,80,120,160,200,240].map(x => <line key={`v${x}`} x1={x} y1="0" x2={x} y2="240" stroke="#00C98A" strokeWidth="0.5"/>)}
-        {[0,40,80,120,160,200,240].map(y => <line key={`h${y}`} x1="0" y1={y} x2="240" y2={y} stroke="#00C98A" strokeWidth="0.5"/>)}
-      </svg>
-      <svg className="pointer-events-none absolute bottom-0 right-0 opacity-[0.06]" width="240" height="240" viewBox="0 0 240 240">
-        {[0,40,80,120,160,200,240].map(x => <line key={`v${x}`} x1={x} y1="0" x2={x} y2="240" stroke="#00C98A" strokeWidth="0.5"/>)}
-        {[0,40,80,120,160,200,240].map(y => <line key={`h${y}`} x1="0" y1={y} x2="240" y2={y} stroke="#00C98A" strokeWidth="0.5"/>)}
-      </svg>
+      {/* Particules flottantes */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {[
+          { left: "12%", delay: 0,  size: 3, duration: 20 },
+          { left: "24%", delay: 4,  size: 4, duration: 24 },
+          { left: "38%", delay: 8,  size: 3, duration: 22 },
+          { left: "52%", delay: 2,  size: 3, duration: 25 },
+          { left: "66%", delay: 12, size: 4, duration: 19 },
+          { left: "78%", delay: 6,  size: 3, duration: 23 },
+          { left: "90%", delay: 10, size: 3, duration: 21 },
+        ].map((p, i) => (
+          <div key={i} className="absolute rounded-full" style={{
+            left: p.left, bottom: "-10px",
+            width: p.size, height: p.size,
+            background: "rgba(0,201,138,0.65)",
+            boxShadow: "0 0 8px rgba(0,201,138,0.55)",
+            animation: `floatParticle ${p.duration}s linear infinite`,
+            animationDelay: `${p.delay}s`,
+          }} />
+        ))}
+      </div>
 
       <div className="relative z-10 w-full px-8 sm:px-14 lg:px-20 2xl:px-28 py-20">
-        <div className="grid lg:grid-cols-[1fr_1.15fr] gap-12 xl:gap-20 items-center">
+        <div className="grid md:grid-cols-[1fr_1.1fr] gap-10 md:gap-12 xl:gap-20 items-center">
 
           <div>
             <div
-              className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-xs font-semibold mb-7 border"
-              style={{ background: "var(--glass-nav-bg)", backdropFilter: "blur(12px)", borderColor: "rgba(0,201,138,0.25)", color: "#065F46", animation: "fadeInUp 0.7s ease both" }}
+              className="inline-flex items-center gap-2 rounded-full border border-white/60 bg-white/70 px-4 py-2 text-xs font-medium text-slate-500 backdrop-blur-xl shadow-[0_4px_20px_rgba(0,201,138,0.10),inset_0_1px_0_rgba(255,255,255,0.9)] mb-8"
+              style={{
+                transform: `translate(${parallax.x * 0.3}px, ${parallax.y * 0.3}px)`,
+                transition: "transform 0.4s cubic-bezier(0.22,1,0.36,1)",
+              }}
             >
-              <span className="h-2 w-2 rounded-full animate-pulse" style={{ background: ACCENT }} />
-              Votre espace santé auditive
+              <span
+                className="inline-block w-1.5 h-1.5 rounded-full bg-[#00C98A]"
+                style={{ animation: "glowPulse 2.4s ease-in-out infinite", boxShadow: "0 0 10px rgba(0,201,138,0.7)" }}
+              />
+              <span className="uppercase tracking-[0.12em] text-[11px]">
+                Espace santé auditive · Patient
+              </span>
             </div>
 
-            <h1
-              className="text-5xl lg:text-6xl xl:text-7xl font-light tracking-tight text-slate-900 leading-[1.08] mb-6"
-              style={{ animation: "fadeInUp 0.7s 0.12s ease both" }}
+            <h1 className="text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tight text-slate-900 leading-[0.98] mb-7 h-title"
+                style={{
+                  transform: `translate(${parallax.x * -0.5}px, ${parallax.y * -0.3}px)`,
+                  transition: "transform 0.5s cubic-bezier(0.22,1,0.36,1)",
+                }}
             >
-              Prenez soin<br />
+              Prenez soin
+              <br />
               <span
-                className="font-black"
-                style={{ background: `linear-gradient(135deg, ${ACCENT}, ${ACCENT2})`, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}
+                style={{
+                  background: "linear-gradient(90deg, #00A876 0%, #00C98A 30%, #14B8A6 60%, #00C98A 80%, #00A876 100%)",
+                  backgroundSize: "200% auto",
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                  backgroundClip: "text",
+                  animation: "textGradientSlide 8s linear infinite",
+                }}
               >
                 de votre audition
               </span>
               <br />
-              <span className="font-semibold text-slate-800">en toute clarté</span>
+              <span className="font-light text-slate-700">en toute clarté</span>
             </h1>
 
-            <p className="text-lg xl:text-xl text-slate-500 leading-relaxed mb-8 max-w-lg" style={{ animation: "fadeInUp 0.7s 0.22s ease both" }}>
-              Bilans auditifs, suivi de vos appareils, ordonnances et messagerie directe avec votre audioprothésiste — depuis un seul espace sécurisé.
+            <p className="text-lg text-slate-500 leading-[1.7] mb-9 max-w-lg">
+              <strong className="text-slate-700 font-semibold">Bilans auditifs</strong>,
+              suivi de vos <strong className="text-slate-700 font-semibold">appareils</strong>,
+              ordonnances et messagerie directe avec votre audioprothésiste — depuis un seul espace sécurisé.
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-3" style={{ animation: "fadeInUp 0.7s 0.32s ease both" }}>
+            <div className="flex flex-col sm:flex-row gap-3">
               <Link
                 href="/connexion/patient?space=audition"
-                className="inline-flex items-center justify-center gap-2 rounded-2xl px-7 py-4 text-sm font-semibold text-white transition-all hover:scale-[1.02]"
-                style={{ background: ACCENT, boxShadow: `0 4px 24px ${ACCENT}44` }}
+                className="group relative inline-flex items-center justify-center gap-2 rounded-full px-7 py-3.5 text-sm font-semibold text-white transition-all duration-300 hover:scale-[1.03] overflow-hidden"
+                style={{
+                  background: `linear-gradient(135deg, ${ACCENT}, ${ACCENT_DEEP})`,
+                  boxShadow: `0 8px 30px ${ACCENT}66, 0 0 0 1px rgba(255,255,255,0.15) inset`,
+                }}
               >
-                Accéder à mon espace
-                <svg className="w-4 h-4" viewBox="0 0 16 16" fill="none">
+                <span className="relative z-10">Accéder à mon espace</span>
+                <svg className="w-4 h-4 relative z-10" viewBox="0 0 16 16" fill="none">
                   <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
+                <span
+                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                  style={{ background: "linear-gradient(135deg, rgba(255,255,255,0.30) 0%, transparent 60%)" }}
+                />
               </Link>
               <button
                 onClick={() => scrollTo("services")}
-                className="inline-flex items-center justify-center gap-2 rounded-2xl border px-7 py-4 text-sm font-semibold text-slate-700 transition-all hover:shadow-md hover:bg-white"
-                style={{ background: "rgba(255,255,255,0.65)", backdropFilter: "blur(12px)", borderColor: "rgba(0,201,138,0.18)" }}
+                className="inline-flex items-center justify-center gap-2 rounded-full px-7 py-3.5 text-sm font-semibold text-slate-700 ring-1 ring-white/60 transition-all duration-200 hover:ring-white/90 hover:shadow-[0_4px_20px_rgba(0,201,138,0.10)]"
+                style={{
+                  background: "rgba(255,255,255,0.70)",
+                  backdropFilter: "blur(16px)",
+                  boxShadow: "inset 0 1px 0 rgba(255,255,255,0.9)",
+                }}
               >
                 Découvrir
                 <svg className="w-4 h-4" viewBox="0 0 16 16" fill="none">
@@ -173,159 +265,197 @@ function Hero() {
               </button>
             </div>
 
-            <div className="mt-12 flex flex-wrap items-center gap-0 text-sm" style={{ animation: "fadeInUp 0.7s 0.44s ease both" }}>
+            <div className="mt-14 flex flex-wrap items-end gap-x-10 gap-y-5">
               {[
-                { n: "4 000+", label: "patients suivis" },
-                { n: "98%",    label: "satisfaction" },
-                { n: "48h",    label: "délai de réponse" },
+                { value: "4 000+", label: "Patients suivis" },
+                { value: "98%",    label: "Satisfaction" },
+                { value: "48h",    label: "Délai de réponse" },
               ].map((s, i) => (
-                <div key={s.n} style={{ paddingLeft: i > 0 ? 28 : 0, marginLeft: i > 0 ? 28 : 0, borderLeft: i > 0 ? "1px solid rgba(0,0,0,0.10)" : "none" }}>
-                  <div className="font-black text-slate-900 text-xl">{s.n}</div>
-                  <div className="text-slate-500 text-xs mt-0.5">{s.label}</div>
+                <div key={s.value} className="text-left">
+                  <div className="flex items-center gap-1.5">
+                    <span
+                      className="text-[10px] font-mono text-slate-300"
+                      style={{ letterSpacing: "0.1em" }}
+                    >
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                    <div className="text-3xl font-bold text-slate-900 h-title">{s.value}</div>
+                  </div>
+                  <div className="mt-1 text-[10px] text-slate-500 uppercase tracking-[0.15em]">{s.label}</div>
                 </div>
               ))}
             </div>
           </div>
 
-          {/* Droite — mock UI audition élargi */}
-          <div className="hidden lg:block relative" style={{ animation: "fadeInUp 0.9s 0.3s ease both, floatY 7s 1.2s ease-in-out infinite" }}>
-
-            {/* Glow derrière la carte */}
-            <div className="absolute inset-4 rounded-3xl blur-2xl"
-                 style={{ background: `linear-gradient(135deg, ${ACCENT}22, #0EA5E918)`, transform: "translateY(8px) scale(1.02)" }} />
-
+          {/* Droite — gros logo oreille avec anneaux et badges glass */}
+          <div className="hidden md:flex relative items-center justify-center" style={{ minHeight: 580 * scale }}>
             <div
-              className="relative rounded-3xl p-7 shadow-[0_40px_100px_rgba(0,201,138,0.16)]"
-              style={{ background: "var(--glass-strong-bg)", backdropFilter: "blur(28px)", border: "1px solid rgba(255,255,255,0.88)" }}
+              className="relative"
+              style={{
+                width: 580,
+                height: 580,
+                transform: `perspective(1400px) rotateX(${parallax.y * 0.4}deg) rotateY(${parallax.x * -0.5}deg) scale(${scale})`,
+                transition: "transform 0.6s cubic-bezier(0.22,1,0.36,1)",
+                transformStyle: "preserve-3d",
+              }}
             >
-              <div className="flex items-center justify-between mb-6">
+              {/* Halo lumineux derrière le logo */}
+              <div
+                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full pointer-events-none"
+                style={{
+                  width: 380, height: 380,
+                  background: "radial-gradient(circle, rgba(0,201,138,0.28) 0%, rgba(20,184,166,0.12) 40%, transparent 70%)",
+                  filter: "blur(8px)",
+                  animation: "glowPulse 4s ease-in-out infinite",
+                }}
+              />
+
+              {/* Anneaux concentriques */}
+              <div
+                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full pointer-events-none"
+                style={{
+                  width: 520, height: 520,
+                  border: `1px dashed rgba(0,201,138,0.25)`,
+                  animation: "spin 60s linear infinite",
+                }}
+              >
+                <div className="absolute -top-1.5 left-1/2 w-3 h-3 rounded-full -translate-x-1/2"
+                     style={{ background: ACCENT, boxShadow: `0 0 20px ${ACCENT}E0` }} />
+              </div>
+              <div
+                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full pointer-events-none"
+                style={{
+                  width: 440, height: 440,
+                  border: `1px solid rgba(20,184,166,0.20)`,
+                  animation: "spin 45s linear infinite reverse",
+                }}
+              >
+                <div className="absolute top-1/2 -right-1.5 w-3 h-3 rounded-full -translate-y-1/2"
+                     style={{ background: "#14B8A6", boxShadow: `0 0 20px rgba(20,184,166,0.9)` }} />
+              </div>
+
+              {/* Logo oreille au centre — flottant */}
+              <div
+                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+                style={{ animation: "floatY 6s ease-in-out infinite" }}
+              >
+                <BrandIcon brand="audition" size={340} className="drop-shadow-[0_20px_40px_rgba(0,201,138,0.25)]" />
+              </div>
+
+              {/* Badge — 100% Santé */}
+              <div
+                className="absolute rounded-2xl px-4 py-3 flex items-center gap-3"
+                style={{
+                  top: "10%", left: "-8%",
+                  background: "rgba(255,255,255,0.85)",
+                  backdropFilter: "blur(20px)",
+                  border: "1px solid rgba(255,255,255,0.95)",
+                  boxShadow: `0 12px 32px rgba(0,201,138,0.18), inset 0 1px 0 rgba(255,255,255,0.95)`,
+                  animation: "floatY 8s ease-in-out infinite",
+                }}
+              >
+                <div className="h-9 w-9 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: `${ACCENT}15` }}>
+                  <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke={ACCENT} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M6 8a6 6 0 0 1 12 0c0 7-3 8-3 8H9a3 3 0 0 1-3-3" />
+                    <circle cx="12" cy="20" r="1" />
+                  </svg>
+                </div>
                 <div>
-                  <div className="font-bold text-slate-800 text-base">Bonjour, Robert</div>
-                  <div className="text-xs text-slate-400 mt-0.5">Dernier bilan il y a 6 mois</div>
-                </div>
-                <div
-                  className="h-10 w-10 rounded-full flex items-center justify-center text-xs font-bold text-white"
-                  style={{ background: ACCENT, boxShadow: `0 4px 14px ${ACCENT}44` }}
-                >
-                  RC
-                </div>
-              </div>
-
-              <div className="grid grid-cols-2 gap-3 mb-4">
-                {[
-                  { label: "Prochain RDV",    value: "22 jan.", icon: "M3 4a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v16H3V4Zm0 6h18M8 2v4M16 2v4" },
-                  { label: "Mes appareils",   value: "2 actifs", icon: "M3 18v-6a9 9 0 0 1 18 0v6M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3ZM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3Z" },
-                  { label: "Bilans auditifs", value: "3 bilans", icon: "M9 19V6l12-3v13M9 19c0 1.1-.9 2-2 2s-2-.9-2-2 .9-2 2-2 2 .9 2 2Zm12-3c0 1.1-.9 2-2 2s-2-.9-2-2 .9-2 2-2 2 .9 2 2Z" },
-                  { label: "Messages",       value: "1 nouveau", icon: "M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" },
-                ].map((s) => (
-                  <div key={s.label} className="rounded-2xl p-3.5"
-                       style={{ background: "rgba(0,201,138,0.05)", border: "1px solid rgba(0,201,138,0.09)" }}>
-                    <svg className="w-4 h-4 mb-2" viewBox="0 0 24 24" fill="none" stroke={ACCENT} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                      <path d={s.icon} />
-                    </svg>
-                    <div className="text-[11px] text-slate-400 mb-0.5">{s.label}</div>
-                    <div className="text-sm font-bold text-slate-800">{s.value}</div>
+                  <div className="text-xs font-bold text-slate-800">100% Santé — RAC 0 €</div>
+                  <div className="flex items-center gap-1.5 mt-0.5">
+                    <span className="h-1.5 w-1.5 rounded-full" style={{ background: ACCENT, animation: "glowPulse 2.4s ease-in-out infinite" }} />
+                    <span className="text-[11px] text-slate-500">Classe I prise en charge</span>
                   </div>
-                ))}
-              </div>
-
-              {/* Appareil actif */}
-              <div className="rounded-2xl p-4 mb-3" style={{ background: "rgba(0,201,138,0.06)", border: "1px solid rgba(0,201,138,0.14)" }}>
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-xs font-semibold text-slate-600">Appareil actif — OD</span>
-                  <span className="text-xs px-2.5 py-0.5 rounded-full font-semibold"
-                        style={{ background: "rgba(0,201,138,0.12)", color: "#065F46" }}>
-                    Classe II
-                  </span>
-                </div>
-                <div className="text-sm font-semibold text-slate-800">Phonak Audéo Lumity 90</div>
-                <div className="text-xs text-slate-500 mt-0.5">Livré le 12 mars 2024 · Contrôle dans 2 mois</div>
-              </div>
-
-              {/* Audiogramme simplifié */}
-              <div className="rounded-2xl p-4" style={{ background: "var(--glass-subtle-bg)", border: "1px solid rgba(0,0,0,0.05)" }}>
-                <div className="flex justify-between items-center mb-2.5">
-                  <span className="text-xs font-semibold text-slate-600">Audiogramme</span>
-                  <span className="text-xs font-bold" style={{ color: ACCENT }}>Bilan 2024</span>
-                </div>
-                <div className="flex items-end gap-1.5 h-10">
-                  {[40, 35, 30, 38, 45, 42, 50, 48].map((h, i) => (
-                    <div key={i} className="flex-1 rounded-t"
-                         style={{ height: `${h}%`, background: i < 4 ? `${ACCENT}` : `${ACCENT}55`, transition: "height .3s" }} />
-                  ))}
-                </div>
-                <div className="flex justify-between mt-1">
-                  <span className="text-[9px] text-slate-400">250Hz</span>
-                  <span className="text-[9px] text-slate-400">8kHz</span>
                 </div>
               </div>
-            </div>
 
-            {/* Badge flottant bas-gauche */}
-            <div
-              className="absolute -bottom-5 -left-10 rounded-2xl px-4 py-3 shadow-[0_12px_40px_rgba(0,0,0,0.10)] flex items-center gap-3"
-              style={{ background: "var(--glass-card-bg)", backdropFilter: "blur(20px)", border: "1px solid rgba(255,255,255,0.95)", animation: "fadeInUp 0.7s 0.6s ease both, floatY 8s 1.8s ease-in-out infinite" }}
-            >
-              <div className="h-9 w-9 rounded-xl flex items-center justify-center flex-shrink-0"
-                   style={{ background: "rgba(0,201,138,0.10)" }}>
-                <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke={ACCENT} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M6 8a6 6 0 0 1 12 0c0 7-3 8-3 8H9a3 3 0 0 1-3-3" />
-                  <circle cx="12" cy="20" r="1" />
+              {/* Badge — RDV confirmé */}
+              <div
+                className="absolute rounded-2xl px-4 py-3 flex items-center gap-3"
+                style={{
+                  top: "8%", right: "-6%",
+                  background: "rgba(255,255,255,0.85)",
+                  backdropFilter: "blur(20px)",
+                  border: "1px solid rgba(255,255,255,0.95)",
+                  boxShadow: "0 12px 32px rgba(16,185,129,0.18), inset 0 1px 0 rgba(255,255,255,0.95)",
+                  animation: "floatY 9s ease-in-out infinite 1s",
+                }}
+              >
+                <div className="h-9 w-9 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: "rgba(16,185,129,0.12)" }}>
+                  <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="#10b981" strokeWidth="1.8" strokeLinecap="round">
+                    <rect x="3" y="4" width="18" height="18" rx="2" />
+                    <path d="M16 2v4M8 2v4M3 10h18" />
+                  </svg>
+                </div>
+                <div>
+                  <div className="text-xs font-bold text-slate-800">RDV de suivi</div>
+                  <div className="text-[11px] text-slate-500 mt-0.5">22 jan. · 14h00</div>
+                </div>
+              </div>
+
+              {/* Badge — Audiogramme */}
+              <div
+                className="absolute rounded-2xl px-4 py-3 flex items-center gap-3"
+                style={{
+                  bottom: "12%", left: "-10%",
+                  background: "rgba(255,255,255,0.85)",
+                  backdropFilter: "blur(20px)",
+                  border: "1px solid rgba(255,255,255,0.95)",
+                  boxShadow: `0 12px 32px ${ACCENT}26, inset 0 1px 0 rgba(255,255,255,0.95)`,
+                  animation: "floatY 7s ease-in-out infinite 0.5s",
+                }}
+              >
+                <div className="h-9 w-9 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: `${ACCENT}15` }}>
+                  <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke={ACCENT} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M9 19V6l12-3v13M9 19c0 1.1-.9 2-2 2s-2-.9-2-2 .9-2 2-2 2 .9 2 2Zm12-3c0 1.1-.9 2-2 2s-2-.9-2-2 .9-2 2-2 2 .9 2 2Z" />
+                  </svg>
+                </div>
+                <div>
+                  <div className="text-xs font-bold text-slate-800">Audiogramme à jour</div>
+                  <div className="text-[11px] text-slate-500 mt-0.5">Dernier bilan · 2024</div>
+                </div>
+              </div>
+
+              {/* Badge — Appareillage SS */}
+              <div
+                className="absolute rounded-2xl px-4 py-3 flex items-center gap-3"
+                style={{
+                  bottom: "10%", right: "-8%",
+                  background: "rgba(255,255,255,0.85)",
+                  backdropFilter: "blur(20px)",
+                  border: "1px solid rgba(255,255,255,0.95)",
+                  boxShadow: "0 12px 32px rgba(14,165,233,0.18), inset 0 1px 0 rgba(255,255,255,0.95)",
+                  animation: "floatY 8.5s ease-in-out infinite 1.5s",
+                }}
+              >
+                <div className="h-9 w-9 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: "rgba(14,165,233,0.12)" }}>
+                  <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="#0EA5E9" strokeWidth="1.8" strokeLinecap="round">
+                    <polyline points="23 4 23 10 17 10" />
+                    <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10" />
+                  </svg>
+                </div>
+                <div>
+                  <div className="text-xs font-bold text-slate-800">Appareillage SS</div>
+                  <div className="text-[11px] text-slate-500 mt-0.5">Renouvellement 2025</div>
+                </div>
+              </div>
+
+              {/* Badge RGPD — haut */}
+              <div
+                className="absolute rounded-full px-3 py-1.5 text-xs font-medium text-slate-600 flex items-center gap-1.5"
+                style={{
+                  top: "-2%", right: "30%",
+                  background: "rgba(255,255,255,0.92)",
+                  backdropFilter: "blur(20px)",
+                  border: "1px solid rgba(255,255,255,0.98)",
+                  boxShadow: "0 4px 16px rgba(0,0,0,0.06), inset 0 1px 0 rgba(255,255,255,0.95)",
+                }}
+              >
+                <svg className="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="#10b981" strokeWidth="2" strokeLinecap="round">
+                  <rect x="5" y="11" width="14" height="10" rx="2" />
+                  <path d="M8 11V7a4 4 0 0 1 8 0v4" />
                 </svg>
-              </div>
-              <div>
-                <div className="text-xs font-bold text-slate-700">100% Santé — RAC 0 €</div>
-                <div className="flex items-center gap-1.5 mt-0.5">
-                  <span className="h-1.5 w-1.5 rounded-full" style={{ background: ACCENT }} />
-                  <span className="text-xs text-slate-500">Classe I prise en charge</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Badge RGPD top-right */}
-            <div
-              className="absolute -top-4 right-4 rounded-full px-3 py-1.5 text-xs font-medium text-slate-600 shadow-sm flex items-center gap-1.5"
-              style={{ background: "var(--glass-card-bg)", backdropFilter: "blur(12px)", border: "1px solid rgba(255,255,255,0.98)", animation: "fadeInUp 0.7s 0.5s ease both" }}
-            >
-              <svg className="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="#10b981" strokeWidth="2" strokeLinecap="round">
-                <rect x="5" y="11" width="14" height="10" rx="2" />
-                <path d="M8 11V7a4 4 0 0 1 8 0v4" />
-              </svg>
-              Données chiffrées · RGPD
-            </div>
-
-            {/* Badge RDV top-left */}
-            <div
-              className="absolute -top-8 -left-8 rounded-2xl px-4 py-3 shadow-[0_8px_30px_rgba(0,0,0,0.09)] flex items-center gap-3"
-              style={{ background: "var(--glass-card-bg)", backdropFilter: "blur(20px)", border: "1px solid rgba(255,255,255,0.95)", animation: "fadeInUp 0.7s 0.72s ease both, floatY 9s 2.4s ease-in-out infinite" }}
-            >
-              <div className="h-8 w-8 rounded-xl flex items-center justify-center flex-shrink-0"
-                   style={{ background: "rgba(16,185,129,0.10)" }}>
-                <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="#10b981" strokeWidth="1.8" strokeLinecap="round">
-                  <path d="M3 4a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v16H3V4Zm0 6h18M8 2v4M16 2v4" />
-                </svg>
-              </div>
-              <div>
-                <div className="text-xs font-bold text-slate-700">RDV de suivi</div>
-                <div className="text-xs text-slate-500 mt-0.5">22 jan. · 14h00</div>
-              </div>
-            </div>
-
-            {/* Badge renouvellement bottom-right */}
-            <div
-              className="absolute -bottom-10 -right-6 rounded-2xl px-4 py-3 shadow-[0_8px_30px_rgba(0,0,0,0.09)] flex items-center gap-3"
-              style={{ background: "var(--glass-card-bg)", backdropFilter: "blur(20px)", border: "1px solid rgba(255,255,255,0.95)", animation: "fadeInUp 0.7s 0.84s ease both, floatY 10s 3s ease-in-out infinite" }}
-            >
-              <div className="h-8 w-8 rounded-xl flex items-center justify-center flex-shrink-0"
-                   style={{ background: "rgba(14,165,233,0.10)" }}>
-                <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="#0EA5E9" strokeWidth="1.8" strokeLinecap="round">
-                  <polyline points="23 4 23 10 17 10" />
-                  <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10" />
-                </svg>
-              </div>
-              <div>
-                <div className="text-xs font-bold text-slate-700">Appareillage SS</div>
-                <div className="text-xs text-slate-500 mt-0.5">Renouvellement 2025</div>
+                <span className="text-[11px]">Données chiffrées · RGPD</span>
               </div>
             </div>
           </div>
@@ -709,19 +839,7 @@ export default function ClairAuditionLanding() {
   return (
     <>
       <style>{`
-        @keyframes floatY {
-          0%,100% { transform: translateY(0); }
-          50%      { transform: translateY(-10px); }
-        }
-        @keyframes orbDrift {
-          0%,100% { transform: translate(0, 0) scale(1); }
-          33%     { transform: translate(30px, -20px) scale(1.04); }
-          66%     { transform: translate(-20px, 15px) scale(0.97); }
-        }
-        @keyframes fadeInUp {
-          from { opacity: 0; transform: translateY(24px); }
-          to   { opacity: 1; transform: translateY(0); }
-        }
+        /* Animations partagées dans globals.css : floatY, fadeInUp, orbDrift */
         .service-card {
           opacity: 0;
           transform: translateY(20px);

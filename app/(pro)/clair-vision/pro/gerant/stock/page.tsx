@@ -157,104 +157,6 @@ function mergeStock(overrides: ItemOverrides): StockItem[] {
   });
 }
 
-/* ─── Mock mouvements initiaux ───────────────────────────────────── */
-const MOCK_MOUVEMENTS: MouvementStock[] = [
-  {
-    id: "mock-1",
-    date: new Date(Date.now() - 86400000 * 2).toISOString(),
-    type: "entree",
-    itemId: "mo-rb-01",
-    designation: "RB5154 Clubmaster",
-    marque: "Ray-Ban",
-    categorie: "montures-optiques",
-    quantite: 5,
-    prixAchatHT: 45,
-    pruAvant: 45,
-    pruApres: 45,
-    stockAvant: 3,
-    stockApres: 8,
-    numeroBL: "BL-2026-0341",
-    fournisseur: "Luxottica Group",
-    operateur: "Gérant",
-  },
-  {
-    id: "mock-2",
-    date: new Date(Date.now() - 86400000 * 3).toISOString(),
-    type: "sortie_vente",
-    itemId: "ms-rb-01",
-    designation: "Aviator RB3025",
-    marque: "Ray-Ban",
-    categorie: "montures-solaires",
-    quantite: 2,
-    prixVenteTTC: 175,
-    stockAvant: 17,
-    stockApres: 15,
-    devisRef: "DEV-2026-0087",
-    operateur: "Opticien A",
-  },
-  {
-    id: "mock-3",
-    date: new Date(Date.now() - 86400000 * 5).toISOString(),
-    type: "sortie_casse",
-    itemId: "mo-sil-01",
-    designation: "Momentum Full Rim",
-    marque: "Silhouette",
-    categorie: "montures-optiques",
-    quantite: 1,
-    stockAvant: 5,
-    stockApres: 4,
-    operateur: "Gérant",
-    notes: "Monture tombée du présentoir — charnière cassée",
-  },
-  {
-    id: "mock-4",
-    date: new Date(Date.now() - 86400000 * 7).toISOString(),
-    type: "entree",
-    itemId: "ls-jj-01",
-    designation: "Acuvue Oasys 1-Day",
-    marque: "Johnson & Johnson",
-    categorie: "lentilles-souples",
-    quantite: 10,
-    prixAchatHT: 20,
-    pruAvant: 20,
-    pruApres: 20,
-    stockAvant: 8,
-    stockApres: 18,
-    numeroBL: "BL-2026-0298",
-    fournisseur: "Johnson & Johnson Vision",
-    operateur: "Gérant",
-  },
-  {
-    id: "mock-5",
-    date: new Date(Date.now() - 86400000 * 10).toISOString(),
-    type: "ajustement_negatif",
-    itemId: "acc-01",
-    designation: "Spray nettoyant 30ml",
-    marque: "Novacel",
-    categorie: "accessoires",
-    quantite: 5,
-    stockAvant: 85,
-    stockApres: 80,
-    operateur: "Gérant",
-    notes: "Inventaire — écart constaté",
-  },
-  {
-    id: "mock-6",
-    date: new Date(Date.now() - 86400000 * 14).toISOString(),
-    type: "sortie_retour_fournisseur",
-    itemId: "mo-cha-01",
-    designation: "CH3282",
-    marque: "Chanel",
-    categorie: "montures-optiques",
-    quantite: 1,
-    stockAvant: 4,
-    stockApres: 3,
-    fournisseur: "Chanel SAS",
-    operateur: "Gérant",
-    notes: "Défaut de fabrication — retour SAV",
-  },
-];
-
 /* ─── Mouvement badge ─────────────────────────────────────────────── */
 const MVT_LABELS: Record<TypeMouvement, string> = {
   entree:                  "Entrée",
@@ -474,14 +376,7 @@ export default function StockPage() {
     const ov  = loadItemOverrides();
     setOverrides(ov);
 
-    const rawMvt = loadMouvements();
-    // Si pas encore de données, charger les mocks
-    if (rawMvt.length === 0) {
-      saveMouvements(MOCK_MOUVEMENTS);
-      setMouvements(MOCK_MOUVEMENTS);
-    } else {
-      setMouvements(rawMvt);
-    }
+    setMouvements(loadMouvements());
 
     setCoeffsPerso(loadCoeffsPerso());
     setPrixVerres(loadPrixVerres());

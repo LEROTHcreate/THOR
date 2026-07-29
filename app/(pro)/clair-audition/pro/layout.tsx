@@ -248,33 +248,44 @@ function IconClipboard({ className }: { className?: string }) {
 }
 
 /* ── Nav definitions ──────────────────────────────────────────────────── */
-const NAV_PRINCIPAL = [
-  { href: "/clair-audition/pro",                   label: "Tableau de bord", Icon: IconDashboard, exact: true  },
-  { href: "/clair-audition/pro/agenda",            label: "Agenda",          Icon: IconCalendar,  exact: false },
-  { href: "/clair-audition/pro/patients",          label: "Patients",        Icon: IconUsers,     exact: false },
-  { href: "/clair-audition/pro/consultation",      label: "Consultation",    Icon: IconClipboard, exact: false },
-  { href: "/clair-audition/pro/messagerie",        label: "Messagerie",      Icon: IconChat,      exact: false },
-  { href: "/clair-audition/pro/rappels",           label: "Rappels",         Icon: IconBell,      exact: false },
+const NAV_QUOTIDIEN = [
+  { href: "/clair-audition/pro",            label: "Tableau de bord", Icon: IconDashboard, exact: true  },
+  { href: "/clair-audition/pro/agenda",     label: "Agenda",          Icon: IconCalendar,  exact: false },
+  { href: "/clair-audition/pro/patients",   label: "Patients",        Icon: IconUsers,     exact: false },
+  { href: "/clair-audition/pro/messagerie", label: "Messagerie",      Icon: IconChat,      exact: false },
 ];
 
-const NAV_GESTION = [
-  { href: "/clair-audition/pro/appareillage",   label: "Appareillage",     Icon: IconHeadphones,  exact: false },
-  { href: "/clair-audition/pro/essais",         label: "Périodes d'essai", Icon: IconClock,       exact: false },
-  { href: "/clair-audition/pro/prets",          label: "Prêts d'appareils", Icon: IconBox,        exact: false },
-  { href: "/clair-audition/pro/tiers-payant",   label: "Tiers payant",     Icon: IconTP,          exact: false },
-  { href: "/clair-audition/pro/facturation",    label: "Facturation",      Icon: IconFacture,     exact: false },
-  { href: "/clair-audition/pro/sav",            label: "SAV",              Icon: IconWrench,      exact: false },
-  { href: "/clair-audition/pro/statistiques",   label: "Statistiques",     Icon: IconBarChart,    exact: false },
+const NAV_DOSSIERS = [
+  { href: "/clair-audition/pro/consultation", label: "Consultation",  Icon: IconClipboard,  exact: false },
+  { href: "/clair-audition/pro/dossiers",     label: "Dossiers",      Icon: IconBox,        exact: false },
+  { href: "/clair-audition/pro/bilans",       label: "Bilans auditifs", Icon: IconHeadphones, exact: false },
+  { href: "/clair-audition/pro/ordonnances",  label: "Ordonnances",   Icon: IconClipboard,  exact: false },
 ];
 
-const NAV_RESSOURCES = [
-  { href: "/clair-audition/pro/calculateur",    label: "Calculateur",      Icon: IconCalculator,  exact: false },
-  { href: "/clair-audition/pro/actus",          label: "Actus secteur",    Icon: IconNewspaper,   exact: false },
+const NAV_VENTE = [
+  { href: "/clair-audition/pro/appareillage", label: "Appareillage",    Icon: IconHeadphones, exact: false },
+  { href: "/clair-audition/pro/essais",       label: "Périodes d'essai", Icon: IconClock,     exact: false },
+  { href: "/clair-audition/pro/prets",        label: "Prêts d'appareils", Icon: IconBox,      exact: false },
+  { href: "/clair-audition/pro/devis",        label: "Devis & commandes", Icon: IconFacture,  exact: false },
+  { href: "/clair-audition/pro/facturation",  label: "Facturation",     Icon: IconFacture,    exact: false },
+  { href: "/clair-audition/pro/tiers-payant", label: "Tiers payant",    Icon: IconTP,         exact: false },
+];
+
+const NAV_SUIVI = [
+  { href: "/clair-audition/pro/rappels",         label: "Rappels",         Icon: IconBell,     exact: false },
+  { href: "/clair-audition/pro/renouvellements", label: "Renouvellements", Icon: IconCalendar, exact: false },
+  { href: "/clair-audition/pro/sav",             label: "SAV",             Icon: IconWrench,   exact: false },
+  { href: "/clair-audition/pro/statistiques",    label: "Statistiques",    Icon: IconBarChart, exact: false },
+];
+
+const NAV_OUTILS = [
+  { href: "/clair-audition/pro/calculateur", label: "Calculateur",   Icon: IconCalculator, exact: false },
+  { href: "/clair-audition/pro/actus",       label: "Actus secteur", Icon: IconNewspaper,  exact: false },
 ];
 
 const NAV_GERANT = [
-  { href: "/clair-audition/pro/gerant",       label: "Espace Gérant",    Icon: IconGerant,   exact: true  },
-  { href: "/clair-audition/pro/gerant/stock", label: "Stock",            Icon: IconStock,    exact: false },
+  { href: "/clair-audition/pro/gerant",       label: "Espace gérant", Icon: IconGerant, exact: true  },
+  { href: "/clair-audition/pro/gerant/stock", label: "Stock",         Icon: IconStock,  exact: false },
 ];
 
 const NAV_BOTTOM = [
@@ -291,7 +302,6 @@ const sidebarStyle: React.CSSProperties = {
 
 const wrapperStyle: React.CSSProperties = {
   background: "var(--thor-bg)",
-  zoom: 0.95,
 };
 
 /* ── NavLink ─────────────────────────────────────────────────────────────── */
@@ -305,31 +315,27 @@ function NavLink({
   onClick?: () => void;
   badge?: number;
 }) {
-  const activeStyle: React.CSSProperties = {
-    background: "#10b981",
-    boxShadow: "0 2px 8px rgba(16,185,129,0.30)",
-  };
-
+  const ACCENT = "#00C98A";
   return (
     <Link
       href={href}
       onClick={onClick}
-      className={`flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all duration-200 ${
-        active ? "text-white" : "text-slate-500 hover:text-[#10b981] dark-nav-hover"
-      }`}
-      style={active ? activeStyle : undefined}
+      aria-current={active ? "page" : undefined}
+      className="flex items-center gap-2.5 rounded-lg px-2.5 py-1.5 text-[13px] font-medium transition-colors dark-nav-hover"
+      style={active
+        ? { background: `${ACCENT}14`, color: ACCENT }
+        : { color: "var(--muted)" }
+      }
     >
-      <span
-        className={`grid h-8 w-8 place-items-center rounded-xl flex-shrink-0 ${active ? "" : "nav-icon-inactive-aud"}`}
-        style={active ? { background: "rgba(255,255,255,0.20)" } : undefined}
-      >
-        <Icon className="w-4 h-4" />
-      </span>
-      <span className="flex-1">{label}</span>
+      <Icon className={`w-4 h-4 flex-shrink-0 ${active ? "" : "opacity-80"}`} />
+      <span className="flex-1 truncate">{label}</span>
       {badge != null && badge > 0 && (
         <span
-          className="text-[10px] font-bold text-white rounded-full px-1.5 py-0.5 min-w-[18px] text-center leading-none"
-          style={{ background: active ? "rgba(255,255,255,0.30)" : "#10b981" }}
+          className="text-[10px] font-bold rounded-full px-1.5 py-0.5 min-w-[18px] text-center leading-none tabular-nums"
+          style={active
+            ? { background: ACCENT, color: "#fff" }
+            : { background: `${ACCENT}1A`, color: ACCENT }
+          }
         >
           {badge}
         </span>
@@ -340,7 +346,7 @@ function NavLink({
 
 function SectionLabel({ children }: { children: string }) {
   return (
-    <div className="px-3 pt-5 pb-1.5 text-[10px] font-bold uppercase tracking-[0.12em] text-slate-400 select-none">
+    <div className="px-2.5 mb-1 text-[10px] font-semibold uppercase tracking-[0.10em] text-slate-400 dark:text-slate-500 select-none">
       {children}
     </div>
   );
@@ -512,64 +518,74 @@ function SidebarContent({
       </div>
 
       {/* Nav */}
-      <nav className="flex flex-1 flex-col gap-0.5 px-4 overflow-y-auto">
-        <SectionLabel>Principal</SectionLabel>
-        {NAV_PRINCIPAL.map(item => (
-          <NavLink
-            key={item.href}
-            href={item.href}
-            label={item.label}
-            Icon={item.Icon}
-            active={isActive(item.href, item.exact)}
-            onClick={onNavClick}
-            badge={item.href === "/clair-audition/pro/messagerie" ? msgUnread : undefined}
-          />
-        ))}
+      <nav className="flex flex-1 flex-col gap-3 px-3 overflow-y-auto pb-2">
+        <div className="flex flex-col gap-0.5">
+          <SectionLabel>Quotidien</SectionLabel>
+          {NAV_QUOTIDIEN.map(item => (
+            <NavLink
+              key={item.href} href={item.href} label={item.label} Icon={item.Icon}
+              active={isActive(item.href, item.exact)} onClick={onNavClick}
+              badge={item.href === "/clair-audition/pro/messagerie" ? msgUnread : undefined}
+            />
+          ))}
+        </div>
 
-        <SectionLabel>Gestion</SectionLabel>
-        {NAV_GESTION.map(item => (
-          <NavLink
-            key={item.href}
-            href={item.href}
-            label={item.label}
-            Icon={item.Icon}
-            active={isActive(item.href, item.exact)}
-            onClick={onNavClick}
-            badge={
-              item.href === "/clair-audition/pro/essais" ? (essaisUrgents  || undefined) :
-              item.href === "/clair-audition/pro/sav"    ? (savOuverts     || undefined) :
-              item.href === "/clair-audition/pro/prets"  ? (pretsEnRetard  || undefined) :
-              undefined
-            }
-          />
-        ))}
+        <div className="flex flex-col gap-0.5">
+          <SectionLabel>Dossiers</SectionLabel>
+          {NAV_DOSSIERS.map(item => (
+            <NavLink
+              key={item.href} href={item.href} label={item.label} Icon={item.Icon}
+              active={isActive(item.href, item.exact)} onClick={onNavClick}
+            />
+          ))}
+        </div>
 
-        <SectionLabel>Ressources</SectionLabel>
-        {NAV_RESSOURCES.map(item => (
-          <NavLink
-            key={item.href}
-            href={item.href}
-            label={item.label}
-            Icon={item.Icon}
-            active={isActive(item.href, item.exact)}
-            onClick={onNavClick}
-          />
-        ))}
+        <div className="flex flex-col gap-0.5">
+          <SectionLabel>Vente</SectionLabel>
+          {NAV_VENTE.map(item => (
+            <NavLink
+              key={item.href} href={item.href} label={item.label} Icon={item.Icon}
+              active={isActive(item.href, item.exact)} onClick={onNavClick}
+              badge={
+                item.href === "/clair-audition/pro/essais" ? (essaisUrgents  || undefined) :
+                item.href === "/clair-audition/pro/prets"  ? (pretsEnRetard  || undefined) :
+                undefined
+              }
+            />
+          ))}
+        </div>
+
+        <div className="flex flex-col gap-0.5">
+          <SectionLabel>Suivi</SectionLabel>
+          {NAV_SUIVI.map(item => (
+            <NavLink
+              key={item.href} href={item.href} label={item.label} Icon={item.Icon}
+              active={isActive(item.href, item.exact)} onClick={onNavClick}
+              badge={item.href === "/clair-audition/pro/sav" ? (savOuverts || undefined) : undefined}
+            />
+          ))}
+        </div>
+
+        <div className="flex flex-col gap-0.5">
+          <SectionLabel>Outils</SectionLabel>
+          {NAV_OUTILS.map(item => (
+            <NavLink
+              key={item.href} href={item.href} label={item.label} Icon={item.Icon}
+              active={isActive(item.href, item.exact)} onClick={onNavClick}
+            />
+          ))}
+        </div>
 
         {currentUser.role === "Gérant" && (
-          <>
+          <div className="flex flex-col gap-0.5">
             <SectionLabel>Gérant</SectionLabel>
             {NAV_GERANT.map(item => (
               <NavLink
-                key={item.href}
-                href={item.href}
-                label={item.label}
-                Icon={item.Icon}
-                active={isActive(item.href, item.exact)}
-                onClick={onNavClick}
+                key={item.href} href={item.href} label={item.label} Icon={item.Icon}
+                active={isActive(item.href, item.exact)} onClick={onNavClick}
               />
             ))}
-          </>
+          </div>
         )}
         <div className="mt-3 border-t border-slate-200/60 pt-3">
           {NAV_BOTTOM.map(item => (
@@ -713,7 +729,7 @@ export default function ProAuditionLayout({ children }: { children: ReactNode })
       <div className="flex h-screen w-full overflow-hidden">
         {/* Desktop sidebar */}
         <aside
-          className="hidden lg:flex w-[260px] flex-col flex-shrink-0 sticky top-0 h-screen z-20"
+          className="hidden lg:flex w-[232px] flex-col flex-shrink-0 sticky top-0 h-screen z-20"
           style={sidebarStyle}
         >
           <SidebarContent
@@ -799,8 +815,8 @@ export default function ProAuditionLayout({ children }: { children: ReactNode })
         </aside>
 
         {/* Main content */}
-        <main className="relative flex-1 flex flex-col overflow-y-auto pt-20 lg:pt-0">
-          <div className="relative flex-1 px-4 py-6 sm:px-8 sm:py-8">{children}</div>
+        <main className="relative flex-1 min-w-0 flex flex-col overflow-y-auto overflow-x-hidden pt-14 lg:pt-0">
+          <div className="relative flex-1 px-4 py-5 sm:px-6 sm:py-6 lg:px-8 lg:py-8 max-w-full">{children}</div>
         </main>
       </div>
 
