@@ -27,8 +27,8 @@ export default function RealisationsPage() {
               Nos <span className="font-light text-slate-500">réalisations.</span>
             </h1>
             <p className="mt-6 text-lg text-slate-500 leading-relaxed max-w-xl">
-              {live} projets en production, du logiciel métier certifié au site
-              d&apos;une activité qui démarre. Le point commun : on part du terrain,
+              {live} projets en production, du logiciel métier certifié à
+              l&apos;application grand public. Le point commun : on part du terrain,
               pas d&apos;un cahier des charges théorique.
             </p>
           </div>

@@ -3,6 +3,10 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Reveal } from "@/components/ui/reveal";
+import { getAllRealisations } from "@/lib/realisations";
+
+/* Le compteur suit le portfolio : ajouter un projet livré le met à jour seul. */
+const PROJETS_LIVRES = getAllRealisations().filter((r) => r.status === "live").length;
 
 /* ──────────────────────────────────────────────────────────────────────────
    Satellites de l'écosystème THOR.
@@ -388,7 +392,7 @@ export default function ThorHero() {
               <Reveal>
                 <div className="mt-10 sm:mt-12 flex flex-wrap items-end gap-x-6 sm:gap-x-8 gap-y-5 justify-center md:justify-start">
                   {[
-                    { value: String(SATELLITES.length + 1), label: "Projets en production" },
+                    { value: String(PROJETS_LIVRES), label: "Projets en production" },
                     { value: "A → Z", label: "Accompagnement complet" },
                     { value: "HDS",   label: "Hébergement certifié" },
                     { value: "24/7",  label: "Support dédié" },

@@ -48,6 +48,43 @@ export type Realisation = {
 
 const REALISATIONS: Realisation[] = [
   {
+    slug: "monsoldereel",
+    name: "MonSoldeRéel",
+    tagline: "Budget",
+    category: "saas",
+    sector: "Finance personnelle",
+    year: 2026,
+    summary:
+      "Application de budget personnel qui calcule ce qui reste vraiment à dépenser une fois les charges fixes déduites, sans connexion bancaire.",
+    audience: "Particuliers",
+    accent: "#7C3AED",
+    accentLight: "#F5F3FF",
+    status: "live",
+    href: "https://monsoldereel.fr/",
+    featured: true,
+    branch: "studio",
+    context:
+      "Le solde affiché par la banque ne dit rien de ce qu'on peut réellement dépenser : le loyer, les abonnements et les assurances n'ont pas encore été prélevés. MonSoldeRéel part de ce constat et affiche le montant qui reste une fois toutes les charges à venir déduites. Le tout sans jamais se connecter au compte bancaire.",
+    mission: [
+      "Conception d'un cycle budgétaire calé sur la date de paie plutôt que sur le mois calendaire",
+      "Saisie manuelle rapide des opérations, pensée pour être tenue au quotidien",
+      "Déduction automatique des charges fixes et rappels d'échéance",
+      "Assistant conversationnel Pia, suivi des objectifs d'épargne et analyse des dépenses",
+    ],
+    outcomes: [
+      { value: "0", label: "connexion bancaire" },
+      { value: "Pia", label: "assistant intégré" },
+      { value: "100 %", label: "propriété du client" },
+    ],
+    stack: [],
+    features: [
+      "Solde réel après déduction des charges fixes",
+      "Cycle budgétaire aligné sur la paie",
+      "Assistant conversationnel Pia",
+      "Objectifs d'épargne et rappels d'échéance",
+    ],
+  },
+  {
     slug: "clair-vision",
     name: "Clair Vision",
     tagline: "Optique",

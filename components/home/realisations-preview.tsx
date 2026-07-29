@@ -20,7 +20,7 @@ export function RealisationsPreview() {
                 Ce que nous avons <span className="font-light text-slate-500">déjà construit.</span>
               </h2>
               <p className="mt-5 text-base text-slate-500 leading-relaxed">
-                {total} projets en production. Chacun part d&apos;un métier réel et se
+                {total} projets en production. Chacun part d&apos;un besoin réel et se
                 juge sur ce qu&apos;il fait gagner à ceux qui l&apos;utilisent tous les jours.
               </p>
             </div>

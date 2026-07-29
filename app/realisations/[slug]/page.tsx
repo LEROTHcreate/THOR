@@ -219,21 +219,23 @@ export default async function RealisationPage({ params }: Params) {
                 </ul>
               </div>
 
-              <div>
-                <h3 className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400 mb-4">
-                  Technologies
-                </h3>
-                <div className="flex flex-wrap gap-2">
-                  {item.stack.map((s) => (
-                    <span
-                      key={s}
-                      className="text-[11px] font-medium px-2.5 py-1 rounded-full bg-slate-100 text-slate-600"
-                    >
-                      {s}
-                    </span>
-                  ))}
+              {item.stack.length > 0 && (
+                <div>
+                  <h3 className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400 mb-4">
+                    Technologies
+                  </h3>
+                  <div className="flex flex-wrap gap-2">
+                    {item.stack.map((s) => (
+                      <span
+                        key={s}
+                        className="text-[11px] font-medium px-2.5 py-1 rounded-full bg-slate-100 text-slate-600"
+                      >
+                        {s}
+                      </span>
+                    ))}
+                  </div>
                 </div>
-              </div>
+              )}
             </aside>
           </Reveal>
         </div>
