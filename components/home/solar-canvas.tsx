@@ -54,47 +54,116 @@ function glowTexture(inner: string, outer: string) {
   return t;
 }
 
+/* ── Bruit ────────────────────────────────────────────────────────────────
+   Les premières textures empilaient des disques tirés au hasard : de loin,
+   du bruit blanc. Une surface d'astre a une structure — des motifs larges
+   qui en contiennent de plus fins, eux-mêmes en contenant d'autres. C'est
+   exactement ce que produit un bruit fractal : on additionne plusieurs
+   octaves d'un même bruit, chacune deux fois plus fine et deux fois moins
+   forte que la précédente.
+
+   La grille est périodique en X, sans quoi une couture verticale apparaît
+   là où la texture se referme autour de la sphère. */
+function makeNoise(seed: number) {
+  const N = 64;
+  const grid = new Float32Array(N * N);
+  let s = seed;
+  for (let i = 0; i < N * N; i++) {
+    grid[i] = (s = (s * 1103515245 + 12345) % 2147483648) / 2147483648;
+  }
+  const smooth = (t: number) => t * t * (3 - 2 * t);
+
+  return (x: number, y: number) => {
+    const xi = Math.floor(x);
+    const yi = Math.floor(y);
+    const xf = smooth(x - xi);
+    const yf = smooth(y - yi);
+    const x0 = ((xi % N) + N) % N;
+    const x1 = (x0 + 1) % N;
+    const y0 = Math.min(N - 1, Math.max(0, yi));
+    const y1 = Math.min(N - 1, y0 + 1);
+    const a = grid[y0 * N + x0], b = grid[y0 * N + x1];
+    const c = grid[y1 * N + x0], d = grid[y1 * N + x1];
+    return (a + (b - a) * xf) * (1 - yf) + (c + (d - c) * xf) * yf;
+  };
+}
+
+function fbm(
+  noise: (x: number, y: number) => number,
+  x: number,
+  y: number,
+  octaves: number,
+) {
+  let sum = 0, amp = 0.5, norm = 0, f = 1;
+  for (let o = 0; o < octaves; o++) {
+    sum += noise(x * f, y * f) * amp;
+    norm += amp;
+    amp *= 0.5;
+    f *= 2;
+  }
+  return sum / norm;
+}
+
 /**
  * Texture de planète, dérivée de la couleur du projet.
  *
- * Des bandes horizontales d'une même teinte à des clartés différentes : c'est
- * ce que donne une géante gazeuse, et c'est surtout ce qui fait lire la
- * rotation. Une sphère de couleur unie tourne sans qu'on le voie.
+ * Le bruit est écrasé en X : une turbulence étirée en longitude donne les
+ * bandes d'une géante gazeuse. Et il est déformé par un second bruit avant
+ * d'être lu — c'est ce « domain warping » qui tord les bandes en volutes au
+ * lieu de les laisser rectilignes, la différence entre un store vénitien et
+ * une atmosphère.
+ *
+ * Les latitudes hautes s'éclaircissent et se lissent : des calottes, qui
+ * donnent en prime un repère pour lire la rotation.
  */
 function planetTexture(hex: string) {
+  const W = 256, H = 128;
   const c = document.createElement("canvas");
-  c.width = 256;
-  c.height = 128;
+  c.width = W;
+  c.height = H;
   const g = c.getContext("2d")!;
-  const base = new THREE.Color(hex);
+  const img = g.createImageData(W, H);
 
+  const base = new THREE.Color(hex);
   const hsl = { h: 0, s: 0, l: 0 };
   base.getHSL(hsl);
 
-  g.fillStyle = `#${base.getHexString()}`;
-  g.fillRect(0, 0, 256, 128);
+  /* Graine tirée de la teinte : deux projets de couleurs voisines n'auront
+     pas la même surface, et la même couleur redonnera toujours la même. */
+  const seed = Math.round(hsl.h * 100000) + 7919;
+  const n1 = makeNoise(seed);
+  const n2 = makeNoise(seed * 3 + 101);
 
-  /* Suite déterministe : la texture doit être identique d'un rendu à l'autre. */
-  let seed = Math.round(hsl.h * 10000) + 7919;
-  const next = () => (seed = (seed * 1103515245 + 12345) % 2147483648) / 2147483648;
+  const shade = new THREE.Color();
 
-  for (let y = 0; y < 128; ) {
-    const h = 3 + next() * 11;
-    const l = Math.min(0.92, Math.max(0.08, hsl.l + (next() - 0.5) * 0.34));
-    const band = new THREE.Color().setHSL(hsl.h, hsl.s * (0.7 + next() * 0.5), l);
-    g.fillStyle = `#${band.getHexString()}`;
-    g.fillRect(0, y, 256, h);
-    y += h;
+  for (let y = 0; y < H; y++) {
+    const v = y / H;
+    /* Latitude : 0 à l'équateur, 1 aux pôles. */
+    const lat = Math.abs(v - 0.5) * 2;
+    for (let x = 0; x < W; x++) {
+      const u = x / W;
+
+      /* Déformation du domaine, puis lecture écrasée en X pour les bandes. */
+      const wx = u * 8 + fbm(n2, u * 4, v * 4, 3) * 1.6;
+      const wy = v * 26 + fbm(n2, u * 3 + 5, v * 3, 2) * 2.2;
+      let t = fbm(n1, wx, wy, 5);
+
+      /* Les calottes lissent la turbulence et éclaircissent. */
+      const cap = Math.pow(lat, 3.2);
+      t = t * (1 - cap) + 0.78 * cap;
+
+      const l = Math.min(0.94, Math.max(0.05, hsl.l - 0.2 + t * 0.55));
+      shade.setHSL(hsl.h, hsl.s * (0.45 + (1 - lat) * 0.55), l);
+
+      const i = (y * W + x) * 4;
+      img.data[i] = shade.r * 255;
+      img.data[i + 1] = shade.g * 255;
+      img.data[i + 2] = shade.b * 255;
+      img.data[i + 3] = 255;
+    }
   }
 
-  /* Pôles éclaircis — repère supplémentaire pour la rotation. */
-  const poles = g.createLinearGradient(0, 0, 0, 128);
-  poles.addColorStop(0, "rgba(255,255,255,0.30)");
-  poles.addColorStop(0.2, "rgba(255,255,255,0)");
-  poles.addColorStop(0.8, "rgba(255,255,255,0)");
-  poles.addColorStop(1, "rgba(255,255,255,0.24)");
-  g.fillStyle = poles;
-  g.fillRect(0, 0, 256, 128);
+  g.putImageData(img, 0, 0);
 
   const t = new THREE.CanvasTexture(c);
   t.colorSpace = THREE.SRGBColorSpace;
@@ -134,42 +203,80 @@ function ringTexture(hex: string) {
 }
 
 /**
- * Photosphère : un grain de cellules de convection, du jaune pâle au blanc.
- * Statique et minuscule (256×128) — c'est un grain, pas un dessin.
+ * Photosphère.
+ *
+ * Une étoile n'a pas de bandes : elle bout. Deux bruits fractals se
+ * combinent — un large qui pose les cellules de convection, un fin qui les
+ * granule — et le résultat traverse une rampe chaude, du rouge sombre des
+ * intervalles au blanc du cœur des cellules. Le passage est volontairement
+ * brutal dans les hautes valeurs : c'est ce qui fait des points incandescents
+ * plutôt qu'une purée orange uniforme.
+ *
+ * Deux taches sombres viennent rompre la régularité. Sans elles, la surface
+ * est trop égale pour qu'on la croie.
  */
 function sunTexture() {
+  const W = 384, H = 192;
   const c = document.createElement("canvas");
-  c.width = 256;
-  c.height = 128;
+  c.width = W;
+  c.height = H;
   const g = c.getContext("2d")!;
-  g.fillStyle = "#FFC44E";
-  g.fillRect(0, 0, 256, 128);
+  const img = g.createImageData(W, H);
 
-  let seed = 424243;
-  const next = () => (seed = (seed * 1103515245 + 12345) % 2147483648) / 2147483648;
+  const nBig = makeNoise(31337);
+  const nFine = makeNoise(90210);
+  const nSpot = makeNoise(555);
 
-  for (let i = 0; i < 1400; i++) {
-    const x = next() * 256;
-    const y = next() * 128;
-    const r = 1.2 + next() * 4.6;
-    const warm = next();
-    g.fillStyle =
-      warm > 0.62
-        ? `rgba(255,255,235,${0.16 + next() * 0.5})`
-        : `rgba(226,116,26,${0.10 + next() * 0.26})`;
-    g.beginPath();
-    g.arc(x, y, r, 0, Math.PI * 2);
-    g.fill();
+  /* Rampe de la photosphère, du plus froid au plus chaud. */
+  const RAMP: [number, number, number, number][] = [
+    [0.00, 0x5c, 0x18, 0x02],
+    [0.30, 0xc4, 0x4c, 0x0c],
+    [0.55, 0xf5, 0x92, 0x22],
+    [0.74, 0xff, 0xc9, 0x5c],
+    [0.88, 0xff, 0xec, 0xb0],
+    [1.00, 0xff, 0xfd, 0xf0],
+  ];
+  function ramp(t: number, out: [number, number, number]) {
+    for (let i = 1; i < RAMP.length; i++) {
+      if (t <= RAMP[i][0] || i === RAMP.length - 1) {
+        const a = RAMP[i - 1], b = RAMP[i];
+        const k = Math.min(1, Math.max(0, (t - a[0]) / (b[0] - a[0])));
+        out[0] = a[1] + (b[1] - a[1]) * k;
+        out[1] = a[2] + (b[2] - a[2]) * k;
+        out[2] = a[3] + (b[3] - a[3]) * k;
+        return;
+      }
+    }
   }
 
-  /* Assombrissement centre-bord : le limbe d'une étoile est plus sombre que
-     son centre, et c'est ce qui la fait lire comme une sphère et non un disque. */
-  const limb = g.createLinearGradient(0, 0, 0, 128);
-  limb.addColorStop(0, "rgba(180,70,10,0.42)");
-  limb.addColorStop(0.5, "rgba(255,255,255,0)");
-  limb.addColorStop(1, "rgba(180,70,10,0.42)");
-  g.fillStyle = limb;
-  g.fillRect(0, 0, 256, 128);
+  const rgb: [number, number, number] = [0, 0, 0];
+
+  for (let y = 0; y < H; y++) {
+    const v = y / H;
+    for (let x = 0; x < W; x++) {
+      const u = x / W;
+
+      const cells = fbm(nBig, u * 14, v * 7, 4);
+      const grain = fbm(nFine, u * 38, v * 19, 3);
+      /* Le grain module les cellules au lieu de s'y ajouter : les creux
+         restent creux, les crêtes se détaillent. */
+      let t = cells * 0.72 + grain * 0.28;
+      t = Math.pow(Math.min(1, Math.max(0, (t - 0.18) / 0.68)), 0.78);
+
+      /* Taches : là où le bruit dédié dépasse un seuil, la surface refroidit. */
+      const spot = fbm(nSpot, u * 5 + 2, v * 2.5, 2);
+      if (spot > 0.66) t *= 1 - Math.min(0.82, (spot - 0.66) * 5.2);
+
+      ramp(t, rgb);
+      const i = (y * W + x) * 4;
+      img.data[i] = rgb[0];
+      img.data[i + 1] = rgb[1];
+      img.data[i + 2] = rgb[2];
+      img.data[i + 3] = 255;
+    }
+  }
+
+  g.putImageData(img, 0, 0);
 
   const t = new THREE.CanvasTexture(c);
   t.colorSpace = THREE.SRGBColorSpace;

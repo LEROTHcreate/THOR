@@ -1,16 +1,19 @@
 import ThorHero from "@/components/home/thor-hero";
-import { ThorSolarSystem } from "@/components/home/thor-solar-system";
 import { ThorBranches } from "@/components/home/thor-branches";
 import { ThorProCTA } from "@/components/home/thor-pro-cta";
 
-/* Le fond animé est monté une seule fois, dans AppShell — ne pas le réintroduire ici.
-   La preuve (le système solaire) passe avant l'orientation (les deux branches) :
-   on montre ce qui tourne déjà avant de demander au visiteur de choisir. */
+/* Le décor — le système solaire — est monté une seule fois dans AppShell, en
+   fond fixe de toute la page. Ne pas le réintroduire ici.
+
+   La liste des six sites a été retirée : elle redisait en cartes ce que les
+   planètes montrent déjà, et ses pavés masquaient les orbites les plus
+   larges. Les projets restent à un clic depuis le hero comme depuis le menu,
+   par /realisations — c'est aussi le chemin qu'emprunte la navigation au
+   clavier, que le survol d'une planète ne peut pas servir. */
 export default function Page() {
   return (
     <>
       <ThorHero />
-      <ThorSolarSystem />
       <ThorBranches />
       <ThorProCTA />
     </>
