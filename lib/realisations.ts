@@ -38,6 +38,12 @@ export type Realisation = {
    */
   cover?: string;
   /**
+   * Autres écrans du même site, plus bas dans la page — ce que `cover` ne
+   * montre pas. Affichés en galerie sur la fiche projet. Vide pour les
+   * produits qui tiennent sur un seul écran.
+   */
+  gallery?: string[];
+  /**
    * Marque du projet, carrée et sur fond transparent. Sert à identifier le
    * produit là où la pastille de couleur seule reste anonyme.
    */
@@ -76,6 +82,10 @@ const REALISATIONS: Realisation[] = [
     status: "live",
     href: "https://pharmapinvertagenda.vercel.app/",
     cover: "/images/captures/pharmaplanning.webp",
+    gallery: [
+      "/images/captures/pharmaplanning-2.webp",
+      "/images/captures/pharmaplanning-3.webp",
+    ],
     featured: true,
     branch: "produits",
     context:
@@ -113,6 +123,10 @@ const REALISATIONS: Realisation[] = [
     href: "/clair-vision",
     proHref: "/connexion/praticien?module=vision",
     cover: "/images/captures/clair-vision.webp",
+    gallery: [
+      "/images/captures/clair-vision-2.webp",
+      "/images/captures/clair-vision-3.webp",
+    ],
     featured: true,
     branch: "produits",
     context:
@@ -152,6 +166,10 @@ const REALISATIONS: Realisation[] = [
     href: "/clair-audition",
     proHref: "/connexion/praticien?module=audition",
     cover: "/images/captures/clair-audition.webp",
+    gallery: [
+      "/images/captures/clair-audition-2.webp",
+      "/images/captures/clair-audition-3.webp",
+    ],
     featured: true,
     branch: "produits",
     context:
@@ -190,6 +208,10 @@ const REALISATIONS: Realisation[] = [
     status: "live",
     href: "https://monsoldereel.fr/",
     cover: "/images/captures/monsoldereel.webp",
+    gallery: [
+      "/images/captures/monsoldereel-2.webp",
+      "/images/captures/monsoldereel-3.webp",
+    ],
     logo: "/images/logos/monsoldereel.png",
     featured: true,
     branch: "studio",

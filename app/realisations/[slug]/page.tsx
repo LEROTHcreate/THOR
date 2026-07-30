@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Reveal } from "@/components/ui/reveal";
@@ -249,6 +250,41 @@ export default async function RealisationPage({ params }: Params) {
             </aside>
           </Reveal>
         </div>
+
+        {/* ── Aperçus ─────────────────────────────────────────────────────
+            D'autres écrans du site en ligne, pris plus bas dans la page. Sans
+            barre de navigateur cette fois : elle est déjà posée sur le bandeau,
+            la répéter alourdirait sans rien apprendre. */}
+        {item.gallery && item.gallery.length > 0 && (
+          <section className="mt-24">
+            <Reveal>
+              <div className="flex items-center gap-5">
+                <span className="mono-label shrink-0 text-slate-500">Aperçus</span>
+                <span aria-hidden="true" className="h-px flex-1 bg-slate-900/[0.07]" />
+              </div>
+            </Reveal>
+
+            <div className="mt-10 grid gap-5 md:grid-cols-2">
+              {item.gallery.map((src, i) => (
+                <Reveal key={src}>
+                  <div
+                    className="relative aspect-[16/9] overflow-hidden rounded-[20px] border border-slate-900/[0.07] bg-slate-50"
+                    style={{ boxShadow: "0 20px 50px -30px rgba(11,18,32,0.40)" }}
+                  >
+                    <Image
+                      src={src}
+                      alt={`${item.name} — écran ${i + 2}`}
+                      fill
+                      sizes="(min-width: 768px) 540px, 100vw"
+                      quality={90}
+                      className="object-cover object-top"
+                    />
+                  </div>
+                </Reveal>
+              ))}
+            </div>
+          </section>
+        )}
 
         {/* ── Autres projets ──────────────────────────────────────────── */}
         <Reveal>
