@@ -86,6 +86,9 @@ const REALISATIONS: Realisation[] = [
     gallery: [
       "/images/captures/pharmaplanning-2.webp",
       "/images/captures/pharmaplanning-3.webp",
+      "/images/captures/pharmaplanning-4.webp",
+      "/images/captures/pharmaplanning-5.webp",
+      "/images/captures/pharmaplanning-6.webp",
     ],
     featured: true,
     branch: "produits",
@@ -128,6 +131,9 @@ const REALISATIONS: Realisation[] = [
     gallery: [
       "/images/captures/clair-vision-2.webp",
       "/images/captures/clair-vision-3.webp",
+      "/images/captures/clair-vision-4.webp",
+      "/images/captures/clair-vision-5.webp",
+      "/images/captures/clair-vision-6.webp",
     ],
     featured: true,
     branch: "produits",
@@ -172,6 +178,8 @@ const REALISATIONS: Realisation[] = [
     gallery: [
       "/images/captures/clair-audition-2.webp",
       "/images/captures/clair-audition-3.webp",
+      "/images/captures/clair-audition-4.webp",
+      "/images/captures/clair-audition-5.webp",
     ],
     featured: true,
     branch: "produits",
@@ -214,6 +222,9 @@ const REALISATIONS: Realisation[] = [
     gallery: [
       "/images/captures/monsoldereel-2.webp",
       "/images/captures/monsoldereel-3.webp",
+      "/images/captures/monsoldereel-4.webp",
+      "/images/captures/monsoldereel-5.webp",
+      "/images/captures/monsoldereel-6.webp",
     ],
     logo: "/images/logos/monsoldereel.png",
     featured: true,

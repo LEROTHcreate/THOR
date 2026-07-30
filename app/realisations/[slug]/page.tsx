@@ -152,6 +152,53 @@ export default async function RealisationPage({ params }: Params) {
           </div>
         </Reveal>
 
+        {/* ── Aperçus ─────────────────────────────────────────────────────
+            La suite du site, plus bas dans la page, en bande défilante juste
+            sous la capture principale.
+
+            Le dernier écran visible est volontairement coupé : c'est ce qui
+            dit qu'il y en a d'autres, mieux qu'une flèche posée par-dessus.
+            Le conteneur est focalisable — une zone qui ne défile qu'à la
+            souris reste inatteignable au clavier. Pas de barre de navigateur
+            sur ces vignettes : elle est déjà posée au-dessus, la répéter
+            alourdirait sans rien apprendre. */}
+        {item.gallery && item.gallery.length > 0 && (
+          <Reveal>
+            <section className="mt-5" aria-labelledby="apercus">
+              <div className="mb-4 flex items-center gap-5">
+                <span id="apercus" className="mono-label shrink-0 text-slate-500">
+                  Aperçus · {item.gallery.length + 1} écrans
+                </span>
+                <span aria-hidden="true" className="h-px flex-1 bg-slate-900/[0.07]" />
+              </div>
+
+              <div
+                tabIndex={0}
+                role="group"
+                aria-label={`Autres écrans de ${item.name}`}
+                className="flex snap-x snap-mandatory gap-4 overflow-x-auto pb-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900/20"
+              >
+                {item.gallery.map((src, i) => (
+                  <div
+                    key={src}
+                    className="relative aspect-[16/9] w-[78%] shrink-0 snap-start overflow-hidden rounded-[18px] border border-slate-900/[0.07] bg-slate-50 sm:w-[48%] lg:w-[38%]"
+                    style={{ boxShadow: "0 18px 44px -30px rgba(11,18,32,0.40)" }}
+                  >
+                    <Image
+                      src={src}
+                      alt={`${item.name} — écran ${i + 2}`}
+                      fill
+                      sizes="(min-width: 1024px) 420px, (min-width: 640px) 48vw, 78vw"
+                      quality={90}
+                      className="object-cover object-top"
+                    />
+                  </div>
+                ))}
+              </div>
+            </section>
+          </Reveal>
+        )}
+
         {/* ── Chiffres clés ───────────────────────────────────────────── */}
         {item.outcomes.length > 0 && (
           <Reveal>
@@ -250,41 +297,6 @@ export default async function RealisationPage({ params }: Params) {
             </aside>
           </Reveal>
         </div>
-
-        {/* ── Aperçus ─────────────────────────────────────────────────────
-            D'autres écrans du site en ligne, pris plus bas dans la page. Sans
-            barre de navigateur cette fois : elle est déjà posée sur le bandeau,
-            la répéter alourdirait sans rien apprendre. */}
-        {item.gallery && item.gallery.length > 0 && (
-          <section className="mt-24">
-            <Reveal>
-              <div className="flex items-center gap-5">
-                <span className="mono-label shrink-0 text-slate-500">Aperçus</span>
-                <span aria-hidden="true" className="h-px flex-1 bg-slate-900/[0.07]" />
-              </div>
-            </Reveal>
-
-            <div className="mt-10 grid gap-5 md:grid-cols-2">
-              {item.gallery.map((src, i) => (
-                <Reveal key={src}>
-                  <div
-                    className="relative aspect-[16/9] overflow-hidden rounded-[20px] border border-slate-900/[0.07] bg-slate-50"
-                    style={{ boxShadow: "0 20px 50px -30px rgba(11,18,32,0.40)" }}
-                  >
-                    <Image
-                      src={src}
-                      alt={`${item.name} — écran ${i + 2}`}
-                      fill
-                      sizes="(min-width: 768px) 540px, 100vw"
-                      quality={90}
-                      className="object-cover object-top"
-                    />
-                  </div>
-                </Reveal>
-              ))}
-            </div>
-          </section>
-        )}
 
         {/* ── Autres projets ──────────────────────────────────────────── */}
         <Reveal>

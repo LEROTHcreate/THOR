@@ -203,7 +203,10 @@ body {
 }
 
 /* Scrollbar subtile */
-::-webkit-scrollbar { width: 6px; }
+/* `height` sert aux barres horizontales — les bandes d'aperçus des fiches
+   projet en ont une, sans quoi elle s'affiche à la taille par défaut du
+   système et écrase le reste. */
+::-webkit-scrollbar { width: 6px; height: 6px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: var(--thor-border); border-radius: 9999px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--thor-muted); }
