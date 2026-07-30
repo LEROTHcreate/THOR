@@ -82,6 +82,7 @@ const REALISATIONS: Realisation[] = [
     status: "live",
     href: "https://pharmapinvertagenda.vercel.app/",
     cover: "/images/captures/pharmaplanning.webp",
+    logo: "/images/logos/pharmaplanning.svg",
     gallery: [
       "/images/captures/pharmaplanning-2.webp",
       "/images/captures/pharmaplanning-3.webp",
@@ -123,6 +124,7 @@ const REALISATIONS: Realisation[] = [
     href: "/clair-vision",
     proHref: "/connexion/praticien?module=vision",
     cover: "/images/captures/clair-vision.webp",
+    logo: "/images/logos/clair-vision.png",
     gallery: [
       "/images/captures/clair-vision-2.webp",
       "/images/captures/clair-vision-3.webp",
@@ -166,6 +168,7 @@ const REALISATIONS: Realisation[] = [
     href: "/clair-audition",
     proHref: "/connexion/praticien?module=audition",
     cover: "/images/captures/clair-audition.webp",
+    logo: "/images/logos/clair-audition-mark.png",
     gallery: [
       "/images/captures/clair-audition-2.webp",
       "/images/captures/clair-audition-3.webp",
@@ -252,6 +255,7 @@ const REALISATIONS: Realisation[] = [
     status: "live",
     href: "https://jarvis-pi-pied.vercel.app/",
     cover: "/images/captures/jarvis.webp",
+    logo: "/images/logos/jarvis-mark.png",
     featured: true,
     branch: "produits",
     context:
