@@ -176,26 +176,48 @@ function planetTexture(hex: string) {
  * ressemblerait à un cerceau posé là.
  */
 function ringTexture(hex: string) {
+  const W = 256;
   const c = document.createElement("canvas");
-  c.width = 128;
+  c.width = W;
   c.height = 1;
   const g = c.getContext("2d")!;
+  const img = g.createImageData(W, 1);
+
   const base = new THREE.Color(hex);
   const hsl = { h: 0, s: 0, l: 0 };
   base.getHSL(hsl);
 
-  let seed = 90001;
-  const next = () => (seed = (seed * 1103515245 + 12345) % 2147483648) / 2147483648;
+  const noise = makeNoise(90001);
+  const shade = new THREE.Color();
 
-  for (let x = 0; x < 128; x++) {
-    const t = x / 128;
-    /* La division de Cassini : un vide net, sans quoi l'anneau est une bouillie. */
-    const gap = t > 0.52 && t < 0.60 ? 0.06 : 1;
-    const a = (0.22 + next() * 0.62) * gap * Math.sin(t * Math.PI) ** 0.4;
-    const band = new THREE.Color().setHSL(hsl.h, hsl.s * 0.5, 0.72 + next() * 0.2);
-    g.fillStyle = `rgba(${Math.round(band.r * 255)},${Math.round(band.g * 255)},${Math.round(band.b * 255)},${a.toFixed(3)})`;
-    g.fillRect(x, 0, 1, 1);
+  for (let x = 0; x < W; x++) {
+    const t = x / (W - 1);
+
+    /* Plusieurs échelles de sillons superposées : un anneau n'est pas un
+       dégradé, c'est une multitude de fines bandes de densités inégales. */
+    let d = fbm(noise, t * 22, 0.5, 4) * 0.62 + fbm(noise, t * 74, 2.5, 2) * 0.38;
+
+    /* La division de Cassini — un vide net. Sans elle l'anneau se lit comme
+       un disque plein, et c'est ce vide qui le rend crédible. */
+    if (t > 0.46 && t < 0.56) d *= 0.05;
+
+    /* Les bords intérieur et extérieur s'éteignent : un anneau n'a pas de
+       tranche franche. */
+    const edge = Math.pow(Math.sin(t * Math.PI), 0.55);
+    const a = Math.min(1, d * 1.5) * edge;
+
+    /* La teinte du projet reste lisible — désaturée, éclaircie, mais pas
+       lavée en gris comme dans la version précédente. */
+    shade.setHSL(hsl.h, hsl.s * 0.42, 0.62 + d * 0.3);
+
+    const i = x * 4;
+    img.data[i] = shade.r * 255;
+    img.data[i + 1] = shade.g * 255;
+    img.data[i + 2] = shade.b * 255;
+    img.data[i + 3] = a * 235;
   }
+
+  g.putImageData(img, 0, 0);
 
   const t = new THREE.CanvasTexture(c);
   t.colorSpace = THREE.SRGBColorSpace;
@@ -376,12 +398,29 @@ export default function SolarCanvas() {
          d'un système solaire : une seule silhouette annelée et la lecture est
          immédiate. Deux faces, sinon l'anneau disparaît vu de dessous. */
       if (o.ring) {
+        const inner = o.size * 1.42;
+        const outer = o.size * 2.35;
+        const geo = new THREE.RingGeometry(inner, outer, 96, 1);
+
+        /* RingGeometry projette ses UV à plat, comme si l'anneau était une
+           image carrée : une texture de bandes s'y plaque en rayures
+           verticales, pas en cercles concentriques. On réécrit donc u sur la
+           distance au centre — c'est la seule façon d'obtenir de vrais
+           anneaux, et ça ne coûte qu'un passage à la construction. */
+        const pos = geo.attributes.position;
+        const uv = geo.attributes.uv;
+        for (let k = 0; k < pos.count; k++) {
+          const r = Math.hypot(pos.getX(k), pos.getY(k));
+          uv.setXY(k, (r - inner) / (outer - inner), 0.5);
+        }
+        uv.needsUpdate = true;
+
         const ring = new THREE.Mesh(
-          new THREE.RingGeometry(o.size * 1.55, o.size * 2.45, 72),
+          geo,
           new THREE.MeshBasicMaterial({
             map: ringTexture(item.accent),
             transparent: true,
-            opacity: 0.75,
+            opacity: 0.9,
             side: THREE.DoubleSide,
             depthWrite: false,
           }),
