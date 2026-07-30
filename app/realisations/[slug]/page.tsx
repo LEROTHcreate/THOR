@@ -176,24 +176,31 @@ export default async function RealisationPage({ params }: Params) {
                 tabIndex={0}
                 role="group"
                 aria-label={`Autres écrans de ${item.name}`}
-                className="flex snap-x snap-mandatory gap-4 overflow-x-auto pb-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900/20"
+                className="shots-strip pb-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900/20"
               >
-                {item.gallery.map((src, i) => (
-                  <div
-                    key={src}
-                    className="relative aspect-[16/9] w-[78%] shrink-0 snap-start overflow-hidden rounded-[18px] border border-slate-900/[0.07] bg-slate-50 sm:w-[48%] lg:w-[38%]"
-                    style={{ boxShadow: "0 18px 44px -30px rgba(11,18,32,0.40)" }}
-                  >
-                    <Image
-                      src={src}
-                      alt={`${item.name} — écran ${i + 2}`}
-                      fill
-                      sizes="(min-width: 1024px) 420px, (min-width: 640px) 48vw, 78vw"
-                      quality={90}
-                      className="object-cover object-top"
-                    />
-                  </div>
-                ))}
+                <div className="shots-rail gap-4 pr-4">
+                  {/* La série est écrite deux fois : la seconde n'existe que
+                      pour que la boucle se referme, elle n'a rien à annoncer. */}
+                  {[0, 1].map((pass) =>
+                    item.gallery!.map((src, i) => (
+                      <div
+                        key={`${pass}-${src}`}
+                        aria-hidden={pass === 1 ? "true" : undefined}
+                        className="relative aspect-[16/9] w-[300px] shrink-0 overflow-hidden rounded-[18px] border border-slate-900/[0.07] bg-slate-50 sm:w-[400px]"
+                        style={{ boxShadow: "0 18px 44px -30px rgba(11,18,32,0.40)" }}
+                      >
+                        <Image
+                          src={src}
+                          alt={pass === 0 ? `${item.name} — écran ${i + 2}` : ""}
+                          fill
+                          sizes="(min-width: 640px) 400px, 300px"
+                          quality={90}
+                          className="object-cover object-top"
+                        />
+                      </div>
+                    )),
+                  )}
+                </div>
               </div>
             </section>
           </Reveal>

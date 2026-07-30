@@ -676,6 +676,39 @@ body {
     text-transform: uppercase;
   }
 
+  /* ── Bande d'aperçus ──
+     Défilement continu, sans JavaScript : la rangée contient deux fois la
+     même série et se translate de la moitié de sa largeur, ce qui referme
+     la boucle sans saut visible.
+
+     Elle s'arrête au survol et au focus — on ne demande pas à quelqu'un de
+     viser une image en mouvement. En mouvement réduit, l'animation cède la
+     place à un défilement manuel : sans quoi les écrans hors cadre
+     deviendraient inatteignables. */
+  .shots-strip {
+    overflow: hidden;
+  }
+
+  .shots-rail {
+    display: flex;
+    width: max-content;
+    animation: thor-marquee 70s linear infinite;
+  }
+
+  .shots-strip:hover .shots-rail,
+  .shots-strip:focus-within .shots-rail {
+    animation-play-state: paused;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .shots-strip {
+      overflow-x: auto;
+    }
+    .shots-rail {
+      animation: none;
+    }
+  }
+
   /* ── Papier millimétré ──
      Trame de repères sous les panneaux de travail. Statique et en dégradé
      répété : aucune image, aucun calque supplémentaire à composer. */
