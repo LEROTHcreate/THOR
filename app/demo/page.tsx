@@ -42,11 +42,11 @@ const THEMES = {
     name: "PharmaPlanning",
   },
   jarvis: {
-    accent: "#1D4ED8", accent2: "#2563EB",
-    glow: "rgba(29,78,216,0.25)", glowStrong: "rgba(29,78,216,0.45)",
-    bg: "rgba(29,78,216,0.08)", bgMid: "rgba(29,78,216,0.16)",
-    border: "rgba(29,78,216,0.32)", gradient: "linear-gradient(135deg,#1D4ED8,#1E3A8A)",
-    orb1: "rgba(29,78,216,0.20)", orb2: "rgba(37,99,235,0.14)",
+    accent: "#22D3EE", accent2: "#2563EB",
+    glow: "rgba(34,211,238,0.25)", glowStrong: "rgba(34,211,238,0.45)",
+    bg: "rgba(34,211,238,0.08)", bgMid: "rgba(34,211,238,0.16)",
+    border: "rgba(34,211,238,0.32)", gradient: "linear-gradient(135deg,#22D3EE,#1E3A8A)",
+    orb1: "rgba(34,211,238,0.20)", orb2: "rgba(37,99,235,0.14)",
     name: "JARVIS",
   },
 } as const;
@@ -151,9 +151,9 @@ const MODULE_NARRATIVE: Record<Space, ModuleNarrative> = {
     trustVal: "0 €",
     trustLabel: "Sans publicité, sans revente",
     trustDesc: "JARVIS ne stocke aucune conversation, ne revend aucune donnée, et n'affiche aucune publicité.",
-    cardGradient: "linear-gradient(135deg,#1D4ED8,#1E3A8A)",
-    cardBg: "rgba(29,78,216,0.08)",
-    cardBorder: "rgba(29,78,216,0.28)",
+    cardGradient: "linear-gradient(135deg,#22D3EE,#1E3A8A)",
+    cardBg: "rgba(34,211,238,0.08)",
+    cardBorder: "rgba(34,211,238,0.28)",
   },
 };
 
@@ -1220,35 +1220,139 @@ const FEATURES_PHARMA: Feature[] = [
   },
 ];
 
-/* ─── Mocks JARVIS — interface HUD sombre inspirée des screenshots ─────── */
+/* ─── Mocks JARVIS ───────────────────────────────────────────────────────
+   L'interface réelle est un HUD cyan sur quasi-noir, cerné de rails de
+   télémétrie : signal et fréquence à gauche, horloge et éphémérides à droite,
+   état des API en bas, dock d'icônes au centre. Ce sont ces rails qui font
+   l'identité de l'écran — sans eux il ne reste qu'un cadre sombre. */
+
+const JV = {
+  fond:    "#04070E",
+  cyan:    "#22D3EE",
+  cyanSourd: "#0E7490",
+  texte:   "#7DD3FC",
+  eteint:  "#3E6B80",
+  filet:   "rgba(34,211,238,0.16)",
+};
+
+/** Étiquette de rail : la voix par défaut de tout le HUD. */
+function JvLabel({ children, color = JV.eteint }: { children: React.ReactNode; color?: string }) {
+  return <div style={{ fontSize: 7, letterSpacing: "0.18em", color }}>{children}</div>;
+}
+
 function JarvisShell({ children }: { children: React.ReactNode }) {
   return (
     <div
       className="relative overflow-hidden rounded-xl"
       style={{
-        background: "linear-gradient(180deg, #0a1220 0%, #0d1a2e 100%)",
-        border: "1px solid rgba(29,78,216,0.30)",
-        boxShadow: "inset 0 1px 0 rgba(29,78,216,0.10), 0 0 32px rgba(29,78,216,0.10)",
-        color: "#BFDBFE",
+        background: JV.fond,
+        border: `1px solid ${JV.filet}`,
+        boxShadow: `inset 0 0 60px rgba(34,211,238,0.05), 0 0 32px rgba(34,211,238,0.06)`,
+        color: JV.texte,
         fontFamily: "ui-monospace, 'SF Mono', 'Fira Code', monospace",
       }}
     >
-      {/* Live feed bandeau */}
-      <div className="flex items-center gap-4 px-3 py-1.5 border-b" style={{ borderColor: "rgba(29,78,216,0.18)", background: "rgba(29,78,216,0.04)" }}>
-        <span style={{ color: "#1D4ED8", fontSize: 9, fontWeight: 700, letterSpacing: 0.5 }}>● LIVE FEED</span>
-        <span style={{ color: "#5d8aa8", fontSize: 9, letterSpacing: 0.4 }}>LE_MONDE</span>
-        <span style={{ color: "#9bd5ef", fontSize: 9, opacity: 0.7 }}>En Suède, des juristes alertent sur la fragilisation de l&apos;État de droit</span>
-        <span className="ml-auto" style={{ color: "#1D4ED8", fontSize: 9, fontWeight: 700 }}>12:42:06</span>
+      {/* Trame de fond, immobile */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0"
+        style={{
+          backgroundImage:
+            "linear-gradient(to right, rgba(34,211,238,0.045) 1px, transparent 1px), linear-gradient(to bottom, rgba(34,211,238,0.045) 1px, transparent 1px)",
+          backgroundSize: "26px 26px",
+        }}
+      />
+
+      {/* Bandeau d'actualités */}
+      <div className="relative flex items-center gap-4 px-3 py-1.5" style={{ borderBottom: `1px solid ${JV.filet}` }}>
+        <span style={{ color: JV.cyan, fontSize: 8, fontWeight: 700, letterSpacing: "0.16em" }}>● LIVE FEED</span>
+        <span style={{ color: JV.eteint, fontSize: 8, letterSpacing: "0.16em" }}>LE_MONDE</span>
+        <span style={{ color: JV.texte, fontSize: 8, opacity: 0.55 }}>
+          En Suède, des juristes alertent sur la fragilisation de l&apos;État de droit
+        </span>
+        <span className="ml-auto tabular-nums" style={{ color: JV.cyan, fontSize: 8, letterSpacing: "0.12em" }}>11:06:51</span>
       </div>
-      {children}
-      {/* Footer status */}
-      <div className="flex items-center justify-between px-3 py-1.5 border-t" style={{ borderColor: "rgba(29,78,216,0.18)" }}>
-        <div className="flex items-center gap-3" style={{ fontSize: 8, color: "#5d8aa8", letterSpacing: 0.4 }}>
-          <span><span style={{ color: "#1D4ED8" }}>● API</span> STANDBY</span>
-          <span>MODEL <span style={{ color: "#BFDBFE" }}>mistral-small</span></span>
-          <span>LATENCY <span style={{ color: "#BFDBFE" }}>16ms</span></span>
+
+      {/* Corps : rail gauche · contenu · rail droit */}
+      <div className="relative flex">
+        {/* Rail gauche — signal, latence, fréquence */}
+        <div className="hidden shrink-0 flex-col gap-4 px-3 py-4 sm:flex" style={{ width: 92 }}>
+          <div>
+            <JvLabel color={JV.cyanSourd}>SIGNAL</JvLabel>
+            <div style={{ fontSize: 11, color: JV.cyan, marginTop: 3 }}>93%</div>
+            <div className="mt-1.5 flex flex-col gap-[2px]">
+              {[1, 0.8, 0.55, 0.3].map((o, i) => (
+                <span key={i} style={{ display: "block", height: 4, width: 14, background: JV.cyan, opacity: o }} />
+              ))}
+            </div>
+          </div>
+          <div>
+            <JvLabel color={JV.cyanSourd}>LAT</JvLabel>
+            <div style={{ fontSize: 11, color: JV.texte, marginTop: 3 }}>23ms</div>
+          </div>
+          <div>
+            <JvLabel color={JV.cyanSourd}>FREQ</JvLabel>
+            <div style={{ fontSize: 11, color: JV.texte, marginTop: 3 }}>3.99GHz</div>
+          </div>
         </div>
-        <span style={{ fontSize: 8, color: "#1D4ED8", letterSpacing: 0.4 }}>T+004 · ONLINE</span>
+
+        <div className="min-w-0 flex-1">{children}</div>
+
+        {/* Rail droit — horloge et éphémérides */}
+        <div className="hidden shrink-0 flex-col items-end gap-4 px-3 py-4 md:flex" style={{ width: 104 }}>
+          <div className="text-right">
+            <div className="tabular-nums" style={{ fontSize: 13, color: JV.cyan, letterSpacing: "0.06em" }}>11:06</div>
+            <JvLabel>JEU. 30 JUIL.</JvLabel>
+            <JvLabel color={JV.cyanSourd}>27°C · CLAIR</JvLabel>
+          </div>
+          <div className="text-right">
+            <JvLabel color={JV.cyanSourd}>SOLAR</JvLabel>
+            <div className="tabular-nums" style={{ fontSize: 9, color: JV.texte, marginTop: 2 }}>06:26 — 21:03</div>
+            <span className="mt-1.5 block" style={{ height: 2, width: 56, background: JV.cyan, opacity: 0.5, marginLeft: "auto" }} />
+          </div>
+          <div className="text-right">
+            <JvLabel color={JV.cyanSourd}>LUNAR</JvLabel>
+            <div style={{ fontSize: 9, color: JV.texte, marginTop: 2 }}>PLEINE</div>
+          </div>
+        </div>
+      </div>
+
+      {/* Panneau API et dock */}
+      <div className="relative flex items-end justify-between gap-4 px-3 pb-2 pt-1">
+        <div className="hidden gap-6 sm:flex">
+          {[
+            { t: "API", l: [["MODEL", "mistral-small"], ["REQUESTS", "000"], ["TOKENS", "~6"]] },
+            { t: "TTS", l: [["VOICE", "—"], ["SESSION", "0 chars"], ["QUOTA", "—"]] },
+          ].map((bloc) => (
+            <div key={bloc.t}>
+              <JvLabel color={JV.cyanSourd}>● {bloc.t} STANDBY</JvLabel>
+              {bloc.l.map(([k, v]) => (
+                <div key={k} className="mt-[3px] flex gap-3" style={{ fontSize: 7.5 }}>
+                  <span style={{ color: JV.eteint, letterSpacing: "0.14em" }}>{k}</span>
+                  <span style={{ color: JV.texte }}>{v}</span>
+                </div>
+              ))}
+            </div>
+          ))}
+        </div>
+
+        {/* Dock — les commandes de l'assistant */}
+        <div className="mx-auto flex items-center gap-1.5 rounded-full px-2 py-1.5" style={{ border: `1px solid ${JV.filet}`, background: "rgba(34,211,238,0.04)" }}>
+          {["micro", "fichier", "onde", "son", "note", "carte"].map((n) => (
+            <span
+              key={n}
+              className="grid h-5 w-5 place-items-center rounded-full"
+              style={{ border: `1px solid ${JV.filet}`, color: JV.cyan }}
+            >
+              <span style={{ display: "block", height: 4, width: 4, borderRadius: 999, background: JV.cyan, opacity: 0.75 }} />
+            </span>
+          ))}
+        </div>
+
+        <div className="hidden text-right md:block">
+          <JvLabel color={JV.cyanSourd}>CPU 50% · MEM 66%</JvLabel>
+          <JvLabel color={JV.cyan}>T+226 ONLINE</JvLabel>
+        </div>
       </div>
     </div>
   );
@@ -1281,20 +1385,20 @@ function JarvisOrb({ size = 120 }: { size?: number }) {
         {/* Halo extérieur diffus */}
         <defs>
           <radialGradient id={`orb-glow-${size}`} cx="50%" cy="50%">
-            <stop offset="0%"  stopColor="#1D4ED8" stopOpacity="0.8" />
-            <stop offset="30%" stopColor="#1D4ED8" stopOpacity="0.30" />
-            <stop offset="65%" stopColor="#1D4ED8" stopOpacity="0.06" />
-            <stop offset="100%" stopColor="#1D4ED8" stopOpacity="0" />
+            <stop offset="0%"  stopColor="#22D3EE" stopOpacity="0.8" />
+            <stop offset="30%" stopColor="#22D3EE" stopOpacity="0.30" />
+            <stop offset="65%" stopColor="#22D3EE" stopOpacity="0.06" />
+            <stop offset="100%" stopColor="#22D3EE" stopOpacity="0" />
           </radialGradient>
           <radialGradient id={`orb-core-${size}`} cx="50%" cy="50%">
             <stop offset="0%"  stopColor="#ffffff" stopOpacity="0.95" />
-            <stop offset="35%" stopColor="#1D4ED8" stopOpacity="0.75" />
-            <stop offset="100%" stopColor="#1D4ED8" stopOpacity="0" />
+            <stop offset="35%" stopColor="#22D3EE" stopOpacity="0.75" />
+            <stop offset="100%" stopColor="#22D3EE" stopOpacity="0" />
           </radialGradient>
         </defs>
 
         {/* Anneau extérieur — pointillé fin */}
-        <circle cx={cx} cy={cy} r={outerR} fill="none" stroke="rgba(29,78,216,0.35)" strokeWidth="0.8" strokeDasharray="2 3" />
+        <circle cx={cx} cy={cy} r={outerR} fill="none" stroke="rgba(34,211,238,0.35)" strokeWidth="0.8" strokeDasharray="2 3" />
 
         {/* Tick marks autour de l'anneau extérieur (longs tous les 5) */}
         {Array.from({ length: tickCount }).map((_, i) => {
@@ -1309,24 +1413,24 @@ function JarvisOrb({ size = 120 }: { size?: number }) {
               y1={cy + Math.sin(angle) * r1}
               x2={cx + Math.cos(angle) * r2}
               y2={cy + Math.sin(angle) * r2}
-              stroke="rgba(29,78,216,0.55)"
+              stroke="rgba(34,211,238,0.55)"
               strokeWidth={isLong ? 1.4 : 0.7}
             />
           );
         })}
 
         {/* Anneau moyen */}
-        <circle cx={cx} cy={cy} r={size * 0.36} fill="none" stroke="rgba(29,78,216,0.45)" strokeWidth="0.9" />
+        <circle cx={cx} cy={cy} r={size * 0.36} fill="none" stroke="rgba(34,211,238,0.45)" strokeWidth="0.9" />
 
         {/* Anneau intérieur */}
-        <circle cx={cx} cy={cy} r={size * 0.24} fill="none" stroke="rgba(29,78,216,0.30)" strokeWidth="0.6" strokeDasharray="1 2" />
+        <circle cx={cx} cy={cy} r={size * 0.24} fill="none" stroke="rgba(34,211,238,0.30)" strokeWidth="0.6" strokeDasharray="1 2" />
 
         {/* Glow diffus arrière */}
         <circle cx={cx} cy={cy} r={size * 0.45} fill={`url(#orb-glow-${size})`} />
 
         {/* Particules du noyau */}
         {coreParticles.map((p, i) => (
-          <circle key={i} cx={p.x} cy={p.y} r={p.size} fill="#BFDBFE" opacity={p.opacity} />
+          <circle key={i} cx={p.x} cy={p.y} r={p.size} fill="#7DD3FC" opacity={p.opacity} />
         ))}
 
         {/* Core lumineux central */}
@@ -1341,7 +1445,7 @@ function JarvisOrb({ size = 120 }: { size?: number }) {
           const y = cy + Math.sin(angle) * outerR;
           return (
             <g key={i}>
-              <circle cx={x} cy={y} r="5" fill="rgba(29,78,216,0.15)" />
+              <circle cx={x} cy={y} r="5" fill="rgba(34,211,238,0.15)" />
               <circle cx={x} cy={y} r="2.5" fill="#ffffff">
                 <animate attributeName="opacity" values="0.5;1;0.5" dur={`${2 + i * 0.4}s`} repeatCount="indefinite" />
               </circle>
@@ -1364,28 +1468,28 @@ function MockJarvisChat() {
     <JarvisShell>
       <div className="relative grid grid-cols-[1fr_auto_1fr] gap-3 px-4 py-5 min-h-[320px]">
         {/* Colonne gauche — vide ou status */}
-        <div style={{ fontSize: 9, color: "#5d8aa8", letterSpacing: 0.4 }}>
-          <div style={{ color: "#1D4ED8", marginBottom: 4 }}>● J.A.R.V.I.S</div>
+        <div style={{ fontSize: 9, color: "#3E6B80", letterSpacing: 0.4 }}>
+          <div style={{ color: "#22D3EE", marginBottom: 4 }}>● J.A.R.V.I.S</div>
           <div>SYS://0xJARVIS</div>
-          <div className="mt-6">SIGNAL <div style={{ color: "#1D4ED8" }}>91%</div></div>
-          <div className="mt-3">LAT <div style={{ color: "#BFDBFE" }}>16ms</div></div>
-          <div className="mt-3">FREQ <div style={{ color: "#BFDBFE" }}>3.94GHz</div></div>
+          <div className="mt-6">SIGNAL <div style={{ color: "#22D3EE" }}>91%</div></div>
+          <div className="mt-3">LAT <div style={{ color: "#7DD3FC" }}>16ms</div></div>
+          <div className="mt-3">FREQ <div style={{ color: "#7DD3FC" }}>3.94GHz</div></div>
         </div>
 
         {/* Centre — orbe */}
         <div className="grid place-items-center">
           <JarvisOrb size={140} />
-          <div className="mt-2 text-center" style={{ fontSize: 10, color: "#1D4ED8", letterSpacing: 1, opacity: 0.7 }}>EN ATTENTE</div>
+          <div className="mt-2 text-center" style={{ fontSize: 10, color: "#22D3EE", letterSpacing: 1, opacity: 0.7 }}>EN ATTENTE</div>
         </div>
 
         {/* Colonne droite — chat */}
         <div className="space-y-3 overflow-hidden">
           {msgs.map((m, i) => (
             <div key={i} className={m.from === "YOU" ? "text-right" : ""}>
-              <div style={{ fontSize: 9, color: "#1D4ED8", letterSpacing: 1, marginBottom: 2 }}>
-                <span style={{ borderLeft: "2px solid #1D4ED8", paddingLeft: 4 }}>{m.from}</span>
+              <div style={{ fontSize: 9, color: "#22D3EE", letterSpacing: 1, marginBottom: 2 }}>
+                <span style={{ borderLeft: "2px solid #22D3EE", paddingLeft: 4 }}>{m.from}</span>
               </div>
-              <div style={{ fontSize: 11, color: m.from === "YOU" ? "#1D4ED8" : "#DBEAFE", whiteSpace: "pre-line", lineHeight: 1.5 }}>
+              <div style={{ fontSize: 11, color: m.from === "YOU" ? "#22D3EE" : "#DBEAFE", whiteSpace: "pre-line", lineHeight: 1.5 }}>
                 {m.text}
               </div>
             </div>
@@ -1416,12 +1520,12 @@ function MockJarvisMap() {
           {/* Mer (gauche) */}
           <path d="M 0 0 L 60 0 L 50 120 L 30 220 L 0 280 Z" fill="rgba(15,23,42,0.7)" />
           {/* Label MARSEILLE */}
-          <text x="150" y="55" fill="#BFDBFE" fontSize="13" fontWeight="700" letterSpacing="2">MARSEILLE</text>
+          <text x="150" y="55" fill="#7DD3FC" fontSize="13" fontWeight="700" letterSpacing="2">MARSEILLE</text>
           {/* Pin position user */}
           <g transform="translate(190 120)">
-            <circle r="14" fill="rgba(29,78,216,0.30)" />
-            <circle r="6"  fill="#1D4ED8" />
-            <circle r="22" fill="none" stroke="#1D4ED8" strokeWidth="1" opacity="0.5">
+            <circle r="14" fill="rgba(34,211,238,0.30)" />
+            <circle r="6"  fill="#22D3EE" />
+            <circle r="22" fill="none" stroke="#22D3EE" strokeWidth="1" opacity="0.5">
               <animate attributeName="r" from="14" to="28" dur="2s" repeatCount="indefinite" />
               <animate attributeName="opacity" from="0.6" to="0" dur="2s" repeatCount="indefinite" />
             </circle>
@@ -1429,8 +1533,8 @@ function MockJarvisMap() {
           {/* Pins boulangeries */}
           {[{ x: 215, y: 95, n: "1" }, { x: 235, y: 145, n: "2" }, { x: 175, y: 170, n: "3" }].map(p => (
             <g key={p.n} transform={`translate(${p.x} ${p.y})`}>
-              <circle r="9" fill="rgba(29,78,216,0.10)" stroke="#1D4ED8" strokeWidth="1" />
-              <text y="3" textAnchor="middle" fontSize="9" fontWeight="700" fill="#1D4ED8">{p.n}</text>
+              <circle r="9" fill="rgba(34,211,238,0.10)" stroke="#22D3EE" strokeWidth="1" />
+              <text y="3" textAnchor="middle" fontSize="9" fontWeight="700" fill="#22D3EE">{p.n}</text>
             </g>
           ))}
         </svg>
@@ -1438,13 +1542,13 @@ function MockJarvisMap() {
         {/* Overlay chat à droite */}
         <div className="absolute top-3 right-3 max-w-[44%] space-y-2">
           <div>
-            <div style={{ fontSize: 9, color: "#1D4ED8", letterSpacing: 1 }}>
-              <span style={{ borderLeft: "2px solid #1D4ED8", paddingLeft: 4 }}>JARVIS</span>
+            <div style={{ fontSize: 9, color: "#22D3EE", letterSpacing: 1 }}>
+              <span style={{ borderLeft: "2px solid #22D3EE", paddingLeft: 4 }}>JARVIS</span>
             </div>
             <div style={{ fontSize: 10, color: "#DBEAFE", marginTop: 3, lineHeight: 1.5 }}>
               Voilà, Boss. Trois adresses à moins de 800 mètres :
             </div>
-            <div className="mt-2 space-y-1" style={{ fontSize: 10, color: "#BFDBFE" }}>
+            <div className="mt-2 space-y-1" style={{ fontSize: 10, color: "#7DD3FC" }}>
               <div><strong style={{ color: "#fff" }}>Le Moulin de Cantini</strong> — 432 m</div>
               <div><strong style={{ color: "#fff" }}>Marrou</strong> — 489 m</div>
               <div><strong style={{ color: "#fff" }}>Boulangerie</strong> — 597 m</div>
@@ -1468,21 +1572,21 @@ function MockJarvisNews() {
     <JarvisShell>
       <div className="px-4 py-4 space-y-2 min-h-[320px]">
         <div className="flex items-center gap-2 mb-2">
-          <span style={{ fontSize: 9, color: "#1D4ED8", letterSpacing: 1, fontWeight: 700 }}>● LIVE FEED</span>
-          <span style={{ fontSize: 9, color: "#5d8aa8" }}>actualisé toutes les 5 min</span>
+          <span style={{ fontSize: 9, color: "#22D3EE", letterSpacing: 1, fontWeight: 700 }}>● LIVE FEED</span>
+          <span style={{ fontSize: 9, color: "#3E6B80" }}>actualisé toutes les 5 min</span>
         </div>
         {items.map((it, i) => (
           <div
             key={i}
             className="flex items-center gap-3 px-3 py-2 rounded-md"
             style={{
-              background: i === 0 ? "rgba(29,78,216,0.06)" : "transparent",
-              border: i === 0 ? "1px solid rgba(29,78,216,0.20)" : "1px solid transparent",
+              background: i === 0 ? "rgba(34,211,238,0.06)" : "transparent",
+              border: i === 0 ? "1px solid rgba(34,211,238,0.20)" : "1px solid transparent",
             }}
           >
-            <span style={{ fontSize: 9, color: "#1D4ED8", letterSpacing: 0.5, fontWeight: 700, minWidth: 70 }}>{it.src}</span>
+            <span style={{ fontSize: 9, color: "#22D3EE", letterSpacing: 0.5, fontWeight: 700, minWidth: 70 }}>{it.src}</span>
             <span style={{ fontSize: 11, color: "#DBEAFE", flex: 1 }}>{it.title}</span>
-            <span style={{ fontSize: 9, color: "#5d8aa8", whiteSpace: "nowrap" }}>{it.age}</span>
+            <span style={{ fontSize: 9, color: "#3E6B80", whiteSpace: "nowrap" }}>{it.age}</span>
           </div>
         ))}
       </div>
@@ -1497,7 +1601,7 @@ function MockJarvisOrbital() {
     <JarvisShell>
       <div className="relative min-h-[320px] px-4 py-4 flex flex-col items-center">
         {/* Header ORBITAL_LOCK */}
-        <div className="flex items-center gap-2" style={{ fontSize: 9, color: "#1D4ED8", letterSpacing: 2 }}>
+        <div className="flex items-center gap-2" style={{ fontSize: 9, color: "#22D3EE", letterSpacing: 2 }}>
           <span>›</span>
           <span style={{ fontWeight: 700 }}>ORBITAL_LOCK</span>
           <span style={{ opacity: 0.5 }}>·</span>
@@ -1508,7 +1612,7 @@ function MockJarvisOrbital() {
         <div className="mt-2">
           <JarvisOrb size={50} />
         </div>
-        <div style={{ fontSize: 7, color: "#5d8aa8", letterSpacing: 1, marginTop: 2 }}>EN ATTENTE</div>
+        <div style={{ fontSize: 7, color: "#3E6B80", letterSpacing: 1, marginTop: 2 }}>EN ATTENTE</div>
 
         {/* Globe terrestre — vraie image NASA */}
         <div className="relative my-3" style={{ width: 200, height: 200 }}>
@@ -1527,8 +1631,8 @@ function MockJarvisOrbital() {
                 style={{
                   ...placement,
                   width: 14, height: 14,
-                  borderTop: "1.5px solid #1D4ED8",
-                  borderLeft: "1.5px solid #1D4ED8",
+                  borderTop: "1.5px solid #22D3EE",
+                  borderLeft: "1.5px solid #22D3EE",
                   transform: `rotate(${rot}deg)`,
                 }}
               />
@@ -1542,8 +1646,8 @@ function MockJarvisOrbital() {
               top: 8, left: 8, right: 8, bottom: 8,
               borderRadius: "50%",
               overflow: "hidden",
-              boxShadow: "0 0 30px rgba(29,78,216,0.30), inset 0 0 40px rgba(29,78,216,0.18)",
-              border: "1px solid rgba(29,78,216,0.40)",
+              boxShadow: "0 0 30px rgba(34,211,238,0.30), inset 0 0 40px rgba(34,211,238,0.18)",
+              border: "1px solid rgba(34,211,238,0.40)",
             }}
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -1561,15 +1665,15 @@ function MockJarvisOrbital() {
             <div
               className="absolute inset-0 pointer-events-none"
               style={{
-                background: "radial-gradient(circle at 38% 32%, rgba(29,78,216,0.10) 0%, transparent 55%), radial-gradient(circle, transparent 48%, rgba(10,18,32,0.55) 100%)",
+                background: "radial-gradient(circle at 38% 32%, rgba(34,211,238,0.10) 0%, transparent 55%), radial-gradient(circle, transparent 48%, rgba(10,18,32,0.55) 100%)",
               }}
             />
             {/* Méridiens fins */}
             <svg viewBox="0 0 100 100" className="absolute inset-0 w-full h-full" preserveAspectRatio="none">
-              <ellipse cx="50" cy="50" rx="50" ry="14" fill="none" stroke="rgba(29,78,216,0.28)" strokeWidth="0.3" />
-              <ellipse cx="50" cy="50" rx="50" ry="28" fill="none" stroke="rgba(29,78,216,0.18)" strokeWidth="0.3" />
-              <ellipse cx="50" cy="50" rx="32" ry="50" fill="none" stroke="rgba(29,78,216,0.22)" strokeWidth="0.3" />
-              <ellipse cx="50" cy="50" rx="14" ry="50" fill="none" stroke="rgba(29,78,216,0.14)" strokeWidth="0.3" />
+              <ellipse cx="50" cy="50" rx="50" ry="14" fill="none" stroke="rgba(34,211,238,0.28)" strokeWidth="0.3" />
+              <ellipse cx="50" cy="50" rx="50" ry="28" fill="none" stroke="rgba(34,211,238,0.18)" strokeWidth="0.3" />
+              <ellipse cx="50" cy="50" rx="32" ry="50" fill="none" stroke="rgba(34,211,238,0.22)" strokeWidth="0.3" />
+              <ellipse cx="50" cy="50" rx="14" ry="50" fill="none" stroke="rgba(34,211,238,0.14)" strokeWidth="0.3" />
             </svg>
             {/* Pin Europe — cible animée */}
             <div
@@ -1577,8 +1681,8 @@ function MockJarvisOrbital() {
               style={{
                 top: "36%", left: "56%",
                 width: 8, height: 8, borderRadius: "50%",
-                background: "#1D4ED8",
-                boxShadow: "0 0 14px #1D4ED8, 0 0 0 2px rgba(29,78,216,0.35)",
+                background: "#22D3EE",
+                boxShadow: "0 0 14px #22D3EE, 0 0 0 2px rgba(34,211,238,0.35)",
                 animation: "glowPulse 2s ease-in-out infinite",
               }}
             />
@@ -1586,8 +1690,8 @@ function MockJarvisOrbital() {
               className="absolute"
               style={{
                 top: "32%", left: "60%",
-                fontSize: 8, color: "#1D4ED8", fontWeight: 700, letterSpacing: 1,
-                textShadow: "0 0 6px rgba(29,78,216,0.6)",
+                fontSize: 8, color: "#22D3EE", fontWeight: 700, letterSpacing: 1,
+                textShadow: "0 0 6px rgba(34,211,238,0.6)",
               }}
             >
               EUROPE
@@ -1597,11 +1701,11 @@ function MockJarvisOrbital() {
 
         {/* Footer coords */}
         <div className="mt-2 text-center">
-          <div style={{ fontSize: 10, color: "#1D4ED8", letterSpacing: 2, fontWeight: 700 }}>ACQUISITION DE CIBLE</div>
-          <div style={{ fontSize: 9, color: "#BFDBFE", letterSpacing: 1.5, marginTop: 4, fontVariantNumeric: "tabular-nums" }}>
+          <div style={{ fontSize: 10, color: "#22D3EE", letterSpacing: 2, fontWeight: 700 }}>ACQUISITION DE CIBLE</div>
+          <div style={{ fontSize: 9, color: "#7DD3FC", letterSpacing: 1.5, marginTop: 4, fontVariantNumeric: "tabular-nums" }}>
             LAT 44.570812 · LNG 7.059650
           </div>
-          <div style={{ fontSize: 7, color: "#5d8aa8", letterSpacing: 0.8, marginTop: 2 }}>
+          <div style={{ fontSize: 7, color: "#3E6B80", letterSpacing: 0.8, marginTop: 2 }}>
             Source : NASA · Apollo 17 (1972) · domaine public
           </div>
         </div>
@@ -1622,12 +1726,12 @@ function MockJarvisNasa() {
           className="rounded-lg overflow-hidden flex flex-col"
           style={{
             background: "linear-gradient(180deg, #0d1a2e 0%, #0a1220 100%)",
-            border: "1px solid rgba(29,78,216,0.30)",
+            border: "1px solid rgba(34,211,238,0.30)",
           }}
         >
-          <div className="flex items-center justify-between px-2.5 py-1.5" style={{ borderBottom: "1px solid rgba(29,78,216,0.18)" }}>
-            <span style={{ fontSize: 9, color: "#1D4ED8", letterSpacing: 0.8, fontWeight: 700 }}>[01] apod.nasa.gov</span>
-            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#1D4ED8" strokeWidth="2"><path d="M7 17L17 7M7 7h10v10" /></svg>
+          <div className="flex items-center justify-between px-2.5 py-1.5" style={{ borderBottom: "1px solid rgba(34,211,238,0.18)" }}>
+            <span style={{ fontSize: 9, color: "#22D3EE", letterSpacing: 0.8, fontWeight: 700 }}>[01] apod.nasa.gov</span>
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#22D3EE" strokeWidth="2"><path d="M7 17L17 7M7 7h10v10" /></svg>
           </div>
           {/* Vraie image APOD */}
           <div className="relative flex-1 overflow-hidden" style={{ minHeight: 160 }}>
@@ -1641,22 +1745,22 @@ function MockJarvisNasa() {
             />
             <span
               className="absolute bottom-1.5 right-1.5 px-1.5 py-0.5 rounded text-[8px] font-bold"
-              style={{ background: "rgba(29,78,216,0.20)", color: "#BFDBFE", border: "1px solid rgba(29,78,216,0.4)", letterSpacing: 1 }}
+              style={{ background: "rgba(34,211,238,0.20)", color: "#7DD3FC", border: "1px solid rgba(34,211,238,0.4)", letterSpacing: 1 }}
             >
               JWST · NIRCam
             </span>
           </div>
-          <div className="px-2.5 py-2" style={{ borderTop: "1px solid rgba(29,78,216,0.18)" }}>
+          <div className="px-2.5 py-2" style={{ borderTop: "1px solid rgba(34,211,238,0.18)" }}>
             <div style={{ fontSize: 10, color: "#fff", fontWeight: 600 }}>Pillars of Creation</div>
-            <div style={{ fontSize: 8, color: "#5d8aa8", marginTop: 2 }}>2022-10-19 · NASA APOD · Webb / NIRCam</div>
+            <div style={{ fontSize: 8, color: "#3E6B80", marginTop: 2 }}>2022-10-19 · NASA APOD · Webb / NIRCam</div>
           </div>
         </div>
 
         {/* Description traduite */}
         <div className="space-y-2">
           <div>
-            <div style={{ fontSize: 9, color: "#1D4ED8", letterSpacing: 1 }}>
-              <span style={{ borderLeft: "2px solid #1D4ED8", paddingLeft: 4 }}>JARVIS</span>
+            <div style={{ fontSize: 9, color: "#22D3EE", letterSpacing: 1 }}>
+              <span style={{ borderLeft: "2px solid #22D3EE", paddingLeft: 4 }}>JARVIS</span>
             </div>
             <div style={{ fontSize: 10, color: "#DBEAFE", marginTop: 4 }}>
               Voici l&apos;image astronomique du jour, Boss :
@@ -1664,11 +1768,11 @@ function MockJarvisNasa() {
           </div>
           <div>
             <div style={{ fontSize: 10, color: "#fff", fontWeight: 700 }}>Les Piliers de la Création</div>
-            <div style={{ fontSize: 9, color: "#5d8aa8", fontStyle: "italic", marginTop: 2 }}>19 octobre 2022 · JWST</div>
-            <p style={{ fontSize: 9, color: "#BFDBFE", lineHeight: 1.55, marginTop: 6 }}>
+            <div style={{ fontSize: 9, color: "#3E6B80", fontStyle: "italic", marginTop: 2 }}>19 octobre 2022 · JWST</div>
+            <p style={{ fontSize: 9, color: "#7DD3FC", lineHeight: 1.55, marginTop: 6 }}>
               Le télescope spatial James Webb capture l&apos;une des images les plus emblématiques de l&apos;astronomie : trois colonnes de gaz et de poussière interstellaires dans la nébuleuse de l&apos;Aigle, à 6 500 années-lumière, où naissent de nouvelles étoiles.
             </p>
-            <p style={{ fontSize: 9, color: "#5d8aa8", lineHeight: 1.55, marginTop: 6 }}>
+            <p style={{ fontSize: 9, color: "#3E6B80", lineHeight: 1.55, marginTop: 6 }}>
               Crédit : NASA, ESA, CSA, STScI · Image originale 1280 × 1300 px.
             </p>
           </div>
@@ -1701,35 +1805,35 @@ function MockJarvisBoot() {
           style={{
             background: "rgba(10,18,32,0.78)",
             backdropFilter: "blur(8px)",
-            border: "1px solid rgba(29,78,216,0.40)",
-            boxShadow: "0 0 24px rgba(29,78,216,0.15), inset 0 1px 0 rgba(29,78,216,0.10)",
+            border: "1px solid rgba(34,211,238,0.40)",
+            boxShadow: "0 0 24px rgba(34,211,238,0.15), inset 0 1px 0 rgba(34,211,238,0.10)",
           }}
         >
           {/* Header */}
-          <div className="flex items-center justify-between px-4 py-2.5" style={{ borderBottom: "1px solid rgba(29,78,216,0.25)" }}>
+          <div className="flex items-center justify-between px-4 py-2.5" style={{ borderBottom: "1px solid rgba(34,211,238,0.25)" }}>
             <div className="flex items-center gap-2">
-              <span className="block w-1.5 h-1.5 rounded-full" style={{ background: "#1D4ED8", boxShadow: "0 0 6px #1D4ED8" }} />
-              <span style={{ fontSize: 11, color: "#1D4ED8", fontWeight: 700, letterSpacing: 2 }}>INITIALISATION</span>
+              <span className="block w-1.5 h-1.5 rounded-full" style={{ background: "#22D3EE", boxShadow: "0 0 6px #22D3EE" }} />
+              <span style={{ fontSize: 11, color: "#22D3EE", fontWeight: 700, letterSpacing: 2 }}>INITIALISATION</span>
             </div>
-            <span style={{ fontSize: 9, color: "#5d8aa8", letterSpacing: 1.5 }}>SYSTEM BOOT</span>
+            <span style={{ fontSize: 9, color: "#3E6B80", letterSpacing: 1.5 }}>SYSTEM BOOT</span>
           </div>
           {/* Module list */}
           <div className="px-4 py-3 space-y-1.5">
             {modules.map((m, i) => (
               <div key={m} className="flex items-center gap-2" style={{ fontSize: 10, color: "#DBEAFE", letterSpacing: 1, fontFamily: "ui-monospace, monospace" }}>
-                <span style={{ color: "#1D4ED8" }}>›</span>
+                <span style={{ color: "#22D3EE" }}>›</span>
                 <span style={{ flex: 1 }}>{m}</span>
-                <span style={{ color: "#5d8aa8" }}>[</span>
-                <span style={{ color: i === modules.length - 1 ? "#BFDBFE" : "#1D4ED8", fontWeight: 700 }}>
+                <span style={{ color: "#3E6B80" }}>[</span>
+                <span style={{ color: i === modules.length - 1 ? "#7DD3FC" : "#22D3EE", fontWeight: 700 }}>
                   {i === modules.length - 1 ? "OK" : "OK"}
                 </span>
-                <span style={{ color: "#5d8aa8" }}>]</span>
+                <span style={{ color: "#3E6B80" }}>]</span>
               </div>
             ))}
           </div>
         </div>
 
-        <div className="mt-3 text-center" style={{ fontSize: 9, color: "#1D4ED8", letterSpacing: 2, opacity: 0.7 }}>
+        <div className="mt-3 text-center" style={{ fontSize: 9, color: "#22D3EE", letterSpacing: 2, opacity: 0.7 }}>
           EN ATTENTE
         </div>
       </div>
@@ -1886,7 +1990,7 @@ export default function DemoPage() {
           animation: textGradientSlide 4s linear infinite;
         }
         .gradient-action-jarvis {
-          background-image: linear-gradient(90deg, #1D4ED8, #2563EB, #60A5FA, #1D4ED8);
+          background-image: linear-gradient(90deg, #22D3EE, #2563EB, #60A5FA, #22D3EE);
           background-size: 250% auto;
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
