@@ -1,4 +1,5 @@
 import ThorHero from "@/components/home/thor-hero";
+import { ThorStatement } from "@/components/home/thor-statement";
 import { ThorBranches } from "@/components/home/thor-branches";
 import { ThorProCTA } from "@/components/home/thor-pro-cta";
 
@@ -14,6 +15,7 @@ export default function Page() {
   return (
     <>
       <ThorHero />
+      <ThorStatement />
       <ThorBranches />
       <ThorProCTA />
     </>
