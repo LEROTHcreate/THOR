@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Reveal } from "@/components/ui/reveal";
-import { ProjectShowcase } from "@/components/realisations/project-showcase";
-import { getAllRealisations } from "@/lib/realisations";
 
 export const metadata: Metadata = {
   title: "Studio",
@@ -12,10 +10,8 @@ export const metadata: Metadata = {
 
 const ACCENT = "#6366F1";
 
-/* Le Studio livre pour des clients : la preuve, ce sont ces projets-là. */
-const LIVRES = getAllRealisations().filter(
-  (r) => r.branch === "studio" && r.status === "live",
-);
+/* Les projets livrés ne sont plus montrés ici : ils vivent sur /produits et
+   sur le portfolio. La page renvoie vers eux plutôt que de les répéter. */
 
 /* ── Les quatre volets de l'accompagnement ────────────────────────────── */
 
@@ -275,28 +271,6 @@ export default function StudioPage() {
           </div>
         </div>
       </section>
-
-      {/* ── La preuve : ce qu'on a livré ──────────────────────────────── */}
-      {LIVRES.length > 0 && (
-        <section className="relative pt-28 sm:pt-36">
-          <div className="mx-auto max-w-[1100px] px-5 sm:px-6">
-            <Reveal>
-              <div className="flex items-center gap-5">
-                <span className="mono-label shrink-0 text-slate-500">Livré · En ligne</span>
-                <span aria-hidden="true" className="h-px flex-1 bg-slate-900/[0.07]" />
-              </div>
-            </Reveal>
-
-            <div className="mt-16 space-y-24 sm:space-y-32">
-              {LIVRES.map((item, i) => (
-                <Reveal key={item.slug}>
-                  <ProjectShowcase item={item} flip={i % 2 === 1} priority={i === 0} />
-                </Reveal>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
 
       {/* ── À qui ça s'adresse ────────────────────────────────────────── */}
       <section className="relative pt-28 sm:pt-36">
