@@ -46,10 +46,10 @@ const BRANCHES: Branch[] = [
   },
   {
     eyebrow: "THOR Produits",
-    title: "Vous exercez un métier de santé",
-    lead: "Des plateformes prêtes à l'emploi, conformité santé intégrée.",
+    title: "Votre activité tourne déjà",
+    lead: "Des outils prêts à l'emploi, chacun taillé pour son métier.",
     href: "/produits",
-    cta: "Voir les plateformes",
+    cta: "Voir les produits",
     accent: "#2D8CFF",
     accentLight: "rgba(45,140,255,0.10)",
     icon: <ProduitsIcon />,
@@ -58,10 +58,10 @@ const BRANCHES: Branch[] = [
 
 export function ThorBranches() {
   return (
-    <section id="branches" className="relative py-24 sm:py-32 md:py-40">
+    <section id="branches" className="relative py-40 sm:py-56 md:py-72">
       <div className="mx-auto max-w-[1100px] px-5 sm:px-6">
         <Reveal>
-          <h2 className="h-title mx-auto mb-16 max-w-2xl text-center text-4xl sm:text-5xl font-semibold tracking-tight text-white leading-[1.05]">
+          <h2 className="h-title mx-auto mb-20 sm:mb-28 max-w-2xl text-center text-4xl sm:text-5xl font-semibold tracking-tight text-white leading-[1.05]">
             Par où commencer ?
           </h2>
         </Reveal>

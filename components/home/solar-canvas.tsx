@@ -529,16 +529,23 @@ export default function SolarCanvas() {
     scene.add(stars);
 
     /* ── Dimensionnement ────────────────────────────────────────────────── */
+    /* La course de défilement est mise en cache ici, pas lue dans la boucle :
+       interroger `scrollHeight` à chaque frame force un recalcul de mise en
+       page soixante fois par seconde. Elle ne change qu'au redimensionnement,
+       ou quand le contenu bouge — ce que l'observateur couvre aussi. */
+    let scrollRange = 1;
     function resize() {
       const w = host!.clientWidth;
       const h = host!.clientHeight;
       renderer.setSize(w, h, false);
       camera.aspect = w / h;
       camera.updateProjectionMatrix();
+      scrollRange = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
     }
     resize();
     const ro = new ResizeObserver(resize);
     ro.observe(host);
+    ro.observe(document.body);
 
     /* ── Pointer une planète, l'ouvrir ──────────────────────────────────────
        Les écouteurs sont posés sur `window`, pas sur le canvas, et ce n'est
@@ -589,10 +596,24 @@ export default function SolarCanvas() {
         b.mesh.rotation.y += b.spin * dt;
       }
 
-      /* La scène s'approche à la descente, et respire très lentement au repos. */
-      const progress = Math.min(1, window.scrollY / Math.max(1, window.innerHeight * 2.2));
-      camera.position.z = baseZ - progress * 16 + Math.sin(t * 0.07) * 0.9;
-      camera.position.y = 11.5 - progress * 5.2;
+      /* La scène s'approche à la descente, et respire très lentement au repos.
+
+         L'avancée est rapportée à la course réelle de la page, non à un
+         multiple fixe de la hauteur d'écran : l'ancienne formule saturait aux
+         deux tiers du défilement, et allonger la page ne faisait qu'ajouter du
+         vide à zoom constant. Ainsi, plus la page est longue, plus la
+         traversée est lente et complète — et le dernier écran arrive au cœur
+         du système au lieu de le survoler.
+
+         La courbe est adoucie en début de course : le premier mouvement de
+         molette ne doit pas expédier le visiteur au milieu des orbites. */
+      /* Saturation à 82 % de la course : la dernière portion de page est
+         occupée par le pied de page, qui masquerait le point le plus proche.
+         L'approche se termine donc juste avant, là où on peut encore la voir. */
+      const raw = Math.min(1, Math.max(0, window.scrollY / (scrollRange * 0.82)));
+      const progress = raw * raw * (3 - 2 * raw);
+      camera.position.z = baseZ - progress * 27 + Math.sin(t * 0.07) * 0.9;
+      camera.position.y = 11.5 - progress * 9;
       camera.lookAt(0, 0, 0);
       stars.rotation.y = t * 0.0045;
 

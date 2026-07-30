@@ -3,7 +3,7 @@ import { Reveal } from "@/components/ui/reveal";
 
 export function ThorProCTA() {
   return (
-    <section className="relative pb-28 sm:pb-40">
+    <section className="relative pt-24 pb-40 sm:pt-40 sm:pb-64">
       <div className="mx-auto max-w-[900px] px-5 sm:px-6">
         <Reveal>
           <div className="text-center">

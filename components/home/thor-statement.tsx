@@ -13,8 +13,11 @@ import { Reveal } from "@/components/ui/reveal";
    ──────────────────────────────────────────────────────────────────────── */
 
 export function ThorStatement() {
+  /* Plus haut qu'un écran : le vide au-dessus et au-dessous de la phrase est
+     ce qui laisse voir le système solaire, et ce qui donne au défilement la
+     course dont l'approche de la caméra a besoin. */
   return (
-    <section className="relative flex min-h-screen items-center justify-center">
+    <section className="relative flex min-h-[135vh] items-center justify-center">
       <div className="mx-auto w-full max-w-[1100px] px-5 sm:px-6 text-center">
         <Reveal>
           <h2
