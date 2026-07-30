@@ -85,7 +85,6 @@ export default function Footer() {
               {[
                 { href: "/studio",                       label: "THOR Studio" },
                 { href: "/realisations",                 label: "Nos réalisations" },
-                { href: "/tarifs",                       label: "Tarifs praticiens" },
                 { href: "/demo",                         label: "Démonstration interactive" },
                 { href: "/nos-centres",                  label: "Nos centres" },
                 { href: "/contact?sujet=demo",           label: "Demander une démo" },

@@ -67,12 +67,6 @@ export default function ProduitsPage() {
             <Link href="/contact?sujet=demo" className="lg lg-btn lg-btn-ink w-full sm:w-auto">
               <span>Réserver une démo</span>
             </Link>
-            <Link href="/tarifs" className="lg lg-btn w-full sm:w-auto">
-              <span>Voir les tarifs</span>
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                <path d="M5 12h14M13 5l7 7-7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            </Link>
           </div>
 
           <div
