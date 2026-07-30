@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 import { getAllRealisations, type Realisation } from "@/lib/realisations";
@@ -305,7 +306,15 @@ function sunTexture() {
   return t;
 }
 
-type Body = { mesh: THREE.Mesh; pivot: THREE.Object3D; item: Realisation; speed: number; spin: number };
+type Body = {
+  mesh: THREE.Mesh;
+  /** Sphère invisible et plus large : c'est elle qu'on vise, pas la planète. */
+  hit: THREE.Mesh;
+  pivot: THREE.Object3D;
+  item: Realisation;
+  speed: number;
+  spin: number;
+};
 
 export default function SolarCanvas() {
   const hostRef = useRef<HTMLDivElement>(null);
@@ -314,6 +323,7 @@ export default function SolarCanvas() {
      change que lorsque le curseur entre ou sort d'une planète. La position,
      elle, s'écrit sur le nœud à chaque frame, sans repasser par React. */
   const [hover, setHover] = useState<{ name: string; slug: string } | null>(null);
+  const router = useRouter();
 
   useEffect(() => {
     const host = hostRef.current;
@@ -477,7 +487,18 @@ export default function SolarCanvas() {
       halo.scale.setScalar(o.size * 3.1);
       mesh.add(halo);
 
-      return { mesh, pivot, item, speed: (Math.PI * 2) / o.period, spin: 0.22 + (i % 3) * 0.1 };
+      /* Cible de pointage.
+         Une planète mesure une vingtaine de pixels à l'écran : viser le corps
+         lui-même demanderait une précision d'horloger. Cette sphère fait deux
+         fois et demie son rayon et ne s'affiche jamais — `colorWrite: false`
+         l'exclut du rendu tout en la laissant visible du lancer de rayon. */
+      const hit = new THREE.Mesh(
+        new THREE.SphereGeometry(o.size * 2.5, 12, 8),
+        new THREE.MeshBasicMaterial({ colorWrite: false, depthWrite: false }),
+      );
+      mesh.add(hit);
+
+      return { mesh, hit, pivot, item, speed: (Math.PI * 2) / o.period, spin: 0.22 + (i % 3) * 0.1 };
     });
 
     /* ── Le ciel ────────────────────────────────────────────────────────── */
@@ -519,17 +540,39 @@ export default function SolarCanvas() {
     const ro = new ResizeObserver(resize);
     ro.observe(host);
 
-    /* ── Survol : la planète sous le curseur devient un lien ────────────── */
+    /* ── Pointer une planète, l'ouvrir ──────────────────────────────────────
+       Les écouteurs sont posés sur `window`, pas sur le canvas, et ce n'est
+       pas un raccourci : le décor est en `-z-10`, donc le contenu de la page
+       — transparent mais bien présent — intercepte tout avant lui. Un clic
+       sur le canvas n'arriverait jamais.
+
+       En contrepartie il faut rendre la main dès que le pointeur est sur un
+       élément interactif : sans cette vérification, cliquer un bouton qui
+       passe devant une planète déclencherait les deux. */
     const ray = new THREE.Raycaster();
     const ndc = new THREE.Vector2(-2, -2);
     let hovered: Body | null = null;
+
+    const INTERACTIVE = 'a, button, input, textarea, select, summary, [role="button"], [contenteditable]';
 
     function onMove(e: PointerEvent) {
       const r = renderer.domElement.getBoundingClientRect();
       ndc.x = ((e.clientX - r.left) / r.width) * 2 - 1;
       ndc.y = -((e.clientY - r.top) / r.height) * 2 + 1;
+      /* Le curseur se pose sur le body : celui du canvas ne s'afficherait
+         jamais, puisque le pointeur survole toujours le contenu au-dessus. */
+      const overUi = (e.target as Element | null)?.closest?.(INTERACTIVE);
+      document.body.style.cursor = hovered && !overUi ? "pointer" : "";
     }
+
+    function onClick(e: MouseEvent) {
+      if (!hovered || e.button !== 0 || e.metaKey || e.ctrlKey) return;
+      if ((e.target as Element | null)?.closest?.(INTERACTIVE)) return;
+      router.push(`/realisations/${hovered.item.slug}`);
+    }
+
     window.addEventListener("pointermove", onMove, { passive: true });
+    window.addEventListener("click", onClick);
 
     /* ── La boucle ──────────────────────────────────────────────────────── */
     const clock = new THREE.Clock();
@@ -555,12 +598,12 @@ export default function SolarCanvas() {
 
       /* Le survol ne coûte un lancer de rayon que lorsque le curseur a bougé. */
       ray.setFromCamera(ndc, camera);
-      const hit = ray.intersectObjects(bodies.map((b) => b.mesh), false)[0];
-      const next = hit ? bodies.find((b) => b.mesh === hit.object) ?? null : null;
+      const hit = ray.intersectObjects(bodies.map((b) => b.hit), false)[0];
+      const next = hit ? bodies.find((b) => b.hit === hit.object) ?? null : null;
       if (next !== hovered) {
         hovered = next;
         setHover(next ? { name: next.item.name, slug: next.item.slug } : null);
-        renderer.domElement.style.cursor = next ? "pointer" : "";
+        document.body.style.cursor = next ? "pointer" : "";
       }
       if (hovered && tipRef.current) {
         const v = hovered.mesh.getWorldPosition(new THREE.Vector3()).project(camera);
@@ -598,6 +641,8 @@ export default function SolarCanvas() {
       if (raf) cancelAnimationFrame(raf);
       document.removeEventListener("visibilitychange", onVisibility);
       window.removeEventListener("pointermove", onMove);
+      window.removeEventListener("click", onClick);
+      document.body.style.cursor = "";
       ro.disconnect();
       scene.traverse((o) => {
         const m = o as THREE.Mesh;
@@ -610,7 +655,7 @@ export default function SolarCanvas() {
       renderer.dispose();
       renderer.domElement.remove();
     };
-  }, []);
+  }, [router]);
 
   return (
     <>
