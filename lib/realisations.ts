@@ -275,10 +275,12 @@ const REALISATIONS: Realisation[] = [
     status: "live",
     href: "https://jarvis-pi-pied.vercel.app/",
     cover: "/images/captures/jarvis.webp",
+    /* Captures prises sur l'application en fonctionnement, geolocalisation
+       accordee : le HUD au repos, le mode ULTRON, et une recherche de
+       proximite reelle avec ses resultats. */
     gallery: [
-      "/images/captures/jarvis-demo-1.webp",
-      "/images/captures/jarvis-demo-2.webp",
-      "/images/captures/jarvis-demo-3.webp",
+      "/images/captures/jarvis-2.webp",
+      "/images/captures/jarvis-3.webp",
     ],
     logo: "/images/logos/jarvis-mark.png",
     featured: true,
