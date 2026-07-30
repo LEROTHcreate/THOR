@@ -11,7 +11,8 @@ const centres = [
 ];
 
 const SUJETS = [
-  { value: "demo",       label: "Demander une démo",   tag: "Recommandé" },
+  { value: "projet",     label: "Parler de mon projet", tag: "Recommandé" },
+  { value: "demo",       label: "Demander une démo",   tag: "" },
   { value: "studio",     label: "Créer mon entreprise", tag: "Studio" },
   { value: "etude-marche", label: "Étude de marché",    tag: "" },
   { value: "tarifs",     label: "Information tarifs",   tag: "" },

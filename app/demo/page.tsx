@@ -2314,7 +2314,7 @@ export default function DemoPage() {
           <p style={{ color: "#475569", marginBottom: 28, fontSize: 15 }}>{narr.ctaDesc}</p>
           <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
             <button onClick={handleDemoClick} style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "13px 28px", borderRadius: 14, background: t.gradient, color: "white", fontWeight: 700, fontSize: 14, border: "none", cursor: "pointer", boxShadow: `0 8px 32px ${t.glowStrong}`, transition: "all 0.2s" }}>
-              Demander une démo →
+              Parler de votre projet →
             </button>
             <Link href="/contact" style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "13px 28px", borderRadius: 14, border: `1px solid ${t.border}`, color: "#475569", fontWeight: 600, fontSize: 14, textDecoration: "none", background: "transparent", transition: "all 0.2s" }}>
               Contacter l&apos;équipe

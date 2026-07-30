@@ -193,7 +193,7 @@ function buildPlans(module: ModuleId): Plan[] {
       accent: "#64748b",
       accentBg: "rgba(100,116,139,0.08)",
       cta: "Commencer",
-      ctaHref: "/contact?sujet=demo",
+      ctaHref: "/contact?sujet=projet",
       ctaStyle: "ghost",
       features: COMMON_FEATURES_DECOUVERTE,
     },
@@ -208,7 +208,7 @@ function buildPlans(module: ModuleId): Plan[] {
       accent: accentByModule,
       accentBg: module === "vision" ? "rgba(45,140,255,0.08)" : module === "audition" ? "rgba(0,201,138,0.08)" : "rgba(139,92,246,0.08)",
       cta: "Démarrer — 2 mois offerts",
-      ctaHref: "/contact?sujet=demo",
+      ctaHref: "/contact?sujet=projet",
       ctaStyle: "primary",
       trialLabel: "2 mois gratuits • Sans carte bancaire",
       features: [...COMMON_FEATURES_PRO_BASE, ...extras],
@@ -223,7 +223,7 @@ function buildPlans(module: ModuleId): Plan[] {
       accent: "#8B5CF6",
       accentBg: "rgba(139,92,246,0.08)",
       cta: "Contacter l'équipe",
-      ctaHref: "/contact?sujet=demo",
+      ctaHref: "/contact?sujet=projet",
       ctaStyle: "outline",
       features: [...COMMON_FEATURES_PREMIUM_BASE, ...extras],
     },
@@ -740,13 +740,13 @@ export default function TarifsPage() {
 
                 <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
                   <Link
-                    href="/contact?sujet=demo"
+                    href="/contact?sujet=projet"
                     className="inline-flex items-center justify-center rounded-[var(--radius-pill)] px-7 py-3.5 text-sm font-semibold bg-white text-slate-800 shadow-[0_4px_20px_rgba(0,0,0,0.20)] transition-all duration-200 hover:shadow-[0_8px_32px_rgba(0,0,0,0.28)] hover:scale-[1.02]"
                   >
-                    Réserver une démo
+                    Parler de votre projet
                   </Link>
                   <Link
-                    href="/contact?sujet=demo"
+                    href="/contact?sujet=projet"
                     className="inline-flex items-center justify-center rounded-[var(--radius-pill)] px-7 py-3.5 text-sm font-semibold text-white/80 hover:text-white border border-white/20 hover:border-white/40 transition-all duration-200"
                   >
                     Parler à un expert →

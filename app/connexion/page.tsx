@@ -281,7 +281,7 @@ export default function ConnexionPage() {
           <p className="text-xs text-slate-300">
             Vous êtes praticien et souhaitez découvrir THOR ?{" "}
             <Link href="/demo" className="font-medium text-slate-400 hover:text-slate-600 transition-colors underline underline-offset-2">
-              Demander une démo gratuite
+              Faire le tour de l’outil
             </Link>
           </p>
         </div>

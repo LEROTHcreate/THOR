@@ -64,8 +64,8 @@ export default function ProduitsPage() {
             className="rise mt-11 flex flex-col sm:flex-row items-center justify-center gap-3"
             style={{ animationDelay: "240ms" }}
           >
-            <Link href="/contact?sujet=demo" className="lg lg-btn lg-btn-ink w-full sm:w-auto">
-              <span>Réserver une démo</span>
+            <Link href="/contact?sujet=projet" className="lg lg-btn lg-btn-ink w-full sm:w-auto">
+              <span>Parler de votre projet</span>
             </Link>
           </div>
 
@@ -132,15 +132,16 @@ export default function ProduitsPage() {
             <div className="lg lg-card relative overflow-hidden px-6 py-14 sm:px-14 sm:py-16 text-center">
               <span aria-hidden="true" className="grid-paper pointer-events-none" style={{ position: "absolute", inset: 0 }} />
               <h2 className="h-title relative mx-auto max-w-md text-3xl sm:text-4xl font-semibold tracking-tight text-slate-900 leading-[1.05]">
-                Voir l’outil tourner, en vrai.
+                Parlons de votre métier.
               </h2>
               <p className="mx-auto mt-5 max-w-md text-[17px] text-slate-500 leading-[1.65]">
-                Une démonstration guidée, sur votre métier, avec vos cas d’usage.
-                Trente minutes suffisent pour savoir si ça vous convient.
+                Trente minutes suffisent pour comprendre votre organisation et
+                savoir si l’une de nos plateformes y répond. Vous pouvez aussi
+                faire le tour de l’outil par vous-même.
               </p>
               <div className="mt-9 flex flex-col sm:flex-row items-center justify-center gap-3">
-                <Link href="/contact?sujet=demo" className="lg lg-btn lg-btn-ink w-full sm:w-auto">
-                  <span>Réserver une démo</span>
+                <Link href="/contact?sujet=projet" className="lg lg-btn lg-btn-ink w-full sm:w-auto">
+                  <span>Parler de votre projet</span>
                 </Link>
                 <Link href="/demo" className="lg lg-btn w-full sm:w-auto">
                   <span>Visite interactive</span>

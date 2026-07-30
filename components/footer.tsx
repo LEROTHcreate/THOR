@@ -87,7 +87,7 @@ export default function Footer() {
                 { href: "/realisations",                 label: "Nos réalisations" },
                 { href: "/demo",                         label: "Démonstration interactive" },
                 { href: "/nos-centres",                  label: "Nos centres" },
-                { href: "/contact?sujet=demo",           label: "Demander une démo" },
+                { href: "/contact?sujet=projet",         label: "Parler de votre projet" },
                 { href: "/contact?sujet=support",        label: "Support technique" },
                 { href: "/contact?sujet=partenariat",    label: "Partenariat / intégration" },
                 { href: "/connexion/praticien",          label: "Connexion praticien" },
@@ -126,10 +126,10 @@ export default function Footer() {
               </a>
 
               <Link
-                href="/contact?sujet=demo"
+                href="/contact?sujet=projet"
                 className="inline-flex items-center gap-2 mt-2 rounded-xl bg-slate-900 px-4 py-2.5 text-xs font-medium text-white hover:bg-slate-800 transition-colors"
               >
-                Réserver une démo
+                Parler de votre projet
                 <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
                   <path d="M5 12h14M13 5l7 7-7 7" />
                 </svg>

@@ -97,11 +97,11 @@ export default function Header() {
           {/* ── Actions desktop ── */}
           <div className="hidden md:flex items-center gap-3">
             <Link
-              href="/contact?sujet=demo"
+              href="/contact?sujet=projet"
               className="lg lg-btn lg-btn-ink text-sm"
               style={{ padding: "0.65rem 1.25rem" }}
             >
-              <span>Réserver une démo</span>
+              <span>Parler de votre projet</span>
             </Link>
           </div>
 
@@ -155,11 +155,11 @@ export default function Header() {
 
               <div className="mt-2 flex flex-col gap-2 p-2 border-t border-thor-border pt-4">
                 <Link
-                  href="/contact?sujet=demo"
+                  href="/contact?sujet=projet"
                   onClick={() => setOpen(false)}
                   className="lg lg-btn lg-btn-ink min-h-[44px] w-full text-sm"
                 >
-                  <span>Réserver une démo</span>
+                  <span>Parler de votre projet</span>
                 </Link>
               </div>
             </div>
