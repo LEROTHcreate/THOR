@@ -32,13 +32,6 @@ export function ThorSolarSystem() {
           >
             Ce qu’on a déjà mis en ligne.
           </h2>
-          <p
-            className="mt-6 text-lg leading-[1.6] text-slate-300/80"
-            style={{ textShadow: "0 1px 20px rgba(2,3,10,0.85)" }}
-          >
-            Une planète par site, à sa couleur. Elles tournent derrière cette
-            page — celles-ci s’ouvrent au clic.
-          </p>
         </div>
 
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">

@@ -2,17 +2,17 @@
 
 import Link from "next/link";
 import { usePointerParallax, PARALLAX_INITIAL } from "@/lib/usePointerParallax";
-import { getAllRealisations } from "@/lib/realisations";
-
-/* Les deux chiffres suivent le portfolio : livrer un projet les met à jour. */
-const LIVRES = getAllRealisations().filter((r) => r.status === "live");
-const NB_PROJETS = LIVRES.length;
-const NB_SECTEURS = new Set(LIVRES.map((r) => r.sector)).size;
 
 /* ──────────────────────────────────────────────────────────────────────────
    Hero de la page nocturne.
 
-   Les quatre gouttes de verre ont disparu, et ce n'est pas un choix de goût :
+   Réduit à trois éléments : le titre, une ligne, deux boutons. La pastille
+   d'accroche et les deux compteurs ont sauté — ils occupaient le centre de
+   l'écran, c'est-à-dire exactement l'endroit où le système solaire doit se
+   voir. Sur une page dont le décor est le sujet, chaque ligne de texte en
+   trop est une planète masquée.
+
+   Les quatre gouttes de verre ont disparu pour une autre raison :
    une goutte est un `backdrop-filter`, et son arrière-plan est désormais un
    canvas WebGL qui change à chaque frame. Le compositeur devrait re-flouter
    quatre calques soixante fois par seconde, sans jamais rien mettre en cache
@@ -35,18 +35,6 @@ export default function ThorHero() {
     >
       <div className="relative z-10 mx-auto w-full max-w-[900px] px-5 sm:px-6 py-20 text-center">
 
-        <div className="rise">
-          <div
-            className="lg lg-pill mb-10"
-            style={{
-              transform: "translate(calc(var(--px) * 0.4), calc(var(--py) * 0.4))",
-              transition: "transform 700ms var(--lg-ease)",
-              color: "rgba(233,237,245,0.74)",
-            }}
-          >
-            <span>Studio de création · Éditeur de logiciels métier</span>
-          </div>
-        </div>
 
         <div className="rise" style={{ animationDelay: "80ms" }}>
           <h1
@@ -70,8 +58,7 @@ export default function ThorHero() {
             className="mx-auto mt-8 max-w-xl text-lg sm:text-xl leading-[1.6] text-slate-300/85"
             style={{ textShadow: "0 1px 22px rgba(2,3,10,0.85)" }}
           >
-            On cadre le projet, on mesure le marché que vous pouvez atteindre,
-            on construit. Puis on reste là.
+            On cadre, on construit, on reste là.
           </p>
         </div>
 
@@ -87,22 +74,6 @@ export default function ThorHero() {
           </Link>
         </div>
 
-        <div className="rise mt-20 flex items-center justify-center gap-10 sm:gap-16" style={{ animationDelay: "320ms" }}>
-          {[
-            { value: String(NB_PROJETS),  label: "projets en production" },
-            { value: String(NB_SECTEURS), label: "secteurs couverts" },
-          ].map((s) => (
-            <div key={s.label} className="text-center">
-              <div
-                className="h-title text-3xl sm:text-4xl font-semibold text-white tabular-nums"
-                style={{ textShadow: "0 1px 20px rgba(2,3,10,0.8)" }}
-              >
-                {s.value}
-              </div>
-              <div className="mt-1.5 text-[13px] text-slate-400">{s.label}</div>
-            </div>
-          ))}
-        </div>
       </div>
 
       {/* Repère de défilement — la seule invitation à descendre */}

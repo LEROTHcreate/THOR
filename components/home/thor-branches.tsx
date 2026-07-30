@@ -5,7 +5,6 @@ type Branch = {
   eyebrow: string;
   title: string;
   lead: string;
-  points: string[];
   href: string;
   cta: string;
   accent: string;
@@ -38,12 +37,7 @@ const BRANCHES: Branch[] = [
   {
     eyebrow: "THOR Studio",
     title: "Vous lancez votre activité",
-    lead: "On cadre le projet, on mesure le marché que vous pouvez atteindre, on construit votre site et on reste là après la mise en ligne.",
-    points: [
-      "Étude du marché adressable sur votre zone",
-      "Identité et site sur mesure",
-      "Un seul interlocuteur, de bout en bout",
-    ],
+    lead: "On mesure votre marché, on construit votre site, on reste là après.",
     href: "/studio",
     cta: "Découvrir le Studio",
     accent: "#6366F1",
@@ -53,12 +47,7 @@ const BRANCHES: Branch[] = [
   {
     eyebrow: "THOR Produits",
     title: "Vous exercez un métier de santé",
-    lead: "Des plateformes prêtes à l'emploi pour les opticiens, les audioprothésistes et les pharmaciens, avec la conformité intégrée.",
-    points: [
-      "Clair Vision, Clair Audition, PharmaPlanning",
-      "Hébergement HDS et conformité RGPD",
-      "IA THOR intégrée nativement",
-    ],
+    lead: "Des plateformes prêtes à l'emploi, conformité santé intégrée.",
     href: "/produits",
     cta: "Voir les plateformes",
     accent: "#2D8CFF",
@@ -100,18 +89,11 @@ export function ThorBranches() {
                     {b.title}
                   </h3>
 
+                  {/* La liste à puces a sauté : trois arguments par carte,
+                      six au total, c'est une page de vente posée sur le ciel.
+                      Le détail vit sur /studio et /produits, où le lecteur
+                      arrive en ayant choisi. */}
                   <p className="text-[15px] text-slate-300/75 leading-[1.7] mb-8">{b.lead}</p>
-
-                  <ul className="space-y-3 mb-10">
-                    {b.points.map((p) => (
-                      <li key={p} className="flex items-start gap-3 text-[15px] text-slate-300/85">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" className="mt-1 shrink-0" style={{ color: b.accent }} aria-hidden="true">
-                          <path d="M5 13l4 4L19 7" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-                        </svg>
-                        {p}
-                      </li>
-                    ))}
-                  </ul>
                 </div>
 
                 <span className="inline-flex items-center gap-2 text-[15px] font-medium text-white transition-all duration-300 group-hover:gap-3">

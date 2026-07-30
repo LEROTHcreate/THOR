@@ -30,12 +30,12 @@ const LIVE = getAllRealisations().filter((r) => r.status === "live");
 
 /** Rayon d'orbite, inclinaison (rad), rayon de la planète, période (s). */
 const ORBITS = [
-  { radius: 5.2,  incl: 0.16, tiltZ: -0.22, size: 0.42, period: 34 },
-  { radius: 7.4,  incl: 0.05, tiltZ:  0.14, size: 0.52, period: 52 },
-  { radius: 9.8,  incl: 0.22, tiltZ: -0.09, size: 0.38, period: 74 },
-  { radius: 12.4, incl: 0.10, tiltZ:  0.26, size: 0.60, period: 98 },
-  { radius: 15.2, incl: 0.27, tiltZ: -0.05, size: 0.46, period: 126 },
-  { radius: 18.4, incl: 0.13, tiltZ:  0.19, size: 0.55, period: 158 },
+  { radius: 5.2,  incl: 0.16, tiltZ: -0.22, size: 0.42, period: 34,  ring: false },
+  { radius: 7.4,  incl: 0.05, tiltZ:  0.14, size: 0.52, period: 52,  ring: false },
+  { radius: 9.8,  incl: 0.22, tiltZ: -0.09, size: 0.38, period: 74,  ring: false },
+  { radius: 12.4, incl: 0.10, tiltZ:  0.26, size: 0.62, period: 98,  ring: true },
+  { radius: 15.2, incl: 0.27, tiltZ: -0.05, size: 0.46, period: 126, ring: false },
+  { radius: 18.4, incl: 0.13, tiltZ:  0.19, size: 0.55, period: 158, ring: false },
 ];
 
 /** Halo radial réutilisé pour la couronne et les étoiles. */
@@ -101,6 +101,81 @@ function planetTexture(hex: string) {
   return t;
 }
 
+/**
+ * Anneau : des bandes concentriques d'opacités inégales, avec une division
+ * franche. C'est l'irrégularité qui fait l'anneau — une couronne unie
+ * ressemblerait à un cerceau posé là.
+ */
+function ringTexture(hex: string) {
+  const c = document.createElement("canvas");
+  c.width = 128;
+  c.height = 1;
+  const g = c.getContext("2d")!;
+  const base = new THREE.Color(hex);
+  const hsl = { h: 0, s: 0, l: 0 };
+  base.getHSL(hsl);
+
+  let seed = 90001;
+  const next = () => (seed = (seed * 1103515245 + 12345) % 2147483648) / 2147483648;
+
+  for (let x = 0; x < 128; x++) {
+    const t = x / 128;
+    /* La division de Cassini : un vide net, sans quoi l'anneau est une bouillie. */
+    const gap = t > 0.52 && t < 0.60 ? 0.06 : 1;
+    const a = (0.22 + next() * 0.62) * gap * Math.sin(t * Math.PI) ** 0.4;
+    const band = new THREE.Color().setHSL(hsl.h, hsl.s * 0.5, 0.72 + next() * 0.2);
+    g.fillStyle = `rgba(${Math.round(band.r * 255)},${Math.round(band.g * 255)},${Math.round(band.b * 255)},${a.toFixed(3)})`;
+    g.fillRect(x, 0, 1, 1);
+  }
+
+  const t = new THREE.CanvasTexture(c);
+  t.colorSpace = THREE.SRGBColorSpace;
+  return t;
+}
+
+/**
+ * Photosphère : un grain de cellules de convection, du jaune pâle au blanc.
+ * Statique et minuscule (256×128) — c'est un grain, pas un dessin.
+ */
+function sunTexture() {
+  const c = document.createElement("canvas");
+  c.width = 256;
+  c.height = 128;
+  const g = c.getContext("2d")!;
+  g.fillStyle = "#FFC44E";
+  g.fillRect(0, 0, 256, 128);
+
+  let seed = 424243;
+  const next = () => (seed = (seed * 1103515245 + 12345) % 2147483648) / 2147483648;
+
+  for (let i = 0; i < 1400; i++) {
+    const x = next() * 256;
+    const y = next() * 128;
+    const r = 1.2 + next() * 4.6;
+    const warm = next();
+    g.fillStyle =
+      warm > 0.62
+        ? `rgba(255,255,235,${0.16 + next() * 0.5})`
+        : `rgba(226,116,26,${0.10 + next() * 0.26})`;
+    g.beginPath();
+    g.arc(x, y, r, 0, Math.PI * 2);
+    g.fill();
+  }
+
+  /* Assombrissement centre-bord : le limbe d'une étoile est plus sombre que
+     son centre, et c'est ce qui la fait lire comme une sphère et non un disque. */
+  const limb = g.createLinearGradient(0, 0, 0, 128);
+  limb.addColorStop(0, "rgba(180,70,10,0.42)");
+  limb.addColorStop(0.5, "rgba(255,255,255,0)");
+  limb.addColorStop(1, "rgba(180,70,10,0.42)");
+  g.fillStyle = limb;
+  g.fillRect(0, 0, 256, 128);
+
+  const t = new THREE.CanvasTexture(c);
+  t.colorSpace = THREE.SRGBColorSpace;
+  return t;
+}
+
 type Body = { mesh: THREE.Mesh; pivot: THREE.Object3D; item: Realisation; speed: number; spin: number };
 
 export default function SolarCanvas() {
@@ -130,11 +205,16 @@ export default function SolarCanvas() {
     host.appendChild(renderer.domElement);
     renderer.domElement.style.display = "block";
 
-    /* ── L'étoile ───────────────────────────────────────────────────────── */
+    /* ── L'étoile ─────────────────────────────────────────────────────────
+       La granulation compte : un disque d'une seule couleur est une gommette.
+       Une photosphère est un grain de cellules de convection, et c'est ce
+       grain qui donne l'échelle — sans lui l'astre pourrait aussi bien être
+       une bille de dix centimètres. */
     const sun = new THREE.Mesh(
       new THREE.SphereGeometry(1.5, 48, 32),
-      new THREE.MeshBasicMaterial({ color: 0xfff0c4 }),
+      new THREE.MeshBasicMaterial({ map: sunTexture() }),
     );
+    sun.rotation.z = 0.24;
     scene.add(sun);
 
     const corona = glowTexture("rgba(255,255,255,0.95)", "rgba(255,178,72,0.42)");
@@ -180,16 +260,62 @@ export default function SolarCanvas() {
         }),
       );
       mesh.position.x = o.radius;
+      /* Inclinaison de l'axe : aucune planète ne tourne parfaitement droite,
+         et six axes identiques donnent une maquette. */
+      mesh.rotation.z = 0.18 + ((i * 0.37) % 0.42);
       pivot.add(mesh);
 
-      /* Le tracé : une ellipse fine à la couleur du projet, dans le plan du
-         pivot pour rester rigoureusement sous la planète. */
-      const pts = new THREE.EllipseCurve(0, 0, o.radius, o.radius, 0, Math.PI * 2)
-        .getPoints(180)
-        .map((p) => new THREE.Vector3(p.x, 0, -p.y));
-      const line = new THREE.LineLoop(
-        new THREE.BufferGeometry().setFromPoints(pts),
-        new THREE.LineBasicMaterial({ color, transparent: true, opacity: 0.34 }),
+      /* Un anneau sur la plus grosse. C'est le signe le plus reconnaissable
+         d'un système solaire : une seule silhouette annelée et la lecture est
+         immédiate. Deux faces, sinon l'anneau disparaît vu de dessous. */
+      if (o.ring) {
+        const ring = new THREE.Mesh(
+          new THREE.RingGeometry(o.size * 1.55, o.size * 2.45, 72),
+          new THREE.MeshBasicMaterial({
+            map: ringTexture(item.accent),
+            transparent: true,
+            opacity: 0.75,
+            side: THREE.DoubleSide,
+            depthWrite: false,
+          }),
+        );
+        ring.rotation.x = Math.PI / 2;
+        mesh.add(ring);
+      }
+
+      /* La traînée.
+         Le tracé n'est pas d'une teinte uniforme : il est vif juste derrière
+         la planète et s'éteint en remontant l'orbite. C'est ce dégradé qui
+         donne le sens de la marche — une ellipse d'un seul ton ne dit pas
+         dans quelle direction on tourne. La ligne étant fille du pivot, elle
+         tourne avec la planète : le dégradé reste calé sans un calcul par
+         frame. Fusion additive, donc le noir vaut transparent. */
+      const SEG = 168;
+      const positions = new Float32Array((SEG + 1) * 3);
+      const colors = new Float32Array((SEG + 1) * 3);
+      for (let k = 0; k <= SEG; k++) {
+        const a = (k / SEG) * Math.PI * 2;
+        positions[k * 3] = Math.cos(a) * o.radius;
+        positions[k * 3 + 2] = -Math.sin(a) * o.radius;
+        /* k = 0 est la position de la planète ; on s'éteint en s'en éloignant,
+           avec un plancher pour que l'orbite entière reste devinable. */
+        const fade = Math.pow(1 - k / SEG, 2.4) * 0.92 + 0.07;
+        colors[k * 3] = color.r * fade;
+        colors[k * 3 + 1] = color.g * fade;
+        colors[k * 3 + 2] = color.b * fade;
+      }
+      const trail = new THREE.BufferGeometry();
+      trail.setAttribute("position", new THREE.BufferAttribute(positions, 3));
+      trail.setAttribute("color", new THREE.BufferAttribute(colors, 3));
+      const line = new THREE.Line(
+        trail,
+        new THREE.LineBasicMaterial({
+          vertexColors: true,
+          transparent: true,
+          opacity: 0.72,
+          blending: THREE.AdditiveBlending,
+          depthWrite: false,
+        }),
       );
       pivot.add(line);
 
