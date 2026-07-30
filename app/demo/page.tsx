@@ -3,6 +3,14 @@
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 
+/* La voix structurelle de la page : index, étiquettes, états. */
+const MONO: React.CSSProperties = {
+  fontFamily: "var(--font-mono)",
+  fontSize: 11,
+  letterSpacing: "0.14em",
+  textTransform: "uppercase",
+};
+
 function cn(...cls: (string | false | null | undefined)[]) {
   return cls.filter(Boolean).join(" ");
 }
@@ -1791,20 +1799,6 @@ const PORTAL_WORDS = [
 ];
 
 /* ─── Page ───────────────────────────────────────────────────────────────── */
-/* Pre-calculated particles (stable across renders) */
-const PARTICLES = [
-  { left: "6%",  size: 2,   dur: 10, delay: 0   },
-  { left: "14%", size: 1.5, dur: 14, delay: 1.2 },
-  { left: "23%", size: 2.5, dur: 11, delay: 2.8 },
-  { left: "35%", size: 1,   dur: 16, delay: 0.5 },
-  { left: "47%", size: 2,   dur: 12, delay: 3.5 },
-  { left: "58%", size: 1.5, dur: 9,  delay: 1.8 },
-  { left: "67%", size: 3,   dur: 13, delay: 4.2 },
-  { left: "76%", size: 1,   dur: 15, delay: 0.9 },
-  { left: "84%", size: 2,   dur: 11, delay: 5.0 },
-  { left: "92%", size: 1.5, dur: 17, delay: 2.3 },
-];
-
 export default function DemoPage() {
   const [space, setSpace] = useState<Space>("pharma");
   const [active, setActive] = useState(0);
@@ -1943,48 +1937,59 @@ export default function DemoPage() {
         }
       `}</style>
 
-      {/* BACKGROUND */}
-      <div className="thor-grid" style={{ position: "fixed", inset: 0, pointerEvents: "none", zIndex: 0 }} />
+      {/* BACKGROUND
+          Une seule trame millimétrée, immobile, estompée vers le bas. Les trois
+          orbes animés en continu qui occupaient cette place tiraient l'œil sans
+          rien dire et faisaient tourner le GPU en permanence : le fond doit
+          porter la page, pas se disputer avec elle. */}
+      <div
+        aria-hidden="true"
+        style={{
+          position: "fixed",
+          inset: 0,
+          pointerEvents: "none",
+          zIndex: 0,
+          backgroundImage:
+            "linear-gradient(to right, rgba(11,18,32,0.035) 1px, transparent 1px), linear-gradient(to bottom, rgba(11,18,32,0.035) 1px, transparent 1px)",
+          backgroundSize: "32px 32px",
+          maskImage: "radial-gradient(ellipse 90% 55% at 50% 0%, #000 25%, transparent 80%)",
+          WebkitMaskImage: "radial-gradient(ellipse 90% 55% at 50% 0%, #000 25%, transparent 80%)",
+        }}
+      />
 
-      {/* Orbes de fond.
-          Le halo vient d'un radial-gradient et non d'un `filter: blur()` : flouter
-          un disque plein de 900 px animé obligeait le GPU à re-rasteriser un calque
-          géant en continu. Rendu équivalent à l'œil, coût sans commune mesure. */}
-      <div style={{ position: "fixed", top: "-10%", right: "-10%", width: 900, height: 900, background: `radial-gradient(circle, ${t.orb1} 0%, transparent 70%)`, animation: "orbDrift 20s ease-in-out infinite", pointerEvents: "none", zIndex: 0, willChange: "transform" }} />
-      <div style={{ position: "fixed", bottom: "-15%", left: "-10%", width: 700, height: 700, background: `radial-gradient(circle, ${t.orb2} 0%, transparent 70%)`, animation: "orbDrift 28s 6s ease-in-out infinite", pointerEvents: "none", zIndex: 0, willChange: "transform" }} />
-      <div style={{ position: "fixed", top: "40%", left: "40%", width: 500, height: 500, background: `radial-gradient(circle, ${t.orb1} 0%, transparent 70%)`, opacity: 0.4, animation: "orbDrift 35s 12s ease-in-out infinite", pointerEvents: "none", zIndex: 0, willChange: "transform" }} />
-
-      {/* HERO */}
-      <section style={{ position: "relative", zIndex: 1, padding: "80px 24px 60px", textAlign: "center", overflow: "hidden" }}>
-        {/* Floating particles */}
-        {PARTICLES.map((p, i) => (
-          <div key={i} style={{ position: "absolute", left: p.left, bottom: 0, width: p.size, height: p.size, borderRadius: "50%", background: t.accent, boxShadow: `0 0 6px ${t.accent}`, animation: `floatParticle ${p.dur}s ${p.delay}s linear infinite`, pointerEvents: "none" }} />
-        ))}
-        {/* Badge */}
-        <div style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "6px 16px", borderRadius: 999, border: `1px solid ${t.border}`, background: t.bg, color: t.accent, fontSize: 12, fontWeight: 700, letterSpacing: "0.06em", marginBottom: 28, animation: "fadeInUp 0.6s ease both", textTransform: "uppercase" }}>
-          <span style={{ width: 6, height: 6, borderRadius: "50%", background: t.accent, animation: "glowPulse 2s ease-in-out infinite", boxShadow: `0 0 8px ${t.accent}` }} />
-          Visite guidée interactive
+      {/* HERO
+          Aligné à gauche et non centré : une visite guidée se lit comme une
+          documentation, pas comme une affiche. La monospace porte la structure,
+          la display ne sert qu'à la phrase. */}
+      <section style={{ position: "relative", zIndex: 1, maxWidth: 1400, margin: "0 auto", padding: "72px 24px 56px" }}>
+        <div style={{ ...MONO, color: "#64748B", animation: "fadeInUp 0.4s ease both" }}>
+          THOR — Visite interactive
         </div>
 
-        {/* Title */}
-        <div style={{ marginBottom: 20, animation: "fadeInUp 0.6s 0.1s ease both" }}>
-          <h1 className="thor-title" style={{ fontSize: "clamp(72px, 13vw, 148px)", fontWeight: 900, lineHeight: 0.9, letterSpacing: "-0.05em", fontFamily: "var(--font-display)", margin: 0, color: "#0f172a" }}>
-            THOR
-          </h1>
-          <div style={{ fontSize: "clamp(20px, 3.2vw, 36px)", fontWeight: 300, color: "#64748b", letterSpacing: "-0.02em", marginTop: 12 }}>
-            en{" "}
-            <span className={space === "vision" ? "gradient-action-vision" : space === "audition" ? "gradient-action-audition" : space === "pharma" ? "gradient-action-pharma" : "gradient-action-jarvis"} style={{ fontWeight: 800 }}>
-              action
-            </span>
-          </div>
-        </div>
+        <h1
+          className="h-title"
+          style={{
+            fontSize: "clamp(38px, 6vw, 64px)",
+            fontWeight: 600,
+            lineHeight: 1.02,
+            letterSpacing: "-0.03em",
+            fontFamily: "var(--font-display)",
+            margin: "22px 0 0",
+            color: "#0f172a",
+            maxWidth: 16 + "ch",
+            animation: "fadeInUp 0.4s 0.06s ease both",
+          }}
+        >
+          L&apos;outil, en vrai
+        </h1>
 
-        <p style={{ fontSize: 17, color: "#475569", maxWidth: 520, margin: "0 auto 36px", lineHeight: 1.7, animation: "fadeInUp 0.6s 0.2s ease both" }}>
-          Explorez les fonctionnalités de <strong style={{ color: t.accent, fontWeight: 700 }}>{t.name}</strong> en temps réel. Chaque aperçu reflète l&apos;interface exacte du produit.
+        <p style={{ fontSize: 17, color: "#475569", maxWidth: 520, margin: "22px 0 0", lineHeight: 1.65, animation: "fadeInUp 0.4s 0.12s ease both" }}>
+          Chaque écran ci-dessous est l&apos;interface réelle du produit, pas une
+          maquette. Choisissez un métier et parcourez ses fonctions.
         </p>
 
-        {/* Space selector */}
-        <div style={{ display: "inline-flex", gap: 4, padding: 4, borderRadius: 16, border: "1px solid rgba(15,23,42,0.08)", background: "rgba(255,255,255,0.6)", backdropFilter: "blur(20px)", WebkitBackdropFilter: "blur(20px)", animation: "fadeInUp 0.6s 0.3s ease both" }}>
+        {/* Sélecteur de métier — une segmentation sobre, sans dégradé ni halo */}
+        <div style={{ display: "inline-flex", gap: 2, marginTop: 36, padding: 3, borderRadius: 6, border: "1px solid rgba(15,23,42,0.10)", background: "rgba(255,255,255,0.75)", animation: "fadeInUp 0.4s 0.18s ease both" }}>
           {(["pharma", "vision", "audition", "jarvis"] as Space[]).map((s) => {
             const th = THEMES[s];
             const isActive = space === s;
@@ -1992,12 +1997,14 @@ export default function DemoPage() {
               <button
                 key={s}
                 onClick={() => switchSpace(s)}
+                aria-pressed={isActive}
                 style={{
-                  padding: "10px 24px", borderRadius: 12, fontSize: 14, fontWeight: 700, border: "none", cursor: "pointer",
-                  transition: "all 0.25s ease",
-                  background: isActive ? th.gradient : "transparent",
-                  color: isActive ? "white" : "#475569",
-                  boxShadow: isActive ? `0 4px 20px ${th.glow}` : "none",
+                  padding: "9px 18px", borderRadius: 4, fontSize: 13, fontWeight: 500, border: "none", cursor: "pointer",
+                  transition: "background-color 250ms ease, color 250ms ease",
+                  /* L'onglet actif se signale par l'encre, pas par un dégradé :
+                     la couleur reste la propriété des produits eux-mêmes. */
+                  background: isActive ? "#0F172A" : "transparent",
+                  color: isActive ? "#FFFFFF" : "#475569",
                   display: "flex", alignItems: "center", gap: 8,
                 }}
               >
@@ -2307,17 +2314,29 @@ export default function DemoPage() {
         </div>
       </section>
 
-      {/* CTA */}
-      <section style={{ position: "relative", zIndex: 1, padding: "40px 24px 80px", textAlign: "center" }}>
-        <div style={{ maxWidth: 600, margin: "0 auto", borderRadius: 24, border: `1px solid ${t.border}`, background: t.bg, padding: "48px 40px", boxShadow: `0 0 60px ${t.glow}` }}>
-          <h2 style={{ fontSize: 32, fontWeight: 800, color: "#0f172a", fontFamily: "var(--font-display)", letterSpacing: "-0.03em", marginBottom: 12 }}>Prêt à démarrer ?</h2>
-          <p style={{ color: "#475569", marginBottom: 28, fontSize: 15 }}>{narr.ctaDesc}</p>
-          <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
-            <button onClick={handleDemoClick} style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "13px 28px", borderRadius: 14, background: t.gradient, color: "white", fontWeight: 700, fontSize: 14, border: "none", cursor: "pointer", boxShadow: `0 8px 32px ${t.glowStrong}`, transition: "all 0.2s" }}>
-              Parler de votre projet →
+      {/* CTA — un filet et de l'air, pas une carte à halo */}
+      <section style={{ position: "relative", zIndex: 1, maxWidth: 1400, margin: "0 auto", padding: "24px 24px 96px" }}>
+        <div style={{ borderTop: "1px solid rgba(15,23,42,0.10)", paddingTop: 48, maxWidth: 560 }}>
+          <div style={{ ...MONO, color: "#64748B" }}>La suite</div>
+          <h2 className="h-title" style={{ fontSize: 32, fontWeight: 600, color: "#0f172a", fontFamily: "var(--font-display)", letterSpacing: "-0.025em", margin: "18px 0 0", lineHeight: 1.1 }}>
+            Vous avez vu l&apos;outil.
+          </h2>
+          <p style={{ color: "#475569", margin: "16px 0 0", fontSize: 16, lineHeight: 1.65 }}>{narr.ctaDesc}</p>
+          <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginTop: 32 }}>
+            <button
+              onClick={handleDemoClick}
+              style={{ ...MONO, display: "inline-flex", alignItems: "center", gap: 10, padding: "15px 28px", borderRadius: 4, background: "#0F172A", color: "white", border: "none", cursor: "pointer", transition: "background-color 200ms ease" }}
+            >
+              Parler de votre projet
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M5 12h14M13 5l7 7-7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
             </button>
-            <Link href="/contact" style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "13px 28px", borderRadius: 14, border: `1px solid ${t.border}`, color: "#475569", fontWeight: 600, fontSize: 14, textDecoration: "none", background: "transparent", transition: "all 0.2s" }}>
-              Contacter l&apos;équipe
+            <Link
+              href="/contact"
+              style={{ ...MONO, display: "inline-flex", alignItems: "center", padding: "15px 28px", borderRadius: 4, border: "1px solid rgba(15,23,42,0.12)", color: "#475569", textDecoration: "none", background: "transparent", transition: "border-color 200ms ease, color 200ms ease" }}
+            >
+              Écrire un message
             </Link>
           </div>
         </div>
