@@ -17,10 +17,11 @@ const inter = Inter({
 
 export const metadata = {
   title: {
-    default: "THOR — Clair Vision & Clair Audition",
+    default: "THOR — Studio & Produits",
     template: "%s — THOR",
   },
-  description: "THOR, le logiciel certifié pour opticiens et audioprothésistes. Agenda, dossiers patients, devis normalisés, hébergement HDS.",
+  description:
+    "THOR conçoit des sites, des outils et des plateformes métier. Accompagnement de bout en bout pour lancer une activité, plateformes prêtes à l'emploi pour celles qui tournent déjà.",
   manifest: "/manifest.json",
   appleWebApp: {
     capable: true,

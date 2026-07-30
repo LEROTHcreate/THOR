@@ -23,39 +23,26 @@ export default function Footer() {
               />
               <div className="leading-tight">
                 <div className="text-sm font-semibold text-slate-900 tracking-tight">THOR</div>
-                <div className="text-[11px] text-slate-500">L'écosystème logiciel des pros de santé</div>
+                <div className="text-[11px] text-slate-500">Studio · Produits</div>
               </div>
             </Link>
 
             <p className="text-sm leading-[1.7] text-slate-500 max-w-sm">
-              Une plateforme commune, plusieurs métiers. Optique, audition, officine
-              — et d'autres modules métier en cours de développement.
+              On conçoit des sites, des outils et des plateformes métier. Pour
+              ceux qui lancent une activité comme pour ceux qui en tiennent
+              déjà une.
             </p>
-
-            <div className="flex gap-2 flex-wrap pt-1">
-              <span className="inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[11px] font-medium bg-white border border-slate-200 text-slate-600">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
-                Hébergement HDS
-              </span>
-              <span className="inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[11px] font-medium bg-white border border-slate-200 text-slate-600">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
-                Partenaire SESAM-Vitale
-              </span>
-              <span className="inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[11px] font-medium bg-white border border-slate-200 text-slate-600">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
-                Données en France
-              </span>
-            </div>
           </div>
 
-          {/* Modules */}
+          {/* Produits */}
           <div className="md:col-span-2 space-y-4">
-            <div className="text-[11px] font-semibold uppercase tracking-[0.08em] text-slate-500">Modules</div>
+            <div className="text-[11px] font-semibold uppercase tracking-[0.08em] text-slate-500">Produits</div>
             <ul className="space-y-2.5">
               {[
                 { href: "/clair-vision",   label: "Clair Vision",   hint: "Optique" },
                 { href: "/clair-audition", label: "Clair Audition", hint: "Audition" },
                 { href: "https://pharmapinvertagenda.vercel.app/", label: "PharmaPlanning", hint: "Officine", external: true },
+                { href: "https://jarvis-pi-pied.vercel.app/", label: "J.A.R.V.I.S", hint: "Assistant", external: true },
               ].map((l) => (
                 <li key={l.href}>
                   <Link
@@ -71,7 +58,7 @@ export default function Footer() {
               ))}
               <li>
                 <span className="inline-flex flex-col text-sm">
-                  <span className="font-medium text-slate-500">Nouveaux modules</span>
+                  <span className="font-medium text-slate-500">Autres outils</span>
                   <span className="text-[11px] text-slate-500">En préparation</span>
                 </span>
               </li>
@@ -84,6 +71,7 @@ export default function Footer() {
             <ul className="space-y-2.5">
               {[
                 { href: "/studio",                       label: "THOR Studio" },
+                { href: "/qui-sommes-nous",              label: "Qui sommes-nous" },
                 { href: "/realisations",                 label: "Nos réalisations" },
                 { href: "/demo",                         label: "Démonstration interactive" },
                 { href: "/nos-centres",                  label: "Nos centres" },

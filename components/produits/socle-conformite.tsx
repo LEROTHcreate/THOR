@@ -1,35 +1,39 @@
 import { Reveal } from "@/components/ui/reveal";
 
 /**
- * Le socle technique commun aux plateformes santé.
+ * Le socle technique commun à tous les produits.
  *
  * Six briques, listées à plat : ce sont des garanties, pas des arguments —
  * elles se lisent en diagonale et n'ont pas à être mises en scène.
+ *
+ * Les certifications propres à la santé tiennent en une seule entrée : elles
+ * restent vraies pour les produits concernés, mais ce ne sont plus elles qui
+ * définissent THOR.
  */
 const SOCLE = [
   {
-    title: "Hébergement HDS",
-    desc: "Données de santé hébergées chez un partenaire certifié HDS, conformément au Code de la santé publique.",
-  },
-  {
-    title: "SESAM-Vitale",
-    desc: "Architecture pensée pour la certification GIE SESAM-Vitale et la télétransmission des FSE.",
-  },
-  {
-    title: "ADRi via e-CPS",
-    desc: "Vérification des droits des assurés en temps réel via l'authentification praticien e-CPS.",
-  },
-  {
-    title: "IA THOR intégrée",
-    desc: "Assistant conversationnel propriétaire intégré nativement à chaque plateforme métier.",
+    title: "Hébergement en France",
+    desc: "Les données restent en France, chez des hébergeurs européens. Aucune sortie hors de l'Union.",
   },
   {
     title: "Conformité RGPD",
     desc: "Chiffrement des données sensibles, traçabilité complète, droits des utilisateurs respectés.",
   },
   {
+    title: "IA THOR intégrée",
+    desc: "Assistant conversationnel propriétaire, intégré nativement à chaque produit de l'écosystème.",
+  },
+  {
+    title: "Exigences du métier",
+    desc: "Chaque produit porte les certifications de son secteur. Côté santé : hébergement HDS, SESAM-Vitale, ADRi via e-CPS.",
+  },
+  {
+    title: "Un seul interlocuteur",
+    desc: "De la conception à la mise en ligne puis au suivi, la même équipe. Pas de sous-traitance en cascade.",
+  },
+  {
     title: "Évolution continue",
-    desc: "Une seule infrastructure, plusieurs métiers. Les évolutions transversales bénéficient à tous nos SaaS.",
+    desc: "Une seule infrastructure, plusieurs métiers. Les évolutions transversales bénéficient à tous les produits.",
   },
 ];
 
@@ -41,12 +45,12 @@ export function SocleConformite() {
           <div className="mx-auto mb-16 max-w-2xl text-center">
             <span className="mono-label mb-5 block text-slate-500">Le socle</span>
             <h2 className="h-title text-4xl sm:text-5xl font-semibold tracking-tight text-slate-900 leading-[1.05]">
-              Conforme avant d’être livré.
+              Le même socle sous chaque produit.
             </h2>
             <p className="mt-6 text-lg text-slate-500 leading-[1.6]">
-              Au lieu de réinventer la conformité santé pour chaque produit, THOR
-              mutualise les briques critiques et les met à disposition de chacune
-              de ses plateformes.
+              Sécurité, hébergement, conformité : les briques critiques sont
+              mutualisées une fois pour toutes. Chaque produit y ajoute ensuite
+              les exigences propres à son métier.
             </p>
           </div>
         </Reveal>

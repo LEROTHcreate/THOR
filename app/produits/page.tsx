@@ -8,7 +8,7 @@ import { getAllRealisations } from "@/lib/realisations";
 export const metadata: Metadata = {
   title: "Produits",
   description:
-    "Les plateformes métier THOR : Clair Vision, Clair Audition, PharmaPlanning, et les outils de l'écosystème. Hébergement HDS et conformité intégrée.",
+    "Les produits THOR en production : Clair Vision, Clair Audition, PharmaPlanning, J.A.R.V.I.S et les autres outils de l'écosystème.",
 };
 
 /* Tout ce qui tourne, quelle que soit la branche : un logiciel livré pour un
@@ -76,7 +76,7 @@ export default function ProduitsPage() {
             {[
               `${PRODUITS.length} produits en production`,
               `${SANTE.length} métiers de santé`,
-              "Hébergement HDS",
+              "Données hébergées en France",
             ].map((fact, i) => (
               <span key={fact} className="flex items-center gap-4">
                 {i > 0 && <span aria-hidden="true" className="text-slate-300">·</span>}
